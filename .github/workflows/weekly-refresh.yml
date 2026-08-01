@@ -1,27 +1,25 @@
-name: Weekly refresh (fundamentals + PLI/Renewable)
+name: Weekly refresh (fundamentals)
 
-# Fundamentals (Screener.in via Playwright) + PLI / Renewable lists
-# (DPIIT / MNRE / PIB via Firecrawl) run together once a week on Sunday
+# Fundamentals (Screener.in via Playwright) run once a week on Sunday
 # night IST. Reason for the weekly cadence: Screener.in fundamentals
-# (P&L ratios, shareholding, auditor remarks) are quarterly/annual
-# numbers that simply don't move day-to-day — daily scraping was
-# burning ~50 min of CI a day for stale data. PLI / Renewable
-# beneficiary lists also change slowly.
+# (P&L ratios, shareholding) are quarterly/annual numbers that simply
+# don't move day-to-day — daily scraping burned ~50 min of CI a day
+# for stale data.
 #
-# Governance flags moved OUT of this workflow and INTO daily-refresh
-# (the news-driven sources need daily cadence to surface high-profile
-# SEBI announcements within 24h instead of waiting for Sunday).
+# Governance flags live in daily-refresh (the news-driven sources need
+# daily cadence to surface high-profile SEBI announcements within 24h
+# instead of waiting for Sunday).
 #
 # Schedule rationale:
-# - Sunday 18:23 UTC == Sunday 23:53 IST (late Sun night IST).
-# - Picked Sunday-late instead of Monday-morning so the fresh
-#   fundamentals.json is committed before Monday's daily-refresh
-#   (which fires at 05:53 IST) — Monday's daily then picks up the
-#   week-fresh data immediately when it commits Technicals/Macro.
+# - Sunday 21:23 UTC == Monday 02:53 IST. Deliberately staggered ~3h
+#   AFTER the klpdash large-cap repo's Sunday 18:23 UTC run so the two
+#   dashboards never hit Screener.in concurrently.
+# - Still lands before Monday's daily-refresh (05:53 IST), so Monday
+#   picks up week-fresh fundamentals immediately.
 # - Off the :00/:15/:30/:45 boundaries to dodge GitHub's cron queue
 #   contention windows.
 #
-# Total runtime budget: ~55 min (Fundamentals ~50, Governance ~3).
+# Total runtime budget: ~70 min at 724 companies.
 
 on:
   workflow_dispatch:
@@ -87,18 +85,6 @@ jobs:
           cp screener-test/output/screener-companies.json public/data/
           cp screener-test/output/metadata.json public/data/
 
-      # ---- 2. PLI + Renewable lists (DPIIT / MNRE / PIB via Firecrawl) — ~3 min, non-fatal ----
-      # Beneficiary lists for the Macro/Sector pillar. Used to be on a
-      # quarterly cron — moved here because (a) the underlying schemes
-      # update mid-quarter often enough to matter, (b) refreshing in
-      # the same workflow as fundamentals + governance means one place
-      # to monitor for "the slow weekly stuff".
-      - name: Run PLI + Renewable list refresh
-        continue-on-error: true
-        env:
-          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
-        run: node screener-test/scrape-pli-renewable-refresh.mjs
-
       # ---- Artifacts ----
       - name: Upload weekly artifacts
         if: always()
@@ -109,8 +95,6 @@ jobs:
             public/data/screener-companies.csv
             public/data/screener-companies.json
             public/data/metadata.json
-            public/data/pli-renewable-refresh-status.json
-            screener-test/static/macro-context.json
           if-no-files-found: warn
 
       # ---- One commit, one push ----
@@ -120,10 +104,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/data/screener-companies.csv public/data/screener-companies.json public/data/metadata.json
-          [ -f public/data/pli-renewable-refresh-status.json ] && git add public/data/pli-renewable-refresh-status.json || true
-          # macro-context.json holds the curated PLI + Renewable beneficiary lists
-          # that the Macro pillar reads from.
-          [ -f screener-test/static/macro-context.json ] && git add screener-test/static/macro-context.json || true
           if git diff --cached --quiet; then
             echo "No data changes to commit."
             exit 0
