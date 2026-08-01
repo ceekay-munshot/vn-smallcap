@@ -515,6 +515,7 @@ const state = {
   watchOnly: false,
   pillarWeights: loadPillarWeights(),
   planCapital: loadPlanCapital(),   // Trade Plan sizing input
+  paperMonth: null,                 // which month Paper Results is showing
   allocPerPick: loadAllocPerPick(),
   cohortMonth: null,            // legacy — kept for compat; unused after move to anchor-date model
   cohortView: loadCohortView(), // "static" | "monthly" | "weekly"
@@ -5453,7 +5454,231 @@ function renderTradePlan() {
       </ol>
     </div>`;
 
-  return `<div class="space-y-4">${capBox}${regimeCard}${warnCard}${readTable}${orderTable}${upCard}${stepCard}</div>`;
+  return `<div class="space-y-4">${capBox}${regimeCard}${warnCard}${readTable}${orderTable}${upCard}${stepCard}${renderPaperResults()}</div>`;
+}
+
+// ============================================================
+// PAPER RESULTS — how the plan's basket has actually done.
+//
+// Nothing is stored. Every month's basket is re-derived from the snapshot
+// trail on the fly: the cohort is the top 7 of that month's FIRST snapshot,
+// and the daily prices come from every snapshot after it. Because snapshots
+// are permanent files, past months stay viewable forever without any
+// separate archive to keep in sync.
+//
+// The stop rule is applied faithfully: walking forward day by day, the first
+// close at or below entry - 2.5 x ATR ends that position and freezes its
+// return there. Note this checks CLOSES only, because that is all a snapshot
+// carries -- a real intraday stop would have triggered earlier and at a
+// worse price, so these figures are mildly optimistic.
+// ============================================================
+
+// Months that have at least one snapshot, newest first.
+function paperMonths() {
+  const snaps = state.cache.history?.snapshots || [];
+  const set = [];
+  for (const s of snaps) { const ym = s.date.slice(0, 7); if (!set.includes(ym)) set.push(ym); }
+  return set.reverse();
+}
+
+function paperTrack(ym) {
+  const cache = state.cache.history;
+  const snaps = (cache?.snapshots || []).filter((s) => s.date.slice(0, 7) === ym);
+  if (!snaps.length) return null;
+  const anchor = snaps[0];
+
+  const top = anchor.stocks
+    .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed)
+    .sort((a, b) => b.composite - a.composite)
+    .slice(0, 7);
+  if (!top.length) return null;
+
+  // Same inverse-ATR weights the plan told you to buy with.
+  const atrOf = (s) => (Number.isFinite(s.techVals?.atr) && s.techVals.atr > 0 ? s.techVals.atr : 3.5);
+  const invSum = top.reduce((a, s) => a + 1 / atrOf(s), 0);
+
+  // Price per ticker per date across this month's snapshots.
+  const px = {};
+  for (const snap of snaps) {
+    for (const s of snap.stocks) {
+      if (!s.ticker || typeof s.close !== "number") continue;
+      (px[s.ticker] || (px[s.ticker] = {}))[snap.date] = s.close;
+    }
+  }
+  const dates = snaps.map((s) => s.date);
+
+  const positions = top.map((s) => {
+    const atr = atrOf(s), weight = (1 / atr) / invSum;
+    const entry = px[s.ticker]?.[anchor.date] ?? s.close;
+    const stopPct = PLAN_STOP_ATR * atr / 100;
+    const stop = entry * (1 - stopPct);
+    let exit = null, exitDate = null, status = "open";
+    for (const d of dates.slice(1)) {
+      const c = px[s.ticker]?.[d];
+      if (c == null) continue;
+      if (c <= stop) { exit = stop; exitDate = d; status = "stopped"; break; }
+    }
+    let last = entry;
+    for (let i = dates.length - 1; i >= 0; i--) { const c = px[s.ticker]?.[dates[i]]; if (c != null) { last = c; break; } }
+    const close = exit ?? last;
+    return {
+      ticker: s.ticker, name: s.name, sector: s.sector, atr, weight,
+      entry, stop, stopPct, status, exitDate, current: close,
+      ret: entry > 0 ? (close / entry - 1) * 100 : 0,
+    };
+  });
+
+  // Daily weighted basket curve. A stopped position is frozen at its stop
+  // from the day it triggered — it stops contributing further moves.
+  const curve = dates.map((d) => {
+    let tot = 0;
+    for (const p of positions) {
+      const stoppedBy = p.exitDate && d >= p.exitDate;
+      const c = stoppedBy ? p.stop : (px[p.ticker]?.[d] ?? p.entry);
+      tot += p.weight * ((c / p.entry) - 1);
+    }
+    return { date: d, ret: tot * 100 };
+  });
+
+  // Benchmark over the identical window.
+  const bcl = cache?.benchmark?.indices?.["NIFTYSMLCAP250.NS"]?.closes || null;
+  let bench = null;
+  if (bcl) {
+    const at = (d) => {
+      if (bcl[d] != null) return bcl[d];
+      let last = null;
+      for (const k of Object.keys(bcl).sort()) { if (k <= d) last = bcl[k]; else break; }
+      return last;
+    };
+    const b0 = at(anchor.date);
+    if (b0) bench = dates.map((d) => ({ date: d, ret: ((at(d) ?? b0) / b0 - 1) * 100 }));
+  }
+
+  const basketRet = curve[curve.length - 1]?.ret ?? 0;
+  const benchRet = bench ? bench[bench.length - 1].ret : null;
+  return {
+    ym, anchorDate: anchor.date, lastDate: dates[dates.length - 1], days: dates.length,
+    positions, curve, bench, basketRet, benchRet,
+    alpha: benchRet == null ? null : basketRet - benchRet,
+    stops: positions.filter((p) => p.status === "stopped").length,
+    winners: positions.filter((p) => p.ret > 0).length,
+    peak: Math.max(...curve.map((c) => c.ret)),
+    trough: Math.min(...curve.map((c) => c.ret)),
+  };
+}
+
+// Two-line chart: basket vs benchmark, both in % from the anchor day.
+function paperChart(t) {
+  if (t.curve.length < 2) {
+    return `<div class="px-4 py-8 text-center text-xs text-slate-400">The line appears from the second day of the month — one day is a single point.</div>`;
+  }
+  const W = 780, H = 150, M = { t: 12, r: 12, b: 20, l: 44 };
+  const iw = W - M.l - M.r, ih = H - M.t - M.b;
+  const all = [...t.curve.map((c) => c.ret), ...(t.bench ? t.bench.map((c) => c.ret) : []), 0];
+  let lo = Math.min(...all), hi = Math.max(...all);
+  const pad = Math.max((hi - lo) * 0.15, 0.6); lo -= pad; hi += pad;
+  const x = (i) => M.l + (i / (t.curve.length - 1)) * iw;
+  const y = (v) => M.t + ih - ((v - lo) / (hi - lo)) * ih;
+  const path = (arr) => arr.map((c, i) => `${i ? "L" : "M"} ${x(i).toFixed(1)} ${y(c.ret).toFixed(1)}`).join(" ");
+  const zeroY = y(0);
+  return `
+    <div class="px-2 pt-2 pb-1 overflow-x-auto">
+      <svg viewBox="0 0 ${W} ${H}" class="w-full" style="min-width:420px;max-height:170px" role="img" aria-label="Basket versus benchmark return">
+        <line x1="${M.l}" y1="${zeroY}" x2="${W - M.r}" y2="${zeroY}" stroke="currentColor" class="text-slate-300" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="${M.l - 6}" y="${zeroY + 3.5}" text-anchor="end" class="fill-slate-400" style="font-size:9px">0%</text>
+        <text x="${M.l - 6}" y="${y(hi) + 8}" text-anchor="end" class="fill-slate-400" style="font-size:9px">${hi.toFixed(1)}%</text>
+        <text x="${M.l - 6}" y="${y(lo)}" text-anchor="end" class="fill-slate-400" style="font-size:9px">${lo.toFixed(1)}%</text>
+        ${t.bench ? `<path d="${path(t.bench)}" fill="none" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="4 3"/>` : ""}
+        <path d="${path(t.curve)}" fill="none" stroke="#4f46e5" stroke-width="2.2" stroke-linejoin="round"/>
+        <circle cx="${x(t.curve.length - 1)}" cy="${y(t.basketRet)}" r="3.5" fill="#4f46e5"/>
+        <text x="${M.l}" y="${H - 5}" class="fill-slate-400" style="font-size:9px">${fmtDateDMY(t.anchorDate)}</text>
+        <text x="${W - M.r}" y="${H - 5}" text-anchor="end" class="fill-slate-400" style="font-size:9px">${fmtDateDMY(t.lastDate)}</text>
+      </svg>
+      <div class="flex items-center gap-4 px-3 pb-1 text-[10px] text-slate-500">
+        <span class="inline-flex items-center gap-1.5"><span class="w-3 h-0.5 bg-indigo-600"></span>AI basket</span>
+        ${t.bench ? `<span class="inline-flex items-center gap-1.5"><span class="w-3 h-0 border-t border-dashed border-slate-400"></span>Smallcap 250</span>` : ""}
+      </div>
+    </div>`;
+}
+
+function renderPaperResults() {
+  const months = paperMonths();
+  if (!months.length) return "";
+  const sel = months.includes(state.paperMonth) ? state.paperMonth : months[0];
+  const t = paperTrack(sel);
+  if (!t) return "";
+
+  const pct = (v, big) => {
+    if (v == null) return `<span class="text-slate-400">—</span>`;
+    const c = v > 0.005 ? "text-emerald-700" : v < -0.005 ? "text-rose-700" : "text-slate-600";
+    return `<span class="${c} ${big ? "text-xl font-bold" : "font-semibold"} tabular-nums">${v > 0 ? "+" : ""}${v.toFixed(2)}%</span>`;
+  };
+  const monthName = (ym) => {
+    const [y, m] = ym.split("-");
+    return new Date(Date.UTC(+y, +m - 1, 1)).toLocaleDateString("en-IN", { month: "short", year: "numeric", timeZone: "UTC" });
+  };
+
+  const pills = months.map((m) => `
+    <button type="button" data-paper-month="${m}" class="px-2.5 py-1.5 text-xs font-semibold rounded-lg ring-1 transition ${m === sel ? "bg-slate-900 text-white ring-slate-900" : "bg-white text-slate-600 ring-slate-200 hover:bg-slate-50"}">${monthName(m)}</button>`).join("");
+
+  const kpi = (label, val, sub) => `
+    <div class="px-4 py-3">
+      <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500">${label}</div>
+      <div class="mt-0.5">${val}</div>
+      ${sub ? `<div class="text-[10px] text-slate-400 mt-0.5">${sub}</div>` : ""}
+    </div>`;
+
+  const rows = t.positions.map((p) => `
+    <tr class="border-t border-slate-100 ${p.status === "stopped" ? "bg-rose-50/40" : ""}">
+      <td class="px-3 py-2 font-semibold text-slate-900">${escapeHtml(p.name)}<div class="text-[10px] font-mono text-slate-400">${escapeHtml(p.ticker)}</div></td>
+      <td class="px-3 py-2 text-right tabular-nums text-slate-500">${inr(p.entry)}</td>
+      <td class="px-3 py-2 text-right tabular-nums font-semibold">${inr(p.current)}</td>
+      <td class="px-3 py-2 text-right">${pct(p.ret)}</td>
+      <td class="px-3 py-2 text-right tabular-nums text-rose-700">${inr(p.stop)}</td>
+      <td class="px-3 py-2 text-right">
+        ${p.status === "stopped"
+          ? `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-rose-100 text-rose-700 ring-1 ring-rose-200">Stopped ${fmtDateDMY(p.exitDate)}</span>`
+          : `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100">Open</span>`}
+      </td>
+      <td class="px-3 py-2 text-right tabular-nums text-slate-500">${(p.weight * 100).toFixed(1)}%</td>
+    </tr>`).join("");
+
+  const oneDay = t.days < 2;
+  return `
+    <div class="bg-white rounded-2xl ring-1 ring-slate-100 overflow-hidden">
+      <div class="px-4 py-3 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Paper results · ${monthName(sel)}</div>
+          <div class="text-xs text-slate-500 mt-0.5">Held from ${fmtDateDMY(t.anchorDate)} · ${t.days} trading day${t.days === 1 ? "" : "s"} recorded${oneDay ? " · results start building tomorrow" : ""}</div>
+        </div>
+        <div class="flex flex-wrap items-center gap-1.5">${pills}</div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-slate-100 border-b border-slate-100">
+        ${kpi("AI basket", pct(t.basketRet, true), "weighted, stops applied")}
+        ${kpi("Smallcap 250", pct(t.benchRet, true), "same window")}
+        ${kpi("Alpha", pct(t.alpha, true), "basket − benchmark")}
+        ${kpi("Stops hit", `<span class="text-xl font-bold tabular-nums ${t.stops ? "text-rose-700" : "text-slate-700"}">${t.stops} <span class="text-sm font-normal text-slate-400">of ${t.positions.length}</span></span>`, `${t.winners} in profit`)}
+      </div>
+
+      ${paperChart(t)}
+
+      <div class="overflow-x-auto border-t border-slate-100">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50/70 text-[10px] uppercase tracking-wider text-slate-500">
+            <tr><th class="px-3 py-2 text-left">Stock</th><th class="px-3 py-2 text-right">Entry</th><th class="px-3 py-2 text-right">Now</th>
+            <th class="px-3 py-2 text-right">Return</th><th class="px-3 py-2 text-right">Stop</th><th class="px-3 py-2 text-right">Status</th><th class="px-3 py-2 text-right">Weight</th></tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+
+      <div class="px-4 py-3 bg-slate-50/60 border-t border-slate-100 flex flex-wrap gap-x-6 gap-y-1 text-xs text-slate-600">
+        <span>Best day <span class="font-bold text-emerald-700 tabular-nums">${t.peak > 0 ? "+" : ""}${t.peak.toFixed(2)}%</span></span>
+        <span>Worst day <span class="font-bold text-rose-700 tabular-nums">${t.trough.toFixed(2)}%</span></span>
+        <span class="text-slate-400">Stops are checked on closing prices, so a real intraday stop would trigger earlier and slightly worse.</span>
+      </div>
+    </div>`;
 }
 
 // Strategy-tab sub-tab bar. Same pattern as the top-level tabs the founder
@@ -6898,6 +7123,13 @@ function wireStrategySubNav() {
       }, 450);
     });
   }
+  $$("#active-content [data-paper-month]").forEach((b) => b.addEventListener("click", () => {
+    const m = b.dataset.paperMonth;
+    if (!m || m === state.paperMonth) return;
+    state.paperMonth = m;
+    renderActive();
+  }));
+
   $$("#active-content [data-plan-preset]").forEach((b) => b.addEventListener("click", () => {
     const v = Number(b.dataset.planPreset);
     if (!Number.isFinite(v) || v === state.planCapital) return;
