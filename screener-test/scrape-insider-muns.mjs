@@ -200,8 +200,22 @@ function aggregateTicker(rows, cutoff) {
 }
 
 // ---------- live API ----------
+// The India path is capped at 100 records when the request carries no date
+// filter. We only ever keep the last LOOKBACK_DAYS, so send that window
+// explicitly: without it a company with a long disclosure history can spend
+// its whole 100-record budget on rows older than the window and come back
+// looking like it had no insider activity — a silent false negative on a
+// scored rule, indistinguishable from genuine no-activity.
+function windowDates() {
+  const to = new Date();
+  const from = new Date(to.getTime() - LOOKBACK_DAYS * 86400000);
+  const iso = (d) => d.toISOString().slice(0, 10);
+  return { fromDate: iso(from), toDate: iso(to) };
+}
+
 async function fetchInsider(ticker) {
-  const body = JSON.stringify({ ticker, country: COUNTRY });
+  const { fromDate, toDate } = windowDates();
+  const body = JSON.stringify({ ticker, country: COUNTRY, fromDate, toDate });
   let attempt = 0;
   while (true) {
     attempt++;
