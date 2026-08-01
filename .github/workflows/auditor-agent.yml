@@ -1,0 +1,103 @@
+name: Auditor Opinion agent
+
+on:
+  workflow_dispatch:
+    inputs:
+      stock_ticker:
+        description: "Stock ticker symbol"
+        required: false
+        default: "NVDA"
+      stock_company_name:
+        description: "Stock company name"
+        required: false
+        default: "NVIDIA Corporation"
+      context_company_name:
+        description: "Context company name"
+        required: false
+        default: "NVIDIA Corporation"
+      stock_country:
+        description: "Stock country (ISO code)"
+        required: false
+        default: "US"
+      to_date:
+        description: "To date (YYYY-MM-DD). Defaults to today (UTC) if blank."
+        required: false
+        default: ""
+      timezone:
+        description: "Timezone"
+        required: false
+        default: "UTC"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Call Auditor Opinion agent
+        env:
+          MUNS_ACCESS_TOKEN: ${{ secrets.MUNS_ACCESS_SECRET }}
+          STOCK_TICKER: ${{ github.event.inputs.stock_ticker || 'NVDA' }}
+          STOCK_COMPANY_NAME: ${{ github.event.inputs.stock_company_name || 'NVIDIA Corporation' }}
+          CONTEXT_COMPANY_NAME: ${{ github.event.inputs.context_company_name || 'NVIDIA Corporation' }}
+          STOCK_COUNTRY: ${{ github.event.inputs.stock_country || 'US' }}
+          TO_DATE_INPUT: ${{ github.event.inputs.to_date }}
+          TIMEZONE: ${{ github.event.inputs.timezone || 'UTC' }}
+        run: |
+          TO_DATE="${TO_DATE_INPUT:-$(date -u +%Y-%m-%d)}"
+          PAYLOAD=$(jq -n \
+            --arg stock_ticker "$STOCK_TICKER" \
+            --arg stock_company_name "$STOCK_COMPANY_NAME" \
+            --arg context_company_name "$CONTEXT_COMPANY_NAME" \
+            --arg stock_country "$STOCK_COUNTRY" \
+            --arg to_date "$TO_DATE" \
+            --arg timezone "$TIMEZONE" \
+            '{
+              user_index: 124,
+              agent_library_id: "0789b5f8-48f2-49db-9490-399dcdc294ba",
+              metadata: {
+                stock_ticker: $stock_ticker,
+                stock_company_name: $stock_company_name,
+                context_company_name: $context_company_name,
+                stock_country: $stock_country,
+                to_date: $to_date,
+                timezone: $timezone
+              }
+            }')
+          echo "Sending payload:"
+          echo "$PAYLOAD"
+          curl -sS -X POST \
+            'https://devde.muns.io/agents/run' \
+            -H 'accept: */*' \
+            -H "Authorization: Bearer ${MUNS_ACCESS_TOKEN}" \
+            -H 'Content-Type: application/json' \
+            -d "$PAYLOAD" \
+            -o auditor_agent.txt
+
+      - name: Commit output to main
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add auditor_agent.txt
+          if git diff --cached --quiet; then
+            echo "No auditor_agent.txt changes this run."
+            exit 0
+          fi
+          git commit -m "Auditor Opinion agent output ($(date -u +%Y-%m-%dT%H:%M:%SZ))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              echo "Push succeeded on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — fetching + rebasing onto fresh main..."
+            git fetch origin main
+            git rebase origin/main || { echo "Rebase failed — aborting."; git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          echo "Push still failing after 4 attempts."
+          exit 1

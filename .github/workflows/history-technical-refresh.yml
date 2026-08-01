@@ -1,0 +1,59 @@
+name: Technical history backfill (1-year OHLC → indicators)
+
+# Pulls ~2 years of daily OHLC for the universe from Yahoo Finance, computes
+# the technical indicators + a 0-100 technical score per day, and writes a
+# compact per-ticker (date, close, score) series to
+# public/data/history-technical.json. The Custom-tab 1-year technical
+# back-test replays over this file.
+#
+# Weekly is plenty — a year-long back-test doesn't move on intraday data, and
+# a full re-fetch of ~500 tickers takes only a couple of minutes. No deps:
+# the scraper uses Node's built-in fetch.
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Tickers to fetch (0 = whole universe). Use a small number only for testing."
+        required: false
+        default: "0"
+  schedule:
+    # 03:30 UTC Sunday = 09:00 IST — after the daily OHLCV + technicals scrapes.
+    - cron: "30 3 * * 0"
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Build technical history
+        continue-on-error: true
+        run: |
+          LIMIT="${{ inputs.limit || '0' }}"
+          if [ "$LIMIT" = "0" ]; then node screener-test/scrape-history-ohlc.mjs; else node screener-test/scrape-history-ohlc.mjs "$LIMIT"; fi
+
+      - name: Commit refreshed history-technical.json
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/history-technical.json
+          if git diff --cached --quiet; then
+            echo "No technical-history changes to commit."
+            exit 0
+          fi
+          git commit -m "Technical history backfill ($(date -u +%Y-%m-%d))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then exit 0; fi
+            git fetch origin main
+            git rebase origin/main || { git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          exit 1

@@ -1,0 +1,156 @@
+name: Daily refresh (all scrapers)
+
+# Daily scrapers that change day-to-day: Technicals, Sentiment extras,
+# Macro, Governance flags. (Insider trades are refreshed MANUALLY via
+# insider-scrape.yml, not here.) The slow Fundamentals + PLI/Renewable
+# scrapes still live in weekly-refresh.yml (Sun 23:53 IST) because those
+# numbers are quarterly/annual and don't move daily.
+#
+# IMPORTANT: workflow name is preserved as "Daily refresh (all scrapers)"
+# because auditor-opinions-refresh.yml chains off this exact name via
+# workflow_run — renaming would silently break the Muns agent trigger.
+#
+# Total runtime budget: ~8 min (Technicals ~4, Sentiment <1, Macro <1,
+# Governance ~3).
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 00:23 UTC == 05:53 IST. Off the :00/:15/:30/:45 marks where GitHub's
+    # cron scheduler queues up runs and frequently delays / skips during
+    # high load.
+    - cron: "23 0 * * *"
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      # ---- 1. Technicals (Yahoo) — ~4 min ----
+      - name: Run technicals scraper
+        run: node screener-test/scrape-technicals.mjs
+
+      # ---- 2. Insider trades — MANUAL ONLY (not run here) ----
+      # Insider refresh runs via .github/workflows/insider-scrape.yml (muns.io),
+      # triggered by hand in 5-at-a-time batches (the `tickers` input). It is
+      # intentionally NOT part of the daily auto-refresh. insider-trades.json
+      # is still read below by the snapshot step; it just isn't regenerated here.
+
+      # ---- 3. Sentiment extras via Firecrawl (PCR + Impact Cost) — ~1 min, non-fatal ----
+      # NSE blocks direct GHA-runner fetches for option-chain (PCR) and the
+      # monthly Impact Cost archive. Firecrawl proxies through residential IPs
+      # and a headless browser, which bypasses that block. Yesterday's PCR is
+      # cached and re-served (marked stale) if today's fetch fails.
+      - name: Run Firecrawl sentiment extras (PCR + Impact Cost)
+        continue-on-error: true
+        env:
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+        run: node screener-test/scrape-firecrawl-sentiment.mjs
+
+      # ---- 4. Macro (Yahoo + NSE FII/DII) — <1 min, non-fatal ----
+      - name: Run macro scraper
+        continue-on-error: true
+        run: node screener-test/scrape-macro.mjs
+
+      # ---- 5. Governance flags (SEBI via Firecrawl) — ~3 min, non-fatal ----
+      # News-driven so daily cadence matters: Mint / BS / ET SEBI topic
+      # pages refresh daily; a high-profile SEBI announcement against a
+      # Nifty 500 name needs to surface within 24h, not wait for Sunday.
+      # Curated baseline (screener-test/static/known-sebi-cases.json)
+      # guarantees minimum coverage even when news sources return empty.
+      - name: Run governance flags scraper
+        continue-on-error: true
+        env:
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+        run: node screener-test/scrape-governance-flags.mjs
+
+      # ---- 6. Benchmark history (Nifty 50 + Bank Nifty) ----
+      # Used by the History tab to compute alpha (pick return − Nifty
+      # return) over the same window as each STRONG BUY pick. One Yahoo
+      # call gets the full 120-day series; we overwrite the file every
+      # day so it's always fresh.
+      - name: Refresh benchmark history
+        continue-on-error: true
+        run: node screener-test/scrape-benchmarks.mjs
+
+      # ---- 6b. Out-of-coverage OHLCV (LKP manual picks below our cap) ----
+      # When the client's LKP basket includes stocks below our ~Rs 12,500 Cr
+      # universe (e.g. ELECON), we still want them to contribute to the
+      # Manual average return + Accuracy hit tracking. This scraper hits
+      # Yahoo for each `in_universe: false` ticker in the LKP file and
+      # writes daily closes to out-of-coverage-history.json.
+      - name: Refresh out-of-coverage OHLCV
+        continue-on-error: true
+        run: node screener-test/scrape-out-of-coverage.mjs
+
+      # ---- 7. Daily SPIP snapshot for the History tab ----
+      # Replays the composite scorer against the freshly-refreshed inputs
+      # and emits public/data/snapshots/YYYY-MM-DD.json — every company's
+      # composite + rating + close at end of day. The History tab uses
+      # the trail of these files to compute realized return per past
+      # STRONG BUY pick. Cheap (~1s), idempotent (same input → same output).
+      - name: Write today's SPIP snapshot
+        if: always()
+        run: node screener-test/write-snapshot.mjs
+
+      # ---- Artifacts (always upload, even on partial failure) ----
+      - name: Upload all data artifacts
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: daily-refresh-data
+          path: |
+            public/data/technicals.json
+            public/data/insider-trades.json
+            public/data/sentiment-extras.json
+            public/data/macro.json
+            public/data/atr-history.json
+            public/data/fii-dii-history.json
+            public/data/governance-flags.json
+            public/data/snapshots/index.json
+          if-no-files-found: warn
+
+      # ---- One commit, one push ----
+      - name: Commit refreshed data to main
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/technicals.json
+          [ -f public/data/insider-trades.json ] && git add public/data/insider-trades.json || true
+          [ -f public/data/sentiment-extras.json ] && git add public/data/sentiment-extras.json || true
+          [ -f public/data/macro.json ] && git add public/data/macro.json || true
+          [ -f public/data/atr-history.json ] && git add public/data/atr-history.json || true
+          [ -f public/data/fii-dii-history.json ] && git add public/data/fii-dii-history.json || true
+          [ -f public/data/governance-flags.json ] && git add public/data/governance-flags.json || true
+          [ -f public/data/benchmark-history.json ] && git add public/data/benchmark-history.json || true
+          [ -f public/data/out-of-coverage-history.json ] && git add public/data/out-of-coverage-history.json || true
+          # Today's snapshot (and any newly rebuilt manifest)
+          [ -d public/data/snapshots ] && git add public/data/snapshots || true
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
+            exit 0
+          fi
+          git commit -m "Daily refresh ($(date -u +%Y-%m-%d))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              echo "Push succeeded on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — fetching + rebasing onto fresh main..."
+            git fetch origin main
+            git rebase origin/main || { echo "Rebase failed — aborting."; git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          echo "Push still failing after 4 attempts."
+          exit 1

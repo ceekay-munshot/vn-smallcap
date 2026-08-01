@@ -1,0 +1,60 @@
+name: Live prices refresh (intraday)
+
+# Refreshes public/data/live-prices.json from the Munshot quote API for the
+# manual (client) basket tickers — current price + intraday day high/low.
+# The dashboard uses this for live prices and intraday target/SL touch
+# detection (a target counts as hit the moment price touches it, e.g. Paytm
+# spiking over Target 2 intraday even though it closed below).
+#
+# Runs every 30 min during NSE market hours (09:15–15:30 IST = 03:45–10:00
+# UTC), Mon–Fri, plus on demand. Cheap (~14 API calls, <1 min).
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Every 30 min, 03:45–10:00 UTC, Mon–Fri (market hours IST).
+    - cron: "45 3 * * 1-5"
+    - cron: "15,45 4-9 * * 1-5"
+    - cron: "0 10 * * 1-5"
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Fetch live prices
+        run: node screener-test/scrape-live-prices.mjs
+
+      - name: Commit live prices to main
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          [ -f public/data/live-prices.json ] && git add public/data/live-prices.json || true
+          if git diff --cached --quiet; then
+            echo "No live-price changes this run."
+            exit 0
+          fi
+          git commit -m "Live prices refresh ($(date -u +%Y-%m-%dT%H:%MZ))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              echo "Push succeeded on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — fetching + rebasing onto fresh main..."
+            git fetch origin main
+            git rebase origin/main || { echo "Rebase failed — aborting."; git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          echo "Push still failing after 4 attempts."
+          exit 1

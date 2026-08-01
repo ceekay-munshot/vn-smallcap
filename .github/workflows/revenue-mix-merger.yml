@@ -1,0 +1,56 @@
+name: Revenue-mix merger (routine output → company-revenue-mix.json)
+
+# Triggers when the daily revenue-mix-refresh Claude.ai routine pushes a
+# new public/data/daily-revenue-mix-refresh.json (via PR-merge to main).
+# Validates each per-company entry against schema sanity checks and merges
+# accepted extractions into public/data/company-revenue-mix.json — the
+# production file the macro-scoring rules consult to replace sector proxies
+# with per-company truth.
+#
+# Failed validation preserves the previous extraction for that company —
+# a bad routine run can't blow away good data.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'public/data/daily-revenue-mix-refresh.json'
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Run revenue-mix merger
+        run: node screener-test/merge-revenue-mix.mjs
+
+      - name: Commit merged company-revenue-mix.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/company-revenue-mix.json
+          if git diff --cached --quiet; then
+            echo "No revenue-mix changes after merge."
+            exit 0
+          fi
+          git commit -m "Auto-merge routine revenue-mix batch ($(date -u +%Y-%m-%d))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              echo "Push succeeded on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — rebasing onto fresh main..."
+            git fetch origin main
+            git rebase origin/main || { echo "Rebase failed — aborting."; git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          echo "Push still failing after 4 attempts."
+          exit 1

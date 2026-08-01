@@ -1,0 +1,59 @@
+name: Sentiment extras (Firecrawl)
+
+on:
+  # Scheduled runs live in daily-refresh.yml. Kept here for manual reruns
+  # (e.g. retrying a failed PCR fetch without waiting for the next daily
+  # cron).
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Run Firecrawl sentiment extras
+        env:
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+        run: node screener-test/scrape-firecrawl-sentiment.mjs
+
+      - name: Upload sentiment extras (artifact)
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: sentiment-extras
+          path: public/data/sentiment-extras.json
+          if-no-files-found: warn
+
+      - name: Commit refreshed sentiment extras
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          [ -f public/data/sentiment-extras.json ] && git add public/data/sentiment-extras.json || true
+          if git diff --cached --quiet; then
+            echo "No sentiment-extras changes to commit."
+            exit 0
+          fi
+          git commit -m "Sentiment extras refresh ($(date -u +%Y-%m-%d))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              echo "Push succeeded on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — fetching + rebasing onto fresh main..."
+            git fetch origin main
+            git rebase origin/main || { echo "Rebase failed — aborting."; git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          echo "Push still failing after 4 attempts."
+          exit 1

@@ -1,0 +1,54 @@
+name: Auditor merger (routine output → dashboard)
+
+# When the Claude.ai routine commits its weekly output to main
+# (weekly-auditor-test.json), this workflow auto-runs the merger that
+# folds the routine's rich extraction (auditor firm, opinion, date,
+# EoM, key concerns) into the dashboard's primary auditor-opinions.json
+# so the Fundamentals "Auditor Remarks" rule picks it up immediately.
+#
+# No secrets needed — pure node script over committed JSON.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/data/weekly-auditor-test.json'
+  workflow_dispatch:
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Run auditor merger
+        run: node screener-test/merge-auditor-routine.mjs
+
+      - name: Commit merged auditor-opinions.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/auditor-opinions.json
+          if git diff --cached --quiet; then
+            echo "No changes to auditor-opinions.json after merge."
+            exit 0
+          fi
+          git commit -m "Auto-merge routine auditor output ($(date -u +%Y-%m-%d))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              echo "Push succeeded on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — rebasing onto fresh main..."
+            git fetch origin main
+            git rebase origin/main || { echo "Rebase failed — aborting."; git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          echo "Push still failing after 4 attempts."
+          exit 1

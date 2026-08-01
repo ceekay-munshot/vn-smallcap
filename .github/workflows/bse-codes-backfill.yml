@@ -1,0 +1,93 @@
+name: BSE codes backfill (one-off)
+
+# Manual-trigger workflow. Visits Screener company pages for companies
+# whose URL slug is an NSE ticker (not a BSE numeric code) and extracts
+# the BSE scrip code from the page header — populates
+# screener-test/static/bse-codes-supplement.json which the auditor
+# to-do generator reads from.
+#
+# Run this whenever new companies join the Nifty 500 universe and you
+# want their BSE codes added to the routine's to-do list.
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_backfill:
+        description: "Cap number of companies to backfill (0 = all). Useful for testing."
+        required: false
+        type: string
+        default: "0"
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90       # 3s throttle × 119 + cool-downs = up to ~60 min
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Install Playwright
+        run: |
+          npm install playwright@1 --no-save
+          npx playwright install --with-deps chromium
+
+      - name: Run BSE code backfill
+        # continue-on-error so even a partial run (cancelled / timed out)
+        # still hits the commit step and saves whatever progress the
+        # scraper checkpointed to disk.
+        continue-on-error: true
+        env:
+          SCREENER_EMAIL: ${{ secrets.SCREENER_EMAIL }}
+          SCREENER_PASSWORD: ${{ secrets.SCREENER_PASSWORD }}
+          MAX_BACKFILL: ${{ inputs.max_backfill || '0' }}
+        run: node screener-test/scrape-bse-codes-backfill.mjs
+
+      - name: Commit supplement file
+        if: always()    # commit even when the scrape step partially failed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add screener-test/static/bse-codes-supplement.json
+          if git diff --cached --quiet; then
+            echo "No new BSE codes to commit."
+            exit 0
+          fi
+          git commit -m "BSE codes backfill ($(date -u +%Y-%m-%d))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then break; fi
+            git fetch origin main
+            git rebase origin/main || { git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+
+      - name: Regenerate to-do list (chain doesn't fire from GITHUB_TOKEN pushes)
+        # GH Actions deliberately doesn't trigger workflow_run when a
+        # workflow's own GITHUB_TOKEN pushes a commit — security feature
+        # to prevent infinite loops. So we explicitly run the to-do
+        # generator here, otherwise the new BSE codes wouldn't get picked
+        # up until tomorrow's daily cron.
+        if: always()
+        run: node screener-test/build-auditor-todo.mjs
+
+      - name: Commit refreshed to-do list
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/auditor-todo.csv
+          if git diff --cached --quiet; then
+            echo "To-do list unchanged."
+            exit 0
+          fi
+          git commit -m "Refresh auditor to-do list (post-backfill, $(date -u +%Y-%m-%d))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then exit 0; fi
+            git fetch origin main
+            git rebase origin/main || { git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          exit 1

@@ -1,0 +1,83 @@
+name: Technicals source scrape (TradingView via Playwright)
+
+# Scrapes per-company technical indicators (RSI, MACD, ADX, MAs, etc.) from
+# TradingView using Playwright on the GitHub Actions runner — free vs the
+# ~$83/month Firecrawl tier the prior version needed.
+#
+# Falls back to OHLCV-calculated values in tech-scoring.js for any company
+# or indicator the source page doesn't expose.
+
+on:
+  workflow_dispatch:
+    inputs:
+      batch_size:
+        description: "Companies to scrape this run. Leave 0 (default) = all NSE-listed companies in the current universe. Use a small number only for testing."
+        required: false
+        default: "0"
+      force_refresh:
+        description: "Wipe technicals-source.json before starting (re-scrape everything)"
+        required: false
+        type: boolean
+        default: false
+  schedule:
+    # 02:15 UTC = 07:45 IST — after revenue-mix TODO regen + Yahoo OHLCV scrape.
+    # Daily run processes the FULL universe (BATCH_SIZE=0) so any company
+    # added to screener-companies.json overnight gets scraped the next day.
+    # Resume mechanic skips already-fresh entries, so steady-state runs
+    # only do new + stale companies — usually a few minutes wall-clock.
+    - cron: "15 2 * * *"
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    # ~10s per company × 504 ≈ 84 min; bump to 150 with headroom for slow
+    # pages + resume-on-rerun if a single run still gets cut short.
+    timeout-minutes: 150
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Install Playwright
+        run: |
+          npm install playwright@1 --no-save
+          npx playwright install --with-deps chromium
+
+      - name: Force-refresh — wipe existing output before scraping
+        if: ${{ inputs.force_refresh == true }}
+        run: |
+          rm -f public/data/technicals-source.json
+          echo "Wiped technicals-source.json; this run will re-scrape every company."
+
+      - name: Run technicals source scraper
+        continue-on-error: true
+        env:
+          # 0 = no limit (scrape every NSE-listed company in screener-companies.json).
+          # The resume mechanic skips entries scraped in the last 18h, so a daily
+          # cron with BATCH_SIZE=0 only does new + stale companies on most runs.
+          TECHNICALS_SOURCE_BATCH: ${{ inputs.batch_size || '0' }}
+          TECHNICALS_SOURCE_THROTTLE: "1500"
+          TECHNICALS_SOURCE_TIMEOUT: "30000"
+        run: node screener-test/scrape-technicals-source.mjs
+
+      - name: Commit refreshed technicals-source.json
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/technicals-source.json
+          if git diff --cached --quiet; then
+            echo "No technicals-source changes to commit."
+            exit 0
+          fi
+          git commit -m "Technicals source refresh ($(date -u +%Y-%m-%d))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then exit 0; fi
+            git fetch origin main
+            git rebase origin/main || { git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          exit 1

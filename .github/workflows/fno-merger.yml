@@ -1,0 +1,55 @@
+name: F&O list merger (routine output → fno-stocks)
+
+# Triggers when the weekly fno-list-refresh Claude.ai routine pushes a new
+# public/data/weekly-fno-refresh.json (via PR-merge to main). Validates the
+# ticker list (count bounds, format, freshness, churn cap) and merges
+# accepted updates into screener-test/static/fno-stocks.json — the
+# production list the Liquidity `fno` rule reads from.
+#
+# Refreshes that fail validation are SILENTLY PRESERVED (existing list kept)
+# so a bad routine run can't blow away good data.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'public/data/weekly-fno-refresh.json'
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Run F&O list merger
+        run: node screener-test/merge-fno-list.mjs
+
+      - name: Commit merged fno-stocks.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add screener-test/static/fno-stocks.json
+          if git diff --cached --quiet; then
+            echo "No F&O list changes after merge."
+            exit 0
+          fi
+          git commit -m "Auto-merge routine F&O list refresh ($(date -u +%Y-%m-%d))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              echo "Push succeeded on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — rebasing onto fresh main..."
+            git fetch origin main
+            git rebase origin/main || { echo "Rebase failed — aborting."; git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          echo "Push still failing after 4 attempts."
+          exit 1

@@ -1,0 +1,143 @@
+name: Weekly refresh (fundamentals + PLI/Renewable)
+
+# Fundamentals (Screener.in via Playwright) + PLI / Renewable lists
+# (DPIIT / MNRE / PIB via Firecrawl) run together once a week on Sunday
+# night IST. Reason for the weekly cadence: Screener.in fundamentals
+# (P&L ratios, shareholding, auditor remarks) are quarterly/annual
+# numbers that simply don't move day-to-day — daily scraping was
+# burning ~50 min of CI a day for stale data. PLI / Renewable
+# beneficiary lists also change slowly.
+#
+# Governance flags moved OUT of this workflow and INTO daily-refresh
+# (the news-driven sources need daily cadence to surface high-profile
+# SEBI announcements within 24h instead of waiting for Sunday).
+#
+# Schedule rationale:
+# - Sunday 18:23 UTC == Sunday 23:53 IST (late Sun night IST).
+# - Picked Sunday-late instead of Monday-morning so the fresh
+#   fundamentals.json is committed before Monday's daily-refresh
+#   (which fires at 05:53 IST) — Monday's daily then picks up the
+#   week-fresh data immediately when it commits Technicals/Macro.
+# - Off the :00/:15/:30/:45 boundaries to dodge GitHub's cron queue
+#   contention windows.
+#
+# Total runtime budget: ~55 min (Fundamentals ~50, Governance ~3).
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "Screener saved-screen URL"
+        required: true
+        type: string
+        default: "https://www.screener.in/screens/3675531/fundareal-klp-final/"
+      max_companies:
+        description: "How many companies to scrape (0 = all)"
+        required: false
+        type: string
+        default: "0"
+      max_pages:
+        description: "Safety cap on screen pages to read"
+        required: false
+        type: string
+        default: "30"
+      start_at:
+        description: "Resume index for fundamentals (0 = start from the first company)"
+        required: false
+        type: string
+        default: "0"
+  schedule:
+    - cron: "23 18 * * 0"
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Install dependencies (Playwright + cheerio)
+        run: |
+          npm install playwright@1 cheerio@1 --no-save
+          npx playwright install --with-deps chromium
+
+      # ---- 1. Fundamentals (Screener.in) — the slow one (~50 min) ----
+      - name: Run fundamentals scraper
+        env:
+          SCREENER_EMAIL: ${{ secrets.SCREENER_EMAIL }}
+          SCREENER_PASSWORD: ${{ secrets.SCREENER_PASSWORD }}
+          SCREEN_URL: ${{ inputs.url || 'https://www.screener.in/screens/3675531/fundareal-klp-final/' }}
+          MAX_COMPANIES: ${{ inputs.max_companies || '0' }}
+          MAX_PAGES: ${{ inputs.max_pages || '30' }}
+          START_AT: ${{ inputs.start_at || '0' }}
+        run: node screener-test/scrape.mjs
+
+      - name: Sync fundamentals into public/data
+        run: |
+          mkdir -p public/data
+          cp screener-test/output/screener-companies.csv public/data/
+          cp screener-test/output/screener-companies.json public/data/
+          cp screener-test/output/metadata.json public/data/
+
+      # ---- 2. PLI + Renewable lists (DPIIT / MNRE / PIB via Firecrawl) — ~3 min, non-fatal ----
+      # Beneficiary lists for the Macro/Sector pillar. Used to be on a
+      # quarterly cron — moved here because (a) the underlying schemes
+      # update mid-quarter often enough to matter, (b) refreshing in
+      # the same workflow as fundamentals + governance means one place
+      # to monitor for "the slow weekly stuff".
+      - name: Run PLI + Renewable list refresh
+        continue-on-error: true
+        env:
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+        run: node screener-test/scrape-pli-renewable-refresh.mjs
+
+      # ---- Artifacts ----
+      - name: Upload weekly artifacts
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: weekly-refresh-data
+          path: |
+            public/data/screener-companies.csv
+            public/data/screener-companies.json
+            public/data/metadata.json
+            public/data/pli-renewable-refresh-status.json
+            screener-test/static/macro-context.json
+          if-no-files-found: warn
+
+      # ---- One commit, one push ----
+      - name: Commit refreshed data to main
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/screener-companies.csv public/data/screener-companies.json public/data/metadata.json
+          [ -f public/data/pli-renewable-refresh-status.json ] && git add public/data/pli-renewable-refresh-status.json || true
+          # macro-context.json holds the curated PLI + Renewable beneficiary lists
+          # that the Macro pillar reads from.
+          [ -f screener-test/static/macro-context.json ] && git add screener-test/static/macro-context.json || true
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
+            exit 0
+          fi
+          git commit -m "Weekly refresh ($(date -u +%Y-%m-%d))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              echo "Push succeeded on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — fetching + rebasing onto fresh main..."
+            git fetch origin main
+            git rebase origin/main || { echo "Rebase failed — aborting."; git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          echo "Push still failing after 4 attempts."
+          exit 1

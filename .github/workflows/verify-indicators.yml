@@ -1,0 +1,74 @@
+name: Verify indicators math
+
+on:
+  workflow_dispatch:
+  # Chain off Technicals scrape — every time we recompute, we re-verify.
+  workflow_run:
+    workflows: ["Technicals scrape"]
+    types: [completed]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # Skip when triggered by a failed upstream run
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Install verification library
+        run: npm install technicalindicators@3 --no-save
+
+      - name: Run verifier
+        id: verify
+        continue-on-error: true
+        run: node screener-test/verify-indicators.mjs
+
+      - name: Upload debug log
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: verify-debug
+          path: public/data/verify-debug.log
+          if-no-files-found: warn
+
+      - name: Commit debug log on failure
+        if: steps.verify.outcome == 'failure' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p _debug
+          TS=$(date -u +%Y%m%d-%H%M%S)
+          OUT="_debug/verify-debug-${TS}.log"
+          if [ -f public/data/verify-debug.log ]; then
+            cp public/data/verify-debug.log "$OUT"
+            echo "" >> "$OUT"
+            echo "=== Workflow context ===" >> "$OUT"
+            echo "Run: $GITHUB_RUN_ID" >> "$OUT"
+            echo "Job: $GITHUB_JOB" >> "$OUT"
+            echo "SHA: $GITHUB_SHA" >> "$OUT"
+          else
+            echo "verify-debug.log was never written — script crashed at/before the log helper or could not write to disk." > "$OUT"
+            echo "Run: $GITHUB_RUN_ID Job: $GITHUB_JOB SHA: $GITHUB_SHA" >> "$OUT"
+            echo "node_modules contents:" >> "$OUT"
+            ls -la node_modules/technicalindicators/ 2>&1 | head -20 >> "$OUT" || echo "no technicalindicators dir" >> "$OUT"
+          fi
+          git add _debug/
+          git commit -m "Verify debug ($TS)"
+          for i in 1 2 3; do
+            if git push origin HEAD:main; then break; fi
+            git fetch origin main && git rebase origin/main || git rebase --abort
+            sleep 2
+          done
+
+      - name: Re-fail if verifier failed
+        if: steps.verify.outcome == 'failure'
+        run: exit 1

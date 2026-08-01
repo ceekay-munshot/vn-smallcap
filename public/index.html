@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VN Smallcap Screener · Fundamentals + Technicals</title>
+    <meta name="description" content="Fundamentals and technicals scoring dashboard for the Rs 2,000-12,500 Cr NSE universe." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+    <style>
+      :root {
+        font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      }
+      body {
+        font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        background:
+          radial-gradient(at 0% 0%, rgba(167, 139, 250, 0.12) 0px, transparent 50%),
+          radial-gradient(at 100% 0%, rgba(244, 114, 182, 0.10) 0px, transparent 50%),
+          radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.10) 0px, transparent 50%),
+          #f8fafc;
+        min-height: 100vh;
+      }
+      .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; }
+      /* Tabular numerals — every number-bearing cell uses fixed-width digits so columns visually line up */
+      table tbody td, table thead th, .stat-card, .stat-num, [data-numeric] { font-variant-numeric: tabular-nums; }
+      .scrollbar-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+      .scrollbar-thin::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+      .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+      .drill-panel { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+      #modal-overlay.is-open { display: flex; }
+      #modal-overlay.is-open #modal-container { opacity: 1; transform: scale(1); }
+      @keyframes fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+      .fade-in { animation: fade-in 0.4s ease-out both; }
+      table thead th[data-sort] { cursor: pointer; user-select: none; }
+      table thead th[data-sort]:hover { color: #4f46e5; }
+      /* Hide the default <details> triangle so summary chips look clean */
+      .meta-details > summary::-webkit-details-marker { display: none; }
+      .meta-details > summary { list-style: none; }
+      .meta-details > summary::marker { content: ""; }
+
+      /* ---------------- Print stylesheet — "Export PDF" button on
+         the SPIP Basket tab triggers window.print() and lets the user
+         save as PDF from the browser dialog. We hide nav, controls,
+         scrollbars, and the modal layer; keep the header strip + top
+         cards + table so the printout reads like a hand-out. */
+      @media print {
+        @page { size: A4; margin: 12mm; }
+        html, body {
+          background: #ffffff !important;
+          color: #0f172a !important;
+        }
+        body > header, nav, #modal-overlay, #drill-panel, #drill-overlay,
+        details, .print-hide, #export-btn, .tab-btn,
+        #score-filter, #search {
+          display: none !important;
+        }
+        .print-only { display: block !important; }
+        main { padding: 0 !important; max-width: 100% !important; }
+        section { break-inside: avoid; page-break-inside: avoid; }
+        .print-cover {
+          break-after: page;
+          page-break-after: always;
+        }
+        a { color: inherit !important; text-decoration: none !important; }
+        /* Force gradients to render in print (Chrome/Safari) */
+        * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        /* Top-cards grid: shrink the gap so more fits per page */
+        #top-cards { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px !important; }
+        .top-card { box-shadow: none !important; border: 1px solid #cbd5e1 !important; }
+        /* Hide search/filter controls row entirely */
+        #top-cards-title + * { display: none; }
+      }
+      .print-only { display: none; }
+
+      /* Tab nav — unmistakable active indicator. The bottom border
+         draws a thick indigo underline for the active tab; inactive
+         tabs get a faint hover background. Animated via a left/right
+         scale so it feels intentional. */
+      .tab-btn { position: relative; }
+      .tab-btn::after {
+        content: "";
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        bottom: -1px;
+        height: 3px;
+        border-radius: 3px 3px 0 0;
+        background: linear-gradient(90deg, #6366f1, #a855f7);
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .tab-btn.is-active::after { transform: scaleX(1); }
+      .tab-btn.is-active {
+        background: linear-gradient(180deg, transparent 60%, rgba(99, 102, 241, 0.05) 100%);
+      }
+    </style>
+  </head>
+  <body class="text-slate-800">
+
+    <!-- HEADER -->
+    <header class="max-w-7xl mx-auto px-6 pt-8 pb-4">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-extrabold text-lg shadow-lg">
+            VN
+          </div>
+          <div>
+            <h1 class="font-display font-extrabold text-2xl text-slate-900 leading-tight">VN Smallcap Screener</h1>
+            <p class="text-sm text-slate-500">Multi-screen scoring · ₹2,000–12,500 Cr universe</p>
+          </div>
+        </div>
+
+        <!-- GLOBAL SEARCH — typeaheads across the full universe; selecting
+             a company opens the composite drill so every pillar's data
+             appears in one place (no tab-switching). -->
+        <div class="flex-1 max-w-xl mx-auto w-full sm:px-4 relative">
+          <div class="relative">
+            <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>
+            </svg>
+            <input id="global-search" type="text" autocomplete="off" placeholder="Search any company — Reliance, ITC, HDFC…"
+              class="w-full pl-10 pr-14 py-2.5 bg-white text-sm text-slate-800 ring-1 ring-slate-200 rounded-xl shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-shadow"/>
+            <kbd id="global-search-kbd" class="absolute right-3 top-1/2 -translate-y-1/2 hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-semibold text-slate-400 bg-slate-100 rounded ring-1 ring-slate-200 pointer-events-none">⌘K</kbd>
+          </div>
+          <div id="global-search-results" class="hidden absolute top-full left-0 right-0 sm:left-4 sm:right-4 mt-2 bg-white rounded-xl shadow-2xl ring-1 ring-slate-200 max-h-[420px] overflow-y-auto z-50"></div>
+        </div>
+
+        <div class="flex items-center gap-2 text-xs text-slate-500 flex-shrink-0">
+          <button id="sources-btn" type="button" title="See all data sources used in this dashboard" class="flex items-center gap-1.5 px-3 py-1.5 bg-white/70 ring-1 ring-slate-200 rounded-full hover:bg-indigo-50 hover:ring-indigo-200 hover:text-indigo-700 transition-colors">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+            <span class="font-medium">Sources</span>
+          </button>
+          <div class="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 ring-1 ring-emerald-100 rounded-full">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="font-medium text-emerald-700">Live</span>
+          </div>
+          <div class="px-3 py-1.5 bg-white/70 ring-1 ring-slate-200 rounded-full">
+            Updated <span id="meta-updated" class="font-semibold text-slate-700">—</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- TABS -->
+    <nav class="max-w-7xl mx-auto px-6">
+      <div class="flex items-center gap-1 border-b border-slate-200">
+        <button data-tab="fundamentals" class="tab-btn px-4 py-2.5 font-semibold text-sm text-indigo-600 border-b-2 border-transparent -mb-px transition-colors">
+          Fundamentals
+        </button>
+        <button data-tab="technicals" class="tab-btn px-4 py-2.5 font-semibold text-sm text-slate-500 hover:text-slate-700 border-b-2 border-transparent -mb-px transition-colors">
+          Technicals
+        </button>
+        <button data-tab="macro" class="tab-btn px-4 py-2.5 font-semibold text-sm text-slate-500 hover:text-slate-700 border-b-2 border-transparent -mb-px transition-colors">
+          Macro
+        </button>
+        <button data-tab="sentiment" class="tab-btn px-4 py-2.5 font-semibold text-sm text-slate-500 hover:text-slate-700 border-b-2 border-transparent -mb-px transition-colors">
+          Sentiment &amp; Liquidity
+        </button>
+        <button data-tab="composite" class="tab-btn px-4 py-2.5 font-semibold text-sm text-slate-500 hover:text-slate-700 border-b-2 border-transparent -mb-px transition-colors">
+          SPIP Basket
+        </button>
+        <button data-tab="active" class="tab-btn px-4 py-2.5 font-semibold text-sm text-slate-500 hover:text-slate-700 border-b-2 border-transparent -mb-px transition-colors">
+          Strategy
+        </button>
+        <button data-tab="custom" class="tab-btn px-4 py-2.5 font-semibold text-sm text-slate-500 hover:text-slate-700 border-b-2 border-transparent -mb-px transition-colors">
+          Backtesting
+        </button>
+      </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 py-6 fade-in">
+
+      <!-- HERO STATS -->
+      <section class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+        <div class="bg-white rounded-2xl p-4 shadow-sm ring-1 ring-slate-100">
+          <div class="text-xs text-slate-500 font-medium uppercase tracking-wider">Universe</div>
+          <div class="text-2xl font-bold text-slate-900 mt-1" id="meta-count">—</div>
+          <div class="text-xs text-slate-500 mt-0.5" id="meta-source">—</div>
+        </div>
+        <div class="bg-white rounded-2xl p-4 shadow-sm ring-1 ring-slate-100 relative">
+          <div class="flex items-start justify-between">
+            <div class="text-xs text-slate-500 font-medium uppercase tracking-wider">Scoring Method</div>
+            <button id="help-btn" class="w-5 h-5 rounded-full bg-indigo-50 hover:bg-indigo-100 ring-1 ring-indigo-200 hover:ring-indigo-300 text-indigo-600 hover:text-indigo-700 text-[11px] font-bold flex items-center justify-center transition-colors" title="See how scoring works on this tab">?</button>
+          </div>
+          <div class="text-2xl font-bold text-slate-900 mt-1" id="stat-rules">—</div>
+          <div class="text-xs text-slate-500 mt-0.5" id="stat-rules-note">Active rules</div>
+        </div>
+        <div id="stat-max-card" class="bg-white rounded-2xl p-4 shadow-sm ring-1 ring-slate-100">
+          <div class="text-xs text-slate-500 font-medium uppercase tracking-wider" id="stat-max-label">Max Score</div>
+          <div class="text-2xl font-bold text-slate-900 mt-1" id="stat-max">—</div>
+          <div class="text-xs text-slate-500 mt-0.5" id="stat-max-note">—</div>
+        </div>
+        <div id="refresh-card" class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-2xl p-4 shadow-lg text-white">
+          <div class="text-xs font-medium uppercase tracking-wider opacity-90">Last Refresh</div>
+          <div class="text-2xl font-bold mt-1" id="refresh-ago">—</div>
+          <div class="text-xs opacity-90 mt-0.5" id="refresh-source">06:00 IST · auto-scheduled</div>
+        </div>
+      </section>
+
+      <!-- TOP 10 -->
+      <section class="mb-8">
+        <div class="flex items-center justify-between mb-3">
+          <h2 id="top-cards-title" class="font-display font-bold text-lg text-slate-900 flex items-center gap-2">
+            <span class="text-amber-500">🏆</span> Top 10 by Score
+          </h2>
+        </div>
+        <div id="top-cards" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"></div>
+      </section>
+
+      <!-- DEFERRED PARAMETERS PANEL (collapsible) -->
+      <details id="deferred-panel" class="mb-6 bg-white rounded-2xl shadow-sm ring-1 ring-slate-100 overflow-hidden">
+        <summary class="cursor-pointer px-5 py-4 flex items-center justify-between hover:bg-slate-50">
+          <div class="flex items-center gap-3">
+            <div class="text-amber-500 text-lg">⚠</div>
+            <div>
+              <div id="deferred-summary" class="font-semibold text-slate-900 text-sm">— parameters pending data source</div>
+              <div class="text-xs text-slate-500">Not yet included in scoring · click to see why</div>
+            </div>
+          </div>
+          <div class="text-xs text-slate-400">expand ↓</div>
+        </summary>
+        <div id="deferred-list" class="px-5 pb-5 pt-1 space-y-2"></div>
+      </details>
+
+      <!-- TABLE CONTROLS -->
+      <section class="bg-white rounded-2xl shadow-sm ring-1 ring-slate-100 overflow-hidden">
+        <div class="p-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center gap-3">
+          <div class="flex-1 flex items-center gap-2">
+            <div class="relative flex-1 max-w-md">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
+              <input id="search" type="text" placeholder="Search company..." class="w-full pl-9 pr-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white" />
+            </div>
+            <select id="score-filter" class="px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white">
+              <option value="all">All scores</option>
+              <option value="excellent">Excellent (80%+)</option>
+              <option value="good">Good (60–80%)</option>
+              <option value="average">Average (40–60%)</option>
+              <option value="weak">Weak (&lt;40%)</option>
+              <option value="redflag">⚠ Red flag (fundamentals)</option>
+              <option value="belowtrend">Below trend / illiquid</option>
+            </select>
+            <button id="watch-toggle" type="button" class="inline-flex items-center gap-1.5 px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg hover:bg-amber-50 hover:border-amber-200 transition-colors" title="Show only watchlisted companies">
+              <span id="watch-star-icon" class="text-amber-400">☆</span>
+              <span>Watchlist</span>
+              <span id="watch-count" class="text-[10px] font-bold text-slate-500 bg-slate-200/70 rounded-full px-1.5 py-0.5 min-w-[18px] text-center">0</span>
+            </button>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="text-xs text-slate-500 hidden sm:block"><span id="row-count" class="font-semibold text-slate-700">—</span> shown</div>
+            <button id="top-picks-btn" type="button" class="hidden inline-flex items-center gap-2 px-4 py-2 text-white text-sm font-semibold rounded-lg shadow-sm hover:shadow transition-all bg-gradient-to-r from-emerald-500 via-amber-500 to-pink-500" title="See the top-scoring names as a highlight page">
+              <span>★</span> Top Picks
+            </button>
+            <button id="export-btn" class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-lg shadow-sm hover:shadow transition-all">
+              <span>📊</span> Export Excel
+            </button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto scrollbar-thin">
+          <table id="table" class="w-full text-sm">
+            <thead id="table-head" class="bg-slate-50/70 sticky top-0 z-10"></thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TOP PICKS — premium hero page rendered by renderTopPicks() in app.js -->
+      <section id="top-picks-section" class="hidden">
+        <div id="top-picks-content"></div>
+      </section>
+
+      <!-- HISTORY — rendered by renderHistory() in app.js; replaces the
+           old "coming soon" placeholder now that snapshots are wired. -->
+      <section id="history-section" class="hidden">
+        <div id="history-content"></div>
+      </section>
+
+      <!-- ACTIVE — daily-rebalancing basket backtest. Walks the snapshot
+           trail, simulates buying every STRONG BUY at today's close and
+           selling when it drops below STRONG BUY. Rendered by renderActive(). -->
+      <section id="active-section" class="hidden">
+        <div id="active-content"></div>
+      </section>
+
+      <section id="custom-section" class="hidden">
+        <div id="custom-content"></div>
+      </section>
+
+      <!-- LEGEND -->
+      <section class="mt-6 p-4 bg-white/60 rounded-2xl ring-1 ring-slate-100">
+        <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Legend</div>
+        <div class="flex flex-wrap gap-4 text-xs">
+          <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Pass</div>
+          <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Partial</div>
+          <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span> Fail</div>
+          <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-600"></span> Hard Fail (red flag)</div>
+          <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-300"></span> N/A — see drill-down for reason</div>
+          <div class="flex items-center gap-1.5"><span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-bold uppercase bg-rose-100 text-rose-700 ring-1 ring-rose-200">⚠ Red Flag</span> Fundamental problem (negative CFO, ICR &lt; 1.5, pledge &gt; 20%, D/E &gt; 2, auditor/governance)</div>
+          <div class="flex items-center gap-1.5"><span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-bold uppercase bg-slate-100 text-slate-500 ring-1 ring-slate-200">Below trend</span> Below 200-day average or thin liquidity — a market condition, not a company problem</div>
+        </div>
+      </section>
+
+      <footer class="mt-8 text-center text-[11px] text-slate-400">
+        VN Smallcap · AI research dashboard
+      </footer>
+    </main>
+
+    <!-- DRILL-DOWN PANEL (side-slide — for pillar tabs) -->
+    <div id="drill-overlay" class="fixed inset-0 bg-slate-900/30 hidden z-40 backdrop-blur-sm"></div>
+    <aside id="drill-panel" class="drill-panel fixed top-0 right-0 h-full w-full sm:w-[480px] bg-white shadow-2xl translate-x-full z-50 overflow-y-auto scrollbar-thin">
+      <div id="drill-content"></div>
+    </aside>
+
+    <!-- CENTRED MODAL — for SPIP Basket drill + Help modal -->
+    <div id="modal-overlay" class="fixed inset-0 bg-slate-900/60 hidden z-[60] backdrop-blur-sm items-center justify-center p-4 sm:p-8 overflow-y-auto">
+      <div id="modal-container" class="relative bg-white rounded-3xl shadow-2xl w-full max-w-4xl my-8 scale-95 opacity-0 transition-all duration-200 overflow-hidden">
+        <div id="modal-content"></div>
+      </div>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>

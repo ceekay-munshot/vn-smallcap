@@ -1,0 +1,57 @@
+name: Insider supplement merger (routine output → supplement file)
+
+# Triggers when the daily insider-refresh Claude.ai routine pushes a new
+# public/data/daily-insider-refresh.json (via PR-merge to main). Validates
+# each filing against sanity bounds and merges accepted disclosures into
+# public/data/insider-recent-supplement.json — a SUPPLEMENT to the
+# daily-regenerated insider-trades.json (so the daily NSE PIT scrape can't
+# wipe routine-captured filings).
+#
+# Pledge / Pledge Release filings are kept for dedupe but excluded from
+# buy/sell aggregates (matches the scoring rule's behaviour).
+
+on:
+  # Retired: muns.io (screener-test/scrape-insider-muns.mjs) now supplies
+  # recent + historical insider disclosures directly, so the BSE-routine
+  # supplement is redundant and merging it would double-count. Kept
+  # dispatch-only for archival; the auto-trigger on daily-insider-refresh.json
+  # pushes is removed so it can't re-populate the supplement file.
+  workflow_dispatch:
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Run insider supplement merger
+        run: node screener-test/merge-insider-supplement.mjs
+
+      - name: Commit merged insider-recent-supplement.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/insider-recent-supplement.json
+          if git diff --cached --quiet; then
+            echo "No insider supplement changes after merge."
+            exit 0
+          fi
+          git commit -m "Auto-merge routine insider supplement ($(date -u +%Y-%m-%d))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              echo "Push succeeded on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — rebasing onto fresh main..."
+            git fetch origin main
+            git rebase origin/main || { echo "Rebase failed — aborting."; git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          echo "Push still failing after 4 attempts."
+          exit 1

@@ -1,0 +1,56 @@
+name: Macro scrape
+
+on:
+  # Scheduled runs live in daily-refresh.yml. Kept here for manual reruns.
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Run macro scraper
+        run: node screener-test/scrape-macro.mjs
+
+      - name: Upload macro data (artifact)
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: macro-data
+          path: public/data/macro.json
+          if-no-files-found: warn
+
+      - name: Commit refreshed macro data
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/macro.json
+          [ -f public/data/fii-dii-history.json ] && git add public/data/fii-dii-history.json || true
+          if git diff --cached --quiet; then
+            echo "No macro changes to commit."
+            exit 0
+          fi
+          git commit -m "Daily macro refresh ($(date -u +%Y-%m-%d))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              echo "Push succeeded on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — fetching + rebasing onto fresh main..."
+            git fetch origin main
+            git rebase origin/main || { echo "Rebase failed — aborting."; git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          echo "Push still failing after 4 attempts."
+          exit 1

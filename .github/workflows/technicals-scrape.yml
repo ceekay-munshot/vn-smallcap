@@ -1,0 +1,56 @@
+name: Technicals scrape
+
+on:
+  # Scheduled runs live in daily-refresh.yml. Kept here for manual reruns.
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Run technicals scraper
+        run: node screener-test/scrape-technicals.mjs
+
+      - name: Upload technicals data (artifact)
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: technicals-data
+          path: public/data/technicals.json
+          if-no-files-found: warn
+
+      - name: Commit refreshed technicals to main
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/technicals.json
+          [ -f public/data/atr-history.json ] && git add public/data/atr-history.json || true
+          if git diff --cached --quiet; then
+            echo "No technicals changes to commit."
+            exit 0
+          fi
+          git commit -m "Daily technicals refresh ($(date -u +%Y-%m-%d))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              echo "Push succeeded on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — fetching + rebasing onto fresh main..."
+            git fetch origin main
+            git rebase origin/main || { echo "Rebase failed — aborting."; git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          echo "Push still failing after 4 attempts."
+          exit 1

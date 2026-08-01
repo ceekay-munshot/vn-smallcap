@@ -1,0 +1,59 @@
+name: Governance flags refresh (ad-hoc)
+
+# Manual-trigger-only workflow for the governance-flags scraper alone.
+# The weekly-refresh.yml workflow also runs this scrape (every Sunday
+# 23:53 IST) as part of the bundled slow-data refresh — but that's a
+# ~55 min run because it does Fundamentals + Governance + PLI together.
+# When you only need to re-pull governance flags ad-hoc (e.g. after
+# tightening the filter, after a high-profile SEBI announcement, or
+# to validate a curated-baseline edit), this workflow gives a ~3 min
+# turnaround.
+#
+# No cron — the weekly workflow already covers the scheduled cadence.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Run governance flags scraper
+        env:
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+        run: node screener-test/scrape-governance-flags.mjs
+
+      - name: Commit refreshed flags to main
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          [ -f public/data/governance-flags.json ] && git add public/data/governance-flags.json || true
+          if git diff --cached --quiet; then
+            echo "No governance-flags changes this run."
+            exit 0
+          fi
+          git commit -m "Governance flags refresh ($(date -u +%Y-%m-%d))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              echo "Push succeeded on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — fetching + rebasing onto fresh main..."
+            git fetch origin main
+            git rebase origin/main || { echo "Rebase failed — aborting."; git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          echo "Push still failing after 4 attempts."
+          exit 1

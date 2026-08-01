@@ -1,0 +1,80 @@
+name: Insider trades scrape (muns.io)
+
+on:
+  # Scheduled runs live in daily-refresh.yml. This manual entrypoint is for
+  # ad-hoc reruns and for probing the muns.io API shape via probe_ticker.
+  workflow_dispatch:
+    inputs:
+      tickers:
+        description: "Comma-separated tickers to refresh and MERGE into insider-trades.json (e.g. RELIANCE,TCS,INFY,HDFCBANK,ICICIBANK). Only these are touched; every other company is preserved. Leave blank for a full universe run."
+        required: false
+        type: string
+        default: ""
+      probe_ticker:
+        description: "Inspect ONE ticker only — dumps the raw API shape to insider-debug.json WITHOUT touching insider-trades.json. Takes precedence over `tickers` if both are set."
+        required: false
+        type: string
+        default: ""
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Run insider scraper (muns.io)
+        env:
+          MUNS_TOKEN: ${{ secrets.MUNS_TOKEN }}
+          MUNS_PROBE_TICKER: ${{ inputs.probe_ticker }}
+          MUNS_TICKERS: ${{ inputs.tickers }}
+        run: node screener-test/scrape-insider-muns.mjs
+
+      - name: Upload insider data (artifact)
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: insider-trades
+          path: |
+            public/data/insider-trades.json
+            public/data/insider-debug.json
+          if-no-files-found: warn
+
+      - name: Commit refreshed insider data
+        if: success() && github.ref == 'refs/heads/main'
+        env:
+          BATCH_TICKERS: ${{ inputs.tickers }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # A probe run only rewrites insider-debug.json; a full or batch run
+          # rewrites insider-trades.json. Stage whichever actually changed.
+          [ -f public/data/insider-trades.json ] && git add public/data/insider-trades.json || true
+          [ -f public/data/insider-debug.json ]  && git add public/data/insider-debug.json  || true
+          if git diff --cached --quiet; then
+            echo "No insider data changes to commit."
+            exit 0
+          fi
+          MSG="Insider scrape via muns.io ($(date -u +%Y-%m-%d))"
+          if [ -n "$BATCH_TICKERS" ]; then MSG="Insider refresh (muns.io): $BATCH_TICKERS ($(date -u +%Y-%m-%d))"; fi
+          git commit -m "$MSG"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              echo "Push succeeded on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — fetching + rebasing onto fresh main..."
+            git fetch origin main
+            git rebase origin/main || { echo "Rebase failed — aborting."; git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          echo "Push still failing after 4 attempts."
+          exit 1

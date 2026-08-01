@@ -1,0 +1,71 @@
+name: Auditor opinions refresh (Muns agent)
+
+# Runs after the daily CSV refresh completes — calls the Muns Auditor
+# Opinion agent in parallel batches (50 at a time) for every company
+# in the screener universe whose cached opinion is missing, errored,
+# or older than 30 days. Result lands in public/data/auditor-opinions.json.
+
+on:
+  workflow_run:
+    workflows: ["Daily refresh (all scrapers)"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      force_refresh:
+        description: "Force-refresh every company (ignore 30-day cache)"
+        required: false
+        default: "false"
+      max_companies:
+        description: "Cap on companies to refresh this run (0 = no cap)"
+        required: false
+        default: "0"
+
+jobs:
+  refresh:
+    # Only proceed if the triggering daily-refresh succeeded.
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Run auditor opinions scraper
+        env:
+          MUNS_ACCESS_TOKEN: ${{ secrets.MUNS_ACCESS_SECRET }}
+          FORCE_REFRESH: ${{ inputs.force_refresh || 'false' }}
+          MAX_COMPANIES: ${{ inputs.max_companies || '0' }}
+        run: node screener-test/scrape-auditor-opinions.mjs
+
+      - name: Commit refreshed opinions to main
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          [ -f public/data/auditor-opinions.json ] && git add public/data/auditor-opinions.json || true
+          if git diff --cached --quiet; then
+            echo "No auditor-opinions changes this run."
+            exit 0
+          fi
+          git commit -m "Auditor opinions refresh ($(date -u +%Y-%m-%d))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              echo "Push succeeded on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — fetching + rebasing onto fresh main..."
+            git fetch origin main
+            git rebase origin/main || { echo "Rebase failed — aborting."; git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          echo "Push still failing after 4 attempts."
+          exit 1

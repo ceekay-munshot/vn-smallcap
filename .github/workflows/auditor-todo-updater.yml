@@ -1,0 +1,60 @@
+name: Auditor to-do list updater
+
+# Regenerates public/data/auditor-todo.csv based on:
+#   - current universe (screener-companies.json)
+#   - existing opinions + their freshness (auditor-opinions.json)
+#   - BSE code supplement (bse-codes-supplement.json — backfilled separately)
+#
+# The Claude.ai weekly routine reads from this file (see routine prompt
+# in PR description). When new companies join the universe or an opinion
+# turns ~11 months old, this updater puts them on the to-do list — and
+# the routine picks them up on its next Sunday run.
+#
+# Runs after the daily-refresh + weekly-refresh + auditor-merger so the
+# to-do always reflects the latest universe + freshest opinion data.
+
+on:
+  schedule:
+    # 01:30 UTC == 07:00 IST every day. After daily-refresh (00:23 UTC)
+    # and any chained workflows finish.
+    - cron: "30 1 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'public/data/screener-companies.json'
+      - 'public/data/auditor-opinions.json'
+      - 'screener-test/static/bse-codes-supplement.json'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Build to-do list
+        run: node screener-test/build-auditor-todo.mjs
+
+      - name: Commit refreshed to-do list
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/auditor-todo.csv
+          if git diff --cached --quiet; then
+            echo "To-do list unchanged."
+            exit 0
+          fi
+          git commit -m "Refresh auditor to-do list ($(date -u +%Y-%m-%d))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then exit 0; fi
+            git fetch origin main
+            git rebase origin/main || { git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          exit 1
