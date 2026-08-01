@@ -1,7 +1,5 @@
 import * as fund from "./scoring.js";
 import * as tech from "./tech-scoring.js";
-import * as macro from "./macro-scoring.js";
-import * as senliq from "./sentiment-liquidity-scoring.js";
 import * as composite from "./composite-scoring.js";
 import { META as RULE_META } from "./rule-meta.js";
 import { exportToExcel as exportToExcelNew } from "./excel-export.js";
@@ -171,7 +169,7 @@ const CONFIGS = {
 // rather than the full five, so a zero-weighted pillar disappears from the
 // sliders, the mini bars and the radar instead of rendering as a dead 0.
 function livePillars(w) {
-  const ALL = ["fundamentals", "technicals", "macro", "sentiment", "liquidity"];
+  const ALL = Object.keys(composite.PILLAR_WEIGHTS);
   const src = w || (typeof state !== "undefined" && state.pillarWeights) || composite.PILLAR_WEIGHTS;
   const live = ALL.filter((k) => (src[k] || 0) > 0);
   return live.length ? live : ALL;      // never render an empty control
@@ -191,14 +189,11 @@ function loadPillarWeights() {
     if (stored && typeof stored === "object") {
       // Sanity-clamp + sum normalisation guard so a corrupted value
       // can't silently break composite scoring.
-      const w = {
-        fundamentals: Math.max(0, Math.min(100, Number(stored.fundamentals) || 0)),
-        technicals:   Math.max(0, Math.min(100, Number(stored.technicals)   || 0)),
-        macro:        Math.max(0, Math.min(100, Number(stored.macro)        || 0)),
-        sentiment:    Math.max(0, Math.min(100, Number(stored.sentiment)    || 0)),
-        liquidity:    Math.max(0, Math.min(100, Number(stored.liquidity)    || 0)),
-      };
-      const sum = w.fundamentals + w.technicals + w.macro + w.sentiment + w.liquidity;
+      const w = {};
+      for (const k of Object.keys(composite.PILLAR_WEIGHTS)) {
+        w[k] = Math.max(0, Math.min(100, Number(stored[k]) || 0));
+      }
+      const sum = Object.values(w).reduce((a, b) => a + b, 0);
       if (sum >= 95 && sum <= 105) return w; // accept ±5 tolerance
     }
   } catch {}
@@ -215,10 +210,10 @@ const LAB_WEIGHTS_KEY = "klpdash-lab-weights-v1";
 function loadLabWeights() {
   try {
     const s = JSON.parse(localStorage.getItem(LAB_WEIGHTS_KEY) || "null");
-    if (s && ["fundamentals", "technicals", "macro", "sentiment", "liquidity"].every((k) => typeof s[k] === "number")) {
+    if (s && Object.keys(composite.PILLAR_WEIGHTS).every((k) => typeof s[k] === "number")) {
       // Migrate mixes saved before the sum-to-100 cap (old sliders let each
       // pillar reach 100 independently) so a restored total never exceeds 100.
-      const total = s.fundamentals + s.technicals + s.macro + s.sentiment + s.liquidity;
+      const total = Object.keys(composite.PILLAR_WEIGHTS).reduce((a, k) => a + (s[k] || 0), 0);
       return total > 100 ? normalizeWeights(s) : s;
     }
   } catch {}
@@ -1159,7 +1154,7 @@ function renderCompositeTopCards() {
   // with a small "Adjust" button. Full editor lives in a modal so the
   // AI basket header stays clean.
   const w = state.pillarWeights;
-  const isDefaultWeights = ["fundamentals","technicals","macro","sentiment","liquidity"]
+  const isDefaultWeights = Object.keys(composite.PILLAR_WEIGHTS)
     .every((k) => w[k] === composite.PILLAR_WEIGHTS[k]);
   const pillarWeightPill = `
     <button id="pillar-weight-btn" type="button" class="inline-flex items-center gap-2 px-3 py-1.5 text-xs rounded-full bg-white ring-1 ring-slate-200 hover:ring-indigo-300 hover:bg-indigo-50 transition shadow-sm">
@@ -1307,7 +1302,7 @@ function renderCompositeTopCards() {
 // Pillar Weights modal — invoked from the AI basket header pill.
 function openPillarWeightsModal() {
   const w = state.pillarWeights;
-  const isDefault = ["fundamentals","technicals","macro","sentiment","liquidity"]
+  const isDefault = Object.keys(composite.PILLAR_WEIGHTS)
     .every((k) => w[k] === composite.PILLAR_WEIGHTS[k]);
   openModal(`
     <div class="px-7 py-6">
@@ -1375,7 +1370,7 @@ function openPillarWeightsModal() {
   $("#pillar-weight-apply")?.addEventListener("click", () => {
     const next = { ...composite.PILLAR_WEIGHTS };   // base on the real defaults, not a frozen copy
     inputs.forEach((el) => { next[el.dataset.weightKey] = Math.max(0, Math.min(100, Number(el.value) || 0)); });
-    const s = next.fundamentals + next.technicals + next.macro + next.sentiment + next.liquidity;
+    const s = Object.values(next).reduce((a, b) => a + b, 0);
     if (s > 0 && s !== 100) {
       const k = 100 / s;
       for (const key of Object.keys(next)) next[key] = Math.round(next[key] * k);
@@ -8615,8 +8610,6 @@ async function exportToExcel() {
     const pillarSpecs = [
       { tag: "fundamentals", rules: fund.ACTIVE_RULES,   prKey: "fund"   },
       { tag: "technicals",   rules: tech.ACTIVE_RULES,   prKey: "tech"   },
-      { tag: "macro",        rules: macro.ACTIVE_RULES,  prKey: "macro"  },
-      { tag: "sentiment",    rules: senliq.ACTIVE_RULES, prKey: "senliq" },
     ];
     const allRules = [];
     for (const p of pillarSpecs) {

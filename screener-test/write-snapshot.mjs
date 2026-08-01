@@ -95,13 +95,10 @@ async function run() {
     // composite deltas day-over-day. pct = 0..100, weighted = contribution
     // to the 100-point composite (sum of all five = composite).
     const p = s.pillars || {};
-    const pillars = {
-      fundamentals: leanPillar(p.fundamentals),
-      technicals:   leanPillar(p.technicals),
-      macro:        leanPillar(p.macro),
-      sentiment:    leanPillar(p.sentiment),
-      liquidity:    leanPillar(p.liquidity),
-    };
+    // Keyed off PILLAR_WEIGHTS so a pillar that is removed from the model
+    // stops appearing in the snapshot as a permanent null column.
+    const pillars = {};
+    for (const k of Object.keys(PILLAR_WEIGHTS)) pillars[k] = leanPillar(p[k]);
 
     // Per-indicator raw values — lets the Custom Lab's tweakable
     // parameter filters (RSI ≥ 65, within 5% of high, Beta 0.7–1.3…)

@@ -23,14 +23,37 @@
 
 import * as fund from "./scoring.js";
 import * as tech from "./tech-scoring.js";
-import * as macro from "./macro-scoring.js";
-import * as senliq from "./sentiment-liquidity-scoring.js";
 
 // Hard-fail rule labels that are TREND / TRADABILITY filters, not company
 // red flags. A stock trips these because of where the market is right now
 // (below its 200-day average) or how thinly it trades — both flip back as
 // conditions change, so the UI shows them apart from fundamental red flags.
 const FILTER_HARD_FAILS = ["Price Above 200 DMA", "Avg Daily Traded Value"];
+
+// Tradability floor, in Rs crore of 20-day average traded value.
+//
+// This used to live in sentiment-liquidity-scoring.js as ruleADTV. That
+// module is gone with the Liquidity pillar, but the GATE has to survive it:
+// a pick you cannot enter or exit at anything near the recorded price is not
+// a real pick, and its backtested return is fiction. Deleting the module
+// without relocating this would have removed the only liquidity protection
+// silently -- no error, just a basket that quietly starts admitting names
+// that trade a few lakh a day.
+//
+// Re-banded from the original Rs 5 Cr, which was calibrated on Nifty 500 and
+// far too strict for a Rs 2,000-12,500 Cr universe. Measured on the live
+// universe: 23 of 701 (3.3%) fall below Rs 1 Cr, against 170 (24.3%) below
+// Rs 5 Cr. Raise it if too many thin names start surviving.
+export const ADTV_HARD_FAIL_CR = 1;
+const ADTV_LABEL = "Avg Daily Traded Value";
+
+// Returns the hard-fail label when a stock is too thin to trade, else null.
+// Unknown ADTV is NOT a fail -- absent data must not read as illiquid.
+function adtvGate(techCo) {
+  const adtv = techCo?.adtv_20d_cr;
+  if (adtv == null || !Number.isFinite(adtv)) return null;
+  return adtv < ADTV_HARD_FAIL_CR ? ADTV_LABEL : null;
+}
 
 // Two live pillars. Macro / Sentiment / Liquidity are held at 0 rather
 // than deleted: weighted() short-circuits on max === 0, and keeping the
@@ -39,17 +62,13 @@ const FILTER_HARD_FAILS = ["Price Above 200 DMA", "Avg Daily Traded Value"];
 export const PILLAR_WEIGHTS = {
   fundamentals: 30,
   technicals: 70,
-  macro: 0,
-  sentiment: 0,
-  liquidity: 0,
 };
 
+// Display fallback only — real maxima come from each module's ACTIVE_RULES
+// at runtime, so removing a rule rebases the percentage automatically.
 export const PILLAR_MAX_RAW = {
-  fundamentals: 29,
+  fundamentals: 27,
   technicals: 24,
-  macro: 17,
-  sentiment: 6,
-  liquidity: 6,
 };
 
 export function ratingFromComposite(composite, hardFailed) {
@@ -141,19 +160,6 @@ export function decisionFor(rating) {
   }
 }
 
-// Split the senliq breakdown into Sentiment vs Liquidity sub-pillars
-// (they live in the same module but have separate weights per spec).
-function splitSenliq(senliqResult) {
-  const sent = senliqResult.breakdown.filter((b) => b.category === "Sentiment");
-  const liq  = senliqResult.breakdown.filter((b) => b.category === "Liquidity");
-  const sumP = (rs) => rs.reduce((s, r) => s + (r.points || 0), 0);
-  const sumM = (rs) => rs.reduce((s, r) => s + (r.max    || 0), 0);
-  return {
-    sentiment: { points: sumP(sent), max: sumM(sent), breakdown: sent },
-    liquidity: { points: sumP(liq),  max: sumM(liq),  breakdown: liq },
-  };
-}
-
 // Weighted contribution of one pillar (handles 0/0 → 0 safely).
 function weighted(points, max, weightPct) {
   if (!max) return 0;
@@ -164,21 +170,18 @@ function weighted(points, max, weightPct) {
 //   fundCo  - row from screener-companies.json (Fundamentals + Macro)
 //   techCo  - matching row from technicals.json (Technicals + Senliq)
 //             may be null if Yahoo OHLCV was missing for this ticker
-//   macroCtx - parsed macro.json (live VIX, sentiment, sector themes)
+//   macroCtx - unused; retained so existing call sites keep working
 //   weights  - optional override of PILLAR_WEIGHTS (lets the SPIP basket
 //              tab re-score with client-adjusted weights without changing
 //              the framework constants)
 export function scoreCompositeOne(fundCo, techCo, macroCtx, weights = PILLAR_WEIGHTS) {
-  const fundResult  = fund.scoreCompany(fundCo);
-  const macroResult = macro.scoreCompany({ ...fundCo, _macro: macroCtx });
+  const fundResult = fund.scoreCompany(fundCo);
 
-  // Technicals + Senliq need techCo. If we don't have OHLCV, return
-  // an explicit "data missing" state rather than zero-scoring those
-  // pillars (which would unfairly penalise the stock).
+  // Technicals needs techCo. Without OHLCV, return an explicit "data
+  // missing" state rather than zero-scoring the pillar, which would
+  // unfairly penalise the stock.
   const hasTechData = techCo && techCo.cmp != null;
-  const techResult   = hasTechData ? tech.scoreCompany(techCo) : null;
-  const senliqResult = hasTechData ? senliq.scoreCompany({ ...techCo, _macro: macroCtx }) : null;
-  const split        = senliqResult ? splitSenliq(senliqResult) : null;
+  const techResult = hasTechData ? tech.scoreCompany(techCo) : null;
 
   // Collect all hard fails from every pillar, then split them into two very
   // different kinds so the UI can stop lumping them together:
@@ -187,10 +190,11 @@ export function scoreCompositeOne(fundCo, techCo, macroCtx, weights = PILLAR_WEI
   //  - FILTER flags = a temporary market condition, not a company problem:
   //    below the 200-day trend, or too thinly traded. These flip back as the
   //    stock/market moves, so they shouldn't read as scary red flags.
+  const adtvFail = hasTechData ? adtvGate(techCo) : null;
   const allHardFails = [
     ...(fundResult.hardFails || []),
     ...(techResult?.hardFails || []),
-    ...(senliqResult?.hardFails || []),
+    ...(adtvFail ? [adtvFail] : []),
   ];
   const filterFlags = allHardFails.filter((l) => FILTER_HARD_FAILS.includes(l));
   const fundamentalFlags = allHardFails.filter((l) => !FILTER_HARD_FAILS.includes(l));
@@ -208,32 +212,13 @@ export function scoreCompositeOne(fundCo, techCo, macroCtx, weights = PILLAR_WEI
       pct: techResult.scorePct,
       weighted: weighted(techResult.totalPoints, techResult.totalMax, weights.technicals),
     } : { raw: null, max: PILLAR_MAX_RAW.technicals, pct: null, weighted: null },
-    macro: {
-      raw: macroResult.totalPoints, max: macroResult.totalMax,
-      pct: macroResult.scorePct,
-      weighted: weighted(macroResult.totalPoints, macroResult.totalMax, weights.macro),
-    },
-    sentiment: split ? {
-      raw: split.sentiment.points, max: split.sentiment.max,
-      pct: split.sentiment.max ? Math.round((split.sentiment.points / split.sentiment.max) * 100) : 0,
-      weighted: weighted(split.sentiment.points, split.sentiment.max, weights.sentiment),
-    } : { raw: null, max: PILLAR_MAX_RAW.sentiment, pct: null, weighted: null },
-    liquidity: split ? {
-      raw: split.liquidity.points, max: split.liquidity.max,
-      pct: split.liquidity.max ? Math.round((split.liquidity.points / split.liquidity.max) * 100) : 0,
-      weighted: weighted(split.liquidity.points, split.liquidity.max, weights.liquidity),
-    } : { raw: null, max: PILLAR_MAX_RAW.liquidity, pct: null, weighted: null },
   };
 
   // If technicals/senliq are missing we cannot compute a faithful
   // composite — return null to indicate "unrated" rather than a
   // misleading partial figure.
   const composite = hasTechData
-    ? Math.round((pillars.fundamentals.weighted +
-                  pillars.technicals.weighted +
-                  pillars.macro.weighted +
-                  pillars.sentiment.weighted +
-                  pillars.liquidity.weighted) * 10) / 10
+    ? Math.round((pillars.fundamentals.weighted + pillars.technicals.weighted) * 10) / 10
     : null;
 
   const hardFailed = allHardFails.length > 0;
@@ -249,7 +234,7 @@ export function scoreCompositeOne(fundCo, techCo, macroCtx, weights = PILLAR_WEI
     filterFlags,
     isRedFlag,
     pillars,
-    pillarResults: { fund: fundResult, tech: techResult, macro: macroResult, senliq: senliqResult, split },
+    pillarResults: { fund: fundResult, tech: techResult },
     dataComplete: hasTechData,
   };
 }
