@@ -5380,6 +5380,55 @@ function renderTradePlan() {
       </div>
     </div>`;
 
+  // ---- upside, expressed in R ----
+  // R is the stop distance. Risking 1R to make 2R is the standard way to
+  // judge a trade before you know the outcome, and it is the only honest
+  // framing available: nobody can tell you a stock's maximum return in
+  // advance. What CAN be stated is the ratio you are accepting.
+  //
+  // Deliberately no fixed rupee "target" here. In momentum, selling winners
+  // at a fixed level is the main way the strategy loses money -- the few
+  // large winners are what pay for the many small stops. Let them run and
+  // raise the stop behind them instead.
+  const r2Total = plan.rows.reduce((a, r) => a + r.cost * r.stopPct * 2, 0);
+  const r3Total = plan.rows.reduce((a, r) => a + r.cost * r.stopPct * 3, 0);
+  const upCard = `
+    <div class="bg-white rounded-2xl ring-1 ring-slate-100 overflow-hidden">
+      <div class="px-4 py-3 border-b border-slate-100">
+        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Step 5 · What the upside looks like</div>
+        <div class="text-xs text-slate-500 mt-0.5"><span class="font-semibold">R</span> = the stop distance. 2R means the stock rose twice as far as your stop sits below. These are <span class="font-semibold">reference levels, not predictions</span>.</div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50/70 text-[10px] uppercase tracking-wider text-slate-500">
+            <tr><th class="px-3 py-2 text-left">Stock</th><th class="px-3 py-2 text-right">Stop (−1R)</th><th class="px-3 py-2 text-right">Entry</th>
+            <th class="px-3 py-2 text-right">+1R</th><th class="px-3 py-2 text-right">+2R</th><th class="px-3 py-2 text-right">+3R</th>
+            <th class="px-3 py-2 text-right">Gain at 2R</th></tr>
+          </thead>
+          <tbody>
+            ${plan.rows.map((r) => `
+              <tr class="border-t border-slate-100">
+                <td class="px-3 py-2 font-semibold text-slate-900">${escapeHtml(r.name)}</td>
+                ${cell(inr(r.stop), "text-rose-700 font-semibold")}
+                ${cell(inr(r.price), "text-slate-500")}
+                ${cell(inr(r.price * (1 + r.stopPct)), "text-emerald-700")}
+                ${cell(inr(r.price * (1 + r.stopPct * 2)), "text-emerald-700 font-bold")}
+                ${cell(inr(r.price * (1 + r.stopPct * 3)), "text-emerald-700")}
+                ${cell("+" + inr(r.cost * r.stopPct * 2), "font-semibold")}
+              </tr>`).join("")}
+          </tbody>
+        </table>
+      </div>
+      <div class="px-4 py-3 bg-slate-50/60 border-t border-slate-100 grid sm:grid-cols-3 gap-3 text-xs">
+        <div><div class="text-[10px] uppercase tracking-wider text-slate-500">Every stop hits</div><div class="font-bold text-rose-700 text-base tabular-nums">−${inr(plan.totalRisk)} · ${riskPct.toFixed(1)}%</div></div>
+        <div><div class="text-[10px] uppercase tracking-wider text-slate-500">Every stock reaches 2R</div><div class="font-bold text-emerald-700 text-base tabular-nums">+${inr(r2Total)} · ${(r2Total / plan.capital * 100).toFixed(1)}%</div></div>
+        <div><div class="text-[10px] uppercase tracking-wider text-slate-500">Every stock reaches 3R</div><div class="font-bold text-emerald-700 text-base tabular-nums">+${inr(r3Total)} · ${(r3Total / plan.capital * 100).toFixed(1)}%</div></div>
+      </div>
+      <div class="px-4 py-3 border-t border-slate-100 text-[11px] text-slate-500 leading-snug">
+        Neither extreme happens. In practice a momentum basket stops out on roughly half its positions and pays for them with a few large winners — which is exactly why there is no fixed sell target here. <span class="font-semibold text-slate-700">Use the Backtesting tab</span> to see what this basket rule actually returned month by month on your own history.
+      </div>
+    </div>`;
+
   // ---- steps ----
   const steps = [
     ["Today, before market opens", `Note the ${plan.rows.length} limit prices and ${plan.rows.length} stop-loss levels above. Write them down — you want them decided while you have no money on the line.`],
@@ -5391,7 +5440,7 @@ function renderTradePlan() {
   ];
   const stepCard = `
     <div class="bg-white rounded-2xl ring-1 ring-slate-100 p-5">
-      <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-4">Step 5 · Exactly what to do</div>
+      <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-4">Step 6 · Exactly what to do</div>
       <ol class="space-y-3.5">
         ${steps.map(([h, b], i) => `
           <li class="flex gap-3">
@@ -5404,7 +5453,7 @@ function renderTradePlan() {
       </ol>
     </div>`;
 
-  return `<div class="space-y-4">${capBox}${regimeCard}${warnCard}${readTable}${orderTable}${stepCard}</div>`;
+  return `<div class="space-y-4">${capBox}${regimeCard}${warnCard}${readTable}${orderTable}${upCard}${stepCard}</div>`;
 }
 
 // Strategy-tab sub-tab bar. Same pattern as the top-level tabs the founder
