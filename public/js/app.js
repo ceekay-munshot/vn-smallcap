@@ -267,7 +267,10 @@ function saveClientCohorts(d) {
 //               from THAT date — handles mid-month uploads
 //   - weekly  : anchored at upload date; AI re-locks each Monday
 const COHORT_VIEW_KEY = "klpdash-cohort-view-v1";
-const COHORT_VIEWS = ["static", "monthly", "weekly"];
+// "monthly" removed — it anchored at the client's upload date, which does
+// not exist here. "static" IS the monthly model: picked at month start,
+// held for the month.
+const COHORT_VIEWS = ["static", "weekly"];
 function loadCohortView() {
   try {
     const v = localStorage.getItem(COHORT_VIEW_KEY);
@@ -1691,9 +1694,13 @@ async function ensureHistoryCache() {
   const benchmark = await fetch("data/benchmark-history.json")
     .then((r) => (r.ok ? r.json() : null))
     .catch(() => null);
-  const lkp = await fetch("data/lkp-manual-picks.json")
-    .then((r) => (r.ok ? r.json() : null))
-    .catch(() => null);
+  // No manual basket on this dashboard. The comparison here is AI vs
+  // benchmark, not AI vs an analyst's picks, so there is nothing to load.
+  // Kept as an explicit null rather than deleted because a lot of
+  // downstream code already branches on `lkp` being absent; making it
+  // permanently null exercises those existing paths instead of inventing
+  // new ones.
+  const lkp = null;
   const ooc = await fetch("data/out-of-coverage-history.json")
     .then((r) => (r.ok ? r.json() : null))
     .catch(() => null);
@@ -2044,8 +2051,7 @@ async function renderHistory() {
     `;
   }).join("");
 
-  const lkpPicks = buildLkpPicks(lkp, byTicker, todayClose);
-  const lkpCard = renderLkpCard(lkpPicks, !!lkpOverride());
+  const lkpCard = "";   // manual-basket card removed — AI vs benchmark only
 
   // Cache for cohort-row click handlers (Performance Tracker drill).
   // Crucially the click cache mirrors the SAME `manualPicks` list the
@@ -2749,18 +2755,24 @@ function renderManualMonthSelector(months, selectedMonth, lkp, snapshots) {
   `;
 }
 
+// Cohort anchor: the first snapshot of the CURRENT month. The basket is
+// picked on the first trading day of each month and held for the month, so
+// that date is both the selection day and the cost basis.
+//
+// Previously this keyed off lkp.generated_at -- the day the client handed
+// over their basket. With no manual basket that date does not exist, and the
+// old fallback walked BACK to the previous month's last snapshot, which
+// would have anchored an August cohort to a July date.
+//
+// The lkp argument is retained so existing call sites keep working.
 function lkpAnchorDate(lkp, snapshots) {
-  if (lkp?.generated_at) {
-    const d = String(lkp.generated_at).slice(0, 10);
-    if (/^\d{4}-\d{2}-\d{2}$/.test(d)) return d;
-  }
   if (!snapshots.length) return null;
-  const today = snapshots[snapshots.length - 1].date;
-  const ym = today.slice(0, 7);
-  for (let i = snapshots.length - 1; i >= 0; i--) {
-    if (snapshots[i].date.slice(0, 7) !== ym) return snapshots[i].date;
-  }
-  return snapshots[0].date;
+  const ym = snapshots[snapshots.length - 1].date.slice(0, 7);
+  const firstOfMonth = snapshots.find((s) => s.date.slice(0, 7) === ym);
+  // Snapshots are ordered oldest -> newest, so find() gives the FIRST one in
+  // the current month. Every snapshot belongs to some month, so this always
+  // resolves once the trail is non-empty; the fallback is belt-and-braces.
+  return firstOfMonth ? firstOfMonth.date : snapshots[0].date;
 }
 
 // Build the cohort. Returns a single object with `segments` — one entry
@@ -3123,8 +3135,7 @@ function renderHistoryViewSwitch(activeView, accuracyData, cohortView) {
   const cohortBtnCls = (active) => `px-2.5 py-1 rounded-md transition ${active ? "bg-white text-indigo-700 shadow-sm" : "text-slate-600 hover:text-slate-900"}`;
   const cohortToggle = `
     <div id="cohort-view-toggle" class="inline-flex bg-slate-100 rounded-lg p-0.5 text-[11px] font-semibold">
-      <button data-view="static" type="button" class="${cohortBtnCls(cohortView === "static")}" title="AI top 7 frozen from prior month-end · held all month (composite model)">Static</button>
-      <button data-view="monthly" type="button" class="${cohortBtnCls(cohortView === "monthly")}" title="AI top 7 frozen from client upload date">Monthly</button>
+      <button data-view="static" type="button" class="${cohortBtnCls(cohortView === "static")}" title="AI top 7 picked on the first trading day of the month · held all month">Monthly</button>
       <button data-view="weekly" type="button" class="${cohortBtnCls(cohortView === "weekly")}" title="AI re-locks every Monday">Weekly</button>
     </div>
   `;
@@ -5186,11 +5197,11 @@ function renderStrategyModeToggle(mode, hits) {
   const modePills = SHOW_ROTATION_STRATEGIES
     ? `<div class="flex gap-1 flex-1 sm:flex-initial">
         ${pill("active", "Active strategy", "AI re-locks at cadence")}
-        ${pill("passive", "Passive strategy", "AI frozen at upload")}
+        ${pill("passive", "Passive strategy", "AI basket frozen at month start")}
       </div>`
     : `<div class="flex items-center gap-2 flex-1">
         <span class="text-base">🎯</span>
-        <div><div class="text-sm font-semibold text-slate-900">AI basket vs Manual basket</div></div>
+        <div><div class="text-sm font-semibold text-slate-900">AI basket vs benchmarks</div></div>
       </div>`;
   return `
     <div class="bg-white rounded-2xl ring-1 ring-slate-100 p-2 sm:p-3 flex flex-wrap items-center justify-between gap-2">
@@ -5276,7 +5287,7 @@ function renderActiveCadencePills(cadence) {
 // the chart clears the fold. Carries the upload/alerts IDs the wiring expects.
 function renderStrategyCommandBar(view, cadence, mode, hits) {
   const isPassive = mode === "passive";
-  const modeLabel = isPassive ? "Passive · frozen at upload" : `${cadence} re-lock`;
+  const modeLabel = isPassive ? "Passive · frozen at month start" : `${cadence} re-lock`;
   const aiDD = curveMaxDrawdown(view.equityCurve || []);
   const manualDD = view.manualFinalReturn != null ? curveMaxDrawdown(view.manualCurve || []) : null;
   const niftyDD = (view.niftyCurve && view.niftyCurve.length) ? curveMaxDrawdown(view.niftyCurve) : null;
@@ -5300,7 +5311,7 @@ function renderStrategyCommandBar(view, cadence, mode, hits) {
         <span class="grid place-items-center w-8 h-8 rounded-xl bg-indigo-50 text-base ring-1 ring-indigo-100 shrink-0">🎯</span>
         <div class="min-w-0">
           <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="text-sm font-bold text-slate-900">AI basket vs Manual basket</span>
+            <span class="text-sm font-bold text-slate-900">AI basket vs benchmarks</span>
             <span class="text-[8px] font-bold uppercase tracking-wider px-1 py-0.5 rounded bg-amber-100 text-amber-700 ring-1 ring-amber-200">Beta</span>
           </div>
           <div class="flex items-center gap-1.5 flex-wrap mt-1">
@@ -5312,9 +5323,9 @@ function renderStrategyCommandBar(view, cadence, mode, hits) {
       <div class="flex items-center gap-3 ml-auto flex-wrap">
         <div class="flex items-stretch rounded-xl ring-1 ring-slate-200 bg-slate-50/40 divide-x divide-slate-200/70">
           ${stat("AI", view.finalReturn, aiDD, "text-indigo-700")}
-          ${stat("Manual", view.manualFinalReturn, manualDD, "text-amber-700")}
-          ${stat("Nifty 50", view.niftyRet, niftyDD, "text-slate-500")}
-          ${stat("Nifty 500", view.nifty500Ret, nifty500DD, "text-sky-600")}
+          
+          ${stat("Smallcap 250", view.niftyRet, niftyDD, "text-slate-500")}
+          ${stat("Midcap 150", view.nifty500Ret, nifty500DD, "text-sky-600")}
         </div>
         <div class="h-9 w-px bg-slate-200 hidden sm:block"></div>
         <div class="flex items-center gap-2">
@@ -5493,9 +5504,9 @@ function renderStrategyKpis(view) {
       </div>
       <div class="space-y-1.5">
         ${row("bg-indigo-500", "AI basket", aiFinal)}
-        ${row("bg-amber-500", "Manual basket", manualFinal)}
-        ${row("bg-slate-400", "Nifty 50", niftyFinal)}
-        ${row("bg-sky-500", "Nifty 500", nifty500Final)}
+        
+        ${row("bg-slate-400", "Smallcap 250", niftyFinal)}
+        ${row("bg-sky-500", "Midcap 150", nifty500Final)}
       </div>    </div>`;
 
   const cardUpside = `
@@ -5505,10 +5516,9 @@ function renderStrategyKpis(view) {
         <div class="text-emerald-500 text-base">▲</div>
       </div>
       <div class="space-y-1.5">
-        ${row("bg-amber-500", "Manual", manualUp)}
         ${row("bg-indigo-500", "AI", aiUp)}
-        ${row("bg-slate-400", "Nifty 50", niftyUp)}
-        ${row("bg-sky-500", "Nifty 500", nifty500Up)}
+        ${row("bg-slate-400", "Smallcap 250", niftyUp)}
+        ${row("bg-sky-500", "Midcap 150", nifty500Up)}
       </div>    </div>`;
 
   const cardDrawdown = `
@@ -5518,10 +5528,9 @@ function renderStrategyKpis(view) {
         <div class="text-rose-500 text-base">▼</div>
       </div>
       <div class="space-y-1.5">
-        ${row("bg-amber-500", "Manual", manualDD)}
         ${row("bg-indigo-500", "AI", aiDD)}
-        ${row("bg-slate-400", "Nifty 50", niftyDD)}
-        ${row("bg-sky-500", "Nifty 500", nifty500DD)}
+        ${row("bg-slate-400", "Smallcap 250", niftyDD)}
+        ${row("bg-sky-500", "Midcap 150", nifty500DD)}
       </div>    </div>`;
 
   const alphaRow = (dotCls, label, value) => `
@@ -5540,9 +5549,8 @@ function renderStrategyKpis(view) {
         <div class="text-indigo-500 text-base">⇆</div>
       </div>
       <div class="space-y-1.5">
-        ${alphaRow("bg-amber-500", "Manual − AI", manualVsAi)}
-        ${alphaRow("bg-slate-400", "AI − Nifty 50", aiVsNifty)}
-        ${alphaRow("bg-sky-500", "AI − Nifty 500", aiVsNifty500)}
+        ${alphaRow("bg-slate-400", "AI − Smallcap 250", aiVsNifty)}
+        ${alphaRow("bg-sky-500", "AI − Midcap 150", aiVsNifty500)}
       </div>    </div>`;
 
   return `
@@ -5584,7 +5592,7 @@ function renderActiveCumulativeChart(view) {
   if (mode === "stocks") {
     const basket = ["ai", "manual", "both"].includes(state.strategyStockBasket) ? state.strategyStockBasket : "ai";
     const bBtn = (k, label) => `<button type="button" data-stock-basket="${k}" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition ${basket === k ? "bg-indigo-600 text-white shadow-sm" : "text-slate-500 hover:text-slate-700"}">${label}</button>`;
-    const basketToggle = `<div class="inline-flex items-center gap-0.5 bg-slate-100 rounded-lg p-0.5">${bBtn("ai", "AI")}${bBtn("manual", "Manual")}${bBtn("both", "Both")}</div>`;
+    const basketToggle = `<div class="inline-flex items-center gap-0.5 bg-slate-100 rounded-lg p-0.5">${bBtn("ai", "AI")}</div>`;
     return shell(basketToggle, renderPerStockSmallMultiples(view, basket)) + `</div>`;
   }
 
@@ -5648,7 +5656,7 @@ function renderActiveCumulativeChart(view) {
   const legend = `
     <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-0.5" style="background:${color.ai}"></span>AI basket</span>
     ${hasManual ? `<span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-0.5" style="background:${color.manual}"></span>Manual basket</span>` : ""}
-    <span class="inline-flex items-center gap-1.5" title="Benchmark"><span class="w-2.5 h-0.5 border-t border-dashed" style="border-color:${color.nifty}"></span>Nifty 50</span>
+    <span class="inline-flex items-center gap-1.5" title="Benchmark"><span class="w-2.5 h-0.5 border-t border-dashed" style="border-color:${color.nifty}"></span>Smallcap 250</span>
     ${hasN500 ? `<span class="inline-flex items-center gap-1.5" title="Benchmark — Nifty Midcap 150">​<span class="w-2.5 h-0.5 border-t border-dashed" style="border-color:${color.nifty500}"></span>Midcap 150</span>` : ""}`;
 
   const body = `
@@ -5757,7 +5765,7 @@ function renderPerStockSmallMultiples(view, basket) {
       <div class="mt-3 flex items-center gap-x-3 gap-y-1 text-[10px] text-slate-400 flex-wrap">
         <span class="inline-flex items-center gap-1"><span class="w-2.5 h-0.5" style="background:${UP}"></span>up</span>
         <span class="inline-flex items-center gap-1"><span class="w-2.5 h-0.5" style="background:${DOWN}"></span>down</span>
-        <span class="inline-flex items-center gap-1"><span class="w-2.5 h-0.5 border-t border-dashed" style="border-color:#cbd5e1"></span>Nifty 50</span>
+        <span class="inline-flex items-center gap-1"><span class="w-2.5 h-0.5 border-t border-dashed" style="border-color:#cbd5e1"></span>Smallcap 250</span>
         <span>· shared scale · honours the Booked / If-held toggle · click a tile to drill in.</span>
       </div>`;
 }
@@ -5853,8 +5861,8 @@ function setupActiveChartHover(view) {
       <div class="font-bold text-sm leading-tight">${fmtDateDMY(p.date)}</div>
       <div class="mt-1 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full" style="background:${color.ai}"></span><span class="text-slate-300">AI active</span><span class="ml-auto font-bold tabular-nums ${cls(p.retPct)}">${fmt(p.retPct)}</span></div>
       ${mVal != null ? `<div class="mt-0.5 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full" style="background:${color.manual}"></span><span class="text-slate-300">Manual</span><span class="ml-auto font-bold tabular-nums ${cls(mVal)}">${fmt(mVal)}</span></div>` : ""}
-      ${nVal != null ? `<div class="mt-0.5 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full" style="background:${color.nifty}"></span><span class="text-slate-300">Nifty 50</span><span class="ml-auto font-bold tabular-nums ${cls(nVal)}">${fmt(nVal)}</span></div>` : ""}
-      ${n5Val != null ? `<div class="mt-0.5 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full" style="background:${color.nifty500}"></span><span class="text-slate-300">Nifty 500</span><span class="ml-auto font-bold tabular-nums ${cls(n5Val)}">${fmt(n5Val)}</span></div>` : ""}
+      ${nVal != null ? `<div class="mt-0.5 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full" style="background:${color.nifty}"></span><span class="text-slate-300">Smallcap 250</span><span class="ml-auto font-bold tabular-nums ${cls(nVal)}">${fmt(nVal)}</span></div>` : ""}
+      ${n5Val != null ? `<div class="mt-0.5 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full" style="background:${color.nifty500}"></span><span class="text-slate-300">Midcap 150</span><span class="ml-auto font-bold tabular-nums ${cls(n5Val)}">${fmt(n5Val)}</span></div>` : ""}
     `;
     tip.classList.remove("hidden");
     tip.style.left = tipX + "px";
@@ -6653,7 +6661,7 @@ function renderActiveBody(sim, stats, niftyOn) {
           <h3 class="font-semibold text-slate-900 text-sm">Cumulative return</h3>
           <div class="flex items-center gap-3 text-[11px] text-slate-500">
             <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-0.5 bg-indigo-600"></span>Active basket</span>
-            <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-0.5 border-t border-dashed border-slate-400"></span>Nifty 50</span>
+            <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-0.5 border-t border-dashed border-slate-400"></span>Smallcap 250</span>
           </div>
         </div>
         ${renderActiveChart(sim, niftyOn)}
@@ -10031,7 +10039,7 @@ function renderCustomOverview(views) {
   const withColor = stratColors(views);
   const series = withColor.filter((v) => v.view).map((v) => ({ label: v.strat.name, color: v.color, curve: v.view.equityCurve }));
   const firstNifty = withColor.find((v) => v.view?.niftyCurve?.length);
-  if (firstNifty) series.push({ label: "Nifty 50", color: "#94a3b8", curve: firstNifty.view.niftyCurve, dash: "5 4" });
+  if (firstNifty) series.push({ label: "Smallcap 250", color: "#94a3b8", curve: firstNifty.view.niftyCurve, dash: "5 4" });
   const aiViews = withColor.filter((v) => v.strat.origin === "ai");
   const userViews = withColor.filter((v) => v.strat.origin !== "ai");
   const grid = (arr) => `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">${arr.map((v) => renderStrategyCard(v.strat, v.view, v.color)).join("")}</div>`;
@@ -10140,7 +10148,7 @@ function renderCustomPerfTable(views) {
         </thead>
         <tbody>${body}</tbody>
       </table>
-      <div class="text-[10px] text-slate-400 mt-2 leading-snug">All returns are net of charges${startDate ? `, backtested from ${fmtDateDMY(startDate)}` : ""}. <strong>Since inception</strong> = total return · <strong>1D/1W/1M</strong> = trailing windows (— when history is shorter than the window) · <strong>vs Nifty</strong> = return above the Nifty 50 over the same period · <strong>Hit rate</strong> = share of all picks that hit target. Sorted by since-inception return; click a row to open it.</div>
+      <div class="text-[10px] text-slate-400 mt-2 leading-snug">All returns are net of charges${startDate ? `, backtested from ${fmtDateDMY(startDate)}` : ""}. <strong>Since inception</strong> = total return · <strong>1D/1W/1M</strong> = trailing windows (— when history is shorter than the window) · <strong>vs benchmark</strong> = return above the Nifty Smallcap 250 over the same period · <strong>Hit rate</strong> = share of all picks that hit target. Sorted by since-inception return; click a row to open it.</div>
     </div>`;
 }
 
@@ -10163,7 +10171,7 @@ function renderCustomDeepDive(entry, todaysNames) {
   const series = [
     { label: strat.name, color: "#6366f1", curve: view.equityCurve, width: 2.4 },
     { label: "Manual", color: "#f59e0b", curve: view.manualCurve || [] },
-    { label: "Nifty 50", color: "#94a3b8", curve: view.niftyCurve || [], dash: "5 4" },
+    { label: "Smallcap 250", color: "#94a3b8", curve: view.niftyCurve || [], dash: "5 4" },
   ];
   return `
     <div class="space-y-4">
