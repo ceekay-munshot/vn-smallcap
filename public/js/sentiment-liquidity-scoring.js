@@ -74,9 +74,13 @@ function ruleADTV(c) {
   const adtv = c?.adtv_20d_cr;
   if (adtv == null) return { ...NA, max: 2, note: "20-day ADTV not yet computed — needs OHLCV from the Technicals scrape." };
   const val = `ADTV ₹${adtv} Cr (20-day average)`;
-  if (adtv >= 10) return { points: 2, max: 2, status: "pass", value: val, note: "ADTV ≥ ₹10 Cr — comfortable liquidity for institutional positions." };
-  if (adtv >= 5) return { points: 1, max: 2, status: "partial", value: val, note: "ADTV ₹5–10 Cr — moderate liquidity, fine for retail/mid-AUM portfolios." };
-  return { points: 0, max: 2, status: "hard_fail", value: val, note: "ADTV < ₹5 Cr — illiquid, hard fail per client framework. Stock excluded from SPIP basket." };
+  // Re-banded for the Rs 2,000-12,500 Cr universe. The original 10/5/5 Cr
+  // bands were calibrated on Nifty 500 and would hard-fail a large share
+  // of this universe. The gate still exists — a stock you cannot exit is
+  // not a tradable pick — just at a floor that matches the segment.
+  if (adtv >= 5) return { points: 2, max: 2, status: "pass", value: val, note: "ADTV ≥ ₹5 Cr — comfortable liquidity for this segment." };
+  if (adtv >= 1) return { points: 1, max: 2, status: "partial", value: val, note: "ADTV ₹1–5 Cr — moderate liquidity; size positions accordingly." };
+  return { points: 0, max: 2, status: "hard_fail", value: val, note: "ADTV < ₹1 Cr — illiquid, hard fail. Excluded from the basket: entry and exit slippage would swamp any edge." };
 }
 
 function ruleImpactCost(c) {

@@ -67,8 +67,8 @@ function ruleRelativeStrength(c) {
   const stockR = c.return_6m;
   const indexR = c.return_6m_index;
   if (rs == null) return { ...NA, max: 2 };
-  const val = `6M return ${fmtPct(stockR,1)} vs Nifty 500 ${fmtPct(indexR,1)} (RS ${rs>=0?"+":""}${fmtPct(rs,1)})`;
-  if (rs > 0) return { points: 2, max: 2, status: "pass", value: val, note: "6M price return ahead of Nifty 500 — outperforming." };
+  const val = `6M return ${fmtPct(stockR,1)} vs Smallcap 250 ${fmtPct(indexR,1)} (RS ${rs>=0?"+":""}${fmtPct(rs,1)})`;
+  if (rs > 0) return { points: 2, max: 2, status: "pass", value: val, note: "6M price return ahead of Nifty Smallcap 250 — outperforming." };
   return { points: 1, max: 2, status: "partial", value: val, note: "Underperforming benchmark." };
 }
 
@@ -214,7 +214,7 @@ const ACTIVE_RULES = [
   { key: "rsi",      label: "RSI (14)",                 category: "Momentum",       criteria: "55–75",                 fn: ruleRSI },
   { key: "macd",     label: "MACD",                     category: "Momentum",       criteria: "Positive crossover",    fn: ruleMACD },
   { key: "adx",      label: "ADX (14)",                 category: "Momentum",       criteria: "> 25",                  fn: ruleADX },
-  { key: "rs",       label: "Relative Strength vs Nifty 500", category: "Momentum", criteria: "Outperforming index",   fn: ruleRelativeStrength },
+  { key: "rs",       label: "Relative Strength vs Smallcap 250", category: "Momentum", criteria: "Outperforming index",   fn: ruleRelativeStrength },
   { key: "volbo",    label: "Volume Breakout",          category: "Volume",         criteria: "≥ 1.5× 20-day avg",     fn: ruleVolumeBreakout },
   { key: "delivery", label: "Delivery Percentage",      category: "Volume",         criteria: "Rising over 30 days",   fn: ruleDeliveryPercentage },
   { key: "instact",  label: "Institutional Activity",   category: "Volume",         criteria: "Net FII + DII buying",  fn: ruleInstitutionalActivity },

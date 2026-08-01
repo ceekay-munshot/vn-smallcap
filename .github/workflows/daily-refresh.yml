@@ -15,10 +15,10 @@ name: Daily refresh (all scrapers)
 on:
   workflow_dispatch:
   schedule:
-    # 00:23 UTC == 05:53 IST. Off the :00/:15/:30/:45 marks where GitHub's
+    # 00:53 UTC == 06:23 IST. Staggered 30 min after the large-cap repo. Off the :00/:15/:30/:45 marks where GitHub's
     # cron scheduler queues up runs and frequently delays / skips during
     # high load.
-    - cron: "23 0 * * *"
+    - cron: "53 0 * * *"
 
 jobs:
   refresh:

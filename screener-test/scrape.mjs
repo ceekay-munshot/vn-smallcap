@@ -16,8 +16,8 @@ const ORIGIN = "https://www.screener.in";
 
 const EMAIL = process.env.SCREENER_EMAIL;
 const PASSWORD = process.env.SCREENER_PASSWORD;
-const screenUrl = process.env.SCREEN_URL || "https://www.screener.in/screens/3675531/fundareal-klp-final/";
-const maxPages = Number(process.env.MAX_PAGES || "30");
+const screenUrl = process.env.SCREEN_URL || "https://www.screener.in/screens/3836355/vipulscreen/";
+const maxPages = Number(process.env.MAX_PAGES || "40");
 const maxCompanies = Number(process.env.MAX_COMPANIES || "0"); // 0 = all
 const startAt = Math.max(0, Number(process.env.START_AT || "0"));
 

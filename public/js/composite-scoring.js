@@ -1,9 +1,10 @@
 // SPIP Composite Scoring — implements the client's weighted 5-pillar
 // model from SPIP_Stock_Selection_Model_v1.xlsx (Scoring_Model sheet).
 //
-//   Composite = (Fund/29)*40 + (Tech/24)*35 + (Macro/17)*15
-//             + (Sent/6)*5   + (Liq/6)*5
-//   → 0-100 score
+//   Composite = (Fund/max)*30 + (Tech/max)*70   → 0-100 score
+//
+// Pillar maxima are derived from each module's ACTIVE_RULES at runtime,
+// so dropping or adding a rule rebases the percentage automatically.
 //
 // Rating bands (Scoring_Model · Section C):
 //   ≥ 75  STRONG BUY   — initiate full position
@@ -31,12 +32,16 @@ import * as senliq from "./sentiment-liquidity-scoring.js";
 // conditions change, so the UI shows them apart from fundamental red flags.
 const FILTER_HARD_FAILS = ["Price Above 200 DMA", "Avg Daily Traded Value"];
 
+// Two live pillars. Macro / Sentiment / Liquidity are held at 0 rather
+// than deleted: weighted() short-circuits on max === 0, and keeping the
+// keys means hard-fails from those modules (notably the ADTV gate) still
+// register while contributing nothing to the score.
 export const PILLAR_WEIGHTS = {
-  fundamentals: 40,
-  technicals: 35,
-  macro: 15,
-  sentiment: 5,
-  liquidity: 5,
+  fundamentals: 30,
+  technicals: 70,
+  macro: 0,
+  sentiment: 0,
+  liquidity: 0,
 };
 
 export const PILLAR_MAX_RAW = {

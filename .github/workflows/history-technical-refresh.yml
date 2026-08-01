@@ -19,7 +19,7 @@ on:
         default: "0"
   schedule:
     # 03:30 UTC Sunday = 09:00 IST — after the daily OHLCV + technicals scrapes.
-    - cron: "30 3 * * 0"
+    - cron: "30 4 * * 0"
 
 jobs:
   backfill:

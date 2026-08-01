@@ -25,7 +25,7 @@ on:
     # added to screener-companies.json overnight gets scraped the next day.
     # Resume mechanic skips already-fresh entries, so steady-state runs
     # only do new + stale companies — usually a few minutes wall-clock.
-    - cron: "15 2 * * *"
+    - cron: "45 2 * * *"
 
 jobs:
   scrape:

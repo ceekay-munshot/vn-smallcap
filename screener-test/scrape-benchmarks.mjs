@@ -1,10 +1,8 @@
 #!/usr/bin/env node
-// Benchmark history scraper. Pulls daily close prices for the indices
-// we want to compare per-stock returns against — Nifty 50, plus Nifty 500
-// (^CRSLDX — the client's ideal benchmark, since it IS our stock universe),
-// plus Bank Nifty as a sector reference. Output is read by the Strategy /
+// Benchmark history scraper. Pulls daily close prices for the indices we
+// compare cohort returns against. Output is read by the Strategy /
 // History tab to compute alpha (pick return − benchmark return) over the
-// same window as each STRONG BUY pick.
+// same window as each monthly top-7 cohort.
 //
 // Cheap: one Yahoo chart endpoint call per index, gets the full 90-day
 // series in one go. No paid APIs.
@@ -16,10 +14,20 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = resolve(__dirname, "../public/data/benchmark-history.json");
 
+// Smallcap 250 is the primary benchmark — it covers NSE ranks 251-500,
+// which is where a Rs 2,000-12,500 Cr universe actually lives. Midcap 150
+// is secondary, because the Rs 12,500 Cr ceiling straddles into it.
+//
+// Nifty 50 and Nifty 500 are retained because app.js still looks them up
+// by literal symbol key (benchmark.indices["^NSEI"] / ["^CRSLDX"]) —
+// dropping them here would silently blank those chart lines. Repoint
+// app.js at Smallcap 250 in the UI pass, then these can go.
+// Bank Nifty removed: nothing reads it.
 const INDICES = [
-  { symbol: "^NSEI",    label: "Nifty 50" },
-  { symbol: "^CRSLDX",  label: "Nifty 500" },
-  { symbol: "^NSEBANK", label: "Bank Nifty" },
+  { symbol: "NIFTYSMLCAP250.NS", label: "Nifty Smallcap 250" },
+  { symbol: "NIFTYMIDCAP150.NS", label: "Nifty Midcap 150" },
+  { symbol: "^NSEI",             label: "Nifty 50" },
+  { symbol: "^CRSLDX",           label: "Nifty 500" },
 ];
 const DAYS = 180;          // ~6 months — comfortably covers the full 4-month hold
                            // window of the OLDEST retained report month, so the

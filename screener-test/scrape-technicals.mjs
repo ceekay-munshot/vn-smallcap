@@ -17,8 +17,22 @@ const COMPANIES_PATH = resolve(__dirname, "../public/data/screener-companies.jso
 const ATR_HISTORY_PATH = resolve(__dirname, "../public/data/atr-history.json");
 
 const HISTORY_DAYS = 400;          // calendar days back; ~280 trading days
-const INDEX_SYMBOL = "^CRSLDX";    // Nifty 500 on Yahoo Finance
 const FETCH_DELAY_MS = 200;        // be polite — ~5 req/sec
+
+// Benchmark for relative strength + beta. Nifty Smallcap 250 covers NSE
+// ranks 251-500, which is the right yardstick for a Rs 2,000-12,500 Cr
+// universe (Nifty 500 would flatter every name in it).
+//
+// Tried and REJECTED — all three return HTTP 200 with a valid name and a
+// live price but only ONE bar of history, which is worse than a 404
+// because a naive length check passes:
+//   ^CNXSC (Smallcap 100), NIFTYSMLCAP50.NS, NIFTYMIDSML400.NS
+// Hence MIN_INDEX_BARS below, and the fallback to Nifty 500.
+const INDEX_CANDIDATES = [
+  { symbol: "NIFTYSMLCAP250.NS", label: "Nifty Smallcap 250" },
+  { symbol: "^CRSLDX",           label: "Nifty 500 (fallback)" },
+];
+const MIN_INDEX_BARS = 200;        // a 1-bar stub must NOT count as success
 
 const FNO_STOCKS_PATH = resolve(__dirname, "static/fno-stocks.json");
 
@@ -48,10 +62,22 @@ async function run() {
   const start = new Date(end.getTime() - HISTORY_DAYS * 86400000);
 
   // Fetch the index first — needed for relative strength and beta.
-  console.log(`\nFetching ${INDEX_SYMBOL} (Nifty 500)...`);
-  const indexBars = await fetchBars(INDEX_SYMBOL, start, end);
-  if (!indexBars.length) throw new Error("Could not load Nifty 500 index data — aborting.");
-  console.log(`  ${indexBars.length} bars`);
+  // Walk the candidate list until one returns a REAL series. Yahoo hands
+  // back 1-bar stubs for several NSE index symbols, so we require
+  // MIN_INDEX_BARS rather than just a non-empty array — otherwise RS and
+  // beta silently compute against a single data point for every company.
+  let indexBars = [], indexLabel = null;
+  for (const { symbol, label } of INDEX_CANDIDATES) {
+    process.stdout.write(`\nFetching ${symbol} (${label})... `);
+    const bars = await fetchBars(symbol, start, end).catch(() => []);
+    console.log(`${bars.length} bars`);
+    if (bars.length >= MIN_INDEX_BARS) { indexBars = bars; indexLabel = label; break; }
+    console.log(`  rejected — need >= ${MIN_INDEX_BARS} bars, trying next candidate`);
+  }
+  if (!indexBars.length) {
+    throw new Error(`No benchmark index returned >= ${MIN_INDEX_BARS} bars — aborting.`);
+  }
+  console.log(`  using ${indexLabel} (${indexBars.length} bars)`);
   const indexReturns = dailyReturns(indexBars);
   const indexClose = indexBars.map((b) => b.close);
 

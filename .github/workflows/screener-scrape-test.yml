@@ -7,7 +7,7 @@ on:
         description: "Screener saved-screen URL"
         required: true
         type: string
-        default: "https://www.screener.in/screens/3675531/fundareal-klp-final/"
+        default: "https://www.screener.in/screens/3836355/vipulscreen/"
       max_companies:
         description: "How many companies to scrape (0 = all). Use a small number for a quick test."
         required: false
@@ -51,9 +51,9 @@ jobs:
         env:
           SCREENER_EMAIL: ${{ secrets.SCREENER_EMAIL }}
           SCREENER_PASSWORD: ${{ secrets.SCREENER_PASSWORD }}
-          SCREEN_URL: ${{ inputs.url || 'https://www.screener.in/screens/3675531/fundareal-klp-final/' }}
+          SCREEN_URL: ${{ inputs.url || 'https://www.screener.in/screens/3836355/vipulscreen/' }}
           MAX_COMPANIES: ${{ inputs.max_companies || '0' }}
-          MAX_PAGES: ${{ inputs.max_pages || '30' }}
+          MAX_PAGES: ${{ inputs.max_pages || '40' }}
           START_AT: ${{ inputs.start_at || '0' }}
         run: node screener-test/scrape.mjs
 
