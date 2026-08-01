@@ -8,6 +8,7 @@ import { writeFileSync, mkdirSync, readFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { abdiRanaldoSpreadPct, amihudImpactPct, liquidityTier } from "./lib/liquidity-estimators.mjs";
+import { mergePinned } from "./lib/pinned.mjs";
 
 const IMPACT_COST_ORDER_SIZE_RUPEES = 5e7;   // ₹5 crore — standardized institutional position
 
@@ -51,8 +52,17 @@ run().catch((err) => {
 
 // ---------- main ----------
 async function run() {
-  const companies = JSON.parse(readFileSync(COMPANIES_PATH, "utf8"));
-  console.log(`Loaded ${companies.length} companies from screener-companies.json`);
+  const universe = JSON.parse(readFileSync(COMPANIES_PATH, "utf8"));
+  console.log(`Loaded ${universe.length} companies from screener-companies.json`);
+
+  // Re-inject cohort members that have left the market-cap band. Without this
+  // a pick that crosses the ceiling mid-hold stops being priced, and the
+  // cohort tracker loses the position exactly when it is working.
+  const pinnedMerge = mergePinned(universe, dirname(COMPANIES_PATH));
+  const companies = pinnedMerge.companies;
+  if (pinnedMerge.added) {
+    console.log(`+ ${pinnedMerge.added} pinned (outside the band, still held): ${pinnedMerge.addedTickers.join(", ")}`);
+  }
 
   // F&O eligible list — used by the Sentiment & Liquidity tab's F&O rule.
   let fnoSet = new Set();

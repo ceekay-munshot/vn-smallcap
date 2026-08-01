@@ -90,6 +90,16 @@ jobs:
           cp screener-test/output/screener-companies.json public/data/
           cp screener-test/output/metadata.json public/data/
 
+      # ---- 2. Pin cohort members that just left the band ----
+      # MUST run here: after the new universe is in place but BEFORE it is
+      # committed. Right now the working tree has the new universe and git
+      # HEAD still has the previous one -- and HEAD is the only place a
+      # just-departed company's fundamentals row still exists. Move this
+      # step after the commit and that row is gone permanently, leaving the
+      # position untracked for the rest of its hold.
+      - name: Pin departed cohort holdings
+        run: node screener-test/pin-holdings.mjs
+
       # ---- Artifacts ----
       - name: Upload weekly artifacts
         if: always()
@@ -100,6 +110,7 @@ jobs:
             public/data/screener-companies.csv
             public/data/screener-companies.json
             public/data/metadata.json
+            public/data/pinned-companies.json
           if-no-files-found: warn
 
       # ---- One commit, one push ----
@@ -109,6 +120,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/data/screener-companies.csv public/data/screener-companies.json public/data/metadata.json
+          [ -f public/data/pinned-companies.json ] && git add public/data/pinned-companies.json || true
           if git diff --cached --quiet; then
             echo "No data changes to commit."
             exit 0

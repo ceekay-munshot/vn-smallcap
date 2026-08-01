@@ -20,6 +20,7 @@ import { scoreCompositeBatch, PILLAR_WEIGHTS } from "../public/js/composite-scor
 import * as techScoring from "../public/js/tech-scoring.js";
 import * as fundScoring from "../public/js/scoring.js";
 import { enrichCompanies } from "./lib/enrich-companies.mjs";
+import { mergePinned } from "./lib/pinned.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR       = resolve(__dirname, "../public/data");
@@ -43,9 +44,22 @@ async function run() {
   console.log(`Building snapshot for ${date}...`);
   const fund  = readJson(FUND_PATH);
   const tech  = readJson(TECH_PATH);
-  const macro = readJson(MACRO_PATH);
+  // macro.json is no longer produced -- the Macro pillar was removed and its
+  // scraper deleted. It must therefore be OPTIONAL: readJson() throws ENOENT,
+  // which would kill the snapshot writer outright and leave the dashboard with
+  // no history at all. macro-scoring.js is null-safe (returns 0/17, all N/A)
+  // and the pillar is zero-weighted, so null costs nothing.
+  const macro = readJsonSafe(MACRO_PATH);
 
-  const fundCompanies = Array.isArray(fund) ? fund : (fund.companies || []);
+  const liveCompanies = Array.isArray(fund) ? fund : (fund.companies || []);
+  // Cohort members that have left the market-cap band still need a snapshot
+  // row every day, otherwise the tracker loses the position mid-hold and the
+  // month's return is measured over a shorter window than it was held.
+  const pinnedMerge = mergePinned(liveCompanies, DATA_DIR);
+  const fundCompanies = pinnedMerge.companies;
+  if (pinnedMerge.added) {
+    console.log(`  pinned (outside band, still held): ${pinnedMerge.addedTickers.join(", ")}`);
+  }
   const techCompanies = tech.companies || tech || [];
 
   // Fuse the same auxiliary data the live SPIP Basket tab merges before
@@ -139,6 +153,12 @@ async function run() {
 
 function readJson(path) {
   return JSON.parse(readFileSync(path, "utf8"));
+}
+
+// Same, but returns null instead of throwing — for inputs whose absence is a
+// valid state rather than a broken run.
+function readJsonSafe(path) {
+  try { return JSON.parse(readFileSync(path, "utf8")); } catch { return null; }
 }
 
 function writeIfChanged(path, content) {

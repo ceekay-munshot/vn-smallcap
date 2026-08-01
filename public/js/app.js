@@ -773,7 +773,9 @@ async function loadTab(tabId) {
     const [fundData, techData, macroData] = await Promise.all([
       fetch("data/screener-companies.json").then((r) => r.json()),
       fetch("data/technicals.json").then((r) => r.json()),
-      fetch("data/macro.json").then((r) => r.json()),
+      // Optional: macro.json is not produced by this dashboard. Inside a
+      // Promise.all a 404 would reject and blank the entire page, so swallow it.
+      fetch("data/macro.json").then((r) => (r.ok ? r.json() : null)).catch(() => null),
     ]);
     const fundCompanies = Array.isArray(fundData) ? fundData : (fundData.companies || []);
     const techCompanies = techData.companies || [];
@@ -860,7 +862,7 @@ async function loadTab(tabId) {
 
   const [rawData, rawMeta] = await Promise.all([
     fetch(c.dataUrl).then((r) => r.json()),
-    c.metaUrl ? fetch(c.metaUrl).then((r) => r.json()) : Promise.resolve(null),
+    c.metaUrl ? fetch(c.metaUrl).then((r) => (r.ok ? r.json() : null)).catch(() => null) : Promise.resolve(null),
   ]);
   const parsed = c.parseData(rawData);
   const rows = parsed.rows || parsed;
