@@ -96,7 +96,7 @@ export function decisionFor(rating) {
       size: "8–10% of basket",
       review: "Monthly",
       exit: "Score drops below 60 OR hard fail triggered",
-      profile: "Passes all hard filters · strong fundamentals + technical momentum + macro tailwind",
+      profile: "Passes all hard filters · strong fundamentals + technical momentum",
     };
     case "BUY": return {
       verdict: "Include with monitoring",
@@ -104,7 +104,7 @@ export function decisionFor(rating) {
       size: "5–7% of basket",
       review: "Bi-weekly",
       exit: "Score drops below 50 OR technical breakdown",
-      profile: "Strong on 3 of 5 pillars · minor gaps in 1–2 parameters",
+      profile: "Strong on one pillar · minor gaps on the other",
     };
     case "WATCH": return {
       verdict: "Watchlist · do not initiate",
@@ -112,7 +112,7 @@ export function decisionFor(rating) {
       size: "3–5% max",
       review: "Weekly",
       exit: "Score does not improve within 2 months",
-      profile: "Mixed signals · fundamentals OK but technicals or macro lagging",
+      profile: "Mixed signals · fundamentals OK but technicals lagging",
     };
     case "AVOID": return {
       verdict: "Exclude from SPIP Basket",
@@ -120,7 +120,7 @@ export function decisionFor(rating) {
       size: "Zero allocation",
       review: "Immediate",
       exit: "Already triggered — exit now",
-      profile: "Fails multiple pillar thresholds",
+      profile: "Fails pillar thresholds",
     };
     case "FILTERED": return {
       verdict: "Filtered out of pipeline",

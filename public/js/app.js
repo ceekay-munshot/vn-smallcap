@@ -81,11 +81,11 @@ const CONFIGS = {
           { name: "ADX",  value: c.adx14 ?? "—" },
           { name: "β",    value: c.beta_1y ?? "—" },
         ],
-        sub: c.relative_strength_6m == null ? "" : `6M relative strength ${(c.relative_strength_6m * 100).toFixed(1)}% vs Nifty 500` },
+        sub: c.relative_strength_6m == null ? "" : `6M relative strength ${(c.relative_strength_6m * 100).toFixed(1)}% vs Smallcap 250` },
     ],
   },
   composite: {
-    label: "SPIP Basket",
+    label: "AI Basket",
     composite: true,                  // marker — special loading + drill
     // Loaded specially in loadTab (fuses fundamentals + technicals + macro).
     dataUrl: "data/screener-companies.json",
@@ -161,7 +161,7 @@ const CONFIGS = {
 // the ☆/★ button in each row and the "Watchlist" filter pill in the toolbar.
 // Client-adjustable pillar weights — stored in localStorage so the
 // per-client tweak survives reloads. Defaults to the framework's
-// PILLAR_WEIGHTS (40/35/15/5/5). SPIP basket + Top Picks tabs re-score
+// PILLAR_WEIGHTS (40/35/15/5/5). AI basket + Top Picks tabs re-score
 // composites whenever the user changes these.
 // One place that renders the active pillar mix. Several UI spots used to
 // print a frozen "40 · 35 · 15 · 5 · 5" that ignored the real weights, so the
@@ -434,7 +434,7 @@ function saveHistoryView(v) {
 
 // "Recompute history with current pillar weights" opt-in. Snapshots are
 // stored with v1 framework weights — when the analyst changes weights
-// in the SPIP basket pillar editor, the History tab still shows the
+// in the AI basket pillar editor, the History tab still shows the
 // v1 composites by default. Opting in here re-derives each snapshot's
 // composite + rating from the stored per-pillar pct × current weights.
 const RECOMPUTE_HISTORY_KEY = "klpdash-recompute-history-v1";
@@ -724,7 +724,7 @@ async function switchTab(tabId) {
 async function loadTab(tabId) {
   const c = CONFIGS[tabId];
 
-  // Composite (SPIP Basket) tab: fuse fundamentals + technicals + macro
+  // Composite (AI Basket) tab: fuse fundamentals + technicals + macro
   // (the same enrichments the per-pillar tabs do) and run the weighted
   // composite scorer. The output rows are composite-result objects, not
   // plain companies — drill/table renderers branch on c.composite.
@@ -1030,7 +1030,7 @@ function sourceFriendly(c, m) {
   if (c.label === "Technicals") return "Yahoo Finance EOD · ₹2,000–12,500 Cr universe";
   if (c.label === "Macro") return "Multi-source · Yahoo + RBI + curated";
   if (c.label === "Sentiment & Liquidity") return "Yahoo + NSE + computed breadth";
-  if (c.label === "SPIP Basket") return `${weightsLabel().names.split(" · ").length}-pillar weighted composite`;
+  if (c.label === "AI Basket") return `${weightsLabel().names.split(" · ").length}-pillar weighted composite`;
   return c.label;
 }
 
@@ -1052,7 +1052,7 @@ function renderStats() {
     }
     const inBasket = counts.strong + counts.buy + counts.watch;
     $("#stat-rules").textContent = `${inBasket}`;
-    $("#stat-rules-note").textContent = `In SPIP Basket of ${st.scored.length}`;
+    $("#stat-rules-note").textContent = `In AI Basket of ${st.scored.length}`;
     // Repurpose the third card for the pillar weights mini-strip (was a
     // confusing "Max Score 300" reading before).
     $("#stat-max-label").textContent = "Pillar Weights";
@@ -1069,7 +1069,7 @@ function renderStats() {
     }
     if (maxCard) maxCard.classList.remove("hidden");
     // Rich title — uses innerHTML so the trophy can render properly.
-    $("#top-cards-title").innerHTML = `<span class="text-amber-500">🏆</span> SPIP Basket — Top 10 Picks <span class="ml-2 text-xs font-normal text-slate-500">composite-weighted, hard-fails excluded</span>`;
+    $("#top-cards-title").innerHTML = `<span class="text-amber-500">🏆</span> AI Basket — Top 10 Picks <span class="ml-2 text-xs font-normal text-slate-500">composite-weighted, hard-fails excluded</span>`;
     return;
   }
   $("#stat-rules").textContent = c.stats.rules;
@@ -1133,7 +1133,7 @@ function renderTopCards() {
   $$("#top-cards .top-card").forEach((el) => el.addEventListener("click", () => openDrillDown(top[Number(el.dataset.idx)])));
 }
 
-// SPIP Basket — premium overview: a rating-distribution strip
+// AI Basket — premium overview: a rating-distribution strip
 // (visual breakdown across STRONG / BUY / WATCH / AVOID / FILTERED)
 // plus a hero card grid for the top 10 picks. Designed for impact.
 function renderCompositeTopCards() {
@@ -1157,7 +1157,7 @@ function renderCompositeTopCards() {
 
   // Pillar-weight summary — just a compact pill showing current weights
   // with a small "Adjust" button. Full editor lives in a modal so the
-  // SPIP basket header stays clean.
+  // AI basket header stays clean.
   const w = state.pillarWeights;
   const isDefaultWeights = ["fundamentals","technicals","macro","sentiment","liquidity"]
     .every((k) => w[k] === composite.PILLAR_WEIGHTS[k]);
@@ -1267,7 +1267,7 @@ function renderCompositeTopCards() {
     <div class="print-only print-cover">
       <div style="padding: 30mm 10mm; text-align: center;">
         <div style="font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #64748b;">VN Smallcap Screener · Basket Brief</div>
-        <h1 style="font-size: 42px; font-weight: 800; margin: 12px 0 8px; color: #0f172a;">SPIP Basket</h1>
+        <h1 style="font-size: 42px; font-weight: 800; margin: 12px 0 8px; color: #0f172a;">AI Basket</h1>
         <p style="font-size: 14px; color: #64748b; margin: 0;">${weightsLabel().names.split(" · ").length}-pillar weighted composite · ₹2,000–12,500 Cr universe · ${new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" })}</p>
         <div style="margin: 36px auto 0; max-width: 480px; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background: linear-gradient(135deg, #eef2ff 0%, #ecfeff 100%);">
           <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
@@ -1304,7 +1304,7 @@ function renderCompositeTopCards() {
   $("#pillar-weight-btn")?.addEventListener("click", () => openPillarWeightsModal());
 }
 
-// Pillar Weights modal — invoked from the SPIP basket header pill.
+// Pillar Weights modal — invoked from the AI basket header pill.
 function openPillarWeightsModal() {
   const w = state.pillarWeights;
   const isDefault = ["fundamentals","technicals","macro","sentiment","liquidity"]
@@ -1314,7 +1314,7 @@ function openPillarWeightsModal() {
       <div class="flex items-start justify-between gap-4 mb-1">
         <div>
           <h2 class="font-display text-xl font-bold text-slate-900">Adjust Pillar Weights</h2>
-          <p class="text-sm text-slate-500 mt-1">Set the relative importance of each pillar. Composite scores update across SPIP Basket and Top Picks.</p>
+          <p class="text-sm text-slate-500 mt-1">Set the relative importance of each pillar. Composite scores update across AI Basket and Top Picks.</p>
         </div>
         <button id="modal-close-btn" class="text-slate-400 hover:text-slate-700 text-2xl leading-none">×</button>
       </div>
@@ -1491,7 +1491,7 @@ function renderTopPicks() {
 
   if (picks.length === 0) {
     $("#top-picks-content").innerHTML = `
-      <button id="tp-back-btn" type="button" class="mb-3 inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-700">← Back to SPIP Basket</button>
+      <button id="tp-back-btn" type="button" class="mb-3 inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-700">← Back to AI Basket</button>
       <div class="bg-white rounded-3xl shadow-sm ring-1 ring-slate-200 p-12 text-center">
         <div class="text-6xl mb-4">🔍</div>
         <h2 class="text-2xl font-bold text-slate-900 mb-2">No stocks above 75 right now</h2>
@@ -1652,7 +1652,7 @@ function renderTopPicks() {
   `;
 
   $("#top-picks-content").innerHTML = `
-    <button id="tp-back-btn" type="button" class="mb-3 inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-700 print-hide">← Back to SPIP Basket</button>
+    <button id="tp-back-btn" type="button" class="mb-3 inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-700 print-hide">← Back to AI Basket</button>
     ${heroHeader}
     ${picks.length > 0 ? `
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-3">
@@ -1834,7 +1834,7 @@ async function renderHistory() {
 
   // Benchmark series lookup — Nifty close on any date, falling back to
   // the most recent close on or before the requested date.
-  const niftyClosesByDate = benchmark?.indices?.["^NSEI"]?.closes || null;
+  const niftyClosesByDate = benchmark?.indices?.["NIFTYSMLCAP250.NS"]?.closes || null;
   const niftyDatesSorted = niftyClosesByDate ? Object.keys(niftyClosesByDate).sort() : null;
   function niftyOn(date) {
     if (!niftyClosesByDate) return null;
@@ -2646,7 +2646,7 @@ function heroStat(label, value, sub) {
 }
 
 // ---------------- Monthly Cohort Tracker ----------------
-// At each month-end, lock the SPIP basket's top 7 (highest composite,
+// At each month-end, lock the AI basket's top 7 (highest composite,
 // regardless of band) as the cohort that's HELD through the next
 // month. Compute daily average return for that locked group, alongside
 // the client's LKP picks (same entry-month logic, midpoint of entry
@@ -3128,7 +3128,7 @@ function renderHistoryViewSwitch(activeView, accuracyData, cohortView) {
   const cohortBtnCls = (active) => `px-2.5 py-1 rounded-md transition ${active ? "bg-white text-indigo-700 shadow-sm" : "text-slate-600 hover:text-slate-900"}`;
   const cohortToggle = `
     <div id="cohort-view-toggle" class="inline-flex bg-slate-100 rounded-lg p-0.5 text-[11px] font-semibold">
-      <button data-view="static" type="button" class="${cohortBtnCls(cohortView === "static")}" title="AI top 7 frozen from prior month-end · held all month (SPIP model)">Static</button>
+      <button data-view="static" type="button" class="${cohortBtnCls(cohortView === "static")}" title="AI top 7 frozen from prior month-end · held all month (composite model)">Static</button>
       <button data-view="monthly" type="button" class="${cohortBtnCls(cohortView === "monthly")}" title="AI top 7 frozen from client upload date">Monthly</button>
       <button data-view="weekly" type="button" class="${cohortBtnCls(cohortView === "weekly")}" title="AI re-locks every Monday">Weekly</button>
     </div>
@@ -3710,7 +3710,7 @@ function renderCohortTracker(cohort, series, view, selectedSegIdx) {
         COHORT_COLOR.manual,
       )}
       ${statBlock(
-        "Nifty 50",
+        "Smallcap 250",
         series.hasNifty ? fmtPct(last.niftyCum) : "—",
         series.hasNifty ? `Benchmark over same window` : "Loading daily",
         sign(last.niftyCum),
@@ -4007,7 +4007,7 @@ function setupCohortHover(series) {
       <div class="space-y-0.5 min-w-[160px]">
         ${line("AI Picks", p.aiCum, COHORT_COLOR.ai)}
         ${series.hasManual ? line("Manual Picks", p.manualCum, COHORT_COLOR.manual) : ""}
-        ${series.hasNifty ? line("Nifty 50", p.niftyCum, COHORT_COLOR.nifty) : ""}
+        ${series.hasNifty ? line("Smallcap 250", p.niftyCum, COHORT_COLOR.nifty) : ""}
       </div>
       ${boundaryNote}
     `;
@@ -4438,7 +4438,7 @@ async function renderActive() {
       ? `<div class="bg-slate-50 rounded-2xl ring-1 ring-slate-200 px-3 py-2 text-[11px] text-slate-600 flex items-center gap-2"><span>🔒</span><span>This basket completed its <strong>4-month hold</strong> — tracking closed on ${fmtDateDMY(todayDate)}. Open positions were marked at that day's close.</span></div>`
       : "";
 
-    const niftyClosesByDate = benchmark?.indices?.["^NSEI"]?.closes || null;
+    const niftyClosesByDate = benchmark?.indices?.["NIFTYSMLCAP250.NS"]?.closes || null;
     const niftyDatesSorted = niftyClosesByDate ? Object.keys(niftyClosesByDate).sort() : null;
     function niftyOn(date) {
       if (!niftyClosesByDate) return null;
@@ -4447,8 +4447,8 @@ async function renderActive() {
       for (const d of niftyDatesSorted) { if (d <= date) last = niftyClosesByDate[d]; else break; }
       return last;
     }
-    // Nifty 500 — the client's ideal benchmark (it IS our stock universe).
-    const nifty500ClosesByDate = benchmark?.indices?.["^CRSLDX"]?.closes || null;
+    // Midcap 150 — secondary reference; the Rs 12,500 Cr ceiling straddles it.
+    const nifty500ClosesByDate = benchmark?.indices?.["NIFTYMIDCAP150.NS"]?.closes || null;
     const nifty500DatesSorted = nifty500ClosesByDate ? Object.keys(nifty500ClosesByDate).sort() : null;
     function nifty500On(date) {
       if (!nifty500ClosesByDate) return null;
@@ -5116,7 +5116,7 @@ function renderActiveShell(view, cadence, anchorDate, todayDate, mode, alertsHtm
 }
 
 // Strategy-tab sub-tab bar. Same pattern as the top-level tabs the founder
-// likes on the SPIP Basket page — one click, no scroll.
+// likes on the AI Basket page — one click, no scroll.
 function renderStrategySubNav(sub) {
   const tabs = [
     { k: "overview",  icon: "📈", label: "Overview" },
@@ -5654,7 +5654,7 @@ function renderActiveCumulativeChart(view) {
     <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-0.5" style="background:${color.ai}"></span>AI basket</span>
     ${hasManual ? `<span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-0.5" style="background:${color.manual}"></span>Manual basket</span>` : ""}
     <span class="inline-flex items-center gap-1.5" title="Benchmark"><span class="w-2.5 h-0.5 border-t border-dashed" style="border-color:${color.nifty}"></span>Nifty 50</span>
-    ${hasN500 ? `<span class="inline-flex items-center gap-1.5" title="Benchmark — the NSE 500 universe">​<span class="w-2.5 h-0.5 border-t border-dashed" style="border-color:${color.nifty500}"></span>Nifty 500</span>` : ""}`;
+    ${hasN500 ? `<span class="inline-flex items-center gap-1.5" title="Benchmark — Nifty Midcap 150">​<span class="w-2.5 h-0.5 border-t border-dashed" style="border-color:${color.nifty500}"></span>Midcap 150</span>` : ""}`;
 
   const body = `
       <div id="active-chart-container" class="relative">
@@ -7199,7 +7199,7 @@ function openHistoryDrill(pick) {
       const panel = $("#hist-hardfail-panel");
       const el = $("#hist-hardfail-rules");
       if (el && panel && panel.dataset.ticker === pick.ticker) {
-        el.textContent = "Couldn't load live rule list — open SPIP Basket for the full breakdown.";
+        el.textContent = "Couldn't load live rule list — open AI Basket for the full breakdown.";
       }
     });
   }
@@ -7703,19 +7703,19 @@ async function populateHardFailRules(ticker) {
   };
 
   // Warm composite cache first so the company gets the same enrichments
-  // (auditor opinion, governance flags, revenue-mix) the SPIP basket uses.
+  // (auditor opinion, governance flags, revenue-mix) the AI basket uses.
   if (!state.cache.composite) {
     try { await loadTab("composite"); } catch {}
   }
 
   const co = await fetchCompanyByTicker(ticker);
   if (!co) {
-    writeIfCurrent("Couldn't resolve ticker — open SPIP Basket for the full breakdown.", true);
+    writeIfCurrent("Couldn't resolve ticker — open AI Basket for the full breakdown.", true);
     return;
   }
   const result = await ensureCompositeFor(co);
   if (result == null) {
-    writeIfCurrent("Couldn't load live rule list — open SPIP Basket for the full breakdown.", true);
+    writeIfCurrent("Couldn't load live rule list — open AI Basket for the full breakdown.", true);
     return;
   }
   const fails = Array.isArray(result.hardFails) ? result.hardFails : [];
@@ -7809,7 +7809,7 @@ function renderPillarCard(label, p, weight) {
   `;
 }
 
-// ---------------- SPIP Basket — radar / thesis / animation / magazine ----------------
+// ---------------- AI Basket — radar / thesis / animation / magazine ----------------
 
 // 5-axis pillar radar (Fund / Tech / Macro / Sent / Liq) rendered as
 // inline SVG. Concentric rings at 20/40/60/80/100, axes at 5 vertices,
@@ -7820,7 +7820,36 @@ function renderPillarCard(label, p, weight) {
 // extend into a `LABEL_PAD` zone outside that, so the actual SVG is
 // (size + 2*LABEL_PAD) wide/tall. This prevents the right-edge labels
 // (e.g. "17.5/24") from getting clipped when long.
+// Two-pillar stand-in for the radar. Same data, same colours, readable at
+// n=2 where a polygon is not.
+function renderPillarBars(s, theme, keys) {
+  const NAME = { fundamentals: "Fundamentals", technicals: "Technicals", macro: "Macro", sentiment: "Sentiment", liquidity: "Liquidity" };
+  const rows = keys.map((k) => {
+    const p = s.pillars?.[k] || {};
+    const pct = p.pct ?? 0;
+    const tier = pct >= 75 ? "bg-emerald-500" : pct >= 60 ? "bg-blue-500" : pct >= 45 ? "bg-amber-500" : "bg-rose-500";
+    return `
+      <div class="mb-4">
+        <div class="flex items-baseline justify-between mb-1.5">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-600">${NAME[k] || k}</span>
+          <span class="text-sm font-bold tabular-nums text-slate-900">${pct}%
+            <span class="text-[11px] font-normal text-slate-400">${p.raw ?? "—"}/${p.max ?? "—"}</span>
+          </span>
+        </div>
+        <div class="h-3 rounded-full bg-slate-100 ring-1 ring-slate-200 overflow-hidden">
+          <div class="h-full ${tier} rounded-full transition-all" style="width:${Math.max(0, Math.min(100, pct))}%"></div>
+        </div>
+      </div>`;
+  }).join("");
+  return `<div class="w-full px-6 py-4">${rows}</div>`;
+}
+
 function renderPillarRadar(s, theme, size = 280) {
+  // A radar needs >= 3 axes to enclose any area. With two live pillars the
+  // polygon degenerates to a line and reads as a rendering bug, so fall back
+  // to horizontal bars, which compare two values better anyway.
+  const liveKeys = livePillars();
+  if (liveKeys.length < 3) return renderPillarBars(s, theme, liveKeys);
   const LABEL_PAD = 64;             // room around chart for labels
   const svgSize = size + LABEL_PAD * 2;
   const cx = svgSize / 2, cy = svgSize / 2;
@@ -7986,7 +8015,7 @@ function synthesizeThesis(s) {
   const rating = s.rating || "—";
 
   const sentences = [];
-  sentences.push(`Composite scores <strong>${composite}/100</strong> — ${rating} territory per the SPIP framework.`);
+  sentences.push(`Composite scores <strong>${composite}/100</strong> — ${rating} territory per the scoring framework.`);
   if (top && top[1].pct >= 75) {
     sentences.push(`Anchored by <strong>${labelMap[top[0]] || top[0]}</strong> at <strong>${top[1].raw}/${top[1].max}</strong> (${top[1].pct}%), contributing <strong>+${(top[1].weighted ?? 0).toFixed(1)}</strong> of the composite.`);
   } else if (top) {
@@ -8041,7 +8070,7 @@ function openMagazineDrill(s) {
       <button id="modal-close" class="absolute top-4 right-4 z-10 text-white/85 hover:text-white text-2xl leading-none w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur flex items-center justify-center transition-colors">×</button>
       <div class="relative px-8 py-7 ${theme.textOn}">
         <div class="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.25em] opacity-85">
-          <span>SPIP Brief</span>
+          <span>Basket Brief</span>
           <span class="opacity-50">·</span>
           <span>${escapeHtml(s.rating)}</span>
           <span class="opacity-50">·</span>
@@ -8067,7 +8096,7 @@ function openMagazineDrill(s) {
         <div class="bg-gradient-to-br ${theme.soft} rounded-2xl ring-1 ${theme.ring} p-5">
           <div class="flex items-center justify-between mb-2">
             <div class="text-[10px] font-bold uppercase tracking-[0.15em] ${theme.accent}">Recommended Action</div>
-            <span class="text-[10px] text-slate-500 whitespace-nowrap">SPIP · Section C</span>
+            <span class="text-[10px] text-slate-500 whitespace-nowrap">Decision framework</span>
           </div>
           <div class="text-lg font-bold text-slate-900 mb-4 leading-snug">${escapeHtml(decision.action)}</div>
           <div class="grid grid-cols-3 gap-4">
@@ -8136,7 +8165,7 @@ function openMagazineDrill(s) {
   requestAnimationFrame(() => animateScoreEntrance($("#modal-content")));
 }
 
-// SPIP Basket drill — opens as a CENTRED MODAL (not the side panel).
+// AI Basket drill — opens as a CENTRED MODAL (not the side panel).
 // Hero gauge + decision card on top, 5-card pillar composition below,
 // then drill-deeper shortcuts to the per-pillar tabs.
 function openCompositeDrill(s) {
@@ -8189,7 +8218,7 @@ function openCompositeDrill(s) {
       <div class="bg-gradient-to-br ${theme.soft} rounded-2xl ring-1 ${theme.ring} p-6">
         <div class="flex items-center justify-between mb-2">
           <div class="text-[10px] font-bold uppercase tracking-wider ${theme.accent}">Recommended Action</div>
-          <span class="text-[10px] text-slate-500 whitespace-nowrap">SPIP · Section C</span>
+          <span class="text-[10px] text-slate-500 whitespace-nowrap">Decision framework</span>
         </div>
         <div class="text-lg font-bold text-slate-900 mb-4 leading-snug">${escapeHtml(decision.action)}</div>
         <div class="grid grid-cols-3 gap-3 text-xs">
@@ -8215,7 +8244,7 @@ function openCompositeDrill(s) {
       <div class="flex items-start gap-3 mb-3">
         <div class="w-10 h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center text-xl flex-shrink-0">⚠</div>
         <div class="flex-1">
-          <div class="font-bold text-rose-900 text-base">Excluded from SPIP Basket</div>
+          <div class="font-bold text-rose-900 text-base">Excluded from AI Basket</div>
           <div class="text-sm text-rose-700/90 mt-0.5">Hard fail per client framework · stock exits pipeline regardless of composite score</div>
         </div>
       </div>
@@ -8405,7 +8434,7 @@ function closeModal() {
 function buildHelpModal(tabId) {
   const cfgTab = CONFIGS[tabId];
 
-  // SPIP Basket — composite-specific help: weights + bands + hard fails.
+  // AI Basket — composite-specific help: weights + bands + hard fails.
   if (cfgTab.composite) {
     const weightedRow = (label, weight, max, color) => `
       <div class="flex items-center gap-3 py-2.5 border-b border-slate-100 last:border-0">
@@ -8438,8 +8467,8 @@ function buildHelpModal(tabId) {
     return `
       <div class="relative bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-6 text-white">
         <button id="modal-close" class="absolute top-3 right-3 text-white/80 hover:text-white text-2xl leading-none w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">×</button>
-        <div class="text-xs font-semibold uppercase tracking-wider opacity-90">SPIP — Stock Selection &amp; Performance Index</div>
-        <h2 class="text-2xl font-bold mt-1">How the SPIP Basket Is Scored</h2>
+        <div class="text-xs font-semibold uppercase tracking-wider opacity-90">AI Basket — Composite Stock Selection</div>
+        <h2 class="text-2xl font-bold mt-1">How the AI Basket Is Scored</h2>
         <p class="text-sm opacity-90 mt-1">Weighted composite of 5 pillars · rating bands per client framework · hard-fail rules exclude stocks from the basket entirely.</p>
       </div>
       <div class="p-6 max-h-[calc(90vh-180px)] overflow-y-auto">
@@ -8472,7 +8501,7 @@ function buildHelpModal(tabId) {
         <div>
           <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Hard-Fail Rules — stock exits pipeline</h3>
           <div class="bg-rose-50/40 rounded-xl p-4 ring-1 ring-rose-200">
-            <div class="text-xs text-rose-800 mb-3">If any of these trigger, the stock is excluded from the SPIP basket regardless of its composite score:</div>
+            <div class="text-xs text-rose-800 mb-3">If any of these trigger, the stock is excluded from the AI basket regardless of its composite score:</div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
               ${hardFails.map((hf) => `
                 <div class="bg-white rounded-lg p-2.5 ring-1 ring-rose-100">
@@ -8540,7 +8569,7 @@ function buildHelpModal(tabId) {
       <button id="modal-close" class="absolute top-3 right-3 text-white/80 hover:text-white text-2xl leading-none w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">×</button>
       <div class="text-xs font-semibold uppercase tracking-wider opacity-90">Client framework</div>
       <h2 class="text-2xl font-bold mt-1">How the ${escapeHtml(cfgTab.label)} Tab Is Scored</h2>
-      <p class="text-sm opacity-90 mt-1">${rules.length} rules across ${Object.keys(grouped).length} categories · max ${totalMax} pts · scored verbatim from the client's SPIP framework.</p>
+      <p class="text-sm opacity-90 mt-1">${rules.length} rules across ${Object.keys(grouped).length} categories · max ${totalMax} pts · scored verbatim from the scoring framework.</p>
     </div>
     <div class="p-6 max-h-[calc(90vh-180px)] overflow-y-auto">
       ${Object.entries(grouped).map(([cat, rs]) => {
@@ -8629,7 +8658,7 @@ async function exportToExcel() {
 // opens the composite drill so every pillar's data (fundamentals,
 // technicals, macro, sentiment, liquidity) appears in one modal —
 // no tab-switching required. Composite cache lazy-loads on first
-// focus if the user hasn't visited the SPIP basket yet.
+// focus if the user hasn't visited the AI basket yet.
 const globalSearch = { matches: [], selectedIdx: -1, lastQuery: "" };
 
 async function ensureCompositeForSearch() {
@@ -9566,7 +9595,7 @@ function renderWeightLab() {
   if (!snaps?.length) return `<section id="weight-lab"></section>`;
   const anchor = snaps[0].date, today = snaps[snaps.length - 1].date;
   const ctx = buildLabContext(snaps, anchor);
-  // Anchor on the CURRENT live weights (what the SPIP basket actually uses),
+  // Anchor on the CURRENT live weights (what the AI basket actually uses),
   // not the framework baseline — so the Lab opens on "current" (founder ask).
   const currentW = { ...(state.pillarWeights || composite.PILLAR_WEIGHTS) };
   const yourW = state.labWeights || currentW;
@@ -9606,7 +9635,7 @@ function renderWeightLab() {
         </div>
         <div class="text-[11px] text-slate-500">Held top-7 · backtested over ${nDays} days · ${fmtDateDMY(anchor)} → ${fmtDateDMY(today)}</div>
       </div>
-      <div class="text-sm text-slate-600 mb-4 max-w-2xl">Change how much each pillar counts and watch which basket the mix would have picked — then let AI hunt for the best mix. This is the same blend the SPIP Basket uses; nothing changes on the live basket until you hit <strong>Apply to SPIP</strong>.</div>
+      <div class="text-sm text-slate-600 mb-4 max-w-2xl">Change how much each pillar counts and watch which basket the mix would have picked — then let AI hunt for the best mix. This is the same blend the AI Basket uses; nothing changes on the live basket until you hit <strong>Apply to Basket</strong>.</div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <div>
           <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">Your weights</div>
@@ -9617,12 +9646,12 @@ function renderWeightLab() {
           </div>
           <div class="flex items-center gap-2 mt-3 flex-wrap">
             <button type="button" data-lab-ai class="px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-semibold hover:bg-slate-800">🤖 AI find best weights</button>
-            <button type="button" data-lab-apply class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700">Apply to SPIP Basket</button>
+            <button type="button" data-lab-apply class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700">Apply to AI Basket</button>
             <button type="button" data-lab-reset title="Reset to the framework default — F${defW.fundamentals} · T${defW.technicals} · M${defW.macro} · S${defW.sentiment} · L${defW.liquidity}" class="px-3 py-1.5 rounded-lg text-slate-600 text-xs font-semibold hover:bg-slate-100">↺ Reset to default</button>
           </div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-          ${renderLabResultCard("Current SPIP", defBadge, currentW, perfCurrent, false)}
+          ${renderLabResultCard("Current Basket", defBadge, currentW, perfCurrent, false)}
           ${renderLabResultCard("Your weights", yourBadge, yourW, perfYour, false)}
           ${aiCard}
         </div>
@@ -9687,7 +9716,7 @@ function wireWeightLab() {
     state.pillarWeights = w; savePillarWeights(w);
     state.labWeights = { ...w };   // the applied weights are now the current/live anchor
     delete state.cache.composite; delete state.cache.topPicks; state.compositeBySlug.clear();
-    alert(`Applied to SPIP Basket: F${w.fundamentals} · T${w.technicals} · M${w.macro} · S${w.sentiment} · L${w.liquidity}. Open the SPIP Basket tab to see the re-scored basket.`);
+    alert(`Applied to AI Basket: F${w.fundamentals} · T${w.technicals} · M${w.macro} · S${w.sentiment} · L${w.liquidity}. Open the AI Basket tab to see the re-scored basket.`);
     refreshWeightLab();   // re-render so the "Current SPIP" card reflects the new live weights
   });
   $(`${root} [data-lab-reset]`)?.addEventListener("click", () => {
@@ -10196,12 +10225,12 @@ async function renderCustom() {
     if (!snapshots.length) { host.innerHTML = renderHistoryEmpty("No snapshots loaded."); return; }
     // Open the Weight Lab anchored on the CURRENT live weights each time the
     // tab is opened (founder ask) — discard any prior sandbox tinkering so the
-    // sliders always start from what the SPIP basket actually uses.
+    // sliders always start from what the AI basket actually uses.
     state.labWeights = { ...(state.pillarWeights || composite.PILLAR_WEIGHTS) };
     state.labAiBest = null;
     const anchorDate = lkpAnchorDate(lkp, snapshots);
     const todayDate = snapshots[snapshots.length - 1].date;
-    const niftyClosesByDate = benchmark?.indices?.["^NSEI"]?.closes || null;
+    const niftyClosesByDate = benchmark?.indices?.["NIFTYSMLCAP250.NS"]?.closes || null;
     const niftyDatesSorted = niftyClosesByDate ? Object.keys(niftyClosesByDate).sort() : null;
     const niftyOn = (date) => { if (!niftyClosesByDate) return null; if (niftyClosesByDate[date] != null) return niftyClosesByDate[date]; let last = null; for (const d of niftyDatesSorted) { if (d <= date) last = niftyClosesByDate[d]; else break; } return last; };
     const lkpResolved = lkpOverride() || lkp;

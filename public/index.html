@@ -42,7 +42,7 @@
       .meta-details > summary::marker { content: ""; }
 
       /* ---------------- Print stylesheet — "Export PDF" button on
-         the SPIP Basket tab triggers window.print() and lets the user
+         the AI Basket tab triggers window.print() and lets the user
          save as PDF from the browser dialog. We hide nav, controls,
          scrollbars, and the modal layer; keep the header strip + top
          cards + table so the printout reads like a hand-out. */
@@ -155,7 +155,7 @@
           Technicals
         </button>
         <button data-tab="composite" class="tab-btn px-4 py-2.5 font-semibold text-sm text-slate-500 hover:text-slate-700 border-b-2 border-transparent -mb-px transition-colors">
-          SPIP Basket
+          AI Basket
         </button>
         <button data-tab="active" class="tab-btn px-4 py-2.5 font-semibold text-sm text-slate-500 hover:text-slate-700 border-b-2 border-transparent -mb-px transition-colors">
           Strategy
@@ -309,7 +309,7 @@
       <div id="drill-content"></div>
     </aside>
 
-    <!-- CENTRED MODAL — for SPIP Basket drill + Help modal -->
+    <!-- CENTRED MODAL — for AI Basket drill + Help modal -->
     <div id="modal-overlay" class="fixed inset-0 bg-slate-900/60 hidden z-[60] backdrop-blur-sm items-center justify-center p-4 sm:p-8 overflow-y-auto">
       <div id="modal-container" class="relative bg-white rounded-3xl shadow-2xl w-full max-w-4xl my-8 scale-95 opacity-0 transition-all duration-200 overflow-hidden">
         <div id="modal-content"></div>
