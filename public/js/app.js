@@ -47,69 +47,6 @@ const CONFIGS = {
         sub: `Capital efficiency snapshot` },
     ],
   },
-  macro: {
-    label: "Macro",
-    dataUrl: "data/screener-companies.json",
-    metaUrl: "data/macro.json",
-    parseData: (raw) => raw,
-    rules: macro.ACTIVE_RULES,
-    deferred: macro.DEFERRED,
-    score: macro.scoreCompany,
-    name: (c) => c.Company,
-    marketCap: (c) => c["Market Cap"] || "",
-    screenerUrl: (c) => c["Screener URL"],
-    sector: (c) => c["Sector"] || null,
-    industry: (c) => c["Broad Industry"] || null,
-    columns: [
-      { label: "Sector",   get: (c) => c["Sector"] || "—" },
-      { label: "Industry", get: (c) => c["Broad Industry"] || "—" },
-      { label: "PLI",      get: (c) => c.in_pli ? "✓" : "—" },
-      { label: "Renewable", get: (c) => c.in_renewable ? "✓" : "—" },
-    ],
-    stats: {
-      rules: "11 / 11",   rulesNote: "Active rules",
-      maxScore: "17 pts", maxNote: "Sector overlays + macro context",
-    },
-    drillHeaderStats: (c) => [
-      { label: "Sector · Industry", main: c["Sector"] || "—",
-        sub: c["Broad Industry"] || "" },
-      { label: "Policy flags",
-        main: [c.in_pli ? "PLI" : null, c.in_renewable ? "Renewable" : null].filter(Boolean).join(" · ") || "—",
-        sub: "" },
-    ],
-  },
-  sentiment: {
-    label: "Sentiment & Liquidity",
-    dataUrl: "data/technicals.json",
-    metaUrl: "data/macro.json",
-    parseData: (raw) => ({ rows: raw.companies || [], meta: raw }),
-    rules: senliq.ACTIVE_RULES,
-    deferred: senliq.DEFERRED,
-    score: senliq.scoreCompany,
-    name: (c) => c.name,
-    marketCap: (c) => c.marketCap || "",
-    screenerUrl: (c) => c.screenerUrl,
-    sector: (c) => c.sector || null,
-    industry: (c) => c.industry || null,
-    columns: [
-      { label: "Sector",  get: (c) => c.sector || "—" },
-      { label: "ADTV ₹Cr", get: (c) => c.adtv_20d_cr == null ? "—" : "₹" + c.adtv_20d_cr },
-      { label: "F&O",     get: (c) => c.fno_eligible ? "✓" : "—" },
-      { label: "CMP",     get: (c) => c.cmp ? "₹" + Math.round(c.cmp).toLocaleString("en-IN") : "—" },
-    ],
-    stats: {
-      rules: "8 / 8",    rulesNote: "Active rules",
-      maxScore: "12 pts", maxNote: "Impact + Spread estimated from OHLCV",
-    },
-    drillHeaderStats: (c) => [
-      { label: "ADTV · F&O",
-        main: c.adtv_20d_cr == null ? "—" : "₹" + c.adtv_20d_cr + " Cr",
-        sub: c.fno_eligible ? "On NSE F&O list" : "Cash-only" },
-      { label: "Sentiment regime",
-        main: c._macro?.live?.india_vix?.latest != null ? "VIX " + c._macro.live.india_vix.latest : "—",
-        sub: c._macro?.sentiment?.fii_net_positive_last_20d === "yes" ? "FII flow net positive" : (c._macro?.sentiment?.fii_net_positive_last_20d || "") },
-    ],
-  },
   technicals: {
     label: "Technicals",
     dataUrl: "data/technicals.json",
@@ -230,6 +167,16 @@ const CONFIGS = {
 // print a frozen "40 · 35 · 15 · 5 · 5" that ignored the real weights, so the
 // dashboard advertised a model it was not running. Zero-weighted pillars are
 // omitted rather than shown as 0.
+// Pillars carrying non-zero weight. Everything user-facing iterates this
+// rather than the full five, so a zero-weighted pillar disappears from the
+// sliders, the mini bars and the radar instead of rendering as a dead 0.
+function livePillars(w) {
+  const ALL = ["fundamentals", "technicals", "macro", "sentiment", "liquidity"];
+  const src = w || (typeof state !== "undefined" && state.pillarWeights) || composite.PILLAR_WEIGHTS;
+  const live = ALL.filter((k) => (src[k] || 0) > 0);
+  return live.length ? live : ALL;      // never render an empty control
+}
+
 function weightsLabel(w) {
   const LBL = { fundamentals: "Fund", technicals: "Tech", macro: "Macro", sentiment: "Sent", liquidity: "Liq" };
   const src = w || (typeof state !== "undefined" && state.pillarWeights) || composite.PILLAR_WEIGHTS;
@@ -1278,7 +1225,7 @@ function renderCompositeTopCards() {
     const ratingTone = s.rating === "STRONG BUY" ? "text-emerald-700" : s.rating === "BUY" ? "text-blue-700" : s.rating === "WATCH" ? "text-amber-700" : "text-slate-700";
     const ribbon = i === 0 ? `<div class="absolute top-0 left-0 px-2 py-0.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-bold uppercase tracking-wider rounded-br-lg shadow">🏆 #1</div>` : `<div class="absolute top-2 right-2 text-xs font-bold text-slate-400">#${i+1}</div>`;
     // Mini pillar bars
-    const pillarBars = ["fundamentals","technicals","macro","sentiment","liquidity"].map((k) => {
+    const pillarBars = livePillars().map((k) => {
       const p = s.pillars?.[k];
       const pct = p?.pct ?? 0;
       const tier = pct >= 75 ? "bg-emerald-500" : pct >= 60 ? "bg-blue-500" : pct >= 45 ? "bg-amber-500" : "bg-rose-500";
@@ -1371,8 +1318,8 @@ function openPillarWeightsModal() {
         </div>
         <button id="modal-close-btn" class="text-slate-400 hover:text-slate-700 text-2xl leading-none">×</button>
       </div>
-      <div class="mt-5 grid grid-cols-2 sm:grid-cols-5 gap-3">
-        ${["fundamentals","technicals","macro","sentiment","liquidity"].map((k) => `
+      <div class="mt-5 grid grid-cols-2 gap-3" style="grid-template-columns: repeat(${Math.min(livePillars(w).length, 5)}, minmax(0, 1fr));">
+        ${livePillars(w).map((k) => `
           <label class="block">
             <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">${k.charAt(0).toUpperCase() + k.slice(1)}</div>
             <div class="flex items-center gap-1 bg-slate-50 border border-slate-200 rounded-lg focus-within:ring-2 focus-within:ring-indigo-500 focus-within:bg-white">
@@ -7879,15 +7826,13 @@ function renderPillarRadar(s, theme, size = 280) {
   const cx = svgSize / 2, cy = svgSize / 2;
   const r = size / 2 - 6;           // chart radius proper
   // 5 axes — start at top (-90°) and step every 72°
-  const axes = [
-    { key: "fundamentals", label: "FUND" },
-    { key: "technicals",   label: "TECH" },
-    { key: "macro",        label: "MACRO" },
-    { key: "sentiment",    label: "SENT" },
-    { key: "liquidity",    label: "LIQ" },
-  ];
+  // Axes follow the live weights. A radar needs at least 3 axes to be a
+  // shape at all -- with two pillars it collapses to a line -- so the caller
+  // falls back to bars below that.
+  const AXIS_LABEL = { fundamentals: "FUND", technicals: "TECH", macro: "MACRO", sentiment: "SENT", liquidity: "LIQ" };
+  const axes = livePillars().map((k) => ({ key: k, label: AXIS_LABEL[k] }));
   const ptAt = (axisIdx, pct) => {
-    const angle = -Math.PI / 2 + (axisIdx * 2 * Math.PI / 5);
+    const angle = -Math.PI / 2 + (axisIdx * 2 * Math.PI / axes.length);
     return { x: cx + Math.cos(angle) * r * (pct / 100), y: cy + Math.sin(angle) * r * (pct / 100) };
   };
   // Concentric guide rings (20/40/60/80/100 %)
