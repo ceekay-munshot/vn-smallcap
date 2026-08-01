@@ -19,7 +19,12 @@ name: Weekly refresh (fundamentals)
 # - Off the :00/:15/:30/:45 boundaries to dodge GitHub's cron queue
 #   contention windows.
 #
-# Total runtime budget: ~70 min at 724 companies.
+# Runtime budget: the 10-company smoke test showed ~1.9s per company but
+# ~35s for the ~20% that hit "(only 0 ratios; retrying)" -- the Screener
+# page occasionally renders with no #top-ratios block at all and needs a
+# reload. At that mix, 724 companies is ~104 min of scraping plus ~5 min
+# of setup. Timeout is 300 min so a worse-than-sampled retry rate cannot
+# kill the run; if it ever does time out, resume with the start_at input.
 
 on:
   workflow_dispatch:
@@ -50,7 +55,7 @@ on:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 300
     permissions:
       contents: write
     steps:

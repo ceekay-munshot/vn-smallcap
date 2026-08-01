@@ -65,36 +65,9 @@ jobs:
           path: screener-test/output/
           if-no-files-found: warn
 
-      - name: Sync fresh data into public/
-        if: success() && github.ref == 'refs/heads/main'
-        run: |
-          mkdir -p public/data
-          cp screener-test/output/screener-companies.csv public/data/
-          cp screener-test/output/screener-companies.json public/data/
-          cp screener-test/output/metadata.json public/data/
-
-      - name: Commit refreshed data to main
-        if: success() && github.ref == 'refs/heads/main'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/screener-companies.csv public/data/screener-companies.json public/data/metadata.json
-          if git diff --cached --quiet; then
-            echo "No data changes to commit."
-            exit 0
-          fi
-          git commit -m "Daily data refresh ($(date -u +%Y-%m-%d))"
-          # Handle push race — another scrape workflow may have committed
-          # to main while we were running. Fetch + rebase + retry.
-          for attempt in 1 2 3 4; do
-            if git push origin HEAD:main; then
-              echo "Push succeeded on attempt $attempt."
-              exit 0
-            fi
-            echo "Push rejected (attempt $attempt) — fetching + rebasing onto fresh main..."
-            git fetch origin main
-            git rebase origin/main || { echo "Rebase failed — aborting."; git rebase --abort; exit 1; }
-            sleep $((attempt * 2))
-          done
-          echo "Push still failing after 4 attempts."
-          exit 1
+      # NO commit step, deliberately. This workflow exists to smoke-test
+      # login + the ribbon on a handful of companies. It used to sync and
+      # push to main, which meant a 10-company test run would overwrite the
+      # real 724-company universe file and the next technicals run would
+      # score 10 stocks. Results are in the artifact above; the full run
+      # lives in weekly-refresh.yml.
