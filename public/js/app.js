@@ -110,9 +110,6 @@ const CONFIGS = {
       } },
       { label: "Fund", get: (co) => `${co._composite?.pillars?.fundamentals?.raw ?? "—"}/29` },
       { label: "Tech", get: (co) => co._composite?.pillars?.technicals?.raw == null ? "—" : `${co._composite.pillars.technicals.raw}/${co._composite.pillars.technicals.max}` },
-      { label: "Macro", get: (co) => `${co._composite?.pillars?.macro?.raw ?? "—"}/17` },
-      { label: "Sent", get: (co) => co._composite?.pillars?.sentiment?.raw == null ? "—" : `${co._composite.pillars.sentiment.raw}/${co._composite.pillars.sentiment.max}` },
-      { label: "Liq", get: (co) => co._composite?.pillars?.liquidity?.raw == null ? "—" : `${co._composite.pillars.liquidity.raw}/${co._composite.pillars.liquidity.max}` },
     ],
     stats: {
       get rules() { const l = weightsLabel(); return `${l.names.split(" · ").length} pillars`; },
@@ -2150,7 +2147,12 @@ function buildCohortClickPick(ticker, side, segAnchor) {
 
   const byTicker = cache.byTicker;
   const tk = byTicker?.get(ticker);
-  if (!tk || !Array.isArray(tk.points) || tk.points.length < 2) return null;
+  // Was < 2, which meant that on the first day of tracking -- exactly when
+  // a new cohort is locked in -- every row in the AI picks list did nothing
+  // at all when clicked. No error, no message. A single point is enough to
+  // show entry price, composite and pillar breakdown; only the return chart
+  // needs two, and that degrades on its own.
+  if (!tk || !Array.isArray(tk.points) || tk.points.length < 1) return null;
 
   // When a segment anchor is supplied (Accuracy / Performance row click),
   // the row's target / SL / return were all computed from the close at
@@ -6108,9 +6110,9 @@ function renderAiBasketTable(segment, view, mode) {
 // picks render greyed with a "Not Covered" badge. The basket is
 // always anchored at upload regardless of which segment is selected.
 function renderManualBasketTable(manualPicks) {
-  if (!manualPicks?.length) {
-    return `<div><div class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">Manual picks</div><div class="text-xs text-slate-500">No manual basket uploaded.</div></div>`;
-  }
+  // No manual basket on this dashboard — render nothing rather than an
+  // empty panel advertising a feature that does not apply.
+  if (!manualPicks?.length) return "";
   const todayClose = state.cache.history?.todayClose || {};
   const inCoverage = manualPicks.filter((p) => !p.notCovered).length;
   const booked = state.manualReturnMode !== "held";
@@ -6908,7 +6910,14 @@ function openHistoryDrill(pick) {
   const todayDate = state.cache.history.idx.dates[state.cache.history.idx.dates.length - 1];
 
   const points = pick.points.filter((p) => typeof p.close === "number");
-  if (points.length < 2) return;
+  // Was < 2, which silently did nothing on the FIRST day of a cohort --
+  // exactly when the basket is locked in and you most want to inspect a
+  // pick. The real constraint was xAt() dividing by (points.length - 1);
+  // that is now guarded, so a single point renders a legitimate one-day
+  // view: entry price, composite, pillars, target and stop-loss bands. The
+  // price line needs two points and simply has nothing to draw until then.
+  if (points.length < 1) return;
+  const singlePoint = points.length === 1;
 
   // --- SVG geometry ---
   // Single viewBox; everything inside is sized in viewBox units, the
@@ -6958,7 +6967,8 @@ function openHistoryDrill(pick) {
   const yPad = ySpan * 0.1;
   const yLo = yMin - yPad, yHi = yMax + yPad;
 
-  const xAt = (i) => M.left + (i / (points.length - 1)) * innerW;
+  // Centre a lone point instead of dividing by zero.
+  const xAt = (i) => M.left + (points.length > 1 ? i / (points.length - 1) : 0.5) * innerW;
   const yAt = (c) => M.top + innerH - ((c - yLo) / (yHi - yLo)) * innerH;
 
   // Path through closes
@@ -8274,17 +8284,19 @@ function openCompositeDrill(s) {
     </div>
   ` : "";
 
-  // --- Pillar composition: 5-card grid with proper breathing room
+  // --- Pillar composition. Cards and their weights both come from the live
+  // mix: this used to hardcode five cards at 40/35/15/5/5, so it rendered
+  // three permanent "no data / 15% weight" tiles for pillars that had been
+  // removed, and misreported the weights of the two that remained.
+  const PILLAR_CARD_NAME = { fundamentals: "Fundamentals", technicals: "Technicals", macro: "Macro", sentiment: "Sentiment", liquidity: "Liquidity" };
+  const cardKeys = livePillars();
+  const wNow = state.pillarWeights || composite.PILLAR_WEIGHTS;
   const pillarCards = `
     <div class="mb-6">
       <div class="flex items-baseline justify-between mb-3">
         <div class="text-xs font-bold uppercase tracking-wider text-slate-500">Pillar Composition</div>      </div>
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-        ${renderPillarCard("Fundamentals", s.pillars?.fundamentals, 40)}
-        ${renderPillarCard("Technicals",   s.pillars?.technicals,   35)}
-        ${renderPillarCard("Macro",        s.pillars?.macro,        15)}
-        ${renderPillarCard("Sentiment",    s.pillars?.sentiment,    5)}
-        ${renderPillarCard("Liquidity",    s.pillars?.liquidity,    5)}
+      <div class="grid gap-3" style="grid-template-columns: repeat(${Math.min(cardKeys.length, 5)}, minmax(0, 1fr));">
+        ${cardKeys.map((k) => renderPillarCard(PILLAR_CARD_NAME[k] || k, s.pillars?.[k], wNow[k] ?? 0)).join("")}
       </div>
       <div class="mt-3 flex items-center justify-between bg-gradient-to-r from-slate-50 to-slate-100 rounded-xl px-4 py-3 ring-1 ring-slate-200">
         <div class="flex items-center gap-2">
@@ -8299,11 +8311,12 @@ function openCompositeDrill(s) {
     </div>
   `;
 
+  // Only pillars that still exist as tabs, with counts read from the rule
+  // modules rather than typed in -- the old hardcoded "19 rules" was already
+  // wrong, and Macro/Sentiment linked to tabs that no longer exist.
   const PILLAR_INFO = {
-    fundamentals: { icon: "📊", label: "Fundamentals", count: "19 rules", color: "from-violet-500 to-purple-500" },
-    technicals:   { icon: "📈", label: "Technicals",   count: "16 rules", color: "from-sky-500 to-blue-500" },
-    macro:        { icon: "🌐", label: "Macro",        count: "11 rules", color: "from-emerald-500 to-teal-500" },
-    sentiment:    { icon: "💹", label: "Sentiment",    count: "8 rules",  color: "from-amber-500 to-orange-500" },
+    fundamentals: { icon: "📊", label: "Fundamentals", count: `${fund.ACTIVE_RULES.length} rules`, color: "from-violet-500 to-purple-500" },
+    technicals:   { icon: "📈", label: "Technicals",   count: `${tech.ACTIVE_RULES.length} rules`, color: "from-sky-500 to-blue-500" },
   };
   const tabShortcuts = `
     <div>
@@ -9444,9 +9457,6 @@ function stratColors(views) { return views.map((v, i) => ({ ...v, color: STRAT_P
 const LAB_PILLARS = [
   { key: "fundamentals", label: "Fundamental", dot: "bg-indigo-500" },
   { key: "technicals",   label: "Technical",   dot: "bg-sky-500" },
-  { key: "macro",        label: "Macro",       dot: "bg-emerald-500" },
-  { key: "sentiment",    label: "Sentiment",   dot: "bg-amber-500" },
-  { key: "liquidity",    label: "Liquidity",   dot: "bg-rose-500" },
 ];
 
 // Normalise a raw weight mix to NON-NEGATIVE integers summing to 100, via the
