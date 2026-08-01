@@ -33,8 +33,8 @@ const CONFIGS = {
     ],
     // 3 stat-card values for the header strip
     stats: {
-      rules: "19 / 19",   rulesNote: "Active rules",
-      maxScore: "29 pts", maxNote: "All rules active",
+      rules: `${fund.ACTIVE_RULES.length} / ${fund.ACTIVE_RULES.length}`, rulesNote: "Active rules",
+      maxScore: `${fund.ACTIVE_RULES.reduce((n, r) => n + (r.max || 0), 0) || 27} pts`, maxNote: "All rules active",
     },
     drillHeaderStats: (c) => [
       { label: "Market Cap", main: c["Market Cap"] || "—", sub: `CMP ${c["Current Price"] || "—"}` },
@@ -180,7 +180,8 @@ const CONFIGS = {
       { label: "Liq", get: (co) => co._composite?.pillars?.liquidity?.raw == null ? "—" : `${co._composite.pillars.liquidity.raw}/${co._composite.pillars.liquidity.max}` },
     ],
     stats: {
-      rules: "5 pillars",  rulesNote: "Weighted: 40 · 35 · 15 · 5 · 5",
+      get rules() { const l = weightsLabel(); return `${l.names.split(" · ").length} pillars`; },
+      get rulesNote() { return `Weighted: ${weightsLabel().nums}`; },
       maxScore: "100 pts", maxNote: "≥75 STRONG BUY · 60 BUY · 45 WATCH",
     },
     drillHeaderStats: (co) => [
@@ -225,6 +226,17 @@ const CONFIGS = {
 // per-client tweak survives reloads. Defaults to the framework's
 // PILLAR_WEIGHTS (40/35/15/5/5). SPIP basket + Top Picks tabs re-score
 // composites whenever the user changes these.
+// One place that renders the active pillar mix. Several UI spots used to
+// print a frozen "40 · 35 · 15 · 5 · 5" that ignored the real weights, so the
+// dashboard advertised a model it was not running. Zero-weighted pillars are
+// omitted rather than shown as 0.
+function weightsLabel(w) {
+  const LBL = { fundamentals: "Fund", technicals: "Tech", macro: "Macro", sentiment: "Sent", liquidity: "Liq" };
+  const src = w || (typeof state !== "undefined" && state.pillarWeights) || composite.PILLAR_WEIGHTS;
+  const live = Object.keys(LBL).filter((k) => (src[k] || 0) > 0);
+  return { nums: live.map((k) => src[k]).join(" · "), names: live.map((k) => LBL[k]).join(" · ") };
+}
+
 const PILLAR_WEIGHTS_KEY = "klpdash-pillar-weights-v1";
 function loadPillarWeights() {
   try {
@@ -791,9 +803,9 @@ async function loadTab(tabId) {
     try { revenueMixByTicker = (await fetch("data/company-revenue-mix.json").then((r) => r.json()))?.companies || {}; } catch {}
     try { const j = await fetch("data/governance-flags.json").then((r) => r.json()); governanceByTicker = j?.flagged_companies || {}; governanceLoaded = !!j && !j.error; } catch {}
     try { const j = await fetch("data/auditor-opinions.json").then((r) => r.json()); auditorByTicker = j?.companies || {}; auditorLoaded = !!j && Object.keys(auditorByTicker).length > 0; } catch {}
-    const pli   = new Set((macroData.pli_companies || []).map((s) => String(s).toUpperCase()));
-    const renew = new Set((macroData.renewable_companies || []).map((s) => String(s).toUpperCase()));
-    const cp1   = new Set((macroData.china_plus_one_companies || []).map((s) => String(s).toUpperCase()));
+    const pli   = new Set((macroData?.pli_companies || []).map((s) => String(s).toUpperCase()));
+    const renew = new Set((macroData?.renewable_companies || []).map((s) => String(s).toUpperCase()));
+    const cp1   = new Set((macroData?.china_plus_one_companies || []).map((s) => String(s).toUpperCase()));
     for (const row of fundCompanies) {
       const m = String(row["Screener URL"] || "").match(/\/company\/([^/]+)/);
       const ticker = m ? m[1].toUpperCase() : null;
@@ -933,9 +945,9 @@ async function loadTab(tabId) {
   // set per-company convenience flags in_pli / in_renewable / in_china_plus_one
   // based on NSE ticker (extracted from Screener URL slug).
   if (tabId === "macro" && rawMeta) {
-    const pli = new Set((rawMeta.pli_companies || []).map((s) => String(s).toUpperCase()));
-    const renew = new Set((rawMeta.renewable_companies || []).map((s) => String(s).toUpperCase()));
-    const cp1 = new Set((rawMeta.china_plus_one_companies || []).map((s) => String(s).toUpperCase()));
+    const pli = new Set((rawMeta?.pli_companies || []).map((s) => String(s).toUpperCase()));
+    const renew = new Set((rawMeta?.renewable_companies || []).map((s) => String(s).toUpperCase()));
+    const cp1 = new Set((rawMeta?.china_plus_one_companies || []).map((s) => String(s).toUpperCase()));
     let revenueMixByTicker = {};
     try { revenueMixByTicker = (await fetch("data/company-revenue-mix.json").then((r) => r.json()))?.companies || {}; } catch {}
     for (const row of rows) {
@@ -1067,11 +1079,11 @@ function relativeTimeFrom(iso) {
 }
 
 function sourceFriendly(c, m) {
-  if (c.label === "Fundamentals") return "Screener.in saved screen · NSE 500";
-  if (c.label === "Technicals") return "Yahoo Finance EOD · NSE 500";
+  if (c.label === "Fundamentals") return "Screener.in saved screen · ₹2,000–12,500 Cr universe";
+  if (c.label === "Technicals") return "Yahoo Finance EOD · ₹2,000–12,500 Cr universe";
   if (c.label === "Macro") return "Multi-source · Yahoo + RBI + curated";
   if (c.label === "Sentiment & Liquidity") return "Yahoo + NSE + computed breadth";
-  if (c.label === "SPIP Basket") return "5-pillar weighted composite";
+  if (c.label === "SPIP Basket") return `${weightsLabel().names.split(" · ").length}-pillar weighted composite`;
   return c.label;
 }
 
@@ -1097,8 +1109,17 @@ function renderStats() {
     // Repurpose the third card for the pillar weights mini-strip (was a
     // confusing "Max Score 300" reading before).
     $("#stat-max-label").textContent = "Pillar Weights";
-    $("#stat-max").innerHTML = `<span class="text-base font-semibold text-slate-700">40 · 35 · 15 · 5 · 5</span>`;
-    $("#stat-max-note").textContent = "Fund · Tech · Macro · Sent · Liq";
+    // Derived, not hardcoded. This card used to print a frozen
+    // "40 · 35 · 15 · 5 · 5" that ignored the actual weights entirely, so it
+    // silently misreported the model the moment the mix changed. Only pillars
+    // carrying weight are listed, so zeroed-out pillars stop being advertised.
+    {
+      const wNow = state.pillarWeights || composite.PILLAR_WEIGHTS;
+      const LBL = { fundamentals: "Fund", technicals: "Tech", macro: "Macro", sentiment: "Sent", liquidity: "Liq" };
+      const live = Object.keys(LBL).filter((k) => (wNow[k] || 0) > 0);
+      $("#stat-max").innerHTML = `<span class="text-base font-semibold text-slate-700">${live.map((k) => wNow[k]).join(" · ")}</span>`;
+      $("#stat-max-note").textContent = live.map((k) => LBL[k]).join(" · ");
+    }
     if (maxCard) maxCard.classList.remove("hidden");
     // Rich title — uses innerHTML so the trophy can render properly.
     $("#top-cards-title").innerHTML = `<span class="text-amber-500">🏆</span> SPIP Basket — Top 10 Picks <span class="ml-2 text-xs font-normal text-slate-500">composite-weighted, hard-fails excluded</span>`;
@@ -1197,7 +1218,7 @@ function renderCompositeTopCards() {
     <button id="pillar-weight-btn" type="button" class="inline-flex items-center gap-2 px-3 py-1.5 text-xs rounded-full bg-white ring-1 ring-slate-200 hover:ring-indigo-300 hover:bg-indigo-50 transition shadow-sm">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-600"><path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16l-3-1m3 1l3-1"/></svg>
       <span class="font-semibold text-slate-700">Weights</span>
-      <span class="tabular-nums text-slate-500">${w.fundamentals}·${w.technicals}·${w.macro}·${w.sentiment}·${w.liquidity}</span>
+      <span class="tabular-nums text-slate-500">${weightsLabel(w).nums.replace(/ /g, "")}</span>
       ${isDefaultWeights ? "" : `<span class="text-[9px] font-bold uppercase tracking-wider text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded">Custom</span>`}
     </button>
   `;
@@ -1283,11 +1304,11 @@ function renderCompositeTopCards() {
           <span class="w-1 h-1 rounded-full bg-white"></span>
           ${escapeHtml(s.rating)}
         </div>
-        <div class="flex items-center gap-0.5" title="Pillar scores: Fund · Tech · Macro · Sent · Liq">
+        <div class="flex items-center gap-0.5" title="Pillar scores: ${weightsLabel().names}">
           ${pillarBars}
         </div>
         <div class="text-[10px] text-slate-400 mt-1 flex justify-between">
-          <span>F</span><span>T</span><span>M</span><span>S</span><span>L</span>
+          ${weightsLabel().names.split(" · ").map((n) => `<span>${n[0]}</span>`).join("")}
         </div>
       </button>
     `;
@@ -1300,7 +1321,7 @@ function renderCompositeTopCards() {
       <div style="padding: 30mm 10mm; text-align: center;">
         <div style="font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #64748b;">VN Smallcap Screener · Basket Brief</div>
         <h1 style="font-size: 42px; font-weight: 800; margin: 12px 0 8px; color: #0f172a;">SPIP Basket</h1>
-        <p style="font-size: 14px; color: #64748b; margin: 0;">5-pillar weighted composite · NSE 500 universe · ${new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" })}</p>
+        <p style="font-size: 14px; color: #64748b; margin: 0;">${weightsLabel().names.split(" · ").length}-pillar weighted composite · ₹2,000–12,500 Cr universe · ${new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" })}</p>
         <div style="margin: 36px auto 0; max-width: 480px; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background: linear-gradient(135deg, #eef2ff 0%, #ecfeff 100%);">
           <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
             <div>
@@ -1405,7 +1426,7 @@ function openPillarWeightsModal() {
     switchTab(state.activeTab === "topPicks" ? "topPicks" : "composite");
   }
   $("#pillar-weight-apply")?.addEventListener("click", () => {
-    const next = { fundamentals: 40, technicals: 35, macro: 15, sentiment: 5, liquidity: 5 };
+    const next = { ...composite.PILLAR_WEIGHTS };   // base on the real defaults, not a frozen copy
     inputs.forEach((el) => { next[el.dataset.weightKey] = Math.max(0, Math.min(100, Number(el.value) || 0)); });
     const s = next.fundamentals + next.technicals + next.macro + next.sentiment + next.liquidity;
     if (s > 0 && s !== 100) {
@@ -8091,7 +8112,7 @@ function openMagazineDrill(s) {
       <div class="lg:col-span-2 p-7 border-r border-slate-100">
         <div class="flex items-baseline justify-between mb-2">
           <div class="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500">Pillar Composition</div>
-          <div class="text-[11px] text-slate-500">Weighted 40 · 35 · 15 · 5 · 5</div>
+          <div class="text-[11px] text-slate-500">Weighted ${weightsLabel().nums}</div>
         </div>
         <div class="flex items-center justify-center -my-2">
           ${renderPillarRadar(s, theme, 280)}
@@ -9640,7 +9661,7 @@ function renderWeightLab() {
         </div>
         <div class="text-[11px] text-slate-500">Held top-7 · backtested over ${nDays} days · ${fmtDateDMY(anchor)} → ${fmtDateDMY(today)}</div>
       </div>
-      <div class="text-sm text-slate-600 mb-4 max-w-2xl">Change how much each pillar counts and watch which basket the mix would have picked — then let AI hunt for the best mix. This is the same 5-pillar blend the SPIP Basket uses; nothing changes on the live basket until you hit <strong>Apply to SPIP</strong>.</div>
+      <div class="text-sm text-slate-600 mb-4 max-w-2xl">Change how much each pillar counts and watch which basket the mix would have picked — then let AI hunt for the best mix. This is the same blend the SPIP Basket uses; nothing changes on the live basket until you hit <strong>Apply to SPIP</strong>.</div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <div>
           <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">Your weights</div>
