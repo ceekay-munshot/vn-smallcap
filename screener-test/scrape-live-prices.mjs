@@ -1,44 +1,65 @@
 #!/usr/bin/env node
-// Live intraday price feed for the manual (client) basket. Calls the
-// Munshot quote API for each basket ticker and writes a compact
+// Live intraday price feed for the CURRENT MONTH'S COHORT. Calls the
+// Munshot quote API (no auth) for each held ticker and writes a compact
 // public/data/live-prices.json the dashboard reads to:
-//   - show the current (intraday) price instead of yesterday's close, and
-//   - detect target / stop-loss TOUCHES using the day's high / low
-//     (the client marks a target "hit" the moment price touches it
-//     intraday, not only when it closes above — e.g. Paytm touched 1359
-//     over Target 2 1350 but closed 1341.8).
+//   - show the current intraday price instead of yesterday's close, and
+//   - detect target / stop-loss TOUCHES from the day's high / low, so a
+//     level counts as hit the moment price touches it intraday rather
+//     than only when it closes through.
 //
-// Munshot also covers the out-of-coverage names (BALRAMCHIN, JAMNAAUTO)
-// that sit below our screener universe, so those get real live prices
-// instead of the synthetic series we used before.
+// The cohort is derived from the snapshot trail with the same rule the
+// dashboard uses (app.js pickTop7): top COHORT_SIZE by composite among
+// rated, data-complete, non-hard-failed stocks in the FIRST snapshot of
+// the current month. This used to read lkp-manual-picks.json -- a client
+// basket that does not exist here -- so the workflow was disabled.
 //
-// Reads:  public/data/lkp-manual-picks.json  (basket tickers)
+// Pinned holdings are included too: a pick that has crossed out of the
+// market-cap band is still held, and still needs a live price.
+//
+// Reads:  public/data/snapshots/  + public/data/pinned-companies.json
 // Writes: public/data/live-prices.json
 //
 // Usage: node screener-test/scrape-live-prices.mjs [EXTRA,TICKERS]
 
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR  = resolve(__dirname, "../public/data");
-const PICKS     = resolve(DATA_DIR, "lkp-manual-picks.json");
+const SNAP_DIR  = resolve(DATA_DIR, "snapshots");
+const COHORT_SIZE = Number(process.env.LIVE_COHORT_SIZE || 7);
 const OUT_PATH  = resolve(DATA_DIR, "live-prices.json");
 const API       = "https://fastapi.muns.io/stock-data";
 
 run().catch((e) => { console.error("Fatal:", e.stack || e.message); process.exit(1); });
 
+// Mirror of app.js pickTop7 — keep the two in step. Returns [] when no
+// snapshot exists yet, which makes this a safe no-op before tracking starts.
+function currentCohortTickers() {
+  if (!existsSync(SNAP_DIR)) return [];
+  const dates = readdirSync(SNAP_DIR)
+    .filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f))
+    .map((f) => f.slice(0, 10))
+    .sort();
+  if (!dates.length) return [];
+  // First snapshot of the LATEST month present — the month-start basket.
+  const ym = dates[dates.length - 1].slice(0, 7);
+  const first = dates.find((d) => d.slice(0, 7) === ym);
+  let snap;
+  try { snap = JSON.parse(readFileSync(resolve(SNAP_DIR, `${first}.json`), "utf8")); }
+  catch { return []; }
+  return (snap.stocks || [])
+    .filter((x) => x.composite != null && x.dataComplete && !x.hardFailed)
+    .sort((a, b) => b.composite - a.composite)
+    .slice(0, COHORT_SIZE)
+    .map((x) => String(x.ticker || "").toUpperCase())
+    .filter(Boolean);
+}
+
 async function run() {
-  // Basket tickers across every month + any explicitly-listed extras.
-  const picks = JSON.parse(readFileSync(PICKS, "utf8"));
-  const tickers = new Set();
-  for (const monthPicks of Object.values(picks.picksByMonth || {})) {
-    for (const p of monthPicks) {
-      const t = (p.ticker || p.selection || "").trim().toUpperCase();
-      if (t) tickers.add(t);
-    }
-  }
+  // This month's cohort, plus any explicitly-listed extras.
+  const tickers = new Set(currentCohortTickers());
   for (const t of (process.argv[2] || "").split(",").map((s) => s.trim().toUpperCase()).filter(Boolean)) {
     tickers.add(t);
   }

@@ -9,11 +9,15 @@ name: Live prices refresh (intraday)
 # Runs every 30 min during NSE market hours (09:15–15:30 IST = 03:45–10:00
 # UTC), Mon–Fri, plus on demand. Cheap (~14 API calls, <1 min).
 
-# SCHEDULE DISABLED. scrape-live-prices.mjs still sources its ticker list
-# from lkp-manual-picks.json, which this dashboard does not have. Re-enable
-# the cron once the script is repointed at the current month's top-7 cohort.
 on:
   workflow_dispatch:
+  schedule:
+    # Every 30 min during NSE market hours (09:15-15:30 IST = 03:45-10:00
+    # UTC), Mon-Fri. Ticker list now comes from the current month's cohort,
+    # so this tracks exactly the 7 names being held.
+    - cron: "45 3 * * 1-5"
+    - cron: "15,45 4-9 * * 1-5"
+    - cron: "0 10 * * 1-5"
 
 jobs:
   refresh:
