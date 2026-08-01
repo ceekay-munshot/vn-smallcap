@@ -34,6 +34,12 @@ const INDEX_CANDIDATES = [
 ];
 const MIN_INDEX_BARS = 200;        // a 1-bar stub must NOT count as success
 
+// Which candidate actually won, resolved at runtime in run(). Module scope
+// because flush() writes it into the output metadata and is called from
+// several places.
+let indexSymbolUsed = null;
+let indexLabelUsed  = null;
+
 const FNO_STOCKS_PATH = resolve(__dirname, "static/fno-stocks.json");
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -71,7 +77,11 @@ async function run() {
     process.stdout.write(`\nFetching ${symbol} (${label})... `);
     const bars = await fetchBars(symbol, start, end).catch(() => []);
     console.log(`${bars.length} bars`);
-    if (bars.length >= MIN_INDEX_BARS) { indexBars = bars; indexLabel = label; break; }
+    if (bars.length >= MIN_INDEX_BARS) {
+      indexBars = bars; indexLabel = label;
+      indexSymbolUsed = symbol; indexLabelUsed = label;
+      break;
+    }
     console.log(`  rejected — need >= ${MIN_INDEX_BARS} bars, trying next candidate`);
   }
   if (!indexBars.length) {
@@ -228,7 +238,8 @@ function flush(results, indexBars, failures) {
   const payload = {
     generated_at: new Date().toISOString(),
     source: "Yahoo Finance",
-    index_symbol: INDEX_SYMBOL,
+    index_symbol: indexSymbolUsed,
+    index_label: indexLabelUsed,
     index_close: indexBars.at(-1)?.close ?? null,
     index_6m_return: indexBars.length >= 126
       ? (indexBars.at(-1).close / indexBars.at(-126).close) - 1
