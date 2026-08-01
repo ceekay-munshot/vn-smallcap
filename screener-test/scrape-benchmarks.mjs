@@ -29,9 +29,10 @@ const INDICES = [
   { symbol: "^NSEI",             label: "Nifty 50" },
   { symbol: "^CRSLDX",           label: "Nifty 500" },
 ];
-const DAYS = 180;          // ~6 months — comfortably covers the full 4-month hold
-                           // window of the OLDEST retained report month, so the
-                           // benchmark line/cards still render for older baskets
+const DAYS = 420;         // ~280 trading days — enough to compute a 200-day
+                          // moving average on the index, which the Trade Plan
+                          // regime check needs. 180 calendar days only yielded
+                          // ~122 trading days, so the 200 DMA was uncomputable
 
 run().catch((err) => {
   console.error("Fatal:", err.stack || err.message);

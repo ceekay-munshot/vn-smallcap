@@ -229,6 +229,18 @@ function saveTechParams(p) { try { localStorage.setItem(TECH_PARAMS_KEY, JSON.st
 
 // Client-configurable allocation per pick for the History portfolio
 // backtest. Defaults to ₹1L. Stored as a plain integer in localStorage.
+// Trade Plan capital — the total rupees to deploy across this month's basket.
+// Editable in the Strategy > Plan tab; the whole sizing table recomputes from it.
+const PLAN_CAPITAL_KEY = "vn-plan-capital-v1";
+const PLAN_STOP_ATR    = 2.5;    // stop = entry - 2.5 x ATR%  (see the manual)
+const PLAN_RSI_HOT      = 75;    // above this the stock has already run
+const PLAN_MAX_PER_SECTOR = 3;   // more than this in one industry is a sector bet
+function loadPlanCapital() {
+  try { const v = Number(localStorage.getItem(PLAN_CAPITAL_KEY)); if (Number.isFinite(v) && v >= 1000) return v; } catch {}
+  return 50000;
+}
+function savePlanCapital(n) { try { localStorage.setItem(PLAN_CAPITAL_KEY, String(n)); } catch {} }
+
 const ALLOC_KEY = "klpdash-alloc-per-pick-v1";
 function loadAllocPerPick() {
   try {
@@ -336,12 +348,12 @@ function saveManualReturnMode(v) {
 // "capital"). Keeps the tab on one screen — the main view (chart + picks +
 // alpha) is the default; everything else is one click away, no long scroll.
 const STRATEGY_SUBTAB_KEY = "klpdash-strategy-subtab-v1";
-const STRATEGY_SUBTABS = ["overview", "accuracy", "balancing"]; // Sector + Industry merged into "balancing" (client ask); "capital" parked — renderSimPanel + its case kept below for easy restore
+const STRATEGY_SUBTABS = ["plan", "overview", "accuracy", "balancing"]; // Sector + Industry merged into "balancing" (client ask); "capital" parked — renderSimPanel + its case kept below for easy restore
 function loadStrategySubTab() {
   try {
     let v = localStorage.getItem(STRATEGY_SUBTAB_KEY);
     if (v === "sector" || v === "industry") v = "balancing";   // migrate the old split sub-tabs
-    return STRATEGY_SUBTABS.includes(v) ? v : "overview";
+    return STRATEGY_SUBTABS.includes(v) ? v : "plan";
   }
   catch { return "overview"; }
 }
@@ -502,6 +514,7 @@ const state = {
   watchlist: loadWatchlist(),
   watchOnly: false,
   pillarWeights: loadPillarWeights(),
+  planCapital: loadPlanCapital(),   // Trade Plan sizing input
   allocPerPick: loadAllocPerPick(),
   cohortMonth: null,            // legacy — kept for compat; unused after move to anchor-date model
   cohortView: loadCohortView(), // "static" | "monthly" | "weekly"
@@ -4414,6 +4427,17 @@ async function renderActive() {
   try {
     try {
       await ensureHistoryCache();
+      // ADTV lives only in technicals.json (snapshots carry techVals, which
+      // omits it). Fetch once per session; the Trade Plan needs it to flag
+      // names too thin to place a market order in.
+      if (!state.cache.planAdtv) {
+        try {
+          const tj = await fetch("data/technicals.json").then((r) => (r.ok ? r.json() : null));
+          const m = {};
+          for (const c of (tj?.companies || [])) if (c.ticker && c.adtv_20d_cr != null) m[c.ticker] = c.adtv_20d_cr;
+          state.cache.planAdtv = m;
+        } catch { state.cache.planAdtv = {}; }
+      }
     } catch (e) {
       host.innerHTML = renderHistoryEmpty(e.message);
       return;
@@ -5104,7 +5128,7 @@ function renderActiveShell(view, cadence, anchorDate, todayDate, mode, alertsHtm
     `;
   }
   const hits = collectStrategyHits(view, todayDate);
-  const sub = STRATEGY_SUBTABS.includes(state.strategySubTab) ? state.strategySubTab : "overview";
+  const sub = STRATEGY_SUBTABS.includes(state.strategySubTab) ? state.strategySubTab : "plan";
   // Tight top: ONE command bar (title + returns + upload/alerts) then the
   // sub-tab bar sharing a row with the Booked/If-held toggle — so the chart
   // clears the fold instead of sitting under stacked header cards (founder ask).
@@ -5123,10 +5147,271 @@ function renderActiveShell(view, cadence, anchorDate, todayDate, mode, alertsHtm
   `;
 }
 
+// ============================================================
+// TRADE PLAN — turns this month's basket into sized orders.
+//
+// Everything here is derived, nothing is stored: change the capital box and
+// the whole sizing table recomputes. The inputs are the current month's
+// cohort (same pickTop7 rule as everywhere else), each stock's ATR / RSI /
+// beta / 52-week distance from the snapshot's techVals, live ADTV from
+// technicals.json, and the index vs its own 200 DMA for the regime call.
+//
+// Sizing is inverse-ATR: weight proportional to 1/ATR%, so a stock that
+// swings 4.5% a day gets a smaller position than one that swings 2.6%, and
+// every holding puts roughly the same rupees at risk. Equal rupees would
+// mean the wildest name dominates the month's P&L.
+// ============================================================
+
+// Regime: is the benchmark above its own long moving average? Long-only
+// momentum bleeds when the index itself is in a downtrend, so this gates
+// everything below it. Falls back to the longest MA the history supports
+// and says so, rather than silently comparing against a shorter window.
+function planRegime(benchmark) {
+  const closes = benchmark?.indices?.["NIFTYSMLCAP250.NS"]?.closes;
+  if (!closes) return { ok: null, note: "Benchmark history not loaded." };
+  const dates = Object.keys(closes).sort();
+  const vals = dates.map((d) => closes[d]);
+  const want = 200;
+  const n = Math.min(want, vals.length);
+  if (n < 50) return { ok: null, note: `Only ${vals.length} days of index history — need ~50 minimum.` };
+  const ma = vals.slice(-n).reduce((a, b) => a + b, 0) / n;
+  const last = vals[vals.length - 1];
+  return {
+    ok: last > ma, last, ma, days: n, exact: n === want,
+    asOf: dates[dates.length - 1],
+  };
+}
+
+// This month's basket, with everything needed to place an order.
+function planRows(capital) {
+  const cache = state.cache.history;
+  const snapshots = cache?.snapshots || [];
+  if (!snapshots.length) return null;
+  const ym = snapshots[snapshots.length - 1].date.slice(0, 7);
+  const first = snapshots.find((s) => s.date.slice(0, 7) === ym);
+  if (!first) return null;
+
+  const top = first.stocks
+    .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed)
+    .sort((a, b) => b.composite - a.composite)
+    .slice(0, 7);
+  if (!top.length) return null;
+
+  const adtvBy = state.cache.planAdtv || {};
+  const live = cache.todayClose || {};
+  const rows = top.map((s) => {
+    const tv = s.techVals || {};
+    // Prefer the live/most-recent price over the month-start close — you are
+    // placing the order today, not on the 1st.
+    const price = live[s.ticker] ?? s.close;
+    return {
+      ticker: s.ticker, name: s.name, sector: s.sector || "—",
+      composite: s.composite,
+      price, entryClose: s.close,
+      atr: tv.atr, rsi: tv.rsi, beta: tv.beta, d52: tv.d52,
+      adtv: adtvBy[s.ticker] ?? null,
+    };
+  });
+
+  // Inverse-ATR weights. A missing ATR falls back to the basket median so a
+  // data gap cannot silently hand one stock an enormous position.
+  const atrs = rows.map((r) => r.atr).filter((v) => Number.isFinite(v) && v > 0).sort((a, b) => a - b);
+  const medAtr = atrs.length ? atrs[Math.floor(atrs.length / 2)] : 3.5;
+  rows.forEach((r) => { r.atrUsed = Number.isFinite(r.atr) && r.atr > 0 ? r.atr : medAtr; });
+  const invSum = rows.reduce((a, r) => a + 1 / r.atrUsed, 0);
+
+  let totalCost = 0, totalRisk = 0;
+  rows.forEach((r) => {
+    r.weight = (1 / r.atrUsed) / invSum;
+    r.target = capital * r.weight;
+    r.shares = r.price > 0 ? Math.round(r.target / r.price) : 0;
+    r.cost = r.shares * r.price;
+    r.stopPct = PLAN_STOP_ATR * r.atrUsed / 100;
+    r.stop = r.price * (1 - r.stopPct);
+    r.risk = r.cost * r.stopPct;
+    r.drift = r.target > 0 ? (r.cost - r.target) / r.target : 0;
+    totalCost += r.cost; totalRisk += r.risk;
+  });
+
+  // Flags — each one is a number against a threshold, nothing subjective.
+  const secCount = {};
+  rows.forEach((r) => { secCount[r.sector] = (secCount[r.sector] || 0) + 1; });
+  const heavySectors = Object.entries(secCount).filter(([, n]) => n > PLAN_MAX_PER_SECTOR);
+  rows.forEach((r) => {
+    r.hot = Number.isFinite(r.rsi) && r.rsi > PLAN_RSI_HOT;
+    r.thin = Number.isFinite(r.adtv) && r.adtv < 2;
+    r.atHigh = Number.isFinite(r.d52) && r.d52 <= 2;
+  });
+  return { rows, totalCost, totalRisk, capital, heavySectors, secCount, month: ym, anchorDate: first.date };
+}
+
+const inr = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
+
+function renderTradePlan() {
+  const plan = planRows(state.planCapital);
+  const regime = planRegime(state.cache.history?.benchmark);
+
+  const capBox = `
+    <div class="bg-white rounded-2xl ring-1 ring-slate-100 p-4 flex flex-wrap items-end gap-4">
+      <div>
+        <label for="plan-capital" class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Capital to deploy</label>
+        <div class="flex items-center gap-2">
+          <span class="text-slate-400 text-lg font-semibold">₹</span>
+          <input id="plan-capital" type="number" min="1000" step="1000" value="${state.planCapital}"
+            class="w-40 px-3 py-2 text-lg font-bold tabular-nums bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white">
+        </div>
+      </div>
+      <div class="flex items-center gap-1.5">
+        ${[25000, 50000, 100000, 250000].map((v) => `
+          <button type="button" data-plan-preset="${v}" class="px-2.5 py-1.5 text-xs font-semibold rounded-lg ring-1 transition ${state.planCapital === v ? "bg-indigo-600 text-white ring-indigo-600" : "bg-white text-slate-600 ring-slate-200 hover:bg-slate-50"}">${v >= 100000 ? (v / 100000) + "L" : (v / 1000) + "k"}</button>`).join("")}
+      </div>
+      <div class="text-[11px] text-slate-500 leading-snug max-w-xs">Sizing recomputes instantly. Positions are weighted by <span class="font-semibold">1 ÷ ATR</span>, so every holding risks about the same rupees.</div>
+    </div>`;
+
+  if (!plan) {
+    return `<div class="space-y-4">${capBox}
+      <div class="bg-white rounded-2xl ring-1 ring-slate-100 p-8 text-center text-sm text-slate-500">
+        No basket for this month yet — the plan appears once the first snapshot of the month exists.
+      </div></div>`;
+  }
+
+  // ---- regime banner: the one check that can cancel the month ----
+  const rOk = regime.ok;
+  const rTone = rOk === null ? "slate" : rOk ? "emerald" : "rose";
+  const regimeCard = `
+    <div class="bg-${rTone}-50 ring-1 ring-${rTone}-200 rounded-2xl p-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+      <div class="flex items-center gap-2.5">
+        <span class="w-8 h-8 rounded-lg bg-${rTone}-600 text-white flex items-center justify-center text-sm font-bold">${rOk === null ? "?" : rOk ? "✓" : "✕"}</span>
+        <div>
+          <div class="text-[10px] font-bold uppercase tracking-wider text-${rTone}-700">Step 1 · Market regime</div>
+          <div class="font-bold text-${rTone}-900 text-sm">${rOk === null ? "Cannot determine" : rOk ? "Risk-on — deploy" : "Risk-off — deploy half, or sit out"}</div>
+        </div>
+      </div>
+      ${regime.last ? `<div class="text-xs text-${rTone}-800 tabular-nums">Smallcap 250 <span class="font-bold">${Math.round(regime.last).toLocaleString("en-IN")}</span> vs ${regime.days}-day avg <span class="font-bold">${Math.round(regime.ma).toLocaleString("en-IN")}</span>${regime.exact ? "" : ` <span class="opacity-70">(only ${regime.days} days of history — not yet a true 200 DMA)</span>`}</div>` : `<div class="text-xs text-slate-600">${escapeHtml(regime.note || "")}</div>`}
+    </div>`;
+
+  // ---- warnings ----
+  const warns = [];
+  plan.rows.filter((r) => r.hot).forEach((r) => warns.push(`<span class="font-semibold">${escapeHtml(r.name)}</span> RSI ${r.rsi} is above ${PLAN_RSI_HOT} — it has already run. Half-size it or take the next rank.`));
+  plan.heavySectors.forEach(([sec, n]) => warns.push(`<span class="font-semibold">${n} of ${plan.rows.length}</span> are ${escapeHtml(sec)} — that is a sector bet, not a diversified basket. Consider dropping the weakest.`));
+  plan.rows.filter((r) => r.thin).forEach((r) => warns.push(`<span class="font-semibold">${escapeHtml(r.name)}</span> trades only ₹${r.adtv} Cr a day — limit orders only, never market.`));
+  const warnCard = warns.length ? `
+    <div class="bg-amber-50 ring-1 ring-amber-200 rounded-2xl p-4">
+      <div class="text-[10px] font-bold uppercase tracking-wider text-amber-700 mb-2">Step 2 · Read before you buy — ${warns.length} flag${warns.length === 1 ? "" : "s"}</div>
+      <ul class="space-y-1.5 text-[13px] text-amber-900 leading-snug">${warns.map((w) => `<li class="flex gap-2"><span class="text-amber-500 flex-shrink-0">▸</span><span>${w}</span></li>`).join("")}</ul>
+    </div>` : `
+    <div class="bg-emerald-50 ring-1 ring-emerald-200 rounded-2xl p-4 text-[13px] text-emerald-900">
+      <span class="font-bold">Step 2 · No flags.</span> Nothing overbought, no sector above ${PLAN_MAX_PER_SECTOR} names, all liquid enough.
+    </div>`;
+
+  const cell = (v, tone) => `<td class="px-3 py-2 text-right tabular-nums ${tone || ""}">${v}</td>`;
+
+  // ---- table 1: what the screener says ----
+  const readTable = `
+    <div class="bg-white rounded-2xl ring-1 ring-slate-100 overflow-hidden">
+      <div class="px-4 py-3 border-b border-slate-100">
+        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Step 3 · This month's basket</div>
+        <div class="text-xs text-slate-500 mt-0.5">Top ${plan.rows.length} by composite on ${fmtDateDMY(plan.anchorDate)}. Amber = worth a second look.</div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50/70 text-[10px] uppercase tracking-wider text-slate-500">
+            <tr><th class="px-3 py-2 text-left">Stock</th><th class="px-3 py-2 text-right">Score</th><th class="px-3 py-2 text-right">Price</th>
+            <th class="px-3 py-2 text-right" title="Average daily move">ATR</th><th class="px-3 py-2 text-right" title="Momentum 0-100; above 75 has run">RSI</th>
+            <th class="px-3 py-2 text-right" title="Moves this much per 1% of index">Beta</th><th class="px-3 py-2 text-right" title="Rupees traded daily">ADTV</th>
+            <th class="px-3 py-2 text-right" title="How far below its 1-year high">Off high</th><th class="px-3 py-2 text-left">Sector</th></tr>
+          </thead>
+          <tbody>
+            ${plan.rows.map((r) => `
+              <tr class="border-t border-slate-100 ${r.hot ? "bg-amber-50/40" : ""}">
+                <td class="px-3 py-2 font-semibold text-slate-900">${escapeHtml(r.name)}<div class="text-[10px] font-mono text-slate-400">${escapeHtml(r.ticker)}</div></td>
+                ${cell(r.composite, "font-bold text-indigo-700")}
+                ${cell(inr(r.price))}
+                ${cell(r.atr != null ? r.atr + "%" : "—", r.atr > 4 ? "text-rose-600 font-semibold" : "")}
+                ${cell(r.rsi ?? "—", r.hot ? "text-rose-600 font-bold" : r.rsi < 60 ? "text-emerald-700 font-semibold" : "")}
+                ${cell(r.beta ?? "—")}
+                ${cell(r.adtv != null ? "₹" + r.adtv + " Cr" : "—", r.thin ? "text-amber-700 font-bold" : "")}
+                ${cell(r.d52 != null ? r.d52 + "%" : "—", r.atHigh ? "text-amber-700 font-bold" : "")}
+                <td class="px-3 py-2 text-xs text-slate-500">${escapeHtml(String(r.sector).slice(0, 22))}</td>
+              </tr>`).join("")}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+
+  // ---- table 2: the orders ----
+  const deployPct = plan.capital > 0 ? (plan.totalCost / plan.capital) * 100 : 0;
+  const riskPct = plan.capital > 0 ? (plan.totalRisk / plan.capital) * 100 : 0;
+  const orderTable = `
+    <div class="bg-white rounded-2xl ring-1 ring-slate-100 overflow-hidden">
+      <div class="px-4 py-3 border-b border-slate-100">
+        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Step 4 · Your orders for ${inr(plan.capital)}</div>
+        <div class="text-xs text-slate-500 mt-0.5">Stop = entry − ${PLAN_STOP_ATR} × ATR. Risk = what you lose on that stock if the stop hits.</div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50/70 text-[10px] uppercase tracking-wider text-slate-500">
+            <tr><th class="px-3 py-2 text-left">Stock</th><th class="px-3 py-2 text-right">Limit ≤</th><th class="px-3 py-2 text-right">Shares</th>
+            <th class="px-3 py-2 text-right">Cost</th><th class="px-3 py-2 text-right">Stop-loss</th><th class="px-3 py-2 text-right">Stop %</th><th class="px-3 py-2 text-right">Risk</th></tr>
+          </thead>
+          <tbody>
+            ${plan.rows.map((r) => `
+              <tr class="border-t border-slate-100">
+                <td class="px-3 py-2 font-semibold text-slate-900">${escapeHtml(r.name)}</td>
+                ${cell(inr(r.price), "text-slate-500")}
+                ${cell(`<span class="text-base font-bold text-slate-900">${r.shares}</span>`)}
+                ${cell(inr(r.cost), "font-semibold")}
+                ${cell(inr(r.stop), "text-rose-700 font-bold")}
+                ${cell((r.stopPct * 100).toFixed(1) + "%", "text-slate-500")}
+                ${cell(inr(r.risk), "text-slate-600")}
+              </tr>`).join("")}
+          </tbody>
+          <tfoot class="bg-slate-50 border-t-2 border-slate-200 font-bold">
+            <tr><td class="px-3 py-2.5">Total</td><td></td><td></td>
+              ${cell(inr(plan.totalCost))}<td></td><td class="px-3 py-2.5 text-right text-[10px] uppercase tracking-wider text-slate-500">at risk</td>
+              ${cell(inr(plan.totalRisk), "text-rose-700")}</tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="px-4 py-3 bg-slate-50/60 border-t border-slate-100 flex flex-wrap gap-x-6 gap-y-1 text-xs text-slate-600">
+        <span>Deploying <span class="font-bold text-slate-900">${deployPct.toFixed(1)}%</span> of capital</span>
+        <span>Total at risk <span class="font-bold ${riskPct > 12 ? "text-rose-700" : "text-slate-900"}">${riskPct.toFixed(1)}%</span> if every stop hits</span>
+        <span class="text-slate-400">Share counts are rounded, so cost won't land exactly on target.</span>
+      </div>
+    </div>`;
+
+  // ---- steps ----
+  const steps = [
+    ["Today, before market opens", `Note the ${plan.rows.length} limit prices and ${plan.rows.length} stop-loss levels above. Write them down — you want them decided while you have no money on the line.`],
+    ["Next trading day, 9:30am", `Skip the first 15 minutes; opening spreads on smallcaps are wide. Then place <span class="font-semibold">limit orders</span> at or below the "Limit ≤" price. Never market orders.`],
+    ["If a stock gapped up overnight", `More than one ATR above the limit price (that stock's own ATR%, column above)? <span class="font-semibold">Skip it.</span> The risk-reward you see here no longer exists at that price.`],
+    ["Same day, once filled", `Place every stop-loss as a <span class="font-semibold">GTT order</span> with your broker. A stop you plan to watch manually is not a stop.`],
+    ["Record your actual fills", `Your real entry will differ from these reference prices. Note what you paid, so month-end measures your trading and not this table's theory.`],
+    ["Then nothing until the 1st", `No daily checking. The stops handle the downside; next month's basket handles the rest. This is a monthly holding, not a trade you manage.`],
+  ];
+  const stepCard = `
+    <div class="bg-white rounded-2xl ring-1 ring-slate-100 p-5">
+      <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-4">Step 5 · Exactly what to do</div>
+      <ol class="space-y-3.5">
+        ${steps.map(([h, b], i) => `
+          <li class="flex gap-3">
+            <span class="flex-shrink-0 w-6 h-6 rounded-lg bg-indigo-50 text-indigo-700 ring-1 ring-indigo-100 text-[11px] font-bold flex items-center justify-center mt-0.5">${i + 1}</span>
+            <div class="min-w-0">
+              <div class="font-semibold text-slate-900 text-sm">${h}</div>
+              <div class="text-[13px] text-slate-600 leading-snug mt-0.5">${b}</div>
+            </div>
+          </li>`).join("")}
+      </ol>
+    </div>`;
+
+  return `<div class="space-y-4">${capBox}${regimeCard}${warnCard}${readTable}${orderTable}${stepCard}</div>`;
+}
+
 // Strategy-tab sub-tab bar. Same pattern as the top-level tabs the founder
 // likes on the AI Basket page — one click, no scroll.
 function renderStrategySubNav(sub) {
   const tabs = [
+    { k: "plan",      icon: "🧾", label: "Trade Plan" },
     { k: "overview",  icon: "📈", label: "Overview" },
     { k: "accuracy",  icon: "🎯", label: "Accuracy" },
     { k: "balancing", icon: "🧭", label: "Balancing" },
@@ -5145,6 +5430,8 @@ function renderStrategySubNav(sub) {
 // Everything from the old single-scroll layout still lives here — just gated.
 function renderStrategySubPanel(view, sub, mode, anchorDate) {
   switch (sub) {
+    case "plan":
+      return renderTradePlan();
     case "accuracy":
       return `<div class="space-y-4">${renderActiveOverallHitsSplit(view)}${renderActivePickRowsSplit(view)}</div>`;
     case "balancing":
@@ -6547,6 +6834,28 @@ function wireManualReturnToggle() {
 }
 
 function wireStrategySubNav() {
+  // Trade Plan capital. Re-renders the whole Strategy panel so both tables
+  // recompute; debounced so typing "250000" does not re-render five times.
+  const capEl = $("#plan-capital");
+  if (capEl) {
+    let t = null;
+    capEl.addEventListener("input", () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        const v = Math.max(1000, Number(capEl.value) || 0);
+        if (v === state.planCapital) return;
+        state.planCapital = v; savePlanCapital(v);
+        renderActive();
+      }, 450);
+    });
+  }
+  $$("#active-content [data-plan-preset]").forEach((b) => b.addEventListener("click", () => {
+    const v = Number(b.dataset.planPreset);
+    if (!Number.isFinite(v) || v === state.planCapital) return;
+    state.planCapital = v; savePlanCapital(v);
+    renderActive();
+  }));
+
   $$("#active-content [data-strategy-subtab]").forEach((btn) => btn.addEventListener("click", () => {
     const v = btn.dataset.strategySubtab;
     if (!STRATEGY_SUBTABS.includes(v) || v === state.strategySubTab) return;
