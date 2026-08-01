@@ -1,0 +1,23 @@
+{
+  "probe": "THEJO",
+  "generated_at": "2026-08-01T12:19:14.861Z",
+  "parsed_as": "unknown",
+  "raw_head": "No insider trades found.",
+  "header_columns": [],
+  "row_count": 0,
+  "classification": {},
+  "in_window": 0,
+  "undated": 0,
+  "sample_rows": [],
+  "aggregated": {
+    "buy_shares": 0,
+    "sell_shares": 0,
+    "buy_value": 0,
+    "sell_value": 0,
+    "transactions": 0,
+    "pledges_excluded": 0,
+    "last_date": null,
+    "net_shares": 0,
+    "net_value": 0
+  }
+}
