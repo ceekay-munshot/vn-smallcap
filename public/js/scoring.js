@@ -566,7 +566,6 @@ const ACTIVE_RULES = [
   { key: "insider", label: "Insider Buying", category: "Shareholding", criteria: "Net buying in last 6 mo", fn: ruleInsiderBuying },
   { key: "div", label: "Dividend Consistency", category: "Governance", criteria: "Positive", fn: ruleDividendConsistency },
   { key: "governance", label: "Corporate Governance Issues", category: "Governance", criteria: "No active SEBI proceedings", fn: ruleGovernanceIssues },
-  { key: "auditorRemarks", label: "Auditor Remarks", category: "Governance", criteria: "Clean unqualified opinion", fn: ruleAuditorOpinion },
 ];
 
 export function scoreCompany(company) {
