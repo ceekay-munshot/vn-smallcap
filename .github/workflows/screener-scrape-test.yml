@@ -17,7 +17,7 @@ on:
         description: "Safety cap on screen pages to read"
         required: false
         type: string
-        default: "30"
+        default: "40"
       start_at:
         description: "Resume index (0 = start from the first company). Use this with max_companies to continue a previous run."
         required: false
