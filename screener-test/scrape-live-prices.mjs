@@ -28,7 +28,10 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR  = resolve(__dirname, "../public/data");
 const SNAP_DIR  = resolve(DATA_DIR, "snapshots");
-const COHORT_SIZE = Number(process.env.LIVE_COHORT_SIZE || 7);
+// 7 held + 3 buffer. The buffers need live prices too: the whole point is
+// to know, on entry morning, which core name we missed and what to buy
+// instead -- which is impossible without a live quote for the substitute.
+const COHORT_SIZE = Number(process.env.LIVE_COHORT_SIZE || 10);
 const OUT_PATH  = resolve(DATA_DIR, "live-prices.json");
 const API       = "https://fastapi.muns.io/stock-data";
 

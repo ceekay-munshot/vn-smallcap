@@ -28,11 +28,14 @@ const INDICES = [
   { symbol: "NIFTYMIDCAP150.NS", label: "Nifty Midcap 150" },
   { symbol: "^NSEI",             label: "Nifty 50" },
   { symbol: "^CRSLDX",           label: "Nifty 500" },
+  // India VIX — the regime overlay's second input, and the only one of the
+  // founder's "market momentum" asks with a free, stable daily feed.
+  { symbol: "^INDIAVIX",         label: "India VIX" },
 ];
-const DAYS = 420;         // ~280 trading days — enough to compute a 200-day
-                          // moving average on the index, which the Trade Plan
-                          // regime check needs. 180 calendar days only yielded
-                          // ~122 trading days, so the 200 DMA was uncomputable
+const DAYS = 1120;        // ~760 trading days. 420 gave ~280, enough for the
+                          // Trade Plan's 200 DMA but far short of the 504-day
+                          // strategy backtest, which left the regime overlay
+                          // and the VIX band blind over most of its window.
 
 run().catch((err) => {
   console.error("Fatal:", err.stack || err.message);

@@ -3,6 +3,8 @@ import * as tech from "./tech-scoring.js";
 import * as composite from "./composite-scoring.js";
 import { META as RULE_META } from "./rule-meta.js";
 import { exportToExcel as exportToExcelNew } from "./excel-export.js";
+import { CHARGE_DEFAULTS, CHARGE_FIELDS, makeCharger, ZERO_CHARGER, roundTrip, chargeSummary, buyRate, sellRate } from "./charges.js";
+import * as strat5 from "./strategies.js";
 
 // ---------------- Tab configuration ----------------
 const CONFIGS = {
@@ -348,7 +350,7 @@ function saveManualReturnMode(v) {
 // "capital"). Keeps the tab on one screen — the main view (chart + picks +
 // alpha) is the default; everything else is one click away, no long scroll.
 const STRATEGY_SUBTAB_KEY = "klpdash-strategy-subtab-v1";
-const STRATEGY_SUBTABS = ["plan", "overview", "accuracy", "balancing"]; // Sector + Industry merged into "balancing" (client ask); "capital" parked — renderSimPanel + its case kept below for easy restore
+const STRATEGY_SUBTABS = ["plan", "compare", "overview", "accuracy", "balancing"]; // Sector + Industry merged into "balancing" (client ask); "capital" parked — renderSimPanel + its case kept below for easy restore
 function loadStrategySubTab() {
   try {
     let v = localStorage.getItem(STRATEGY_SUBTAB_KEY);
@@ -377,22 +379,24 @@ const SHOW_ROTATION_STRATEGIES = false;
 // recomputes. Capital is the total pot; bufferPct is held back as idle
 // cash (his "buffer for charges / maintenance" idea), the rest is
 // deployed equal-weight across the basket.
-const SIM_PREFS_KEY = "klpdash-sim-prefs-v1";
+// Charge rates themselves live in charges.js — verified against the
+// Zerodha calculator. The old model here was a single symmetric "% per
+// side", which got three things wrong: it charged delivery brokerage
+// (there is none), it missed buy-side stamp duty, and — the one that
+// actually matters — it ignored the flat ₹15.34 DP fee on every sell.
+// Being flat, that fee is 0.43% of a ₹3,500 position and 0.11% of a
+// ₹14,000 one, so the old model understated the cost of small tickets
+// and of churn alike.
+const SIM_PREFS_KEY = "klpdash-sim-prefs-v2";   // v2: charge model changed shape
 const SIM_DEFAULTS = {
-  capital: 500000,     // ₹ total pot
+  capital: 50000,      // ₹ total pot — the account this is actually run at
   bufferPct: 0,        // % of capital kept as idle cash reserve
-  brokeragePct: 0.03,  // % of trade value, per side
-  sttPct: 0.10,        // % of trade value, per side (approx — STT is sell-side)
-  exchangePct: 0.003,  // % of trade value, per side (exchange turnover)
-  gstPct: 18,          // % GST levied on (brokerage + exchange)
+  ...CHARGE_DEFAULTS,
 };
 const SIM_FIELDS = [
-  { key: "capital",      label: "Capital (₹)",        step: 50000, money: true },
-  { key: "bufferPct",    label: "Cash buffer (%)",    step: 1 },
-  { key: "brokeragePct", label: "Brokerage (%/side)", step: 0.01 },
-  { key: "sttPct",       label: "STT (%/side)",       step: 0.01 },
-  { key: "exchangePct",  label: "Exchange (%/side)",  step: 0.001 },
-  { key: "gstPct",       label: "GST (%)",            step: 1 },
+  { key: "capital",   label: "Capital (₹)",     step: 5000, money: true },
+  { key: "bufferPct", label: "Cash buffer (%)", step: 1 },
+  ...CHARGE_FIELDS,
 ];
 function loadSimPrefs() {
   try {
@@ -406,24 +410,10 @@ function saveSimPrefs(p) {
 }
 let simPrefs = loadSimPrefs();
 
-// Per-side charge as a fraction of trade value: brokerage + STT +
-// exchange turnover, plus GST on (brokerage + exchange). The simulator
-// debits this on every buy and every sell.
-function perSideChargeRate(p = simPrefs) {
-  const brok = (p.brokeragePct || 0) / 100;
-  const stt  = (p.sttPct || 0) / 100;
-  const exch = (p.exchangePct || 0) / 100;
-  const gst  = (p.gstPct || 0) / 100;
-  return brok + stt + exch + (brok + exch) * gst;
-}
-function chargeOn(notional, p = simPrefs) {
-  return Math.max(0, notional) * perSideChargeRate(p);
-}
-// Zero-charge clone — used to compute the gross (frictionless) curve so
-// the panel can show how much the charges actually cost.
-function zeroChargePrefs(p = simPrefs) {
-  return { ...p, brokeragePct: 0, sttPct: 0, exchangePct: 0, gstPct: 0 };
-}
+// The engines take a charger rather than a rate, because a sell charge is
+// not proportional to notional — it carries the flat DP fee.
+function charger(p = simPrefs) { return makeCharger(p); }
+function zeroCharger() { return ZERO_CHARGER; }
 
 // History tab sub-view ("history" | "accuracy"). Toggled by an inline
 // switch below the Performance Tracker; persisted in localStorage so
@@ -524,7 +514,9 @@ const state = {
   strategyMode: loadStrategyMode(),  // "active" | "passive"
   activeCadence: loadActiveCadence(), // "daily" | "weekly" | "monthly" (used when strategyMode === "active")
   manualReturnMode: loadManualReturnMode(), // "booked" | "held" — manual-basket return convention
-  strategySubTab: loadStrategySubTab(),     // Strategy-tab sub-tab (overview / accuracy / sector / industry / capital)
+  strategySubTab: loadStrategySubTab(),     // Strategy-tab sub-tab (plan / compare / overview / accuracy / balancing)
+  compareView: (() => { try { return localStorage.getItem("vn-compare-view-v1") || "summary"; } catch { return "summary"; } })(),
+  planStrategyId: (() => { try { return localStorage.getItem("vn-plan-strategy-v1") || null; } catch { return null; } })(),
   manualMonth: null,                  // selected client-basket month "YYYY-MM" (null = latest)
   labWeights: loadLabWeights(),       // Weight Lab sandbox pillar mix
   labAiBest: null,                    // last AI weight-search result (in-memory)
@@ -4245,7 +4237,7 @@ function simulateActiveBasket(snapshots, anchorDate, simP = simPrefs) {
   // the round-trip the client actually pays per holding.
   const capital = simP?.capital ?? ACTIVE_INITIAL_CAPITAL;
   const bufferAmt = capital * Math.max(0, simP?.bufferPct ?? 0) / 100;
-  const sideRate = perSideChargeRate(simP);
+  const chg = simP === ZERO_CHARGER ? ZERO_CHARGER : makeCharger(simP);
   let cash = capital;
   let totalCharges = 0;
   const holdings = new Map();   // ticker → { units, entryDate, entryPrice, name, sector }
@@ -4270,7 +4262,7 @@ function simulateActiveBasket(snapshots, anchorDate, simP = simPrefs) {
       const exitPrice = closeByTicker.get(ticker);
       if (typeof exitPrice !== "number") continue;   // carry to next day if missing close
       const gross = pos.units * exitPrice;
-      const fee = gross * sideRate;
+      const fee = chg.sell(gross);
       cash += gross - fee;
       totalCharges += fee;
       const ret = (exitPrice / pos.entryPrice - 1) * 100;
@@ -4327,9 +4319,9 @@ function simulateActiveBasket(snapshots, anchorDate, simP = simPrefs) {
       // so floating-point dust can't push cash negative.
       for (const e of newEntries) {
         // Cap so buyValue + its charge can't overdraw cash.
-        const buyValue = Math.min(targetValuePerStock, Math.max(0, cash) / (1 + sideRate));
+        const buyValue = Math.min(targetValuePerStock, Math.max(0, cash) / (1 + buyRate(chg.prefs || {})));
         if (buyValue < 0.01) continue;
-        const fee = buyValue * sideRate;
+        const fee = chg.buy(buyValue);
         const units = buyValue / e.close;
         holdings.set(e.ticker, {
           units, entryDate: date, entryPrice: e.close,
@@ -4438,6 +4430,24 @@ async function renderActive() {
           for (const c of (tj?.companies || [])) if (c.ticker && c.adtv_20d_cr != null) m[c.ticker] = c.adtv_20d_cr;
           state.cache.planAdtv = m;
         } catch { state.cache.planAdtv = {}; }
+      }
+      // Strategy definitions + their precomputed backtest, and the pre-open
+      // market context. All optional: a missing file degrades one panel
+      // rather than taking the whole tab down with it.
+      await strat5.loadStrategies();
+      // A #1 chosen in this browser but not yet committed still has to win
+      // here, or the crown and the Trade Plan would disagree after a reload.
+      try {
+        const override = localStorage.getItem("vn-primary-override-v1");
+        if (override && strat5.strategyById(override)) strat5.setPrimaryId(override);
+      } catch {}
+      if (state.cache.strategyBacktest === undefined) {
+        try { state.cache.strategyBacktest = await fetch("data/strategy-backtest.json").then((r) => (r.ok ? r.json() : null)); }
+        catch { state.cache.strategyBacktest = null; }
+      }
+      if (state.cache.marketContext === undefined) {
+        try { state.cache.marketContext = await fetch("data/market-context.json").then((r) => (r.ok ? r.json() : null)); }
+        catch { state.cache.marketContext = null; }
       }
     } catch (e) {
       host.innerHTML = renderHistoryEmpty(e.message);
@@ -4571,6 +4581,29 @@ async function renderActive() {
     });
     wireStrategyChartMode();
     wireStrategyStockBasket();
+    // Trade Plan: switch which strategy's plan you are looking at.
+    $$("#active-content [data-plan-strategy]").forEach((b) => b.addEventListener("click", () => {
+      state.planStrategyId = b.dataset.planStrategy;
+      try { localStorage.setItem("vn-plan-strategy-v1", state.planStrategyId); } catch {}
+      renderActive();
+    }));
+    // Compare: view switch + "make this my #1".
+    $$("#active-content [data-compare-view]").forEach((b) => b.addEventListener("click", () => {
+      state.compareView = b.dataset.compareView;
+      try { localStorage.setItem("vn-compare-view-v1", state.compareView); } catch {}
+      renderActive();
+    }));
+    $$("#active-content [data-set-primary]").forEach((b) => b.addEventListener("click", () => {
+      const id = b.dataset.setPrimary;
+      strat5.setPrimaryId(id);
+      state.planStrategyId = id;
+      try {
+        localStorage.setItem("vn-plan-strategy-v1", id);
+        localStorage.setItem("vn-primary-override-v1", id);
+      } catch {}
+      openPrimaryCommitModal(id);
+      renderActive();
+    }));
     // Chart hover crosshair + tooltip — basket mode only (the per-stock
     // "Stocks" view draws static lines with its own legend).
     if (state.strategySubTab === "overview" && (state.strategyChartMode || "basket") !== "stocks") setupActiveChartHover(view);
@@ -4600,7 +4633,7 @@ function buildActiveView(snapshots, anchorDate, todayDate, cadence, niftyOn, man
     if (!sim || !sim.equity.length) return null;
     // Frictionless twin — same allocation, zero charges — so we can show
     // how much the charges actually cost (gross vs net).
-    const simGross = simulateActiveBasket(snapshots, anchorDate, zeroChargePrefs(simPrefs));
+    const simGross = simulateActiveBasket(snapshots, anchorDate, ZERO_CHARGER);
     const picks = buildActiveDailyPicks(sim, snapshots, todayDate);
     const hitSummary = computeOverallHitSummary(picks);
     const start = sim.equity[0];
@@ -4649,12 +4682,15 @@ function buildActiveView(snapshots, anchorDate, todayDate, cadence, niftyOn, man
   if (!segments.length) return null;
   const picks = buildActiveSegmentedPicks(segments, snapshots, todayDate);
   const hitSummary = computeOverallHitSummary(picks);
-  const sideRate = perSideChargeRate(simPrefs);
+  const chg = makeCharger(simPrefs);
   // Same booked/held convention as the manual basket, so AI and Manual are a
   // like-to-like comparison: booked freezes each name at its first target / SL.
-  const curveOpts = { booked: state.manualReturnMode !== "held", todayDate, livePrices: state.cache.history?.livePrices || {} };
-  const equityCurve = buildSegmentedEquityCurve(segments, snapshots, anchorDate, sideRate, curveOpts);
-  const grossCurve = buildSegmentedEquityCurve(segments, snapshots, anchorDate, 0, curveOpts);
+  // Trading calendar straight off the benchmark: if the index has no close
+  // for a date, the market was shut and nothing may be plotted there.
+  const tradingDays = new Set(Object.keys(state.cache.history?.benchmark?.indices?.["NIFTYSMLCAP250.NS"]?.closes || {}));
+  const curveOpts = { booked: state.manualReturnMode !== "held", todayDate, livePrices: state.cache.history?.livePrices || {}, tradingDays };
+  const equityCurve = buildSegmentedEquityCurve(segments, snapshots, anchorDate, chg, { ...curveOpts, capital: simPrefs.capital });
+  const grossCurve = buildSegmentedEquityCurve(segments, snapshots, anchorDate, ZERO_CHARGER, curveOpts);
   const dates = equityCurve.map((e) => e.date);
   const niftyCurve = buildNiftyCurve(dates, niftyOn);
   const { manualRows, manualSummary, manualCurve, manualBooked } = buildManualBundle(manualPicks, snapshots, anchorDate, todayDate, dates);
@@ -4671,6 +4707,8 @@ function buildActiveView(snapshots, anchorDate, todayDate, cadence, niftyOn, man
   const cadenceLabel = cadence === "weekly" ? "Weekly re-lock" : cadence === "monthly" ? "Monthly re-lock" : "Passive (basket frozen)";
   return {
     kind: cadence,
+    entryCostPct: equityCurve.entryCostPct ?? 0,
+    tradedDays: Math.max(0, equityCurve.length - 1),
     segments, picks, hitSummary,
     equityCurve, niftyCurve, manualCurve,
     nifty500Curve, nifty500Ret, aiStockCurves, manualStockCurves,
@@ -4867,7 +4905,7 @@ function buildActiveSegmentChain(snapshots, anchorDate, periodDays) {
 // Composite per-day equity curve across all segments. Each segment's
 // average basket return is multiplicatively chained to the previous
 // segment's end-factor (so a +5% week followed by +3% week = +8.15%).
-// sideRate (per-side charge fraction) nets out transaction costs: each
+// The charger nets out transaction costs: each
 // re-lock is a round-trip (sell the old basket, buy the new one), and
 // the very first segment is a buy only. Pass 0 for the gross curve.
 // opts.booked (default off): once a name reaches its +5% target or −20% SL,
@@ -4876,8 +4914,20 @@ function buildActiveSegmentChain(snapshots, anchorDate, periodDays) {
 // the manual basket's book-at-first-target rule so the AI and Manual curves
 // are a true like-to-like comparison. Detection is on the daily close; for
 // today it widens to the live intraday high/low (client's "hit = touched").
-function buildSegmentedEquityCurve(segments, snapshots, anchorDate, sideRate = 0, opts = {}) {
-  const { booked = false, todayDate = null, livePrices = {} } = opts;
+function buildSegmentedEquityCurve(segments, snapshots, anchorDate, chg = ZERO_CHARGER, opts = {}) {
+  const { booked = false, todayDate = null, livePrices = {}, capital = 0, tradingDays = null } = opts;
+  // Only real trading days may draw a point. Snapshots are written every
+  // calendar day, so without this a Saturday and a Sunday both land on the
+  // chart carrying Friday's closes -- and the entry charge debited on day
+  // one then reads as a price move on a day the market was shut.
+  const isTradingDay = (d) => !tradingDays || tradingDays.size === 0 || tradingDays.has(d);
+  // Charges are expressed as a fraction of the basket so they can be
+  // folded into the return factor. The sell leg carries the flat DP fee,
+  // so it depends on position size -- at a small account that fee is the
+  // larger half of the round trip and cannot be treated as a rate.
+  const perPos = capital > 0 && segments[0]?.top7?.length ? capital / segments[0].top7.length : 0;
+  const buyFrac  = perPos > 0 ? chg.buy(perPos) / perPos : 0;
+  const sellFrac = perPos > 0 ? chg.sell(perPos) / perPos : 0;
   if (!segments.length) return [];
   const curve = [];
   let prevFactor = 1.0;
@@ -4886,13 +4936,14 @@ function buildSegmentedEquityCurve(segments, snapshots, anchorDate, sideRate = 0
   segments.forEach((seg, si) => {
     // Charge to (re)lock this basket: a buy on the first segment, a full
     // round-trip (sell previous + buy current) on every re-lock after.
-    prevFactor *= (1 - (si === 0 ? sideRate : 2 * sideRate));
+    prevFactor *= (1 - (si === 0 ? buyFrac : buyFrac + sellFrac));
     const entryCloses = {};
     for (const s of seg.top7) entryCloses[s.ticker] = s.close;
     const frozenFactor = {};   // ticker -> locked factor (target / SL level)
     let lastFactor = 1.0;
     for (const day of seg.tracking) {
       if (day.date === anchorDate) continue;
+      if (!isTradingDay(day.date)) continue;
       let sum = 0, n = 0;
       for (const ticker of Object.keys(entryCloses)) {
         if (booked && frozenFactor[ticker] != null) { sum += frozenFactor[ticker]; n++; continue; }
@@ -4925,6 +4976,9 @@ function buildSegmentedEquityCurve(segments, snapshots, anchorDate, sideRate = 0
     }
     prevFactor *= lastFactor;
   });
+  // The entry charge is a cost, not a price move. Exposed here so the
+  // chart can label it instead of letting it masquerade as day-one loss.
+  curve.entryCostPct = buyFrac * 100;
   return curve;
 }
 
@@ -5183,8 +5237,23 @@ function planRegime(benchmark) {
   };
 }
 
-// This month's basket, with everything needed to place an order.
-function planRows(capital) {
+// How far above yesterday's close we will still pay, in percent. A limit
+// pinned exactly at the previous close throws away good names on any
+// morning the whole market gaps up — which is a market move, not the
+// stock running away from us. So the tolerance follows the overnight
+// signal, and is capped at half the stock's own ATR either way: we accept
+// the market's move, never the stock's.
+function entryTolerancePct() {
+  const mc = state.cache.marketContext;
+  const t = mc?.signal?.tolerancePct;
+  return Number.isFinite(t) ? t : 0.5;
+}
+
+// The basket for a given strategy, with everything needed to place an
+// order. Returns `core` (what you buy) and `buffer` (the bench), because
+// on any given morning some core name will have gapped away from us and
+// the substitute has to be pre-sized and ready, not calculated at 9:20.
+function planRows(capital, strategy) {
   const cache = state.cache.history;
   const snapshots = cache?.snapshots || [];
   if (!snapshots.length) return null;
@@ -5192,65 +5261,317 @@ function planRows(capital) {
   const first = snapshots.find((s) => s.date.slice(0, 7) === ym);
   if (!first) return null;
 
-  const top = first.stocks
-    .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed)
-    .sort((a, b) => b.composite - a.composite)
-    .slice(0, 7);
-  if (!top.length) return null;
-
+  const st = strategy || { basketSize: 7, bufferSize: 3, stopAtr: PLAN_STOP_ATR, invAtrSizing: true, gates: {} };
   const adtvBy = state.cache.planAdtv || {};
   const live = cache.todayClose || {};
-  const rows = top.map((s) => {
-    const tv = s.techVals || {};
+
+  // Rank once, then let the strategy's own gates decide what it will hold.
+  const ranked = first.stocks
+    .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed)
+    .sort((a, b) => b.composite - a.composite)
+    .map((s) => {
+      const tv = s.techVals || {};
+      return {
+        ticker: s.ticker, name: s.name, sector: s.sector || "—", score: s.composite,
+        ind: { rsi: tv.rsi, atr: tv.atr, d52: tv.d52, adtv: adtvBy[s.ticker] ?? null,
+               aboveMa50: tv.e50, aboveMa200: tv.d200, macdPositive: tv.macd },
+        techVals: tv, close: s.close,
+      };
+    });
+  if (!ranked.length) return null;
+
+  // Ask for a deeper bench than we intend to show. Some core names turn out
+  // to be unbuildable at this capital and get replaced from the bench, and
+  // the bench still has to have three names left afterwards -- its real job
+  // is covering entries we miss on the morning, not patching sizing.
+  const wantBuffer = st.bufferSize || 3;
+  const sel = strat5.selectFromRanked(ranked, { ...st, bufferSize: wantBuffer + 4 }, {});
+  if (!sel.core.length) return null;
+
+  const decorate = (c) => {
+    const tv = c.techVals || {};
     // Prefer the live/most-recent price over the month-start close — you are
     // placing the order today, not on the 1st.
-    const price = live[s.ticker] ?? s.close;
+    const price = live[c.ticker] ?? c.close;
     return {
-      ticker: s.ticker, name: s.name, sector: s.sector || "—",
-      composite: s.composite,
-      price, entryClose: s.close,
+      ticker: c.ticker, name: c.name, sector: c.sector, composite: c.score,
+      price, entryClose: c.close, ind: c.ind,
       atr: tv.atr, rsi: tv.rsi, beta: tv.beta, d52: tv.d52,
-      adtv: adtvBy[s.ticker] ?? null,
+      adtv: adtvBy[c.ticker] ?? null,
     };
-  });
+  };
+  const rows = sel.core.map(decorate);
+  const buffer = sel.buffer.map(decorate);
 
-  // Inverse-ATR weights. A missing ATR falls back to the basket median so a
-  // data gap cannot silently hand one stock an enormous position.
+  // Sizing comes from the strategy itself (risk parity with a per-name cap,
+  // or flat slots), so the plan you trade is the plan that was backtested.
+  const weightOf = strat5.invAtrWeights(sel.core, st);
   const atrs = rows.map((r) => r.atr).filter((v) => Number.isFinite(v) && v > 0).sort((a, b) => a - b);
   const medAtr = atrs.length ? atrs[Math.floor(atrs.length / 2)] : 3.5;
-  rows.forEach((r) => { r.atrUsed = Number.isFinite(r.atr) && r.atr > 0 ? r.atr : medAtr; });
-  const invSum = rows.reduce((a, r) => a + 1 / r.atrUsed, 0);
+  const stopAtr = st.stopAtr ?? PLAN_STOP_ATR;
+  const tol = entryTolerancePct() / 100;
 
-  let totalCost = 0, totalRisk = 0;
-  rows.forEach((r) => {
-    r.weight = (1 / r.atrUsed) / invSum;
+  const size = (r, coreIdx) => {
+    r.atrUsed = Number.isFinite(r.atr) && r.atr > 0 ? r.atr : medAtr;
+    r.weight = coreIdx >= 0 ? weightOf(sel.core[coreIdx]) : 1 / (st.basketSize || 7);
     r.target = capital * r.weight;
-    r.shares = r.price > 0 ? Math.round(r.target / r.price) : 0;
+    r.shares = r.price > 0 ? Math.floor(r.target / r.price) : 0;
     r.cost = r.shares * r.price;
-    r.stopPct = PLAN_STOP_ATR * r.atrUsed / 100;
+    r.stopPct = stopAtr * r.atrUsed / 100;
     r.stop = r.price * (1 - r.stopPct);
     r.risk = r.cost * r.stopPct;
-    r.drift = r.target > 0 ? (r.cost - r.target) / r.target : 0;
-    totalCost += r.cost; totalRisk += r.risk;
-  });
+    // Three prices, decided before the bell: what we'd like to pay, the most
+    // we'll accept if the market itself gapped, and the level above which the
+    // trade is simply a different trade.
+    r.limitIdeal = r.price;
+    r.limitMax = r.price * (1 + Math.min(tol, r.atrUsed / 200));
+    r.skipAbove = r.price * (1 + r.atrUsed / 100);
+    // Can this position even be built? One share of a ₹2,400 stock inside a
+    // ₹3,500 slot is not a position, it is a rounding error wearing a hat.
+    r.tradable = r.shares >= 3;
+    r.oneShare = r.shares > 0 && r.shares < 3;
+    r.unaffordable = r.shares === 0;
+    return r;
+  };
+  rows.forEach((r, i) => size(r, i));
+  buffer.forEach((r) => size(r, -1));
+
+  // ---- unbuildable names ----------------------------------------------
+  // A ₹5,686 share does not fit in a ₹3,679 slot, so that position is zero
+  // and its capital sits idle -- at ₹50k across 10 names this was leaving a
+  // fifth of the account undeployed. Swap in the best bench name we CAN
+  // afford, and if none is affordable, drop the slot and spread its money
+  // over the rest. Either way the book gets fully invested and the risk
+  // weighting still holds across whatever actually got bought.
+  const skipped = [];
+  let coreSel = [...sel.core];
+  let finalRows = [...rows];
+  const benchPool = [...buffer];
+  for (let i = finalRows.length - 1; i >= 0; i--) {
+    if (finalRows[i].shares > 0) continue;
+    skipped.push({ name: finalRows[i].name, price: finalRows[i].price, target: finalRows[i].target });
+    const bi = benchPool.findIndex((b) => b.price > 0 && finalRows[i].target / b.price >= 1);
+    if (bi >= 0) {
+      const promoted = benchPool.splice(bi, 1)[0];
+      promoted.promoted = true;
+      promoted.replaces = finalRows[i].name;
+      finalRows[i] = promoted;
+      coreSel[i] = sel.buffer.find((c) => c.ticker === promoted.ticker) || coreSel[i];
+    } else {
+      finalRows.splice(i, 1);
+      coreSel.splice(i, 1);
+    }
+  }
+  // Re-weight over what survived so nothing is left on the table.
+  if (skipped.length) {
+    const w2 = strat5.invAtrWeights(coreSel, { ...st, basketSize: coreSel.length });
+    finalRows.forEach((r, i) => { r.weight = w2(coreSel[i]); size(r, -2); r.weight = w2(coreSel[i]);
+      r.target = capital * r.weight;
+      r.shares = r.price > 0 ? Math.floor(r.target / r.price) : 0;
+      r.cost = r.shares * r.price;
+      r.risk = r.cost * r.stopPct;
+      r.tradable = r.shares >= 3;
+    });
+  }
+  rows.length = 0;
+  rows.push(...finalRows);
+  const bench = benchPool.slice(0, wantBuffer);
+
+  let totalCost = 0, totalRisk = 0;
+  rows.forEach((r) => { totalCost += r.cost; totalRisk += r.risk; });
 
   // Flags — each one is a number against a threshold, nothing subjective.
   const secCount = {};
   rows.forEach((r) => { secCount[r.sector] = (secCount[r.sector] || 0) + 1; });
   const heavySectors = Object.entries(secCount).filter(([, n]) => n > PLAN_MAX_PER_SECTOR);
-  rows.forEach((r) => {
+  [...rows, ...bench].forEach((r) => {
     r.hot = Number.isFinite(r.rsi) && r.rsi > PLAN_RSI_HOT;
     r.thin = Number.isFinite(r.adtv) && r.adtv < 2;
     r.atHigh = Number.isFinite(r.d52) && r.d52 <= 2;
   });
-  return { rows, totalCost, totalRisk, capital, heavySectors, secCount, month: ym, anchorDate: first.date };
+
+  const roundTripPct = rows.length ? roundTrip(capital / rows.length, simPrefs).pct : 0;
+  return {
+    rows, buffer: bench, totalCost, totalRisk, capital, heavySectors, secCount,
+    month: ym, anchorDate: first.date, strategy: st, tolerancePct: tol * 100, roundTripPct,
+    tooSmall: rows.filter((r) => !r.tradable), skipped,
+  };
 }
 
 const inr = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
 
+// ---- Entry monitor -------------------------------------------------
+// On entry morning the question is not "what should I buy" — that was
+// settled last night — but "what did I actually get, and what do I do
+// about what I missed". This reads the live quote for every core name
+// and classifies it against the limit that was decided before the open.
+//
+// A miss is only useful if it says WHY. "Gapped 3.2% above your limit" is
+// actionable; "missed" is not.
+function entryStatus(row, live) {
+  if (!live || live.current == null) return { code: "unknown", label: "No live price", tone: "slate" };
+  const { current, open, dayLow, dayHigh, prevClose } = live;
+  const limit = row.limitMax;
+  const awayPct = ((current - limit) / limit) * 100;
+
+  // Filled: price is at or under the limit right now.
+  if (current <= limit) return { code: "filled", label: "At or below your limit", tone: "emerald", awayPct };
+
+  // The low of the day reached the limit — the order should have filled
+  // even though it has since moved up.
+  if (dayLow != null && dayLow <= limit) {
+    return { code: "filled_earlier", label: "Traded at your limit earlier today", tone: "emerald", awayPct };
+  }
+
+  // Never came back: distinguish a gap at the open from an intraday run,
+  // because they call for different responses.
+  const gapPct = open != null && prevClose ? ((open - prevClose) / prevClose) * 100 : null;
+  if (open != null && open > limit) {
+    return {
+      code: "missed_gap", tone: "rose", awayPct, gapPct,
+      label: gapPct != null
+        ? `Opened ${gapPct >= 0 ? "+" : ""}${gapPct.toFixed(1)}% — above your limit from the first tick`
+        : "Opened above your limit",
+    };
+  }
+  return { code: "missed_ran", label: `Ran ${awayPct.toFixed(1)}% past your limit intraday`, tone: "amber", awayPct };
+}
+
+// Pair each missed core name with the best available bench name, and
+// re-size the substitute at ITS own price and ATR so the rupees at risk
+// stay where they were. Simply copying the quantity across would change
+// the risk of the book, which is the one thing the sizing rule exists to
+// hold constant.
+function planSubstitutions(plan, livePrices) {
+  const out = [];
+  const used = new Set();
+  for (const r of plan.rows) {
+    const st = entryStatus(r, livePrices[r.ticker]);
+    if (st.code !== "missed_gap" && st.code !== "missed_ran") continue;
+    const sub = plan.buffer.find((b) => {
+      if (used.has(b.ticker)) return false;
+      const bl = livePrices[b.ticker];
+      // Only offer a substitute we could actually buy right now.
+      return !bl || bl.current == null || bl.current <= b.skipAbove;
+    });
+    if (sub) {
+      used.add(sub.ticker);
+      const live = livePrices[sub.ticker];
+      const px = live?.current ?? sub.price;
+      const shares = px > 0 ? Math.floor(r.target / px) : 0;
+      out.push({ missed: r, status: st, sub, subPrice: px, shares, cost: shares * px,
+                 stop: px * (1 - sub.stopPct), risk: shares * px * sub.stopPct });
+    } else {
+      out.push({ missed: r, status: st, sub: null });
+    }
+  }
+  return out;
+}
+
+function renderEntryMonitor(plan) {
+  const livePrices = state.cache.history?.livePrices || {};
+  if (!Object.keys(livePrices).length) return "";
+  const rows = plan.rows.map((r) => ({ r, st: entryStatus(r, livePrices[r.ticker]) }));
+  const known = rows.filter((x) => x.st.code !== "unknown");
+  if (!known.length) return "";
+  const missed = rows.filter((x) => x.st.code.startsWith("missed"));
+  const subs = planSubstitutions(plan, livePrices);
+  const tone = { emerald: "text-emerald-700", rose: "text-rose-700", amber: "text-amber-700", slate: "text-slate-400" };
+  const dot = { emerald: "bg-emerald-500", rose: "bg-rose-500", amber: "bg-amber-500", slate: "bg-slate-300" };
+
+  return `
+    <div class="bg-white rounded-2xl ring-1 ring-slate-100 overflow-hidden">
+      <div class="px-4 py-3 border-b border-slate-100 flex items-center justify-between gap-2 flex-wrap">
+        <div>
+          <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Entry monitor · live</div>
+          <div class="text-xs text-slate-500 mt-0.5">${missed.length ? `${missed.length} of ${plan.rows.length} moved past your limit` : "Every name is still inside your limit"}</div>
+        </div>
+        ${missed.length ? `<span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full bg-rose-50 text-rose-700 ring-1 ring-rose-200">${missed.length} to replace</span>` : ""}
+      </div>
+      <div class="divide-y divide-slate-100">
+        ${rows.map(({ r, st }) => `
+          <div class="px-4 py-2 flex items-center gap-3 text-sm">
+            <span class="w-1.5 h-1.5 rounded-full flex-shrink-0 ${dot[st.tone]}"></span>
+            <span class="font-semibold text-slate-900 truncate flex-1 min-w-0">${escapeHtml(r.name)}</span>
+            <span class="text-xs ${tone[st.tone]} text-right">${escapeHtml(st.label)}</span>
+            <span class="text-xs tabular-nums text-slate-400 w-24 text-right">limit ${inr(r.limitMax)}</span>
+          </div>`).join("")}
+      </div>
+      ${subs.length ? `
+        <div class="px-4 py-3 bg-slate-50/70 border-t border-slate-100">
+          <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">Buy instead</div>
+          <div class="space-y-1.5">
+            ${subs.map((s) => s.sub ? `
+              <div class="text-[13px] text-slate-700 flex flex-wrap items-baseline gap-x-1.5">
+                <span class="text-slate-400">${escapeHtml(s.missed.name)} →</span>
+                <span class="font-semibold text-slate-900">${escapeHtml(s.sub.name)}</span>
+                <span class="tabular-nums">· <b>${s.shares}</b> shares at ${inr(s.subPrice)} = ${inr(s.cost)}</span>
+                <span class="tabular-nums text-rose-700">· stop ${inr(s.stop)}</span>
+              </div>` : `
+              <div class="text-[13px] text-slate-500">${escapeHtml(s.missed.name)} → no bench name available under its skip price. Hold the cash.</div>`).join("")}
+          </div>
+        </div>` : ""}
+    </div>`;
+}
+
+// Strategy picker — the five plans, one click apart. The crown marks the
+// one committed as #1 in data/strategies.json; each pill carries its
+// backtested CAGR so the choice is made against evidence, not vibes.
+function renderPlanStrategyPills() {
+  const defs = strat5.allStrategies();
+  if (!defs.length) return "";
+  const bt = state.cache.strategyBacktest;
+  const primary = strat5.primaryId();
+  const active = state.planStrategyId || primary;
+  return `
+    <div class="bg-white rounded-2xl ring-1 ring-slate-100 p-1.5 flex flex-wrap gap-1">
+      ${defs.map((d) => {
+        const on = d.id === active;
+        const m = bt?.strategies?.find((x) => x.id === d.id)?.metrics;
+        const cagr = m?.cagr;
+        return `<button type="button" data-plan-strategy="${d.id}"
+          class="flex-1 min-w-[104px] px-2.5 py-2 rounded-xl text-left transition ${on ? "bg-indigo-600 text-white shadow-sm" : "hover:bg-slate-50"}">
+          <div class="flex items-center gap-1">
+            <span class="text-[13px] font-bold leading-tight ${on ? "text-white" : "text-slate-800"}">${escapeHtml(d.name)}</span>
+            ${d.id === primary ? `<span title="Your #1 strategy">★</span>` : ""}
+          </div>
+          <div class="text-[10px] leading-tight mt-0.5 ${on ? "text-indigo-100" : "text-slate-400"}">
+            ${cagr != null ? `${cagr >= 0 ? "+" : ""}${cagr.toFixed(1)}% a year` : escapeHtml(d.tagline || "")}
+          </div>
+        </button>`;
+      }).join("")}
+    </div>`;
+}
+
+// Pre-open context: what happened overnight, and how jumpy the market is.
+// Advisory only — it sets how far above yesterday's close we will pay, and
+// warns when limits are unlikely to fill. It never picks a stock.
+function renderMarketContext() {
+  const mc = state.cache.marketContext;
+  if (!mc?.signal) return "";
+  const s = mc.signal;
+  const f = mc.feeds || {};
+  const tone = s.dir === "up" ? "emerald" : s.dir === "down" ? "rose" : "slate";
+  const chip = (label, v) => v?.changePct == null ? "" :
+    `<span class="text-[11px] text-slate-500">${label} <b class="tabular-nums ${v.changePct >= 0 ? "text-emerald-700" : "text-rose-700"}">${v.changePct >= 0 ? "+" : ""}${v.changePct.toFixed(2)}%</b></span>`;
+  return `
+    <div class="bg-${tone}-50 ring-1 ring-${tone}-200 rounded-2xl px-4 py-3 flex flex-wrap items-center gap-x-4 gap-y-1.5">
+      <span class="text-sm font-semibold text-${tone}-900">${escapeHtml(s.headline)}</span>
+      ${chip("US futures", f.spFutures)}
+      ${chip("Nikkei", f.nikkei)}
+      ${chip("Hang Seng", f.hangSeng)}
+      ${s.vix != null ? `<span class="text-[11px] text-slate-500">India VIX <b class="tabular-nums text-slate-700">${s.vix.toFixed(1)}</b> <span class="text-slate-400">${escapeHtml(s.vixBand)}</span></span>` : ""}
+      <span class="text-[11px] text-slate-500 ml-auto">Paying up to <b class="text-slate-700">+${s.tolerancePct}%</b> over yesterday\u2019s close today</span>
+    </div>`;
+}
+
 function renderTradePlan() {
-  const plan = planRows(state.planCapital);
+  const activeId = state.planStrategyId || strat5.primaryId();
+  const strategy = strat5.strategyById(activeId);
+  const plan = planRows(state.planCapital, strategy);
   const regime = planRegime(state.cache.history?.benchmark);
+  const pills = renderPlanStrategyPills();
+  const context = renderMarketContext();
 
   const capBox = `
     <div class="bg-white rounded-2xl ring-1 ring-slate-100 p-4 flex flex-wrap items-end gap-4">
@@ -5263,14 +5584,14 @@ function renderTradePlan() {
         </div>
       </div>
       <div class="flex items-center gap-1.5">
-        ${[25000, 50000, 100000, 250000].map((v) => `
+        ${[25000, 50000, 60000, 100000].map((v) => `
           <button type="button" data-plan-preset="${v}" class="px-2.5 py-1.5 text-xs font-semibold rounded-lg ring-1 transition ${state.planCapital === v ? "bg-indigo-600 text-white ring-indigo-600" : "bg-white text-slate-600 ring-slate-200 hover:bg-slate-50"}">${v >= 100000 ? (v / 100000) + "L" : (v / 1000) + "k"}</button>`).join("")}
       </div>
-      <div class="text-[11px] text-slate-500 leading-snug max-w-xs">Sizing recomputes instantly. Positions are weighted by <span class="font-semibold">1 ÷ ATR</span>, so every holding risks about the same rupees.</div>
+      <div class="text-[11px] text-slate-500 leading-snug max-w-xs">${plan ? `Sizing follows <span class="font-semibold">${escapeHtml(strategy?.name || "the strategy")}</span>. Buying and selling one position costs <span class="font-semibold">${plan.roundTripPct.toFixed(2)}%</span> at this size.` : "Sizing recomputes instantly."}</div>
     </div>`;
 
   if (!plan) {
-    return `<div class="space-y-4">${capBox}
+    return `<div class="space-y-4">${pills}${capBox}
       <div class="bg-white rounded-2xl ring-1 ring-slate-100 p-8 text-center text-sm text-slate-500">
         No basket for this month yet — the plan appears once the first snapshot of the month exists.
       </div></div>`;
@@ -5312,7 +5633,7 @@ function renderTradePlan() {
     <div class="bg-white rounded-2xl ring-1 ring-slate-100 overflow-hidden">
       <div class="px-4 py-3 border-b border-slate-100">
         <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Step 3 · This month's basket</div>
-        <div class="text-xs text-slate-500 mt-0.5">Top ${plan.rows.length} by composite on ${fmtDateDMY(plan.anchorDate)}. Amber = worth a second look.</div>
+        <div class="text-xs text-slate-500 mt-0.5">${escapeHtml(plan.strategy.name)} · top ${plan.rows.length} on ${fmtDateDMY(plan.anchorDate)}. Amber = worth a second look.</div>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
@@ -5347,29 +5668,34 @@ function renderTradePlan() {
     <div class="bg-white rounded-2xl ring-1 ring-slate-100 overflow-hidden">
       <div class="px-4 py-3 border-b border-slate-100">
         <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Step 4 · Your orders for ${inr(plan.capital)}</div>
-        <div class="text-xs text-slate-500 mt-0.5">Stop = entry − ${PLAN_STOP_ATR} × ATR. Risk = what you lose on that stock if the stop hits.</div>
+        <div class="text-xs text-slate-500 mt-0.5">Stop = entry − ${plan.strategy.stopAtr ?? PLAN_STOP_ATR} × ATR. <b>Pay up to</b> allows for the market's own gap (today ${plan.tolerancePct.toFixed(2)}%), capped at half the stock's ATR — never chase the stock itself.</div>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
           <thead class="bg-slate-50/70 text-[10px] uppercase tracking-wider text-slate-500">
-            <tr><th class="px-3 py-2 text-left">Stock</th><th class="px-3 py-2 text-right">Limit ≤</th><th class="px-3 py-2 text-right">Shares</th>
-            <th class="px-3 py-2 text-right">Cost</th><th class="px-3 py-2 text-right">Stop-loss</th><th class="px-3 py-2 text-right">Stop %</th><th class="px-3 py-2 text-right">Risk</th></tr>
+            <tr><th class="px-3 py-2 text-left">Stock</th><th class="px-3 py-2 text-right" title="What we would like to pay">Ideal</th>
+            <th class="px-3 py-2 text-right" title="The most we will pay if the whole market gapped up">Pay up to</th>
+            <th class="px-3 py-2 text-right" title="Above this it is a different trade — take a bench name instead">Skip above</th>
+            <th class="px-3 py-2 text-right">Shares</th>
+            <th class="px-3 py-2 text-right">Cost</th><th class="px-3 py-2 text-right">Stop-loss</th><th class="px-3 py-2 text-right">Risk</th></tr>
           </thead>
           <tbody>
             ${plan.rows.map((r) => `
-              <tr class="border-t border-slate-100">
-                <td class="px-3 py-2 font-semibold text-slate-900">${escapeHtml(r.name)}</td>
-                ${cell(inr(r.price), "text-slate-500")}
-                ${cell(`<span class="text-base font-bold text-slate-900">${r.shares}</span>`)}
+              <tr class="border-t border-slate-100 ${r.tradable ? "" : "bg-amber-50/40"}">
+                <td class="px-3 py-2 font-semibold text-slate-900">${escapeHtml(r.name)}${r.promoted ? `<span class="ml-1.5 text-[9px] font-bold uppercase tracking-wider px-1 py-0.5 rounded bg-sky-100 text-sky-700">from bench</span>` : ""}</td>
+                ${cell(inr(r.limitIdeal), "text-slate-500")}
+                ${cell(inr(r.limitMax), "font-semibold text-slate-900")}
+                ${cell(inr(r.skipAbove), "text-slate-400")}
+                ${cell(`<span class="text-base font-bold ${r.tradable ? "text-slate-900" : "text-amber-700"}">${r.shares}</span>`)}
                 ${cell(inr(r.cost), "font-semibold")}
                 ${cell(inr(r.stop), "text-rose-700 font-bold")}
-                ${cell((r.stopPct * 100).toFixed(1) + "%", "text-slate-500")}
                 ${cell(inr(r.risk), "text-slate-600")}
               </tr>`).join("")}
           </tbody>
           <tfoot class="bg-slate-50 border-t-2 border-slate-200 font-bold">
-            <tr><td class="px-3 py-2.5">Total</td><td></td><td></td>
-              ${cell(inr(plan.totalCost))}<td></td><td class="px-3 py-2.5 text-right text-[10px] uppercase tracking-wider text-slate-500">at risk</td>
+            <tr><td class="px-3 py-2.5">Total</td><td></td><td></td><td></td><td></td>
+              ${cell(inr(plan.totalCost))}
+              <td class="px-3 py-2.5 text-right text-[10px] uppercase tracking-wider text-slate-500">at risk</td>
               ${cell(inr(plan.totalRisk), "text-rose-700")}</tr>
           </tfoot>
         </table>
@@ -5377,9 +5703,62 @@ function renderTradePlan() {
       <div class="px-4 py-3 bg-slate-50/60 border-t border-slate-100 flex flex-wrap gap-x-6 gap-y-1 text-xs text-slate-600">
         <span>Deploying <span class="font-bold text-slate-900">${deployPct.toFixed(1)}%</span> of capital</span>
         <span>Total at risk <span class="font-bold ${riskPct > 12 ? "text-rose-700" : "text-slate-900"}">${riskPct.toFixed(1)}%</span> if every stop hits</span>
-        <span class="text-slate-400">Share counts are rounded, so cost won't land exactly on target.</span>
+        <span class="text-slate-400">Share counts are rounded down, so cost won't land exactly on target.</span>
       </div>
     </div>`;
+
+  // ---- sizing feasibility ----
+  // A flat rupee slot says nothing about whether the position is buildable.
+  // One share of a ₹2,400 stock inside a ₹3,500 slot is 68% of the slot in a
+  // single tick — the risk weighting above becomes decoration. Say so, and
+  // say what capital or basket size would fix it.
+  const sizeWarn = (plan.skipped.length || plan.tooSmall.length) ? `
+    <div class="bg-amber-50 ring-1 ring-amber-200 rounded-2xl p-4">
+      <div class="text-[10px] font-bold uppercase tracking-wider text-amber-700 mb-1.5">Sizing notes</div>
+      <div class="text-[13px] text-amber-900 leading-snug space-y-1">
+        ${plan.skipped.map((k) => {
+          const swap = plan.rows.find((r) => r.replaces === k.name);
+          return `<div><span class="font-semibold">${escapeHtml(k.name)}</span> skipped — one share costs ${inr(k.price)}, more than its ${inr(k.target)} slot.${swap ? ` Replaced with <span class="font-semibold">${escapeHtml(swap.name)}</span> from the bench.` : ` No affordable bench name, so its money went to the rest of the basket.`}</div>`;
+        }).join("")}
+        ${plan.tooSmall.length ? `<div>${plan.tooSmall.map((r) => `<span class="font-semibold">${escapeHtml(r.name)}</span> — only ${r.shares} share${r.shares === 1 ? "" : "s"} fit in its ${inr(r.target)} slot`).join("; ")}. Below about three shares the risk weighting is approximate.</div>` : ""}
+      </div>
+    </div>` : "";
+
+  // ---- the bench ----
+  // The whole point: on entry morning a name will have gapped away, and the
+  // replacement has to be already chosen and already sized. Deciding this at
+  // 9:20 with the market moving is how baskets end up half-built.
+  const bufferTable = plan.buffer.length ? `
+    <div class="bg-white rounded-2xl ring-1 ring-slate-100 overflow-hidden">
+      <div class="px-4 py-3 border-b border-slate-100">
+        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500">The bench · ${plan.buffer.length} reserves</div>
+        <div class="text-xs text-slate-500 mt-0.5">If a name above gaps past its skip price, buy the top bench name instead — sized at its own price and ATR, so the risk stays where it was.</div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50/70 text-[10px] uppercase tracking-wider text-slate-500">
+            <tr><th class="px-3 py-2 text-left">#</th><th class="px-3 py-2 text-left">Stock</th><th class="px-3 py-2 text-right">Score</th>
+            <th class="px-3 py-2 text-right">Pay up to</th><th class="px-3 py-2 text-right">Skip above</th>
+            <th class="px-3 py-2 text-right">Shares</th><th class="px-3 py-2 text-right">Stop-loss</th><th class="px-3 py-2 text-left">Sector</th></tr>
+          </thead>
+          <tbody>
+            ${plan.buffer.map((r, i) => `
+              <tr class="border-t border-slate-100">
+                <td class="px-3 py-2 text-slate-400 tabular-nums">${plan.rows.length + i + 1}</td>
+                <td class="px-3 py-2 font-semibold text-slate-900">${escapeHtml(r.name)}<div class="text-[10px] font-mono text-slate-400">${escapeHtml(r.ticker)}</div></td>
+                ${cell(r.composite, "font-bold text-indigo-700")}
+                ${cell(inr(r.limitMax), "font-semibold")}
+                ${cell(inr(r.skipAbove), "text-slate-400")}
+                ${cell(`<span class="font-bold">${r.shares}</span>`)}
+                ${cell(inr(r.stop), "text-rose-700 font-semibold")}
+                <td class="px-3 py-2 text-xs text-slate-500">${escapeHtml(String(r.sector).slice(0, 22))}</td>
+              </tr>`).join("")}
+          </tbody>
+        </table>
+      </div>
+    </div>` : "";
+
+  const entryMonitor = renderEntryMonitor(plan);
 
   // ---- upside, expressed in R ----
   // R is the stop distance. Risking 1R to make 2R is the standard way to
@@ -5430,31 +5809,7 @@ function renderTradePlan() {
       </div>
     </div>`;
 
-  // ---- steps ----
-  const steps = [
-    ["Today, before market opens", `Note the ${plan.rows.length} limit prices and ${plan.rows.length} stop-loss levels above. Write them down — you want them decided while you have no money on the line.`],
-    ["Next trading day, 9:30am", `Skip the first 15 minutes; opening spreads on smallcaps are wide. Then place <span class="font-semibold">limit orders</span> at or below the "Limit ≤" price. Never market orders.`],
-    ["If a stock gapped up overnight", `More than one ATR above the limit price (that stock's own ATR%, column above)? <span class="font-semibold">Skip it.</span> The risk-reward you see here no longer exists at that price.`],
-    ["Same day, once filled", `Place every stop-loss as a <span class="font-semibold">GTT order</span> with your broker. A stop you plan to watch manually is not a stop.`],
-    ["Record your actual fills", `Your real entry will differ from these reference prices. Note what you paid, so month-end measures your trading and not this table's theory.`],
-    ["Then nothing until the 1st", `No daily checking. The stops handle the downside; next month's basket handles the rest. This is a monthly holding, not a trade you manage.`],
-  ];
-  const stepCard = `
-    <div class="bg-white rounded-2xl ring-1 ring-slate-100 p-5">
-      <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-4">Step 6 · Exactly what to do</div>
-      <ol class="space-y-3.5">
-        ${steps.map(([h, b], i) => `
-          <li class="flex gap-3">
-            <span class="flex-shrink-0 w-6 h-6 rounded-lg bg-indigo-50 text-indigo-700 ring-1 ring-indigo-100 text-[11px] font-bold flex items-center justify-center mt-0.5">${i + 1}</span>
-            <div class="min-w-0">
-              <div class="font-semibold text-slate-900 text-sm">${h}</div>
-              <div class="text-[13px] text-slate-600 leading-snug mt-0.5">${b}</div>
-            </div>
-          </li>`).join("")}
-      </ol>
-    </div>`;
-
-  return `<div class="space-y-4">${capBox}${regimeCard}${warnCard}${readTable}${orderTable}${upCard}${stepCard}${renderPaperResults()}</div>`;
+  return `<div class="space-y-4">${pills}${context}${capBox}${regimeCard}${warnCard}${entryMonitor}${readTable}${sizeWarn}${orderTable}${bufferTable}${upCard}${renderPaperResults()}</div>`;
 }
 
 // ============================================================
@@ -5686,6 +6041,7 @@ function renderPaperResults() {
 function renderStrategySubNav(sub) {
   const tabs = [
     { k: "plan",      icon: "🧾", label: "Trade Plan" },
+    { k: "compare",   icon: "⚖️", label: "Compare" },
     { k: "overview",  icon: "📈", label: "Overview" },
     { k: "accuracy",  icon: "🎯", label: "Accuracy" },
     { k: "balancing", icon: "🧭", label: "Balancing" },
@@ -5706,6 +6062,8 @@ function renderStrategySubPanel(view, sub, mode, anchorDate) {
   switch (sub) {
     case "plan":
       return renderTradePlan();
+    case "compare":
+      return renderStrategyCompare();
     case "accuracy":
       return `<div class="space-y-4">${renderActiveOverallHitsSplit(view)}${renderActivePickRowsSplit(view)}</div>`;
     case "balancing":
@@ -5716,6 +6074,242 @@ function renderStrategySubPanel(view, sub, mode, anchorDate) {
     default:
       return `<div class="space-y-4">${renderActiveCumulativeChart(view)}${renderStrategyKpis(view)}${renderActiveSegmentedBaskets(view, mode)}</div>`;
   }
+}
+
+// ============================================================
+// COMPARE — five strategies, one table, no favourites.
+//
+// The founder's question is "which of these actually makes the most money
+// for the least risk", and the honest answer needs three views: month by
+// month (is it consistent, or was it one lucky month), a summary of every
+// risk and cost measure, and the trades themselves.
+//
+// Numbers come from data/strategy-backtest.json, precomputed by
+// screener-test/backtest-strategies.mjs. Replaying 504 days x 620 tickers
+// x 5 strategies in the browser took seconds and blocked the first paint.
+// ============================================================
+
+// Picking a #1 has to survive the browser it was picked in — otherwise the
+// two founders each see their own answer and the comparison is pointless.
+// A static site cannot write to its own repo, so the honest version is:
+// apply it locally straight away, and hand over the exact file to commit.
+function openPrimaryCommitModal(id) {
+  const def = strat5.strategyById(id);
+  const json = strat5.strategiesFileJson();
+  const overlay = $("#modal-overlay");
+  const content = $("#modal-content");
+  if (!overlay || !content) return;
+  content.innerHTML = `
+    <div class="p-6">
+      <div class="flex items-start gap-3">
+        <span class="text-2xl">★</span>
+        <div class="flex-1 min-w-0">
+          <h3 class="font-display font-bold text-slate-900 text-lg">${escapeHtml(def?.name || id)} is now your #1</h3>
+          <p class="text-sm text-slate-600 mt-1">Applied here already — the Trade Plan follows it from now on. To make it stick for everyone, commit this file.</p>
+        </div>
+        <button type="button" data-close-modal class="text-slate-400 hover:text-slate-600 text-xl leading-none">×</button>
+      </div>
+      <div class="mt-4">
+        <div class="flex items-center justify-between mb-1.5">
+          <code class="text-[11px] font-semibold text-slate-500">public/data/strategies.json</code>
+          <button type="button" id="copy-strategies-json" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700">Copy file</button>
+        </div>
+        <pre class="text-[10px] bg-slate-900 text-slate-200 rounded-xl p-3 max-h-56 overflow-auto scrollbar-thin">${escapeHtml(json)}</pre>
+      </div>
+    </div>`;
+  overlay.classList.add("is-open");
+  overlay.classList.remove("hidden");
+  const close = () => { overlay.classList.remove("is-open"); overlay.classList.add("hidden"); };
+  content.querySelector("[data-close-modal]")?.addEventListener("click", close);
+  content.querySelector("#copy-strategies-json")?.addEventListener("click", (e) => {
+    navigator.clipboard?.writeText(json);
+    e.target.textContent = "Copied ✓";
+  });
+}
+
+const COMPARE_VIEWS = ["monthly", "summary", "trades"];
+
+function compareView() {
+  return COMPARE_VIEWS.includes(state.compareView) ? state.compareView : "summary";
+}
+
+function renderStrategyCompare() {
+  const bt = state.cache.strategyBacktest;
+  const defs = strat5.allStrategies();
+  if (!bt?.strategies?.length || !defs.length) {
+    return `<div class="bg-white rounded-2xl ring-1 ring-slate-100 p-8 text-center text-sm text-slate-500">
+      Backtest not built yet — run <code class="bg-slate-100 px-1 rounded text-[11px]">node screener-test/backtest-strategies.mjs</code>.
+    </div>`;
+  }
+  const rows = defs.map((d) => ({ def: d, ...(bt.strategies.find((x) => x.id === d.id) || {}) })).filter((r) => r.metrics);
+  const view = compareView();
+  const primary = strat5.primaryId();
+
+  const tab = (k, label) => `<button type="button" data-compare-view="${k}" class="px-3 py-1.5 rounded-lg text-xs font-bold transition ${view === k ? "bg-indigo-600 text-white shadow-sm" : "text-slate-500 hover:text-slate-700"}">${label}</button>`;
+
+  const header = `
+    <div class="bg-white rounded-2xl ring-1 ring-slate-100 p-4 flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <h3 class="font-display font-bold text-slate-900 text-base">Which strategy wins?</h3>
+        <div class="text-xs text-slate-500 mt-0.5">${fmtDateDMY(bt.window.start)} → ${fmtDateDMY(bt.window.end)} · ${(bt.window.days / 252).toFixed(1)} years · net of charges at ${inr(bt.capital)}</div>
+      </div>
+      <div class="inline-flex items-center gap-0.5 bg-slate-100 rounded-lg p-0.5">${tab("summary", "Summary")}${tab("monthly", "Month by month")}${tab("trades", "Trades")}</div>
+    </div>`;
+
+  const body = view === "monthly" ? renderCompareMonthly(rows)
+             : view === "trades"  ? renderCompareTrades(rows)
+             : renderCompareSummary(rows, bt, primary);
+
+  const caveats = `
+    <details class="bg-white rounded-2xl ring-1 ring-slate-100 p-4">
+      <summary class="cursor-pointer text-xs font-semibold text-slate-600 select-none">What these numbers are not ▾</summary>
+      <ul class="mt-2 space-y-1 text-[11px] text-slate-500 leading-snug list-disc pl-4">
+        ${(bt.caveats || []).map((c) => `<li>${escapeHtml(c)}</li>`).join("")}
+        <li>A backtest is a rehearsal, not a record. The live tracking below is the only real evidence, and it starts now.</li>
+      </ul>
+    </details>`;
+
+  return `<div class="space-y-3">${header}${body}${caveats}</div>`;
+}
+
+const cmpPct = (v, d = 1) => v == null ? `<span class="text-slate-300">—</span>`
+  : `<span class="tabular-nums font-semibold ${v >= 0 ? "text-emerald-700" : "text-rose-700"}">${v >= 0 ? "+" : ""}${v.toFixed(d)}%</span>`;
+
+function renderCompareSummary(rows, bt, primary) {
+  const best = (key, dir = 1) => {
+    let win = null;
+    for (const r of rows) { const v = r.metrics?.[key]; if (v == null) continue; if (win == null || v * dir > win * dir) win = v; }
+    return win;
+  };
+  const bestCagr = best("cagr"), bestDD = best("maxDD"), bestRisk = best("riskAdj");
+  const mark = (v, b) => v != null && b != null && Math.abs(v - b) < 1e-9 ? " ring-1 ring-emerald-300 bg-emerald-50/60 rounded" : "";
+
+  const head = ["Strategy", "Return", "A year", "Worst fall", "Swing", "Return ÷ risk", "Best month", "Worst month", "Months up", "Win rate", "Trades", "Charges"];
+  return `
+    <div class="bg-white rounded-2xl ring-1 ring-slate-100 overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50/70 text-[10px] uppercase tracking-wider text-slate-500">
+            <tr>${head.map((h, i) => `<th class="px-3 py-2 ${i === 0 ? "text-left" : "text-right"}">${h}</th>`).join("")}</tr>
+          </thead>
+          <tbody>
+            ${rows.map((r) => {
+              const m = r.metrics;
+              return `
+              <tr class="border-t border-slate-100 hover:bg-slate-50">
+                <td class="px-3 py-2.5">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full flex-shrink-0" style="background:${r.def.color}"></span>
+                    <span class="font-semibold text-slate-900">${escapeHtml(r.def.name)}</span>
+                    ${r.def.id === primary ? `<span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 ring-1 ring-amber-200">★ #1</span>` : ""}
+                  </div>
+                  <div class="text-[10px] text-slate-400 mt-0.5">${escapeHtml(r.def.tagline)}</div>
+                </td>
+                <td class="px-3 py-2.5 text-right">${cmpPct(m.netReturn)}</td>
+                <td class="px-3 py-2.5 text-right${mark(m.cagr, bestCagr)}">${cmpPct(m.cagr)}</td>
+                <td class="px-3 py-2.5 text-right${mark(m.maxDD, bestDD)}"><span class="tabular-nums font-semibold text-rose-700">${m.maxDD.toFixed(1)}%</span></td>
+                <td class="px-3 py-2.5 text-right"><span class="tabular-nums text-slate-500">${m.vol.toFixed(1)}%</span></td>
+                <td class="px-3 py-2.5 text-right${mark(m.riskAdj, bestRisk)}"><span class="tabular-nums font-bold text-slate-800">${m.riskAdj == null ? "—" : m.riskAdj.toFixed(2)}</span></td>
+                <td class="px-3 py-2.5 text-right">${cmpPct(m.bestMonth?.retPct)}</td>
+                <td class="px-3 py-2.5 text-right">${cmpPct(m.worstMonth?.retPct)}</td>
+                <td class="px-3 py-2.5 text-right"><span class="tabular-nums text-slate-600">${m.monthlyWinRate == null ? "—" : m.monthlyWinRate.toFixed(0) + "%"}</span></td>
+                <td class="px-3 py-2.5 text-right"><span class="tabular-nums text-slate-600">${m.winRate == null ? "—" : m.winRate.toFixed(0) + "%"}</span></td>
+                <td class="px-3 py-2.5 text-right"><span class="tabular-nums text-slate-500">${m.trades}</span></td>
+                <td class="px-3 py-2.5 text-right"><span class="tabular-nums text-slate-500">${m.chargesPct.toFixed(1)}%</span></td>
+              </tr>`;
+            }).join("")}
+          </tbody>
+        </table>
+      </div>
+      <div class="px-4 py-3 bg-slate-50/60 border-t border-slate-100">
+        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">Make one your #1</div>
+        <div class="flex flex-wrap gap-1.5">
+          ${rows.map((r) => `<button type="button" data-set-primary="${r.def.id}"
+            class="px-3 py-1.5 rounded-lg text-xs font-semibold ring-1 transition ${r.def.id === primary ? "bg-amber-500 text-white ring-amber-500" : "bg-white text-slate-600 ring-slate-200 hover:bg-amber-50 hover:ring-amber-200"}">
+            ${r.def.id === primary ? "★ " : ""}${escapeHtml(r.def.name)}</button>`).join("")}
+        </div>
+        <div class="text-[10px] text-slate-400 mt-2 leading-snug">Your #1 drives the Trade Plan. The dashboard is a static site, so the button cannot commit for you — it applies here immediately and hands you the updated <code class="bg-slate-100 px-1 rounded">strategies.json</code> to commit, so your co-founder sees the same pick.</div>
+      </div>
+      <div class="px-4 py-3 border-t border-slate-100 text-[11px] text-slate-500 leading-snug">
+        <b>Return ÷ risk</b> is the yearly return divided by how much the value swings — the closest thing here to "most money for least worry". <b>Charges</b> is what the broker took, as a share of starting capital.
+      </div>
+    </div>`;
+}
+
+function renderCompareMonthly(rows) {
+  // Union of every month any strategy traded, so a strategy that sat in
+  // cash shows a gap rather than silently shifting its neighbours' columns.
+  const months = [...new Set(rows.flatMap((r) => (r.metrics.months || []).map((m) => m.month)))].sort();
+  const cellFor = (v) => {
+    if (v == null) return `<td class="px-2 py-1.5 text-right text-slate-300">—</td>`;
+    const a = Math.min(1, Math.abs(v) / 8);
+    const bg = v >= 0 ? `rgba(16,185,129,${0.08 + a * 0.32})` : `rgba(244,63,94,${0.08 + a * 0.32})`;
+    return `<td class="px-2 py-1.5 text-right tabular-nums text-[11px] font-semibold ${v >= 0 ? "text-emerald-900" : "text-rose-900"}" style="background:${bg}">${v >= 0 ? "+" : ""}${v.toFixed(1)}</td>`;
+  };
+  return `
+    <div class="bg-white rounded-2xl ring-1 ring-slate-100 overflow-hidden">
+      <div class="px-4 py-3 border-b border-slate-100">
+        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Month by month · % net</div>
+        <div class="text-xs text-slate-500 mt-0.5">Consistency matters more than any single month. Look for a row with few deep red cells.</div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50/70 text-[9px] uppercase tracking-wider text-slate-500">
+            <tr><th class="px-3 py-2 text-left sticky left-0 bg-slate-50">Strategy</th>
+            ${months.map((m) => `<th class="px-2 py-2 text-right whitespace-nowrap">${m.slice(2).replace("-", "/")}</th>`).join("")}</tr>
+          </thead>
+          <tbody>
+            ${rows.map((r) => {
+              const by = new Map((r.metrics.months || []).map((m) => [m.month, m.retPct]));
+              return `<tr class="border-t border-slate-100">
+                <td class="px-3 py-1.5 font-semibold text-slate-800 whitespace-nowrap sticky left-0 bg-white">
+                  <span class="inline-block w-2 h-2 rounded-full mr-1.5" style="background:${r.def.color}"></span>${escapeHtml(r.def.name)}
+                </td>
+                ${months.map((m) => cellFor(by.get(m))).join("")}
+              </tr>`;
+            }).join("")}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function renderCompareTrades(rows) {
+  return `
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+      ${rows.map((r) => {
+        const m = r.metrics;
+        const t = (r.trades || []).slice().sort((a, b) => b.retPct - a.retPct);
+        const best = t.slice(0, 3), worst = t.slice(-3).reverse();
+        const line = (x) => `<div class="flex items-center justify-between gap-2 text-[11px] py-0.5">
+            <span class="font-mono text-slate-600 truncate">${escapeHtml(x.ticker)}</span>
+            <span class="text-slate-400 tabular-nums">${x.days}d · ${escapeHtml(x.reason)}</span>
+            <span class="tabular-nums font-bold ${x.retPct >= 0 ? "text-emerald-700" : "text-rose-700"}">${x.retPct >= 0 ? "+" : ""}${x.retPct.toFixed(1)}%</span>
+          </div>`;
+        return `
+        <div class="bg-white rounded-2xl ring-1 ring-slate-100 p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-2 h-2 rounded-full" style="background:${r.def.color}"></span>
+            <span class="font-semibold text-slate-900 text-sm">${escapeHtml(r.def.name)}</span>
+            <span class="text-[10px] text-slate-400 ml-auto">${m.trades} trades · avg ${m.avgHoldDays == null ? "—" : Math.round(m.avgHoldDays) + "d"} held</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2 mb-3">
+            ${["Avg win", "Avg loss", "Win ÷ loss"].map((lbl, i) => {
+              const v = i === 0 ? m.avgWin : i === 1 ? m.avgLoss : m.profitFactor;
+              const txt = v == null ? "—" : i === 2 ? v.toFixed(2) : `${v >= 0 ? "+" : ""}${v.toFixed(1)}%`;
+              const cls = i === 0 ? "text-emerald-700" : i === 1 ? "text-rose-700" : "text-slate-800";
+              return `<div class="rounded-lg bg-slate-50 px-2 py-1.5">
+                <div class="text-[9px] uppercase tracking-wider text-slate-500">${lbl}</div>
+                <div class="text-sm font-bold tabular-nums ${cls}">${txt}</div></div>`;
+            }).join("")}
+          </div>
+          <div class="text-[9px] font-bold uppercase tracking-wider text-slate-400 mb-1">Best</div>
+          ${best.map(line).join("")}
+          <div class="text-[9px] font-bold uppercase tracking-wider text-slate-400 mt-2 mb-1">Worst</div>
+          ${worst.map(line).join("")}
+        </div>`;
+      }).join("")}
+    </div>`;
 }
 
 // Sector / Industry timing sub-tab wrapper — shows a friendly empty state
@@ -5949,10 +6543,25 @@ function renderSimPanel(view) {
 
   const inputs = SIM_FIELDS.map((f) => `
     <label class="flex flex-col gap-1">
-      <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-500">${f.label}</span>
+      <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-500">${f.label}${f.suffix ? ` <span class="text-slate-300 normal-case">${f.suffix}</span>` : ""}</span>
       <input type="number" data-sim-field="${f.key}" value="${p[f.key]}" step="${f.step}" min="0"
              class="w-full rounded-lg ring-1 ring-slate-200 focus:ring-2 focus:ring-indigo-300 px-2 py-1.5 text-sm tabular-nums outline-none" />
+      ${f.note ? `<span class="text-[9px] text-slate-400">${f.note}</span>` : ""}
     </label>`).join("");
+
+  // What the charges actually cost at this ticket size — the number that
+  // decides whether a strategy's edge survives contact with the broker.
+  const basket = 7;
+  const cs = chargeSummary(p.capital, basket, p);
+  const costCard = `
+    <div class="rounded-xl ring-1 ring-amber-200 bg-amber-50/60 px-3 py-2.5 mt-3">
+      <div class="text-[11px] text-amber-900 leading-snug">
+        At <b>${money(p.capital)}</b> across ${basket} stocks that is <b>${money(cs.perPosition)}</b> a position —
+        <b>${cs.roundTripPct.toFixed(2)}%</b> to buy and sell it once
+        (the flat ₹${p.dpFee} DP fee is <b>${cs.dpSharePct.toFixed(0)}%</b> of that).
+        Replacing the whole basket every month costs <b>${cs.monthlyRotationAnnualPct.toFixed(1)}% a year</b>.
+      </div>
+    </div>`;
 
   return `
     <div class="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 p-4 sm:p-5">
@@ -5972,8 +6581,9 @@ function renderSimPanel(view) {
       </div>
       <details class="group">
         <summary class="cursor-pointer text-[11px] font-semibold text-indigo-600 hover:text-indigo-700 select-none">Adjust capital, buffer &amp; charge rates ▾</summary>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 mt-3">${inputs}</div>
-        <div class="text-[10px] text-slate-400 mt-2 leading-snug">Charges apply on every buy &amp; sell (round-trip per holding); daily internal rebalancing isn't charged. Cash buffer is held back from deployment. Rates are placeholders — overwrite with the client's actual figures and the curve recomputes.</div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 mt-3">${inputs}</div>
+        ${costCard}
+        <div class="text-[10px] text-slate-400 mt-2 leading-snug">Zerodha NSE delivery rates. STT and the exchange/SEBI fees hit both sides, stamp duty only the buy, and the DP fee is a flat charge per stock sold — which is why it costs far more, in percentage terms, on a small position than a large one.</div>
       </details>
     </div>`;
 }
@@ -6161,7 +6771,14 @@ function renderActiveCumulativeChart(view) {
 
   const pts = view.equityCurve;
   if (pts.length < 2) {
-    return shell("", `<div class="text-xs text-slate-500 py-6 text-center">Not enough days to plot yet.</div>`) + `</div>`;
+    // Distinguish "the market has not opened since you locked the basket"
+    // from "something is broken". The old code drew a line through weekend
+    // snapshots here, so the entry charge looked like a price move.
+    return shell("", `
+      <div class="text-xs text-slate-500 py-6 text-center leading-relaxed">
+        No trading day since the basket was locked — nothing to plot yet.<br>
+        <span class="text-slate-400">The line starts on the next market open.</span>
+      </div>`) + `</div>`;
   }
   const niftyByDate = new Map((view.niftyCurve || []).map((p) => [p.date, p.retPct]));
   const nifty500ByDate = new Map((view.nifty500Curve || []).map((p) => [p.date, p.retPct]));
@@ -6246,7 +6863,8 @@ function renderActiveCumulativeChart(view) {
           <rect id="active-chart-capture" x="0" y="0" width="${W}" height="${H}" fill="transparent" />
         </svg>
         <div id="active-chart-tooltip" class="hidden absolute z-10 pointer-events-none -translate-x-1/2 -translate-y-[calc(100%+10px)] bg-slate-900/95 backdrop-blur text-white text-[11px] rounded-xl shadow-2xl ring-1 ring-slate-700/60 px-3 py-2 whitespace-nowrap"></div>
-      </div>`;
+      </div>
+      ${view.entryCostPct > 0 ? `<div class="text-[10px] text-slate-400 mt-1.5 leading-snug">The basket line starts <b>${view.entryCostPct.toFixed(2)}%</b> down: that is the buying charge, debited the moment the basket is locked, not a price move. Only trading days are plotted.</div>` : ""}`;
   return shell(legend, body) + `</div>`;
 }
 
@@ -9620,7 +10238,7 @@ function simulateCustomStrategy(snapshots, anchorDate, strat, simP = simPrefs) {
   const hasParams = activeParamCount(params) > 0;
   const capital = simP?.capital ?? ACTIVE_INITIAL_CAPITAL;
   const bufferAmt = capital * Math.max(0, simP?.bufferPct ?? 0) / 100;
-  const sideRate = perSideChargeRate(simP);
+  const chg = simP === ZERO_CHARGER ? ZERO_CHARGER : makeCharger(simP);
 
   let cash = capital, totalCharges = 0;
   let lastRebal = sorted[0].date;
@@ -9659,7 +10277,7 @@ function simulateCustomStrategy(snapshots, anchorDate, strat, simP = simPrefs) {
       else if (isRebalanceDay && !topNset.has(ticker)) reason = "REBAL";
       if (!reason) continue;
       const gross = pos.units * px;
-      const fee = gross * sideRate;
+      const fee = chg.sell(gross);
       cash += gross - fee; totalCharges += fee;
       trades.push({ action: "SELL", ticker, name: pos.name, sector: pos.sector, date, price: px, entryDate: pos.entryDate, entryPrice: pos.entryPrice, days: daysBetween(pos.entryDate, date), ret: (px / pos.entryPrice - 1) * 100, reason });
       holdings.delete(ticker);
@@ -9674,9 +10292,9 @@ function simulateCustomStrategy(snapshots, anchorDate, strat, simP = simPrefs) {
         let nav = cash;
         for (const [t, p] of holdings) nav += p.units * (closeBy.get(t) ?? p.entryPrice);
         const slot = Math.max(0, nav - bufferAmt) / N;
-        const buyValue = Math.min(slot, Math.max(0, cash) / (1 + sideRate));
+        const buyValue = Math.min(slot, Math.max(0, cash) / (1 + buyRate(chg.prefs || {})));
         if (buyValue < 0.01) break;
-        const fee = buyValue * sideRate;
+        const fee = chg.buy(buyValue);
         holdings.set(s.ticker, { units: buyValue / s.close, entryDate: date, entryPrice: s.close, name: s.name || s.ticker, sector: s.sector || null });
         trades.push({ action: "BUY", ticker: s.ticker, name: s.name || s.ticker, sector: s.sector || null, date, price: s.close });
         cash -= buyValue + fee; totalCharges += fee;
@@ -9711,7 +10329,7 @@ function buildCustomPicks(sim, snapshots, todayDate, strat) {
 function buildCustomView(snapshots, anchorDate, todayDate, strat, niftyOn, manualPicks) {
   const sim = simulateCustomStrategy(snapshots, anchorDate, strat, simPrefs);
   if (!sim || !sim.equity.length) return null;
-  const simGross = simulateCustomStrategy(snapshots, anchorDate, strat, zeroChargePrefs(simPrefs));
+  const simGross = simulateCustomStrategy(snapshots, anchorDate, strat, ZERO_CHARGER);
   const picks = buildCustomPicks(sim, snapshots, todayDate, strat);
   const hitSummary = computeOverallHitSummary(picks);
   const equityCurve = sim.equity.map((e) => ({ date: e.date, retPct: (e.value / sim.startCapital - 1) * 100 }));
@@ -10357,10 +10975,12 @@ function buildTechContext(hist, windowDays) {
   return { start, dates, T, ranked, closeAt, hist };
 }
 
-// sideRate = per-side transaction cost fraction (brokerage + STT + exchange
-// + GST). Applied on every buy AND sell so heavy churn is penalised — pass 0
-// for the gross (frictionless) run, perSideChargeRate() for the net run.
-function runTechBacktest(ctx, p, sideRate = 0) {
+// chg = a charger from charges.js. Applied on every buy AND sell so heavy
+// churn is penalised — pass ZERO_CHARGER for the gross (frictionless) run.
+// The book is normalised to 1.0, so notionals are scaled to the real
+// capital before charging: the DP fee is flat, and a fee computed on a
+// notional of 0.14 rather than ₹7,143 would round to nothing.
+function runTechBacktest(ctx, p, chg = ZERO_CHARGER, capital = 50000) {
   const { dates, ranked, closeAt, hist } = ctx;
   const N = Math.max(1, p.basketSize), thr = p.threshold, tgt = p.targetPct / 100, sl = p.slPct / 100, reb = Math.max(1, p.rebalanceDays);
   let cash = 1, lastReb = 0, trades = 0, charges = 0;
@@ -10375,7 +10995,7 @@ function runTechBacktest(ctx, p, sideRate = 0) {
       const px = closeAt(t, di); if (px == null) continue;
       const g = px / pos.entryPrice - 1;
       if (g >= tgt || g <= -sl || (isReb && !topN.has(t))) {
-        const proceeds = pos.units * px, fee = proceeds * sideRate;
+        const proceeds = pos.units * px, fee = chg.sell(proceeds * capital) / capital;
         cash += proceeds - fee; charges += fee; holds.delete(t); trades++;
       }
     }
@@ -10384,9 +11004,9 @@ function runTechBacktest(ctx, p, sideRate = 0) {
         if (holds.size >= N) break;
         if (holds.has(r.t)) continue;
         let nav = cash; for (const [tk, pos] of holds) nav += pos.units * (closeAt(tk, di) ?? pos.entryPrice);
-        const buy = Math.min(nav / N, cash / (1 + sideRate));   // leave room for the buy-side fee
+        const buy = Math.min(nav / N, cash / (1 + buyRate(chg.prefs || {})));   // leave room for the buy-side fee
         if (buy < 1e-6) break;
-        const fee = buy * sideRate;
+        const fee = chg.buy(buy * capital) / capital;
         holds.set(r.t, { units: buy / r.close, entryPrice: r.close }); cash -= buy + fee; charges += fee; trades++;
       }
     }
@@ -10408,9 +11028,9 @@ function runTechBacktest(ctx, p, sideRate = 0) {
 // (= XIRR for a single-capital backtest). 252 trading days ≈ 1 year.
 function techWindowRow(p, windowDays, label) {
   const ctx = buildTechContext(techHist, windowDays);
-  const rate = perSideChargeRate();
-  const gross = runTechBacktest(ctx, p, 0);
-  const net = runTechBacktest(ctx, p, rate);
+  const cap = simPrefs.capital ?? 50000;
+  const gross = runTechBacktest(ctx, p, ZERO_CHARGER, cap);
+  const net = runTechBacktest(ctx, p, makeCharger(simPrefs), cap);
   // Annualise over the ACTUAL trading days simulated, not the nominal window —
   // buildTechContext clamps `start` to the available history, so net.days can
   // be < windowDays (e.g. a shorter regenerated file). Using windowDays there
@@ -10431,14 +11051,14 @@ function techWindowRow(p, windowDays, label) {
 function findBestTechStrategy(ctx) {
   const GRID = { basketSize: [5, 7, 10], rebalanceDays: [5, 10, 20], targetPct: [8, 12, 20], slPct: [5, 8, 12], threshold: [50, 55, 60] };
   let best = null, tried = 0;
-  const rate = perSideChargeRate();   // score on NET return so the optimiser can't win by churning
+  const chg = makeCharger(simPrefs);   // score on NET return so the optimiser can't win by churning
   for (const basketSize of GRID.basketSize)
     for (const rebalanceDays of GRID.rebalanceDays)
       for (const targetPct of GRID.targetPct)
         for (const slPct of GRID.slPct)
           for (const threshold of GRID.threshold) {
             const params = { basketSize, rebalanceDays, targetPct, slPct, threshold };
-            const r = runTechBacktest(ctx, params, rate); tried++;
+            const r = runTechBacktest(ctx, params, chg, simPrefs.capital ?? 50000); tried++;
             const score = r.finalReturn + 0.4 * r.maxDD;
             if (!best || score > best.score) best = { params, r, score };
           }
@@ -10461,7 +11081,7 @@ function renderTechBacktest() {
     </section>`;
   }
   const p = state.techParams;
-  const rate = perSideChargeRate();
+  const cs = chargeSummary(simPrefs.capital ?? 50000, state.techParams.basketSize || 7, simPrefs);
   // Compute all three windows at once so the client sees 6M / 1Y / 2Y side by
   // side (founder ask) instead of one number behind a window toggle.
   const rows = [techWindowRow(p, 126, "6M"), techWindowRow(p, 252, "1Y"), techWindowRow(p, 504, "2Y")];
@@ -10502,7 +11122,7 @@ function renderTechBacktest() {
       <div class="px-4 sm:px-5 pt-4 sm:pt-5">
         <div class="flex items-center gap-2"><span class="text-base">🧪</span><h3 class="font-display font-bold text-slate-900 text-base">Technical Back-test</h3></div>
         <div class="text-[12px] text-slate-600 mt-1.5 leading-snug">Buy the top <b>${p.basketSize}</b> stocks with technical strength <b>≥ ${p.threshold}/100</b> · sell each at <b>+${p.targetPct}%</b> or <b>−${p.slPct}%</b> · rebuild every <b>${p.rebalanceDays} days</b>.</div>
-        <div class="text-[11px] text-slate-400 mt-0.5 tabular-nums">Real daily prices · ${fmtDateDMY(full.start)} → ${fmtDateDMY(full.end)} · <b>Net</b> is after <b>${(rate * 100).toFixed(2)}%/side</b> costs.</div>
+        <div class="text-[11px] text-slate-400 mt-0.5 tabular-nums">Real daily prices · ${fmtDateDMY(full.start)} → ${fmtDateDMY(full.end)} · <b>Net</b> is after real charges — <b>${cs.roundTripPct.toFixed(2)}%</b> a round trip at ₹${Math.round(cs.perPosition).toLocaleString("en-IN")} a position.</div>
       </div>
 
       <div class="px-4 sm:px-5 mt-3">

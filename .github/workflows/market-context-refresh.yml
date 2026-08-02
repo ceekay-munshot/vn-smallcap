@@ -1,0 +1,59 @@
+name: Market context (pre-open)
+
+# Builds public/data/market-context.json: overnight US futures, the Asian
+# session and India VIX. The Trade Plan uses it to set how far above
+# yesterday's close a limit order may go, and to warn that limits are
+# unlikely to fill on a gap-up morning.
+#
+# Runs pre-open and once mid-session so the "would we have missed this"
+# read stays current. Cheap: 6 Yahoo calls.
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 08:15 IST = 02:45 UTC — before the 09:15 open, after Asia has opened.
+    - cron: "45 2 * * 1-5"
+    # 12:30 IST = 07:00 UTC — mid-session refresh of the VIX reading.
+    - cron: "0 7 * * 1-5"
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Fetch market context
+        run: node screener-test/scrape-market-context.mjs
+
+      - name: Commit market context to main
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          [ -f public/data/market-context.json ] && git add public/data/market-context.json || true
+          if git diff --cached --quiet; then
+            echo "No market-context changes this run."
+            exit 0
+          fi
+          git commit -m "Market context refresh ($(date -u +%Y-%m-%dT%H:%MZ))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              echo "Push succeeded on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — fetching + rebasing onto fresh main..."
+            git fetch origin main
+            git rebase origin/main || { echo "Rebase failed — aborting."; git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          echo "Push still failing after 4 attempts."
+          exit 1
