@@ -516,6 +516,7 @@ const state = {
   manualReturnMode: loadManualReturnMode(), // "booked" | "held" — manual-basket return convention
   strategySubTab: loadStrategySubTab(),     // Strategy-tab sub-tab (plan / compare / overview / accuracy / balancing)
   compareView: (() => { try { return localStorage.getItem("vn-compare-view-v1") || "summary"; } catch { return "summary"; } })(),
+  compareSource: (() => { try { return localStorage.getItem("vn-compare-source-v1") || "live"; } catch { return "live"; } })(),
   planStrategyId: (() => { try { return localStorage.getItem("vn-plan-strategy-v1") || null; } catch { return null; } })(),
   manualMonth: null,                  // selected client-basket month "YYYY-MM" (null = latest)
   labWeights: loadLabWeights(),       // Weight Lab sandbox pillar mix
@@ -991,6 +992,7 @@ function renderAll() {
 
 function renderMeta() {
   const c = cfg(); const st = tabState();
+  if (!st) return;   // tab not loaded yet — Strategy never fills this cache slot
   const m = st.meta;
   if (m && m.generated_at) {
     $("#meta-updated").textContent = new Date(m.generated_at).toLocaleString("en-IN", {
@@ -4588,6 +4590,11 @@ async function renderActive() {
       renderActive();
     }));
     // Compare: view switch + "make this my #1".
+    $$("#active-content [data-compare-source]").forEach((b) => b.addEventListener("click", () => {
+      state.compareSource = b.dataset.compareSource;
+      try { localStorage.setItem("vn-compare-source-v1", state.compareSource); } catch {}
+      renderActive();
+    }));
     $$("#active-content [data-compare-view]").forEach((b) => b.addEventListener("click", () => {
       state.compareView = b.dataset.compareView;
       try { localStorage.setItem("vn-compare-view-v1", state.compareView); } catch {}
@@ -6150,7 +6157,152 @@ function openPrimaryCommitModal(id) {
   });
 }
 
+// ============================================================
+// LIVE STRATEGY TRACKING
+//
+// The backtest answers "what would these five have done over the last two
+// years". It cannot answer "which one is actually winning", because it
+// never happened. This does: it replays all five over the REAL snapshot
+// trail, with the closes actually recorded each morning and the charges
+// actually payable, and it extends by one point every trading day without
+// anyone running anything -- the snapshots already refresh at 06:23 IST.
+//
+// It will look thin for the first few weeks. That is honest: a comparison
+// between five strategies picking from one ranking needs a couple of
+// months before sector caps and basket width separate them.
+// ============================================================
+
+function liveTradingDays(snapshots) {
+  // The benchmark is the trading calendar. Snapshots are written every
+  // calendar day, so without this a Saturday carrying Friday's closes
+  // becomes a data point.
+  const cal = state.cache.history?.benchmark?.indices?.["NIFTYSMLCAP250.NS"]?.closes;
+  if (!cal) return snapshots;
+  return snapshots.filter((s) => cal[s.date] != null);
+}
+
+// One snapshot -> ranked candidates in the shape the selection helpers want.
+function liveCandidates(snap) {
+  const adtvBy = state.cache.planAdtv || {};
+  return snap.stocks
+    .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed && typeof s.close === "number")
+    .sort((a, b) => b.composite - a.composite)
+    .map((s) => {
+      const tv = s.techVals || {};
+      return {
+        ticker: s.ticker, name: s.name || s.ticker, sector: s.sector || "—", score: s.composite,
+        close: s.close,
+        ind: { rsi: tv.rsi, atr: tv.atr, d52: tv.d52, adtv: adtvBy[s.ticker] ?? null,
+               aboveMa50: tv.e50, aboveMa200: tv.d200, macdPositive: tv.macd },
+      };
+    });
+}
+
+// Replay one strategy over the real snapshots. Rebalances on the first
+// trading day of each month -- the product is a monthly basket, so the
+// live track has to be the monthly basket, not a daily re-pick.
+function runLiveStrategy(days, strategy, chg, capital) {
+  const want = strategy.basketSize || 7;
+  const stopAtr = strategy.stopAtr ?? 2.5;
+  const trailAtr = strategy.trailAtr ?? 3;
+  let cash = capital, charges = 0, lastMonth = null, daysInvested = 0;
+  const holdings = new Map();
+  const trades = [];
+  const curve = [];
+  const baseDefs = strategy.consensus ? strat5.allStrategies().filter((s) => !s.consensus) : null;
+
+  days.forEach((snap, i) => {
+    const closeBy = new Map();
+    for (const s of snap.stocks) if (typeof s.close === "number") closeBy.set(s.ticker, s.close);
+    const ym = snap.date.slice(0, 7);
+    const isRebal = lastMonth === null || ym !== lastMonth;
+
+    let sel = null;
+    if (isRebal) {
+      lastMonth = ym;
+      const ranked = liveCandidates(snap);
+      sel = strategy.consensus && baseDefs?.length
+        ? strat5.consensusPicks(baseDefs.map((d) => strat5.selectFromRanked(ranked, d, {})), strategy)
+        : strat5.selectFromRanked(ranked, strategy, {});
+    }
+    const inBasket = sel ? new Set(sel.core.map((p) => p.ticker)) : null;
+
+    // Exits first, so freed cash can fund the same day's entries.
+    for (const [t, pos] of [...holdings]) {
+      const px = closeBy.get(t);
+      if (px == null) continue;
+      if (px > pos.peak) pos.peak = px;
+      let reason = null;
+      if (px <= pos.entry * (1 - (stopAtr * pos.atr) / 100)) reason = "SL";
+      else if (strategy.trailStop && pos.peak >= pos.entry * (1 + ((strategy.trailArmAtr ?? 1.5) * pos.atr) / 100)
+               && px <= pos.peak * (1 - (trailAtr * pos.atr) / 100)) reason = "TRAIL";
+      else if (isRebal && inBasket && !inBasket.has(t)) reason = "REBAL";
+      if (!reason) continue;
+      const gross = pos.units * px, fee = chg.sell(gross);
+      cash += gross - fee; charges += fee;
+      trades.push({ ticker: t, entryDate: pos.entryDate, exitDate: snap.date, entry: pos.entry, exit: px,
+                    retPct: (px / pos.entry - 1) * 100, days: i - pos.dayIdx, reason });
+      holdings.delete(t);
+    }
+
+    if (isRebal && sel) {
+      let nav = cash;
+      for (const [t, p] of holdings) nav += p.units * (closeBy.get(t) ?? p.entry);
+      const weightOf = strat5.invAtrWeights(sel.core, strategy);
+      for (const pick of sel.core) {
+        if (holdings.size >= want || holdings.has(pick.ticker)) continue;
+        const px = closeBy.get(pick.ticker);
+        if (px == null || px <= 0) continue;
+        const spend = Math.min(nav * weightOf(pick), Math.max(0, cash) * 0.98);
+        const units = Math.floor(spend / px);
+        if (units < 1) continue;
+        const cost = units * px, fee = chg.buy(cost);
+        if (cost + fee > cash) continue;
+        cash -= cost + fee; charges += fee;
+        holdings.set(pick.ticker, { units, entry: px, entryDate: snap.date, dayIdx: i, peak: px,
+                                    atr: pick.ind?.atr ?? 3.5 });
+      }
+    }
+
+    let value = cash;
+    for (const [t, p] of holdings) value += p.units * (closeBy.get(t) ?? p.entry);
+    if (holdings.size) daysInvested++;
+    curve.push({ date: snap.date, retPct: (value / capital - 1) * 100, holdings: holdings.size });
+  });
+
+  return { curve, trades, charges, startCapital: capital, daysInvested, strategy };
+}
+
+// All five over the real trail, cached per snapshot count so switching
+// sub-tabs does not replay everything.
+function liveStrategyRuns() {
+  const snaps = state.cache.history?.snapshots || [];
+  const days = liveTradingDays(snaps);
+  const defs = strat5.allStrategies();
+  if (!days.length || !defs.length) return null;
+  const key = `${days.length}:${days[days.length - 1]?.date}:${simPrefs.capital}`;
+  if (state.cache.liveRunsKey === key && state.cache.liveRuns) return state.cache.liveRuns;
+
+  const chg = makeCharger(simPrefs);
+  const bench = buildNiftyCurve(days.map((d) => d.date), (date) => {
+    const cl = state.cache.history?.benchmark?.indices?.["NIFTYSMLCAP250.NS"]?.closes;
+    return cl ? cl[date] ?? null : null;
+  });
+  const runs = defs.map((d) => {
+    const result = runLiveStrategy(days, d, chg, simPrefs.capital);
+    return { def: d, id: d.id, name: d.name, result, curve: result.curve,
+             metrics: strat5.metrics(result, bench), trades: result.trades };
+  });
+  const out = { runs, bench, days, start: days[0]?.date, end: days[days.length - 1]?.date };
+  state.cache.liveRuns = out; state.cache.liveRunsKey = key;
+  return out;
+}
+
 const COMPARE_VIEWS = ["monthly", "summary", "trades"];
+const COMPARE_SOURCES = ["live", "backtest"];
+function compareSource() {
+  return COMPARE_SOURCES.includes(state.compareSource) ? state.compareSource : "live";
+}
 
 function compareView() {
   return COMPARE_VIEWS.includes(state.compareView) ? state.compareView : "summary";
@@ -6159,40 +6311,95 @@ function compareView() {
 function renderStrategyCompare() {
   const bt = state.cache.strategyBacktest;
   const defs = strat5.allStrategies();
-  if (!bt?.strategies?.length || !defs.length) {
-    return `<div class="bg-white rounded-2xl ring-1 ring-slate-100 p-8 text-center text-sm text-slate-500">
-      Backtest not built yet — run <code class="bg-slate-100 px-1 rounded text-[11px]">node screener-test/backtest-strategies.mjs</code>.
-    </div>`;
+  if (!defs.length) {
+    return `<div class="bg-white rounded-2xl ring-1 ring-slate-100 p-8 text-center text-sm text-slate-500">Strategy definitions not loaded.</div>`;
   }
-  const rows = defs.map((d) => ({ def: d, ...(bt.strategies.find((x) => x.id === d.id) || {}) })).filter((r) => r.metrics);
+  const src = compareSource();
   const view = compareView();
   const primary = strat5.primaryId();
+  const live = src === "live" ? liveStrategyRuns() : null;
 
+  const srcBtn = (k, label, sub) => `
+    <button type="button" data-compare-source="${k}" class="px-3 py-1.5 rounded-lg text-left transition ${src === k ? "bg-white shadow-sm ring-1 ring-slate-200" : "hover:bg-white/60"}">
+      <div class="text-xs font-bold ${src === k ? "text-slate-900" : "text-slate-500"}">${label}</div>
+      <div class="text-[9px] ${src === k ? "text-slate-500" : "text-slate-400"}">${sub}</div>
+    </button>`;
   const tab = (k, label) => `<button type="button" data-compare-view="${k}" class="px-3 py-1.5 rounded-lg text-xs font-bold transition ${view === k ? "bg-indigo-600 text-white shadow-sm" : "text-slate-500 hover:text-slate-700"}">${label}</button>`;
+
+  const range = src === "live"
+    ? (live?.start ? `${fmtDateDMY(live.start)} → ${fmtDateDMY(live.end)} · ${live.days.length} trading day${live.days.length === 1 ? "" : "s"} of real prices` : "waiting for the first trading day")
+    : bt?.window ? `${fmtDateDMY(bt.window.start)} → ${fmtDateDMY(bt.window.end)} · ${(bt.window.days / 252).toFixed(1)} years, simulated` : "not built";
 
   const header = `
     <div class="bg-white rounded-2xl ring-1 ring-slate-100 p-4 flex flex-wrap items-center justify-between gap-3">
-      <div>
+      <div class="min-w-0">
         <h3 class="font-display font-bold text-slate-900 text-base">Which strategy wins?</h3>
-        <div class="text-xs text-slate-500 mt-0.5">${fmtDateDMY(bt.window.start)} → ${fmtDateDMY(bt.window.end)} · ${(bt.window.days / 252).toFixed(1)} years · net of charges at ${inr(bt.capital)}</div>
+        <div class="text-xs text-slate-500 mt-0.5">${range} · net of charges at ${inr(src === "live" ? simPrefs.capital : (bt?.capital ?? simPrefs.capital))}</div>
       </div>
-      <div class="inline-flex items-center gap-0.5 bg-slate-100 rounded-lg p-0.5">${tab("summary", "Summary")}${tab("monthly", "Month by month")}${tab("trades", "Trades")}</div>
+      <div class="flex items-center gap-2 flex-wrap">
+        <div class="inline-flex items-center gap-0.5 bg-slate-100 rounded-lg p-1">
+          ${srcBtn("live", "Live", "real money, grows daily")}
+          ${srcBtn("backtest", "Backtest", "2 years, simulated")}
+        </div>
+        <div class="inline-flex items-center gap-0.5 bg-slate-100 rounded-lg p-0.5">${tab("summary", "Summary")}${tab("monthly", "Month by month")}${tab("trades", "Trades")}</div>
+      </div>
     </div>`;
 
+  // ---- live branch --------------------------------------------------
+  if (src === "live") {
+    if (!live || !live.days.length) {
+      return `<div class="space-y-3">${header}
+        <div class="bg-white rounded-2xl ring-1 ring-slate-100 p-8 text-center">
+          <div class="text-sm text-slate-600">No trading day has closed since tracking began.</div>
+          <div class="text-xs text-slate-400 mt-1">This fills in by itself — one point per trading day, starting with the next market close.</div>
+          <button type="button" data-compare-source="backtest" class="mt-4 px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700">See the 2-year backtest instead →</button>
+        </div></div>`;
+    }
+    const rows = live.runs.filter((r) => r.metrics).map((r) => ({ def: r.def, metrics: r.metrics, trades: r.trades }));
+    const enough = live.days.length >= 2;
+    const chart = enough ? renderMultiCurveChart(
+      [...live.runs.map((r) => ({ label: r.def.name, color: r.def.color, curve: r.curve })),
+       { label: "Smallcap 250", color: "#94a3b8", curve: live.bench, dash: "5 4" }],
+      "All five, side by side", "Real prices from the daily snapshots. One new point every trading day.") : "";
+    const young = `
+      <div class="bg-sky-50 ring-1 ring-sky-200 rounded-2xl px-4 py-3 text-[13px] text-sky-900 leading-snug">
+        <b>${live.days.length} trading day${live.days.length === 1 ? "" : "s"} in.</b>
+        All five pick from the same ranking, so early on their lines sit almost on top of each other — the sector cap and the wider basket only start to separate them over a couple of months.
+        This chart extends itself every trading day; nothing needs running.
+      </div>`;
+    const body = !enough ? "" :
+      view === "monthly" ? renderCompareMonthly(rows) :
+      view === "trades"  ? renderCompareTrades(rows) :
+      renderCompareSummary(rows, { capital: simPrefs.capital }, primary);
+    return `<div class="space-y-3">${header}${live.days.length < 25 ? young : ""}${chart}${body}</div>`;
+  }
+
+  // ---- backtest branch ----------------------------------------------
+  if (!bt?.strategies?.length) {
+    return `<div class="space-y-3">${header}
+      <div class="bg-white rounded-2xl ring-1 ring-slate-100 p-8 text-center text-sm text-slate-500">
+        Backtest not built yet — run <code class="bg-slate-100 px-1 rounded text-[11px]">node screener-test/backtest-strategies.mjs</code>.
+      </div></div>`;
+  }
+  const rows = defs.map((d) => ({ def: d, ...(bt.strategies.find((x) => x.id === d.id) || {}) })).filter((r) => r.metrics);
+  const btChart = renderMultiCurveChart(
+    [...bt.strategies.map((s) => {
+      const def = defs.find((d) => d.id === s.id);
+      return { label: s.name, color: def?.color || "#94a3b8", curve: (s.curve || []).map((p) => ({ date: p.d, retPct: p.r })) };
+    }), { label: "Universe", color: "#94a3b8", curve: (bt.universeCurve || []).map((p) => ({ date: p.d, retPct: p.r })), dash: "5 4" }],
+    "All five over two years", "Simulated on real past prices. A rehearsal, not a record.");
   const body = view === "monthly" ? renderCompareMonthly(rows)
              : view === "trades"  ? renderCompareTrades(rows)
              : renderCompareSummary(rows, bt, primary);
-
   const caveats = `
     <details class="bg-white rounded-2xl ring-1 ring-slate-100 p-4">
       <summary class="cursor-pointer text-xs font-semibold text-slate-600 select-none">What these numbers are not ▾</summary>
       <ul class="mt-2 space-y-1 text-[11px] text-slate-500 leading-snug list-disc pl-4">
         ${(bt.caveats || []).map((c) => `<li>${escapeHtml(c)}</li>`).join("")}
-        <li>A backtest is a rehearsal, not a record. The live tracking below is the only real evidence, and it starts now.</li>
+        <li>A backtest is a rehearsal, not a record. Switch to <b>Live</b> for the only evidence that counts.</li>
       </ul>
     </details>`;
-
-  return `<div class="space-y-3">${header}${body}${caveats}</div>`;
+  return `<div class="space-y-3">${header}${btChart}${body}${caveats}</div>`;
 }
 
 const cmpPct = (v, d = 1) => v == null ? `<span class="text-slate-300">—</span>`
@@ -6230,7 +6437,7 @@ function renderCompareSummary(rows, bt, primary) {
                   <div class="text-[10px] text-slate-400 mt-0.5">${escapeHtml(r.def.tagline)}</div>
                 </td>
                 <td class="px-3 py-2.5 text-right">${cmpPct(m.netReturn)}</td>
-                <td class="px-3 py-2.5 text-right${mark(m.cagr, bestCagr)}">${cmpPct(m.cagr)}</td>
+                <td class="px-3 py-2.5 text-right${m.days >= 252 ? mark(m.cagr, bestCagr) : ""}">${m.days >= 252 ? cmpPct(m.cagr) : `<span class="text-slate-300" title="Needs a full year before annualising means anything">—</span>`}</td>
                 <td class="px-3 py-2.5 text-right${mark(m.maxDD, bestDD)}"><span class="tabular-nums font-semibold text-rose-700">${m.maxDD.toFixed(1)}%</span></td>
                 <td class="px-3 py-2.5 text-right"><span class="tabular-nums text-slate-500">${m.vol.toFixed(1)}%</span></td>
                 <td class="px-3 py-2.5 text-right${mark(m.riskAdj, bestRisk)}"><span class="tabular-nums font-bold text-slate-800">${m.riskAdj == null ? "—" : m.riskAdj.toFixed(2)}</span></td>
@@ -6255,7 +6462,7 @@ function renderCompareSummary(rows, bt, primary) {
         <div class="text-[10px] text-slate-400 mt-2 leading-snug">Your #1 drives the Trade Plan. The dashboard is a static site, so the button cannot commit for you — it applies here immediately and hands you the updated <code class="bg-slate-100 px-1 rounded">strategies.json</code> to commit, so your co-founder sees the same pick.</div>
       </div>
       <div class="px-4 py-3 border-t border-slate-100 text-[11px] text-slate-500 leading-snug">
-        <b>Return ÷ risk</b> is the yearly return divided by how much the value swings — the closest thing here to "most money for least worry". <b>Charges</b> is what the broker took, as a share of starting capital.
+        ${rows.some((r) => r.metrics.days < 252) ? `<b>A year</b> is blank until there are twelve months to annualise from — stretching a few months into a yearly figure produces a number that looks impressive and means nothing. ` : ""}<b>Return ÷ risk</b> is the return divided by how much the value swings — the closest thing here to "most money for least worry". <b>Charges</b> is what the broker took, as a share of starting capital.
       </div>
     </div>`;
 }

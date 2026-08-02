@@ -569,7 +569,10 @@ export function metrics(result, benchCurve = null) {
 
   return {
     netReturn: last, cagr, maxDD, recoveryDays, vol,
-    riskAdj: vol > 0 ? cagr / vol : null,
+    // Return per unit of swing. Under a year the numerator is the plain
+    // return, not the annualised one -- stretching four months into a
+    // yearly figure inflates this into a score nobody should act on.
+    riskAdj: vol > 0 ? (curve.length >= 252 ? cagr : last) / vol : null,
     months, monthlyWinRate: months.length ? (wins / months.length) * 100 : null,
     bestMonth: best, worstMonth: worst,
     trades: closed.length,
