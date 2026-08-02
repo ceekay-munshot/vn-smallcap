@@ -31,8 +31,8 @@ whether that helped — not to assert it.
 
 | | Adds | 2-yr net | CAGR | Worst fall |
 |---|---|---|---|---|
-| 1 Core | top 7, equal money | +22.5% | 10.7% | −26.0% |
-| 2 Equal risk | inverse-ATR sizing | +23.5% | 11.1% | −25.5% |
+| 1 Core | top 7, equal money (control) | +22.5% | 10.7% | −26.0% |
+| 2 Equal risk **← what runs today** | inverse-ATR sizing | +23.5% | 11.1% | −25.5% |
 | 3 Spread | 10 names instead of 7 | +28.3% | 13.3% | −20.2% |
 | 4 Balanced | max 2 per sector | **+34.1%** | **15.8%** | **−19.6%** |
 | 5 Consensus | conviction weighting | +24.9% | 11.8% | −19.2% |
@@ -41,6 +41,10 @@ Every layer controls risk rather than picking better stocks, because that is
 what the score does not already do. Filters that repeat the score (MACD,
 relative strength, above-50-DMA) were tested and dropped — they reject
 high-scoring names and push the basket deeper down the ranking for no gain.
+
+**#1 is Equal risk** — the plan already being run, so nothing changed underfoot.
+Balanced led the backtest, but a backtest is a rehearsal; switch #1 from the
+Compare tab once live tracking has an opinion.
 
 Backtest: `node screener-test/backtest-strategies.mjs`, replayed over
 `history-technical.json` (504 trading days, 620 tickers) and written to

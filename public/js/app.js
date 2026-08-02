@@ -5377,6 +5377,28 @@ function planRows(capital, strategy) {
   rows.push(...finalRows);
   const bench = benchPool.slice(0, wantBuffer);
 
+  // ---- leftover cash sweep --------------------------------------------
+  // Share counts round DOWN, not to nearest: rounding up overspends the
+  // slot, and on a ₹4,849 share inside a ₹3,832 slot "nearest" buys one
+  // anyway and blows the position 27% over target. Rounding down alone
+  // leaves a few thousand rupees idle, so the change is spent back here --
+  // one share at a time, always to whichever holding sits furthest below
+  // its target. Same result as rounding to nearest when that was safe,
+  // without ever overshooting a slot.
+  let leftover = capital - rows.reduce((a, r) => a + r.cost, 0);
+  for (let guard = 0; guard < 50; guard++) {
+    const candidates = rows
+      .filter((r) => r.price > 0 && r.price <= leftover && r.cost + r.price <= r.target * 1.15)
+      .sort((a, b) => (a.cost - a.target) - (b.cost - b.target));
+    if (!candidates.length) break;
+    const r = candidates[0];
+    r.shares += 1;
+    r.cost = r.shares * r.price;
+    r.risk = r.cost * r.stopPct;
+    r.tradable = r.shares >= 3;
+    leftover -= r.price;
+  }
+
   let totalCost = 0, totalRisk = 0;
   rows.forEach((r) => { totalCost += r.cost; totalRisk += r.risk; });
 
@@ -5534,6 +5556,7 @@ function renderPlanStrategyPills() {
           <div class="flex items-center gap-1">
             <span class="text-[13px] font-bold leading-tight ${on ? "text-white" : "text-slate-800"}">${escapeHtml(d.name)}</span>
             ${d.id === primary ? `<span title="Your #1 strategy">★</span>` : ""}
+            ${d.isOriginal ? `<span class="text-[8px] font-bold uppercase tracking-wider px-1 py-0.5 rounded ${on ? "bg-white/25 text-white" : "bg-slate-100 text-slate-500"}">current</span>` : ""}
           </div>
           <div class="text-[10px] leading-tight mt-0.5 ${on ? "text-indigo-100" : "text-slate-400"}">
             ${cagr != null ? `${cagr >= 0 ? "+" : ""}${cagr.toFixed(1)}% a year` : escapeHtml(d.tagline || "")}
@@ -5703,7 +5726,7 @@ function renderTradePlan() {
       <div class="px-4 py-3 bg-slate-50/60 border-t border-slate-100 flex flex-wrap gap-x-6 gap-y-1 text-xs text-slate-600">
         <span>Deploying <span class="font-bold text-slate-900">${deployPct.toFixed(1)}%</span> of capital</span>
         <span>Total at risk <span class="font-bold ${riskPct > 12 ? "text-rose-700" : "text-slate-900"}">${riskPct.toFixed(1)}%</span> if every stop hits</span>
-        <span class="text-slate-400">Share counts are rounded down, so cost won't land exactly on target.</span>
+        <span class="text-slate-400">Shares round down, then spare cash buys one more of whatever sits furthest below target — so no slot is overspent.</span>
       </div>
     </div>`;
 
@@ -6202,6 +6225,7 @@ function renderCompareSummary(rows, bt, primary) {
                     <span class="w-2 h-2 rounded-full flex-shrink-0" style="background:${r.def.color}"></span>
                     <span class="font-semibold text-slate-900">${escapeHtml(r.def.name)}</span>
                     ${r.def.id === primary ? `<span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 ring-1 ring-amber-200">★ #1</span>` : ""}
+                    ${r.def.isOriginal ? `<span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 ring-1 ring-slate-200">what you run today</span>` : ""}
                   </div>
                   <div class="text-[10px] text-slate-400 mt-0.5">${escapeHtml(r.def.tagline)}</div>
                 </td>
