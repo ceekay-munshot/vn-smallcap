@@ -1,13 +1,19 @@
 {
-  "generated_at": "2026-08-01T12:40:09.115Z",
+  "generated_at": "2026-08-02T04:21:33.234Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 11,
+  "total_entities_seen": 14,
   "flagged_companies": {},
   "unmatched_sample": [
     {
-      "name": "Zee Entertainment",
+      "name": "Axis MF",
       "type": "sebi-fine",
+      "source": "Mint — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "NSE",
+      "type": "settlement",
       "source": "Mint — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -24,8 +30,14 @@
       "origin": "scraper"
     },
     {
-      "name": "NSE",
-      "type": "settlement",
+      "name": "KTL",
+      "type": "sebi-investigation",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Veritas Finance",
+      "type": "sebi-investigation",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -36,13 +48,13 @@
       "origin": "scraper"
     },
     {
-      "name": "Zee Entertainment",
+      "name": "Zee Entertainment Enterprises Limited",
       "type": "sebi-ban",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Zee Entertainment",
+      "name": "Zee Entertainment Enterprises Limited",
       "type": "sebi-fine",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
@@ -55,7 +67,13 @@
     },
     {
       "name": "Axis Mutual Fund",
-      "type": "sebi-ban",
+      "type": "sebi-fine",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "NSE",
+      "type": "sebi-settlement",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -66,8 +84,8 @@
       "origin": "scraper"
     },
     {
-      "name": "NSE",
-      "type": "sebi-settlement",
+      "name": "Saurashtra Cement Ltd",
+      "type": "sebi-exemption",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -77,32 +95,61 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-01T12:39:50.877Z",
+      "at": "2026-08-02T04:21:16.202Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 1,
-      "total_extracted": 1,
+      "total_extracted_raw": 5,
+      "total_extracted": 5,
       "prefilter_sample": [
         {
-          "name": "Zee Entertainment",
+          "name": "Voda Idea",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Voda Idea receives ₹26.8 crore notice from DoT over spectrum rollout; telco says operations remain unaffected"
+        },
+        {
+          "name": "Sun Pharma",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Alert! 10 eye drop brands recalled in India, Sun Pharma says ‘safety our highest priority’ as expert warns of risk"
+        },
+        {
+          "name": "Axis MF",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "India's SEBI imposes penalty of 14.8 million rupees on Zee Entertainment"
+          "snippet": "Sebi fines former Axis MF chief dealer, aides in ₹30.56 crore front-running case"
+        },
+        {
+          "name": "NSE",
+          "order_type": "settlement",
+          "is_listed_entity": true,
+          "snippet": "Curtains down on co-location, dark fibre: Sebi agrees to NSE's ₹1,491 crore settlement"
+        },
+        {
+          "name": "HDFC Mid Cap Fund",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "HDFC Mid Cap Fund tops ₹1 trillion AUM: Is it still worth considering?"
         }
       ],
-      "after_filter_count": 1,
+      "after_filter_count": 2,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 0,
+        "no_sebi_signal_in_snippet": 3,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
-          "name": "Zee Entertainment",
+          "name": "Axis MF",
           "order_type": "sebi-fine",
-          "snippet": "India's SEBI imposes penalty of 14.8 million rupees on Zee Entertainment"
+          "snippet": "Sebi fines former Axis MF chief dealer, aides in ₹30.56 crore front-running case"
+        },
+        {
+          "name": "NSE",
+          "order_type": "settlement",
+          "snippet": "Curtains down on co-location, dark fibre: Sebi agrees to NSE's ₹1,491 crore settlement"
         }
       ]
     },
@@ -110,12 +157,12 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-01T12:39:54.973Z",
+      "at": "2026-08-02T04:21:19.975Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 4,
-      "total_extracted": 4,
+      "total_extracted_raw": 5,
+      "total_extracted": 5,
       "prefilter_sample": [
         {
           "name": "Zee",
@@ -130,10 +177,16 @@
           "snippet": "Sebi fines SME firm Kalahridhaan Trendz, promoters over disclosure lapses"
         },
         {
-          "name": "NSE",
-          "order_type": "settlement",
+          "name": "KTL",
+          "order_type": "sebi-investigation",
           "is_listed_entity": true,
-          "snippet": "Sebi clears NSE settlement in colo, dark-fibre cases ahead of IPO"
+          "snippet": "Sebi fines SME firm Kalahridhaan Trendz, promoters over disclosure lapses"
+        },
+        {
+          "name": "Veritas Finance",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": true,
+          "snippet": "Veritas Finance files DRHP with Sebi for IPO; plans ₹900 crore issue"
         },
         {
           "name": "Viresh Joshi",
@@ -142,7 +195,7 @@
           "snippet": "Sebi bars Viresh Joshi from mkts for 7 years in Axis MF front-running case"
         }
       ],
-      "after_filter_count": 3,
+      "after_filter_count": 4,
       "dropped_counts": {
         "not_listed": 1,
         "no_sebi_signal_in_snippet": 0,
@@ -161,9 +214,14 @@
           "snippet": "Sebi fines SME firm Kalahridhaan Trendz, promoters over disclosure lapses"
         },
         {
-          "name": "NSE",
-          "order_type": "settlement",
-          "snippet": "Sebi clears NSE settlement in colo, dark-fibre cases ahead of IPO"
+          "name": "KTL",
+          "order_type": "sebi-investigation",
+          "snippet": "Sebi fines SME firm Kalahridhaan Trendz, promoters over disclosure lapses"
+        },
+        {
+          "name": "Veritas Finance",
+          "order_type": "sebi-investigation",
+          "snippet": "Veritas Finance files DRHP with Sebi for IPO; plans ₹900 crore issue"
         }
       ]
     },
@@ -171,12 +229,12 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-01T12:39:59.265Z",
+      "at": "2026-08-02T04:21:24.064Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 10,
-      "total_extracted": 10,
+      "total_extracted_raw": 11,
+      "total_extracted": 11,
       "prefilter_sample": [
         {
           "name": "Kalahridhaan Trendz",
@@ -185,13 +243,13 @@
           "snippet": "Sebi penalises SME firm Kalahridhaan Trendz, promoters for misleading disclosures"
         },
         {
-          "name": "Zee Entertainment",
+          "name": "Zee Entertainment Enterprises Limited",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
           "snippet": "Sebi bans Zee's Subhash Chandra, Punit Goenka from markets for a year"
         },
         {
-          "name": "Zee Entertainment",
+          "name": "Zee Entertainment Enterprises Limited",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
           "snippet": "Sebi imposes penalty of Rs 1.48 crore on Zee Entertainment"
@@ -210,15 +268,9 @@
         },
         {
           "name": "Axis Mutual Fund",
-          "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Sebi bars former Axis MF dealer Viresh Joshi from securities markets for 7 years front-running case"
-        },
-        {
-          "name": "CDSL",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Sebi imposes Rs 1 crore penalty on CDSL over 2022 malware attack"
+          "snippet": "Sebi imposes penalties totaling ₹7.5 crore on Viresh Joshi"
         },
         {
           "name": "NSE",
@@ -233,16 +285,28 @@
           "snippet": "Sebi agrees to settle all NSE cases, clears way for mega IPO"
         },
         {
-          "name": "Adani Energy Solutions",
-          "order_type": "sebi-investigation",
+          "name": "CDSL",
+          "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Adani Energy launches Rs 3,500 crore QIP, sets floor price at Rs 1,698 per share"
+          "snippet": "Sebi imposes Rs 1 crore penalty on CDSL over 2022 malware attack"
+        },
+        {
+          "name": "Saurashtra Cement Ltd",
+          "order_type": "sebi-exemption",
+          "is_listed_entity": true,
+          "snippet": "Sebi exempts Juhi Chawla-owned Mehta Family Trust from Saurashtra Cement open offer"
+        },
+        {
+          "name": "Devin Capital",
+          "order_type": "sebi-fine",
+          "is_listed_entity": false,
+          "snippet": "Sebi imposes Rs 2 crore penalty on Devin Capital for regulatory lapses"
         }
       ],
-      "after_filter_count": 7,
+      "after_filter_count": 8,
       "dropped_counts": {
-        "not_listed": 1,
-        "no_sebi_signal_in_snippet": 2,
+        "not_listed": 2,
+        "no_sebi_signal_in_snippet": 1,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -253,12 +317,12 @@
           "snippet": "Sebi penalises SME firm Kalahridhaan Trendz, promoters for misleading disclosures"
         },
         {
-          "name": "Zee Entertainment",
+          "name": "Zee Entertainment Enterprises Limited",
           "order_type": "sebi-ban",
           "snippet": "Sebi bans Zee's Subhash Chandra, Punit Goenka from markets for a year"
         },
         {
-          "name": "Zee Entertainment",
+          "name": "Zee Entertainment Enterprises Limited",
           "order_type": "sebi-fine",
           "snippet": "Sebi imposes penalty of Rs 1.48 crore on Zee Entertainment"
         },
@@ -269,8 +333,13 @@
         },
         {
           "name": "Axis Mutual Fund",
-          "order_type": "sebi-ban",
-          "snippet": "Sebi bars former Axis MF dealer Viresh Joshi from securities markets for 7 years front-running case"
+          "order_type": "sebi-fine",
+          "snippet": "Sebi imposes penalties totaling ₹7.5 crore on Viresh Joshi"
+        },
+        {
+          "name": "NSE",
+          "order_type": "sebi-settlement",
+          "snippet": "Sebi agrees to settle all NSE cases, clears way for mega IPO"
         },
         {
           "name": "CDSL",
@@ -278,9 +347,9 @@
           "snippet": "Sebi imposes Rs 1 crore penalty on CDSL over 2022 malware attack"
         },
         {
-          "name": "NSE",
-          "order_type": "sebi-settlement",
-          "snippet": "Sebi agrees to settle all NSE cases, clears way for mega IPO"
+          "name": "Saurashtra Cement Ltd",
+          "order_type": "sebi-exemption",
+          "snippet": "Sebi exempts Juhi Chawla-owned Mehta Family Trust from Saurashtra Cement open offer"
         }
       ]
     },
@@ -288,29 +357,16 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-08-01T12:40:05.194Z",
+      "at": "2026-08-02T04:21:30.336Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 2,
-      "total_extracted": 2,
-      "prefilter_sample": [
-        {
-          "name": "CITRUS CHECK INNS LIMITED",
-          "order_type": "public-notice",
-          "is_listed_entity": false,
-          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
-        },
-        {
-          "name": "ROYAL TWINKLE STAR CLUB PVT. LTD",
-          "order_type": "public-notice",
-          "is_listed_entity": false,
-          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
-        }
-      ],
+      "total_extracted_raw": 0,
+      "total_extracted": 0,
+      "prefilter_sample": [],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 2,
+        "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
