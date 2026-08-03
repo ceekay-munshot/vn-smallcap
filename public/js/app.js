@@ -1711,10 +1711,10 @@ async function ensureHistoryCache() {
     .catch(() => null);
   // Live intraday feed (Munshot) — current price + day high/low per basket
   // ticker. Powers live prices and intraday target/SL touch detection.
-  const livePrices = await fetch("data/live-prices.json")
+  const livePricesRaw = await fetch("data/live-prices.json")
     .then((r) => (r.ok ? r.json() : null))
-    .then((j) => j?.prices || {})
-    .catch(() => ({}));
+    .catch(() => null);
+  const livePrices = livePricesRaw?.prices || {};
 
   // Inject synthetic stock entries for out-of-coverage tickers (LKP picks
   // below our ~Rs 12,500 Cr universe, e.g. ELECON). Once they look like
@@ -1789,6 +1789,8 @@ async function ensureHistoryCache() {
     if (p && typeof p.current === "number") todayClose[t] = p.current;
   }
   state.cache.history.livePrices = livePrices;
+  // Kept so the UI can tell "nothing moved" apart from "nothing arrived".
+  state.cache.history.livePricesGeneratedAt = livePricesRaw?.generated_at || null;
   // LKP picks indexed by ticker so manual-row clicks resolve to the
   // client-entry framing (with targets/SL) rather than the snapshot trail.
   const lkpForCache = lkpOverride() || lkp;
@@ -4715,6 +4717,7 @@ function buildActiveView(snapshots, anchorDate, todayDate, cadence, niftyOn, man
   return {
     kind: cadence,
     entryCostPct: equityCurve.entryCostPct ?? 0,
+    liveMark: !!equityCurve.liveMark,
     tradedDays: Math.max(0, equityCurve.length - 1),
     segments, picks, hitSummary,
     equityCurve, niftyCurve, manualCurve,
@@ -4983,10 +4986,51 @@ function buildSegmentedEquityCurve(segments, snapshots, anchorDate, chg = ZERO_C
     }
     prevFactor *= lastFactor;
   });
+
+  // Today's intraday mark. The last snapshot was written pre-market and
+  // carries the previous close, so during a session the curve would
+  // otherwise sit still while the basket is plainly moving.
+  const q = liveQuotesToday();
+  const lastSeg = segments[segments.length - 1];
+  if (q && lastSeg?.top7?.length) {
+    let sum = 0, n = 0;
+    for (const s of lastSeg.top7) {
+      const px = q.prices[s.ticker];
+      if (px != null && s.close > 0) { sum += px / s.close; n++; }
+    }
+    if (n) {
+      const cum = (prevFactorAtLastSeg(segments, curve, prevFactor) * (sum / n) - 1) * 100;
+      const pt = { date: q.date, retPct: cum, live: true };
+      const at = curve.findIndex((p) => p.date === q.date);
+      if (at >= 0) curve[at] = pt; else curve.push(pt);
+      curve.liveMark = true;
+    }
+  }
+
   // The entry charge is a cost, not a price move. Exposed here so the
   // chart can label it instead of letting it masquerade as day-one loss.
   curve.entryCostPct = buyFrac * 100;
   return curve;
+}
+
+// prevFactor has already absorbed the final segment's last day by the time
+// the loop ends; the intraday mark has to be applied to the factor BEFORE
+// that day, or today would compound on top of yesterday twice.
+function prevFactorAtLastSeg(segments, curve, prevFactorAfter) {
+  const lastSeg = segments[segments.length - 1];
+  if (!lastSeg) return 1;
+  let lastFactor = 1;
+  const entry = {};
+  for (const s of lastSeg.top7) entry[s.ticker] = s.close;
+  for (const day of lastSeg.tracking) {
+    let sum = 0, n = 0;
+    for (const t of Object.keys(entry)) {
+      const st = day.stocks.find((x) => x.ticker === t);
+      if (st?.close != null && entry[t] > 0) { sum += st.close / entry[t]; n++; }
+    }
+    if (n) lastFactor = sum / n;
+  }
+  return lastFactor > 0 ? prevFactorAfter / lastFactor : prevFactorAfter;
 }
 
 function buildNiftyCurve(dates, niftyOn) {
@@ -5198,6 +5242,7 @@ function renderActiveShell(view, cadence, anchorDate, todayDate, mode, alertsHtm
     <div id="active-strategy" class="space-y-3">
       ${monthSelectorHtml}
       ${holdNote}
+      ${renderDataFreshness()}
       ${renderStrategyCommandBar(view, cadence, mode, hits)}
       ${cadenceBar}
       <div class="flex flex-col sm:flex-row gap-2 sm:items-stretch">
@@ -6172,6 +6217,64 @@ function openPrimaryCommitModal(id) {
 // months before sector caps and basket width separate them.
 // ============================================================
 
+// Is live-prices.json actually from today? The file is committed by a
+// workflow, so a stale one looks exactly like a fresh one unless the
+// timestamp is checked. Returns null when it is not today's, so callers
+// fall back to closes rather than quietly plotting two-day-old prices as
+// "live".
+function liveQuotesToday() {
+  const lp = state.cache.history?.livePrices;
+  const gen = state.cache.history?.livePricesGeneratedAt;
+  if (!lp || !gen) return null;
+  const istDay = (d) => new Date(new Date(d).getTime() + 5.5 * 3600 * 1000).toISOString().slice(0, 10);
+  const today = istTodayDate();
+  if (istDay(gen) !== today) return null;
+  const prices = {};
+  for (const [t, q] of Object.entries(lp)) if (q?.current != null) prices[t] = q.current;
+  return Object.keys(prices).length ? { date: today, prices, asOf: gen } : null;
+}
+
+// Age of a timestamp in hours, for the freshness strip.
+function hoursSince(iso) {
+  if (!iso) return null;
+  return (Date.now() - new Date(iso).getTime()) / 3600000;
+}
+
+// One honest line per feed: what it is, when it last landed, and whether
+// that is a problem. The dashboard used to show +0.00% across the board
+// when a scraper had not run, which reads as "nothing moved" rather than
+// "nothing arrived" -- the two look identical and mean opposite things.
+function renderDataFreshness() {
+  const h = state.cache.history;
+  if (!h) return "";
+  const snaps = h.snapshots || [];
+  const lastSnap = snaps.length ? snaps[snaps.length - 1].date : null;
+  const cal = h.benchmark?.indices?.["NIFTYSMLCAP250.NS"]?.closes || {};
+  const lastClose = Object.keys(cal).sort().pop() || null;
+  const lpAge = hoursSince(h.livePricesGeneratedAt);
+  const mcAge = hoursSince(state.cache.marketContext?.generated_at);
+  const fresh = liveQuotesToday();
+
+  const rows = [
+    { label: "Daily snapshot", value: lastSnap ? fmtDateDMY(lastSnap) : "none",
+      bad: !lastSnap, warn: lastSnap && lastSnap < istTodayDate() },
+    { label: "Prices through", value: lastClose ? fmtDateDMY(lastClose) : "—", bad: !lastClose },
+    { label: "Live quotes", value: lpAge == null ? "never" : fresh ? `${Math.round(lpAge * 60)} min ago` : `${Math.floor(lpAge / 24)}d old`,
+      bad: !fresh, warn: false },
+    { label: "Market context", value: mcAge == null ? "never" : mcAge < 24 ? `${Math.round(mcAge)}h ago` : `${Math.floor(mcAge / 24)}d old`,
+      warn: mcAge != null && mcAge > 24, bad: mcAge == null },
+  ];
+  const anyBad = rows.some((r) => r.bad);
+  const tone = anyBad ? "amber" : "slate";
+  return `
+    <div class="bg-${tone}-50 ring-1 ring-${tone}-200 rounded-2xl px-4 py-2.5 flex flex-wrap items-center gap-x-5 gap-y-1">
+      <span class="text-[10px] font-bold uppercase tracking-wider text-${tone}-700">Data freshness</span>
+      ${rows.map((r) => `<span class="text-[11px] text-slate-600">${r.label}
+        <b class="${r.bad ? "text-amber-800" : r.warn ? "text-slate-700" : "text-emerald-700"}">${r.value}</b></span>`).join("")}
+      ${anyBad ? `<span class="text-[11px] text-amber-900 ml-auto">A feed hasn't landed — figures below are the last good data, not today's.</span>` : ""}
+    </div>`;
+}
+
 function liveTradingDays(snapshots) {
   // The benchmark is the trading calendar. Snapshots are written every
   // calendar day, so without this a Saturday carrying Friday's closes
@@ -6270,7 +6373,19 @@ function runLiveStrategy(days, strategy, chg, capital) {
     curve.push({ date: snap.date, retPct: (value / capital - 1) * 100, holdings: holdings.size });
   });
 
-  return { curve, trades, charges, startCapital: capital, daysInvested, strategy };
+  // Today's intraday mark. Snapshots are written pre-market and carry the
+  // PREVIOUS close, so without this the chart sits frozen all session while
+  // the basket is visibly moving -- which reads as "flat", not "no data".
+  const q = liveQuotesToday();
+  if (q && holdings.size) {
+    let value = cash;
+    for (const [t, p] of holdings) value += p.units * (q.prices[t] ?? p.entry);
+    const pt = { date: q.date, retPct: (value / capital - 1) * 100, holdings: holdings.size, live: true };
+    if (curve.length && curve[curve.length - 1].date === q.date) curve[curve.length - 1] = pt;
+    else curve.push(pt);
+  }
+
+  return { curve, trades, charges, startCapital: capital, daysInvested, strategy, liveMark: !!q };
 }
 
 // All five over the real trail, cached per snapshot count so switching
@@ -6293,7 +6408,8 @@ function liveStrategyRuns() {
     return { def: d, id: d.id, name: d.name, result, curve: result.curve,
              metrics: strat5.metrics(result, bench), trades: result.trades };
   });
-  const out = { runs, bench, days, start: days[0]?.date, end: days[days.length - 1]?.date };
+  const curveDays = Math.max(...runs.map((r) => r.curve.length), 0);
+  const out = { runs, bench, days, curveDays, start: days[0]?.date, end: days[days.length - 1]?.date };
   state.cache.liveRuns = out; state.cache.liveRunsKey = key;
   return out;
 }
@@ -6356,7 +6472,10 @@ function renderStrategyCompare() {
         </div></div>`;
     }
     const rows = live.runs.filter((r) => r.metrics).map((r) => ({ def: r.def, metrics: r.metrics, trades: r.trades }));
-    const enough = live.days.length >= 2;
+    // A chart needs two points to be a line; a table of returns is useful
+    // from the first day. Gating both on two days hid today's numbers for
+    // no reason.
+    const enough = live.curveDays >= 2;
     const chart = enough ? renderMultiCurveChart(
       [...live.runs.map((r) => ({ label: r.def.name, color: r.def.color, curve: r.curve })),
        { label: "Smallcap 250", color: "#94a3b8", curve: live.bench, dash: "5 4" }],
@@ -6367,7 +6486,7 @@ function renderStrategyCompare() {
         All five pick from the same ranking, so early on their lines sit almost on top of each other — the sector cap and the wider basket only start to separate them over a couple of months.
         This chart extends itself every trading day; nothing needs running.
       </div>`;
-    const body = !enough ? "" :
+    const body =
       view === "monthly" ? renderCompareMonthly(rows) :
       view === "trades"  ? renderCompareTrades(rows) :
       renderCompareSummary(rows, { capital: simPrefs.capital }, primary);
@@ -7095,7 +7214,7 @@ function renderActiveCumulativeChart(view) {
         </svg>
         <div id="active-chart-tooltip" class="hidden absolute z-10 pointer-events-none -translate-x-1/2 -translate-y-[calc(100%+10px)] bg-slate-900/95 backdrop-blur text-white text-[11px] rounded-xl shadow-2xl ring-1 ring-slate-700/60 px-3 py-2 whitespace-nowrap"></div>
       </div>
-      ${view.entryCostPct > 0 ? `<div class="text-[10px] text-slate-400 mt-1.5 leading-snug">The basket line starts <b>${view.entryCostPct.toFixed(2)}%</b> down: that is the buying charge, debited the moment the basket is locked, not a price move. Only trading days are plotted.</div>` : ""}`;
+      ${view.entryCostPct > 0 || view.liveMark ? `<div class="text-[10px] text-slate-400 mt-1.5 leading-snug">${view.entryCostPct > 0 ? `The basket line starts <b>${view.entryCostPct.toFixed(2)}%</b> down: that is the buying charge, debited the moment the basket is locked, not a price move. Only trading days are plotted.` : ""}${view.liveMark ? ` The last point is <b>today, live</b> — it moves with the market and settles at the close.` : ""}</div>` : ""}`;
   return shell(legend, body) + `</div>`;
 }
 
