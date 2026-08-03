@@ -5407,9 +5407,15 @@ function planRows(capital, strategy) {
 
   const decorate = (c) => {
     const tv = c.techVals || {};
-    // Prefer the live/most-recent price over the month-start close — you are
-    // placing the order today, not on the 1st.
-    const price = live[c.ticker] ?? c.close;
+    // Anchor every price to the MONTH-START close, exactly as the founder
+    // asked ("1 tarik ka closing ko entry limit bana raha hai"). The buy
+    // limit, the stop and the entry are all decided off that one number,
+    // so the price shown here is the same one the Overview tracks the
+    // position from. Letting today's live price in here produced a "buy up
+    // to ₹578" for a stock already held from ₹528 -- three prices for one
+    // holding. The live price belongs to the Entry Monitor and the
+    // Overview, not to the plan's reference price.
+    const price = c.close;
     return {
       ticker: c.ticker, name: c.name, sector: c.sector, composite: c.score,
       price, entryClose: c.close, ind: c.ind,
@@ -5610,6 +5616,21 @@ function planSubstitutions(plan, livePrices) {
 function renderEntryMonitor(plan) {
   const livePrices = state.cache.history?.livePrices || {};
   if (!Object.keys(livePrices).length) return "";
+  // The Entry Monitor answers "did my orders fill this morning" — a
+  // question that only exists on entry day. Past the first couple of
+  // trading days the basket is bought and held, so comparing today's live
+  // price against a day-one limit just flags every winner as "missed".
+  // Count trading days since the basket was locked, and hide it after that.
+  const cal = state.cache.history?.benchmark?.indices?.["NIFTYSMLCAP250.NS"]?.closes || {};
+  const anchor = plan.anchorDate;
+  const today = istTodayDate();
+  let tradedSince = 0;
+  for (const d of Object.keys(cal)) if (d > anchor && d <= today) tradedSince++;
+  // Once a full trading day has closed since the basket locked, entry is
+  // over — you either filled or you didn't, and the Overview shows what you
+  // now hold. Only show this on entry morning itself (no completed session
+  // yet) and only when we actually have live prices to compare against.
+  if (tradedSince >= 1 || !liveQuotesToday()) return "";
   const rows = plan.rows.map((r) => ({ r, st: entryStatus(r, livePrices[r.ticker]) }));
   const known = rows.filter((x) => x.st.code !== "unknown");
   if (!known.length) return "";
@@ -5904,7 +5925,14 @@ function renderTradePlan() {
       ${regime.last ? `<span class="text-[11px] text-slate-500 tabular-nums">Smallcap 250 ${Math.round(regime.last).toLocaleString("en-IN")} vs ${regime.days}d avg ${Math.round(regime.ma).toLocaleString("en-IN")}</span>` : ""}
     </div>`;
 
-  return `<div class="space-y-3">${pills}${context}${conditions}${capBox}${warnRow}${entryMonitor}${orderTable}${bufferTable}${upCard}${renderPaperResults()}</div>`;
+  // One line so the two tabs never blur: this tab is the shopping list,
+  // Overview is the scoreboard. Prices here are the month-start entry
+  // basis, so a stock's price here matches its "bought at" in Overview.
+  const intro = `
+    <div class="text-[12px] text-slate-500 leading-snug px-1">
+      <b class="text-slate-700">What to buy this month</b> — the list, the price to buy at, and where the stop sits. All prices are this month's entry (${fmtDateDMY(plan.anchorDate)}). For how the basket is doing since then, see <b class="text-slate-600">Overview</b>.
+    </div>`;
+  return `<div class="space-y-3">${pills}${intro}${context}${conditions}${capBox}${warnRow}${entryMonitor}${orderTable}${bufferTable}${upCard}${renderPaperResults()}</div>`;
 }
 
 // ============================================================
