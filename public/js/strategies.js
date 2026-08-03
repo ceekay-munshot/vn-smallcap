@@ -338,7 +338,14 @@ export function backtest(ctx, strategy, charger = ZERO_CHARGER, opts = {}) {
   const trailAtr = strategy.trailAtr ?? 3.0;
   const want = strategy.basketSize || 7;
 
-  let cash = startCapital, charges = 0, lastRebal = -1;
+  // Rebalance on the calendar month, not a rolling day count. The product
+  // rule is "buy the top names on the 1st, hold until the 1st of next
+  // month" -- so the backtest re-picks on the first trading day of each new
+  // month, exactly as the live tracker does, rather than every 21 rolling
+  // days which drifts off the month boundary. rebalanceDays is kept as a
+  // fallback for callers that still pass a day count.
+  const byMonth = opts.rebalanceMonthly !== false;
+  let cash = startCapital, charges = 0, lastRebal = -1, lastMonth = null;
   const holdings = new Map();   // ticker -> { units, entry, entryDate, peak, atr }
   const trades = [];
   const curve = [];
@@ -352,7 +359,11 @@ export function backtest(ctx, strategy, charger = ZERO_CHARGER, opts = {}) {
   for (let i = 0; i < dates.length; i++) {
     const date = dates[i];
     const dayCtx = { medianRet3m: medianRet3m[i], indexAboveMa200: idxAboveMa200[i], vix: vixOn[i] };
-    const isRebal = lastRebal < 0 || (i - lastRebal) >= rebalanceDays;
+    const ym = date.slice(0, 7);
+    const isRebal = byMonth
+      ? (lastMonth === null || ym !== lastMonth)
+      : (lastRebal < 0 || (i - lastRebal) >= rebalanceDays);
+    if (isRebal) lastMonth = ym;
 
     // --- exits: stop, trailing stop, or dropped out of the basket ---
     let selection = null;

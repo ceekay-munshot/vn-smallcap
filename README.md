@@ -29,22 +29,28 @@ Five plans over one ranking, defined in `public/data/strategies.json`. Each
 adds a single layer to the one before it, and the Compare tab is there to test
 whether that helped — not to assert it.
 
+All rebalance **monthly** — buy on the first trading day, hold to the first of
+next month. 2-year backtest, net of charges, technicals only:
+
 | | Adds | 2-yr net | CAGR | Worst fall |
 |---|---|---|---|---|
-| 1 Core | top 7, equal money (control) | +22.5% | 10.7% | −26.0% |
-| 2 Equal risk **← what runs today** | inverse-ATR sizing | +23.5% | 11.1% | −25.5% |
-| 3 Spread | 10 names instead of 7 | +28.3% | 13.3% | −20.2% |
-| 4 Balanced | max 2 per sector | **+34.1%** | **15.8%** | **−19.6%** |
-| 5 Consensus | conviction weighting | +24.9% | 11.8% | −19.2% |
+| 1 Core | top 7, equal money (control) | +56.4% | 25.0% | −15.9% |
+| 2 Equal risk **← what runs today** | inverse-ATR sizing | **+66.6%** | **29.1%** | −13.6% |
+| 3 Spread | 10 names instead of 7 | +56.7% | 25.2% | −12.4% |
+| 4 Balanced | max 2 per sector | +43.1% | 19.6% | −14.1% |
+| 5 Consensus | conviction weighting | +60.8% | 26.8% | **−10.3%** |
+
+These are five *approaches*, not a ladder where each beats the last — with ~24
+rebalances on 7 concentrated names, the numbers are very sensitive to timing and
+should be read as a rehearsal, not a record.
 
 Every layer controls risk rather than picking better stocks, because that is
 what the score does not already do. Filters that repeat the score (MACD,
 relative strength, above-50-DMA) were tested and dropped — they reject
 high-scoring names and push the basket deeper down the ranking for no gain.
 
-**#1 is Equal risk** — the plan already being run, so nothing changed underfoot.
-Balanced led the backtest, but a backtest is a rehearsal; switch #1 from the
-Compare tab once live tracking has an opinion.
+**#1 is Equal risk** — the plan already being run, and the backtest leader too.
+A backtest is still a rehearsal; the live track is the real test.
 
 Backtest: `node screener-test/backtest-strategies.mjs`, replayed over
 `history-technical.json` (504 trading days, 620 tickers) and written to

@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "note": "Five strategies over one ranking. Each adds a single layer to the one before it. #1 is the strategy the Trade Plan follows; change it from the Compare tab and commit this file so both founders see the same pick.",
+  "note": "Five strategies over one ranking, each a different way to control risk. All rebalance monthly \u2014 buy on the first trading day, hold to the first of next month \u2014 matching how the desk actually trades. #1 drives the Trade Plan; change it from the Compare tab and commit this file.",
   "primaryId": "s2",
-  "designNote": "Every layer here controls risk rather than picking better stocks, because that is what the score does not already do. Filters that repeat the score (MACD, relative strength, above-50-DMA) were tested and dropped \u2014 they reject high-scoring names and push the basket deeper down the ranking for no gain. A tempting RSI-85 filter was also dropped: it doubled the backtest at exactly 85 and reversed at 80 and 90, which is a fitted artefact, not a signal.",
+  "designNote": "These are five approaches, NOT a ladder where each beats the last. Under honest monthly rebalancing (the real rule) the ranking is not monotonic \u2014 position sizing, basket width, the sector cap and conviction weighting each help in some periods and cost in others. The Compare tab shows the real numbers; trust the live track over the backtest. Filters that merely repeat the score (MACD, relative strength, above-50-DMA) were tested and dropped.",
   "strategies": [
     {
       "id": "s1",
@@ -109,5 +109,5 @@
       "consensusHalf": 3
     }
   ],
-  "primaryNote": "Left on Equal risk \u2014 the plan already being run \u2014 so nothing changes underfoot. Balanced (S4) led the 2-year backtest on both return and drawdown and Consensus (S5) had the lowest volatility, but a backtest is a rehearsal: switch #1 once live tracking has an opinion."
+  "primaryNote": "On the 2-year backtest, Equal risk (S2) \u2014 the plan already being run \u2014 led on return, and Consensus (S5) had the lowest drawdown. But a backtest is a rehearsal and these numbers are highly sensitive to rebalance timing, so #1 stays on the current plan until the live track earns a change."
 }
