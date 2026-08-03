@@ -1075,6 +1075,10 @@ function renderStats() {
     $("#top-cards-title").innerHTML = `<span class="text-amber-500">🏆</span> AI Basket — Top 10 Picks <span class="ml-2 text-xs font-normal text-slate-500">composite-weighted, hard-fails excluded</span>`;
     return;
   }
+  // The Strategy and Custom tabs are bespoke renderers with no rule-count
+  // stats block. Reaching here for one of them threw on c.stats.rules and
+  // aborted the rest of the render.
+  if (!c?.stats) return;
   $("#stat-rules").textContent = c.stats.rules;
   $("#stat-rules-note").textContent = c.stats.rulesNote;
   $("#stat-max-label").textContent = "Max Score";
@@ -1792,6 +1796,7 @@ async function ensureHistoryCache() {
     if (p && typeof p.current === "number") todayClose[t] = p.current;
   }
   state.cache.history.livePrices = livePrices;
+  state.cache.history.todayClose = todayClose;
   // Kept so the UI can tell "nothing moved" apart from "nothing arrived".
   state.cache.history.livePricesGeneratedAt = livePricesRaw?.generated_at || null;
   // LKP picks indexed by ticker so manual-row clicks resolve to the
@@ -4556,6 +4561,18 @@ async function renderActive() {
       ? lkpPicksForMonth(lkpResolved, anchorMonth, mostRecentMonth) || lkpResolved.picks || []
       : [];
 
+    // Ask the quote API directly for the basket + bench before anything is
+    // computed, so every figure on the tab reflects the market right now
+    // rather than the last workflow run.
+    try {
+      const anchorSnap = snapshots.find((s) => s.date === anchorDate) || snapshots[snapshots.length - 1];
+      const want = (strat5.strategyById(strat5.primaryId())?.basketSize || 7) + 3;
+      const cohort = (anchorSnap?.stocks || [])
+        .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed)
+        .sort((a, b) => b.composite - a.composite).slice(0, want).map((s) => s.ticker);
+      await refreshLiveQuotes([...cohort, ...Object.keys(state.cache.history.livePrices || {})]);
+    } catch (e) { console.warn("live quote refresh skipped:", e?.message); }
+
     const view = buildActiveView(viewSnaps, anchorDate, todayDate, cadence, niftyOn, manualPicks, nifty500On);
 
     // Alerts section (lives inside the Strategy tab, not a separate tab).
@@ -6253,6 +6270,79 @@ function openPrimaryCommitModal(id) {
 // months before sector caps and basket width separate them.
 // ============================================================
 
+// ---- Live quotes, fetched by the browser on every open ----------------
+//
+// live-prices.json is written by a workflow and committed, so the page was
+// only ever as current as the last successful run -- and when that run was
+// cancelled on 3 Aug the dashboard served Friday's closes through a live
+// session without saying so. The quote API allows any origin
+// (access-control-allow-origin: *), so the page can simply ask for itself.
+//
+// The committed file stays as the fallback: it covers a blocked network, a
+// rate limit, or the API hanging as it briefly did. So the worst case is
+// what we had before, and the normal case is quotes seconds old.
+const QUOTE_API = "https://fastapi.muns.io/stock-data";
+const QUOTE_TTL_MS = 60_000;   // don't refetch on every sub-tab click
+
+function parseQuoteLine(str) {
+  const kv = {};
+  for (const part of String(str).split(",")) {
+    const i = part.indexOf("=");
+    if (i > 0) kv[part.slice(0, i).trim()] = part.slice(i + 1).trim();
+  }
+  const num = (v) => { const n = Number(String(v).replace(/[^0-9.\-]/g, "")); return Number.isFinite(n) ? n : null; };
+  const range = (v) => {
+    const m = String(v || "").split("-").map(num);
+    return m.length === 2 && m[0] != null && m[1] != null ? { lo: Math.min(...m), hi: Math.max(...m) } : null;
+  };
+  const current = num(kv["Current Price"]);
+  if (current == null) return null;
+  const day = range(kv["Day Range"]), wk = range(kv["52-Week Range"]);
+  return {
+    current,
+    open: num(kv["Opening Price"]),
+    prevClose: num(kv["Previous Close"]),
+    dayHigh: day?.hi ?? null, dayLow: day?.lo ?? null,
+    week52High: wk?.hi ?? null, week52Low: wk?.lo ?? null,
+    ma50: num(kv["50-Day Moving Average"]), ma200: num(kv["200-Day Moving Average"]),
+  };
+}
+
+async function fetchQuoteDirect(ticker) {
+  try {
+    const r = await fetch(QUOTE_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ticker_symbol: ticker, type: "stockquote", country: "india" }),
+      signal: AbortSignal.timeout(7000),
+    });
+    if (!r.ok) return null;
+    const body = await r.json();
+    return typeof body === "string" ? parseQuoteLine(body) : null;
+  } catch { return null; }
+}
+
+// Refresh quotes for the basket in place. Anything that fails keeps whatever
+// the committed file had, so a partial outage degrades one row rather than
+// blanking the basket.
+async function refreshLiveQuotes(tickers) {
+  const h = state.cache.history;
+  if (!h || !tickers?.length) return;
+  const now = Date.now();
+  if (state.cache.quotesFetchedAt && now - state.cache.quotesFetchedAt < QUOTE_TTL_MS) return;
+  state.cache.quotesFetchedAt = now;
+
+  const uniq = [...new Set(tickers.filter(Boolean))].slice(0, 20);
+  const results = await Promise.all(uniq.map(async (t) => [t, await fetchQuoteDirect(t)]));
+  let ok = 0;
+  for (const [t, q] of results) if (q) { h.livePrices[t] = q; ok++; }
+  if (!ok) return;                       // API unreachable — committed file stands
+  h.livePricesGeneratedAt = new Date().toISOString();
+  h.livePricesSource = `browser · ${ok}/${uniq.length} quotes`;
+  // Display prices follow the fresh quotes too, not just the hit detection.
+  for (const [t, q] of results) if (q?.current != null) h.todayClose[t] = q.current;
+}
+
 // Is live-prices.json actually from today? The file is committed by a
 // workflow, so a stale one looks exactly like a fresh one unless the
 // timestamp is checked. Returns null when it is not today's, so callers
@@ -6297,8 +6387,10 @@ function renderDataFreshness() {
     { label: "Daily snapshot", value: lastSnap ? fmtDateDMY(lastSnap) : "none",
       bad: !lastSnap, warn: lastSnap && lastSnap < istTodayDate() },
     { label: "Prices through", value: lastClose ? fmtDateDMY(lastClose) : "—", bad: !lastClose },
-    { label: "Live quotes", value: lpAge == null ? "never" : fresh ? `${Math.round(lpAge * 60)} min ago` : `${Math.floor(lpAge / 24)}d old`,
-      bad: !fresh, warn: false },
+    { label: "Live quotes", value: lpAge == null ? "never"
+        : fresh ? (lpAge < 0.05 ? "just now" : `${Math.round(lpAge * 60)} min ago`)
+        : `${Math.floor(lpAge / 24)}d old`,
+      bad: !fresh, warn: false, note: h.livePricesSource || null },
     { label: "Market context", value: mcAge == null ? "never" : mcAge < 24 ? `${Math.round(mcAge)}h ago` : `${Math.floor(mcAge / 24)}d old`,
       warn: mcAge != null && mcAge > 24, bad: mcAge == null },
   ];
@@ -6307,7 +6399,7 @@ function renderDataFreshness() {
   return `
     <div class="bg-${tone}-50 ring-1 ring-${tone}-200 rounded-2xl px-4 py-2.5 flex flex-wrap items-center gap-x-5 gap-y-1">
       <span class="text-[10px] font-bold uppercase tracking-wider text-${tone}-700">Data freshness</span>
-      ${rows.map((r) => `<span class="text-[11px] text-slate-600">${r.label}
+      ${rows.map((r) => `<span class="text-[11px] text-slate-600"${r.note ? ` title="${escapeHtml(r.note)}"` : ""}>${r.label}
         <b class="${r.bad ? "text-amber-800" : r.warn ? "text-slate-700" : "text-emerald-700"}">${r.value}</b></span>`).join("")}
       ${recon ? `<span class="text-[11px] text-slate-500">History before <b class="text-slate-700">${fmtDateDMY(liveFrom)}</b> is rebuilt from past prices, not a live record</span>` : ""}
       ${anyBad ? `<span class="text-[11px] text-amber-900 ml-auto">A feed hasn't landed — figures below are the last good data, not today's.</span>` : ""}
