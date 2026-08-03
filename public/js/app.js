@@ -5006,13 +5006,17 @@ function buildSegmentedEquityCurve(segments, snapshots, anchorDate, chg = ZERO_C
   const sellFrac = perPos > 0 ? chg.sell(perPos) / perPos : 0;
   if (!segments.length) return [];
   const curve = [];
-  let prevFactor = 1.0;
+  let prevFactor = 1.0, segStartFactor = 1.0;
   curve.push({ date: anchorDate, retPct: 0 });
   const TGT = 1 + AI_TARGET_PCT, SLF = 1 - AI_SL_PCT;
   segments.forEach((seg, si) => {
     // Charge to (re)lock this basket: a buy on the first segment, a full
     // round-trip (sell previous + buy current) on every re-lock after.
     prevFactor *= (1 - (si === 0 ? buyFrac : buyFrac + sellFrac));
+    // Remembered so the intraday mark below can compound today's live move
+    // onto the book as it stood BEFORE today, without having to reconstruct
+    // that state by division.
+    segStartFactor = prevFactor;
     const entryCloses = {};
     for (const s of seg.top7) entryCloses[s.ticker] = s.close;
     const frozenFactor = {};   // ticker -> locked factor (target / SL level)
@@ -5065,7 +5069,7 @@ function buildSegmentedEquityCurve(segments, snapshots, anchorDate, chg = ZERO_C
       if (px != null && s.close > 0) { sum += px / s.close; n++; }
     }
     if (n) {
-      const cum = (prevFactorAtLastSeg(segments, curve, prevFactor) * (sum / n) - 1) * 100;
+      const cum = (segStartFactor * (sum / n) - 1) * 100;
       const pt = { date: q.date, retPct: cum, live: true };
       const at = curve.findIndex((p) => p.date === q.date);
       if (at >= 0) curve[at] = pt; else curve.push(pt);
@@ -5079,25 +5083,6 @@ function buildSegmentedEquityCurve(segments, snapshots, anchorDate, chg = ZERO_C
   return curve;
 }
 
-// prevFactor has already absorbed the final segment's last day by the time
-// the loop ends; the intraday mark has to be applied to the factor BEFORE
-// that day, or today would compound on top of yesterday twice.
-function prevFactorAtLastSeg(segments, curve, prevFactorAfter) {
-  const lastSeg = segments[segments.length - 1];
-  if (!lastSeg) return 1;
-  let lastFactor = 1;
-  const entry = {};
-  for (const s of lastSeg.top7) entry[s.ticker] = s.close;
-  for (const day of lastSeg.tracking) {
-    let sum = 0, n = 0;
-    for (const t of Object.keys(entry)) {
-      const st = day.stocks.find((x) => x.ticker === t);
-      if (st?.close != null && entry[t] > 0) { sum += st.close / entry[t]; n++; }
-    }
-    if (n) lastFactor = sum / n;
-  }
-  return lastFactor > 0 ? prevFactorAfter / lastFactor : prevFactorAfter;
-}
 
 function buildNiftyCurve(dates, niftyOn) {
   if (!dates.length) return [];
