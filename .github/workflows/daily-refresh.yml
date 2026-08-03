@@ -18,7 +18,8 @@ on:
     # 00:53 UTC == 06:23 IST. Staggered 30 min after the large-cap repo. Off the :00/:15/:30/:45 marks where GitHub's
     # cron scheduler queues up runs and frequently delays / skips during
     # high load.
-    - cron: "53 0 * * *"
+    - cron: "11 0 * * *"   # 05:41 IST. Off the :00/:15/:30/:45 marks, where
+                           # GitHub queues scheduled runs and often delays them.
 
 jobs:
   refresh:

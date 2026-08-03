@@ -10,14 +10,26 @@ name: Market context (pre-open)
 
 on:
   workflow_dispatch:
+  # Also refresh whenever the daily scrape lands, so the pre-open read is
+  # never older than the prices it sits next to.
+  workflow_run:
+    workflows: ["Daily refresh (all scrapers)"]
+    types: [completed]
   schedule:
-    # 08:15 IST = 02:45 UTC — before the 09:15 open, after Asia has opened.
-    - cron: "45 2 * * 1-5"
-    # 12:30 IST = 07:00 UTC — mid-session refresh of the VIX reading.
-    - cron: "0 7 * * 1-5"
+    # Scheduled runs land one to three hours after their cron on shared
+    # runners, so a "pre-open" job set for 08:15 IST would arrive after the
+    # 09:15 open and be useless. Asking at 04:43 IST buys enough slack that
+    # even a three-hour queue still delivers before the bell.
+    - cron: "13 23 * * 0-4"
+    # Mid-session refresh of the VIX reading (nominally 12:07 IST).
+    - cron: "37 6 * * 1-5"
 
 jobs:
   refresh:
+    # Chained runs proceed only when the run that triggered them succeeded.
+    # Phrased as "not a chained run, OR the trigger passed" so the schedule
+    # and manual dispatch are untouched.
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -25,6 +37,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          ref: main
 
       - name: Setup Node
         uses: actions/setup-node@v5

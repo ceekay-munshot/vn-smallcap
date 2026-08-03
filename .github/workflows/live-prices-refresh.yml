@@ -11,16 +11,30 @@ name: Live prices refresh (intraday)
 
 on:
   workflow_dispatch:
+  # Chain off the daily refresh. GitHub queues scheduled runs by hours, so
+  # a cron alone means quotes can be stale until mid-morning. The moment
+  # the daily scrape lands we pull fresh quotes too, whatever the clock says.
+  workflow_run:
+    workflows: ["Daily refresh (all scrapers)"]
+    types: [completed]
   schedule:
     # Every 30 min during NSE market hours (09:15-15:30 IST = 03:45-10:00
     # UTC), Mon-Fri. Ticker list now comes from the current month's cohort,
     # so this tracks exactly the 7 names being held.
-    - cron: "45 3 * * 1-5"
-    - cron: "15,45 4-9 * * 1-5"
-    - cron: "0 10 * * 1-5"
+    # Deliberately OFF the :00/:15/:30/:45 marks — GitHub's scheduler queues
+    # heavily on those and routinely delays or drops runs. Every 20 minutes
+    # through the session so a single delayed run never leaves the dashboard
+    # showing yesterday's prices during market hours.
+    - cron: "37 3 * * 1-5"
+    - cron: "7,27,47 4-9 * * 1-5"
+    - cron: "7 10 * * 1-5"
 
 jobs:
   refresh:
+    # Chained runs proceed only when the run that triggered them succeeded.
+    # Phrased as "not a chained run, OR the trigger passed" so the schedule
+    # and manual dispatch are untouched.
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -28,6 +42,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          ref: main
 
       - name: Setup Node
         uses: actions/setup-node@v5
