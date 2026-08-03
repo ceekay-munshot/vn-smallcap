@@ -5066,7 +5066,21 @@ function buildSegmentedEquityCurve(segments, snapshots, anchorDate, chg = ZERO_C
     let sum = 0, n = 0;
     for (const s of lastSeg.top7) {
       const px = q.prices[s.ticker];
-      if (px != null && s.close > 0) { sum += px / s.close; n++; }
+      if (px == null || !(s.close > 0)) continue;
+      let f = px / s.close;
+      // Book at the target / stop exactly as the daily walk does. Without
+      // this the chart marked a name at its full live gain while the picks
+      // list beside it showed the same name frozen at +5%, and the two
+      // headline numbers disagreed by more than half a percent.
+      if (booked) {
+        const live = livePrices[s.ticker] || {};
+        let hiF = f, loF = f;
+        if (live.dayHigh != null) hiF = Math.max(hiF, live.dayHigh / s.close);
+        if (live.dayLow != null) loF = Math.min(loF, live.dayLow / s.close);
+        if (hiF >= TGT) f = TGT;
+        else if (loF <= SLF) f = SLF;
+      }
+      sum += f; n++;
     }
     if (n) {
       const cum = (segStartFactor * (sum / n) - 1) * 100;
@@ -6302,16 +6316,39 @@ async function refreshLiveQuotes(tickers) {
 // timestamp is checked. Returns null when it is not today's, so callers
 // fall back to closes rather than quietly plotting two-day-old prices as
 // "live".
+// Which trading session do the quotes we are holding belong to? NOT the
+// wall-clock date: at 00:53 IST a quote is Monday's closing price, and
+// stamping it "Tuesday" invented a data point for a day that had not
+// traded -- which is exactly what the chart did. Before the 09:15 open the
+// session is the previous trading day, and either way we walk back to a
+// date the exchange actually opened.
+function quoteSessionDate() {
+  const istMs = Date.now() + 5.5 * 3600 * 1000;
+  const ist = new Date(istMs);
+  const minutes = ist.getUTCHours() * 60 + ist.getUTCMinutes();
+  let d = ist.toISOString().slice(0, 10);
+  if (minutes < 9 * 60 + 15) d = shiftDateStr(d, -1);   // pre-open: still yesterday's session
+  const cal = state.cache.history?.benchmark?.indices?.["NIFTYSMLCAP250.NS"]?.closes;
+  if (cal) {
+    for (let i = 0; i < 10 && cal[d] == null; i++) d = shiftDateStr(d, -1);
+    if (cal[d] == null) return null;
+  }
+  return d;
+}
+
+// Quotes usable as the current session's mark, or null. Stale quotes --
+// generated before the session they would be plotted on -- are refused, so
+// a feed that stopped updating can never masquerade as live.
 function liveQuotesToday() {
   const lp = state.cache.history?.livePrices;
   const gen = state.cache.history?.livePricesGeneratedAt;
   if (!lp || !gen) return null;
   const istDay = (d) => new Date(new Date(d).getTime() + 5.5 * 3600 * 1000).toISOString().slice(0, 10);
-  const today = istTodayDate();
-  if (istDay(gen) !== today) return null;
+  const session = quoteSessionDate();
+  if (!session || istDay(gen) < session) return null;
   const prices = {};
   for (const [t, q] of Object.entries(lp)) if (q?.current != null) prices[t] = q.current;
-  return Object.keys(prices).length ? { date: today, prices, asOf: gen } : null;
+  return Object.keys(prices).length ? { date: session, prices, asOf: gen } : null;
 }
 
 // Age of a timestamp in hours, for the freshness strip.
@@ -6912,7 +6949,7 @@ function renderStrategyCommandBar(view, cadence, mode, hits) {
             <span class="text-[8px] font-bold uppercase tracking-wider px-1 py-0.5 rounded bg-amber-100 text-amber-700 ring-1 ring-amber-200">Beta</span>
           </div>
           <div class="flex items-center gap-1.5 flex-wrap mt-1">
-            <span class="text-[10px] text-slate-500 tabular-nums">${escapeHtml(modeLabel)} · ${fmtDateDMY(view.startDate)} → ${fmtDateDMY(view.endDate)} · ${view.equityCurve.length}d</span>
+            <span class="text-[10px] text-slate-500 tabular-nums">${escapeHtml(modeLabel)} · ${fmtDateDMY(view.startDate)} → ${fmtDateDMY(view.endDate)} · ${Math.max(0, view.equityCurve.length - 1)} trading day${view.equityCurve.length === 2 ? "" : "s"}</span>
             ${convoChip}
           </div>
         </div>
