@@ -5985,6 +5985,18 @@ function paperTrack(ym) {
   }
   const dates = snaps.map((s) => s.date);
 
+  // Overlay the live price onto the latest date, so "now" here reads the
+  // SAME source the Overview does (state.cache.history.todayClose = snapshot
+  // close with the live quote laid over it). Without this the Overview
+  // showed Thejo at its live ₹2,169 while this table showed the ₹2,129
+  // snapshot close -- one holding, two "now" prices. Feeds the stop check,
+  // the current value and the curve endpoint alike.
+  const lastDate = dates[dates.length - 1];
+  for (const t of Object.keys(px)) {
+    const liveNow = cache.todayClose?.[t];
+    if (typeof liveNow === "number") px[t][lastDate] = liveNow;
+  }
+
   const positions = top.map((s) => {
     const atr = atrOf(s), weight = (1 / atr) / invSum;
     const entry = px[s.ticker]?.[anchor.date] ?? s.close;
