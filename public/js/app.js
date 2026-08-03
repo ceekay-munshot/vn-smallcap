@@ -7153,8 +7153,15 @@ function renderStrategyKpis(view) {
         <div class="text-indigo-500 text-base">≡</div>
       </div>
       <div class="space-y-1.5">
-        ${row("bg-indigo-500", "AI basket", aiFinal)}
-        
+        <div class="flex items-center gap-2 text-sm">
+          <span class="inline-block w-2 h-2 rounded-full bg-indigo-500"></span>
+          <span class="text-slate-600">AI basket</span>
+          <span class="ml-auto text-right">
+            <span class="font-bold tabular-nums ${cls(aiFinal)}">${fmtPct(aiFinal)}</span>
+            <span class="text-[10px] text-slate-400">net</span>
+            ${view.grossFinalReturn != null ? `<div class="text-[10px] text-slate-400 tabular-nums">${fmtPct(view.grossFinalReturn)} before charges</div>` : ""}
+          </span>
+        </div>
         ${row("bg-slate-400", "Smallcap 250", niftyFinal)}
         ${row("bg-sky-500", "Midcap 150", nifty500Final)}
       </div>    </div>`;
@@ -7656,7 +7663,7 @@ function renderActiveSegmentedBaskets(view, mode) {
           <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500">${escapeHtml(headerLabel)}</div>
           ${pillsHtml}
         </div>` : ""}
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+      <div class="grid grid-cols-1 ${view.manualPicks?.length ? "lg:grid-cols-2" : ""} gap-3">
         ${renderAiBasketTable(selected, view, mode)}
         ${renderManualBasketTable(view.manualPicks)}
       </div>
@@ -7721,6 +7728,7 @@ function renderAiBasketTable(segment, view, mode) {
     : view.kind === "monthly" ? `${segment.label} · ${fmtDateDM(segment.startDate)} → ${fmtDateDM(segment.endDate)}`
     : `Held since ${fmtDateDMY(segment.startDate)}`;
 
+  let retSum = 0, retN = 0;
   const rows = segment.top7.map((s) => {
     const today = (typeof todayClose[s.ticker] === "number") ? todayClose[s.ticker] : s.close;
     const heldRet = ((today / s.close) - 1) * 100;
@@ -7731,24 +7739,35 @@ function renderAiBasketTable(segment, view, mode) {
     // Booked freezes at the target/SL LEVEL — the real exit — not the live mark.
     const exitLevel = isBooked ? (p.status === "TARGET_HIT" ? p.target : p.sl) : null;
     const displayRet = isBooked ? ((exitLevel / s.close) - 1) * 100 : heldRet;
-    const exitPx = isBooked ? exitLevel : today;
+    const nowPx = today, exitPx = isBooked ? exitLevel : today;
+    retSum += displayRet; retN++;
     const retCls = displayRet >= 0 ? "text-emerald-700" : "text-rose-700";
+    // For a booked pick the "return" is the captured level and "now" is where
+    // the stock actually sits — shown small so the two are never conflated.
     const heldNote = isBooked
-      ? `<div class="text-[9px] text-slate-400 tabular-nums" title="Where the stock is now — booked return is what was captured at the exit level">if held ${heldRet >= 0 ? "+" : ""}${heldRet.toFixed(1)}%</div>`
+      ? `<div class="text-[9px] text-slate-400 tabular-nums">now ₹${formatPrice(nowPx)} · if held ${heldRet >= 0 ? "+" : ""}${heldRet.toFixed(1)}%</div>`
       : "";
     return `
-      <button type="button" data-cohort-row data-cohort-side="ai" data-ticker="${escapeHtml(s.ticker)}" data-seg-anchor="${escapeHtml(segment.startDate)}" class="w-full text-left grid grid-cols-12 items-center gap-2 py-2 px-2 rounded-lg cursor-pointer transition hover:bg-indigo-50/40 hover:ring-1 hover:ring-indigo-200">
-        <div class="col-span-6 sm:col-span-5 min-w-0">
-          <div class="font-semibold text-slate-900 text-sm truncate" title="${escapeHtml(s.name || s.ticker)}">${escapeHtml(s.name || s.ticker)}</div>
-          <div class="text-[10px] text-slate-500 tabular-nums">₹${formatPrice(s.close)} → ₹${formatPrice(exitPx)}${isBooked ? " · locked" : ""}</div>
-        </div>
-        <div class="col-span-3 sm:col-span-3 text-right">
-          <div class="tabular-nums text-sm font-bold ${retCls}">${displayRet >= 0 ? "+" : ""}${displayRet.toFixed(2)}%</div>
+      <tr data-cohort-row data-cohort-side="ai" data-ticker="${escapeHtml(s.ticker)}" data-seg-anchor="${escapeHtml(segment.startDate)}" class="border-t border-slate-100 cursor-pointer transition hover:bg-indigo-50/40">
+        <td class="py-2 pl-3 pr-2">
+          <div class="font-semibold text-slate-900 text-sm truncate max-w-[180px]" title="${escapeHtml(s.name || s.ticker)}">${escapeHtml(s.name || s.ticker)}</div>
           ${heldNote}
-        </div>
-        <div class="col-span-3 sm:col-span-4 text-right">${rosterStatusBadge(isBooked, reason)}</div>
-      </button>`;
+        </td>
+        <td class="py-2 px-2 text-right tabular-nums text-slate-500 text-sm">₹${formatPrice(s.close)}</td>
+        <td class="py-2 px-2 text-right tabular-nums text-slate-700 text-sm">₹${formatPrice(exitPx)}${isBooked ? ` <span class="text-slate-300">🔒</span>` : ""}</td>
+        <td class="py-2 px-2 text-right"><span class="tabular-nums text-sm font-bold ${retCls}">${displayRet >= 0 ? "+" : ""}${displayRet.toFixed(2)}%</span></td>
+        <td class="py-2 pl-2 pr-3 text-right">${rosterStatusBadge(isBooked, reason)}</td>
+      </tr>`;
   }).join("");
+
+  // Basket average = mean of the equal-weighted per-row returns above, which
+  // IS the simple average of the percentages shown. Net applies the buy-side
+  // charge, so the two figures reconcile on screen instead of the headline
+  // looking pulled from nowhere.
+  const grossBasket = retN ? retSum / retN : 0;
+  const netBasket = ((1 + grossBasket / 100) * (1 - buyRate(simPrefs)) - 1) * 100;
+  const gCls = grossBasket >= 0 ? "text-emerald-700" : "text-rose-700";
+  const nCls = netBasket >= 0 ? "text-emerald-700" : "text-rose-700";
 
   return `
     <div>
@@ -7757,7 +7776,30 @@ function renderAiBasketTable(segment, view, mode) {
         <div class="text-[11px] font-bold uppercase tracking-wider text-slate-700">AI picks</div>
         <span class="text-[10px] text-slate-400 truncate">· ${escapeHtml(subLabel)} · ${segment.top7.length} stocks</span>
       </div>
-      <div class="rounded-lg bg-slate-50/60 ring-1 ring-slate-100 p-1 space-y-0.5">${rows}</div>
+      <div class="rounded-lg ring-1 ring-slate-100 overflow-hidden">
+        <table class="w-full">
+          <thead class="bg-slate-50/70 text-[10px] uppercase tracking-wider text-slate-400">
+            <tr>
+              <th class="py-1.5 pl-3 pr-2 text-left font-semibold">Stock</th>
+              <th class="py-1.5 px-2 text-right font-semibold">Bought at</th>
+              <th class="py-1.5 px-2 text-right font-semibold">Now / exit</th>
+              <th class="py-1.5 px-2 text-right font-semibold">Return</th>
+              <th class="py-1.5 pl-2 pr-3 text-right font-semibold">Status</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+          <tfoot class="bg-slate-50 border-t-2 border-slate-200">
+            <tr>
+              <td class="py-2.5 pl-3 pr-2 text-[11px] font-bold uppercase tracking-wider text-slate-500" colspan="3">Basket average</td>
+              <td class="py-2.5 px-2 text-right" colspan="2">
+                <span class="tabular-nums text-base font-bold ${nCls}">${netBasket >= 0 ? "+" : ""}${netBasket.toFixed(2)}%</span>
+                <span class="text-[10px] text-slate-400 ml-1">net</span>
+                <div class="text-[10px] text-slate-400 tabular-nums">${grossBasket >= 0 ? "+" : ""}${grossBasket.toFixed(2)}% before charges</div>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
     </div>
   `;
 }
