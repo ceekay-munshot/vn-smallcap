@@ -349,13 +349,16 @@ function saveManualReturnMode(v) {
 // Strategy-tab sub-tab ("overview" | "accuracy" | "sector" | "industry" |
 // "capital"). Keeps the tab on one screen — the main view (chart + picks +
 // alpha) is the default; everything else is one click away, no long scroll.
-const STRATEGY_SUBTAB_KEY = "klpdash-strategy-subtab-v1";
+// v2: the default moved from "plan" to "overview". Bumping the key rather
+// than just changing the fallback, so anyone carrying a stored "plan" from
+// the old default lands on Overview too instead of never seeing the change.
+const STRATEGY_SUBTAB_KEY = "klpdash-strategy-subtab-v2";
 const STRATEGY_SUBTABS = ["plan", "compare", "overview", "accuracy", "balancing"]; // Sector + Industry merged into "balancing" (client ask); "capital" parked — renderSimPanel + its case kept below for easy restore
 function loadStrategySubTab() {
   try {
     let v = localStorage.getItem(STRATEGY_SUBTAB_KEY);
     if (v === "sector" || v === "industry") v = "balancing";   // migrate the old split sub-tabs
-    return STRATEGY_SUBTABS.includes(v) ? v : "plan";
+    return STRATEGY_SUBTABS.includes(v) ? v : "overview";
   }
   catch { return "overview"; }
 }
@@ -983,6 +986,11 @@ async function loadTab(tabId) {
 
 // ---------------- rendering ----------------
 function renderAll() {
+  // The Strategy and Custom tabs are bespoke renderers with no rules,
+  // deferred list, or scored rows -- the shared header pipeline below
+  // reads all three and throws on each. They draw their own chrome.
+  const c = cfg();
+  if (!c || c.active || c.custom) return;
   renderMeta();
   renderStats();
   renderDeferredList();
@@ -1092,7 +1100,7 @@ function renderDeferredList() {
   const c = cfg();
   const panel = $("#deferred-panel");
   // Composite tab has no "pending data source" concept — hide the panel entirely.
-  if (c.composite || c.deferred.length === 0) {
+  if (c.composite || !c.deferred?.length) {
     panel?.classList.add("hidden");
     return;
   }
@@ -4561,16 +4569,21 @@ async function renderActive() {
       ? lkpPicksForMonth(lkpResolved, anchorMonth, mostRecentMonth) || lkpResolved.picks || []
       : [];
 
-    // Ask the quote API directly for the basket + bench before anything is
-    // computed, so every figure on the tab reflects the market right now
-    // rather than the last workflow run.
+    // Quotes are fetched in the BACKGROUND, not awaited. Blocking the first
+    // paint on them left the tab reading "Loading active strategy…" for
+    // seven seconds whenever the API was slow -- trading a stale number for
+    // a blank screen, which is the worse of the two. Draw with what we have,
+    // then redraw when the quotes land. The TTL check inside stops the
+    // second render from starting another fetch.
     try {
       const anchorSnap = snapshots.find((s) => s.date === anchorDate) || snapshots[snapshots.length - 1];
       const want = (strat5.strategyById(strat5.primaryId())?.basketSize || 7) + 3;
       const cohort = (anchorSnap?.stocks || [])
         .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed)
         .sort((a, b) => b.composite - a.composite).slice(0, want).map((s) => s.ticker);
-      await refreshLiveQuotes([...cohort, ...Object.keys(state.cache.history.livePrices || {})]);
+      refreshLiveQuotes([...cohort, ...Object.keys(state.cache.history.livePrices || {})])
+        .then((changed) => { if (changed && state.activeTab === "active") renderActive(); })
+        .catch(() => {});
     } catch (e) { console.warn("live quote refresh skipped:", e?.message); }
 
     const view = buildActiveView(viewSnaps, anchorDate, todayDate, cadence, niftyOn, manualPicks, nifty500On);
@@ -5725,219 +5738,174 @@ function renderTradePlan() {
       </div></div>`;
   }
 
-  // ---- regime banner: the one check that can cancel the month ----
+  // ---- one line for market conditions -------------------------------
+  // The overnight strip and the regime check were two separate cards
+  // saying the same kind of thing. Merged: one row, one verdict.
   const rOk = regime.ok;
   const rTone = rOk === null ? "slate" : rOk ? "emerald" : "rose";
-  const regimeCard = `
-    <div class="bg-${rTone}-50 ring-1 ring-${rTone}-200 rounded-2xl p-4 flex flex-wrap items-center gap-x-5 gap-y-2">
-      <div class="flex items-center gap-2.5">
-        <span class="w-8 h-8 rounded-lg bg-${rTone}-600 text-white flex items-center justify-center text-sm font-bold">${rOk === null ? "?" : rOk ? "✓" : "✕"}</span>
-        <div>
-          <div class="text-[10px] font-bold uppercase tracking-wider text-${rTone}-700">Step 1 · Market regime</div>
-          <div class="font-bold text-${rTone}-900 text-sm">${rOk === null ? "Cannot determine" : rOk ? "Risk-on — deploy" : "Risk-off — deploy half, or sit out"}</div>
-        </div>
-      </div>
-      ${regime.last ? `<div class="text-xs text-${rTone}-800 tabular-nums">Smallcap 250 <span class="font-bold">${Math.round(regime.last).toLocaleString("en-IN")}</span> vs ${regime.days}-day avg <span class="font-bold">${Math.round(regime.ma).toLocaleString("en-IN")}</span>${regime.exact ? "" : ` <span class="opacity-70">(only ${regime.days} days of history — not yet a true 200 DMA)</span>`}</div>` : `<div class="text-xs text-slate-600">${escapeHtml(regime.note || "")}</div>`}
-    </div>`;
+  const regimeChip = `
+    <span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-lg bg-${rTone}-50 ring-1 ring-${rTone}-200 text-[11px] font-semibold text-${rTone}-800">
+      ${rOk === null ? "?" : rOk ? "✓" : "✕"} ${rOk === null ? "Regime unknown" : rOk ? "Risk-on" : "Risk-off — half size"}
+    </span>`;
 
-  // ---- warnings ----
+  // ---- warnings, as short chips ---------------------------------------
   const warns = [];
-  plan.rows.filter((r) => r.hot).forEach((r) => warns.push(`<span class="font-semibold">${escapeHtml(r.name)}</span> RSI ${r.rsi} is above ${PLAN_RSI_HOT} — it has already run. Half-size it or take the next rank.`));
-  plan.heavySectors.forEach(([sec, n]) => warns.push(`<span class="font-semibold">${n} of ${plan.rows.length}</span> are ${escapeHtml(sec)} — that is a sector bet, not a diversified basket. Consider dropping the weakest.`));
-  plan.rows.filter((r) => r.thin).forEach((r) => warns.push(`<span class="font-semibold">${escapeHtml(r.name)}</span> trades only ₹${r.adtv} Cr a day — limit orders only, never market.`));
-  const warnCard = warns.length ? `
-    <div class="bg-amber-50 ring-1 ring-amber-200 rounded-2xl p-4">
-      <div class="text-[10px] font-bold uppercase tracking-wider text-amber-700 mb-2">Step 2 · Read before you buy — ${warns.length} flag${warns.length === 1 ? "" : "s"}</div>
-      <ul class="space-y-1.5 text-[13px] text-amber-900 leading-snug">${warns.map((w) => `<li class="flex gap-2"><span class="text-amber-500 flex-shrink-0">▸</span><span>${w}</span></li>`).join("")}</ul>
-    </div>` : `
-    <div class="bg-emerald-50 ring-1 ring-emerald-200 rounded-2xl p-4 text-[13px] text-emerald-900">
-      <span class="font-bold">Step 2 · No flags.</span> Nothing overbought, no sector above ${PLAN_MAX_PER_SECTOR} names, all liquid enough.
-    </div>`;
+  plan.rows.filter((r) => r.hot).forEach((r) => warns.push(`${escapeHtml(r.name)} · RSI ${r.rsi}, already run`));
+  plan.heavySectors.forEach(([sec, n]) => warns.push(`${n} of ${plan.rows.length} in ${escapeHtml(sec)}`));
+  plan.rows.filter((r) => r.thin).forEach((r) => warns.push(`${escapeHtml(r.name)} · thin, ₹${r.adtv} Cr a day`));
+  plan.skipped.forEach((k) => {
+    const swap = plan.rows.find((r) => r.replaces === k.name);
+    warns.push(`${escapeHtml(k.name)} too pricey for its slot${swap ? ` → ${escapeHtml(swap.name)}` : " → dropped"}`);
+  });
+  const warnRow = warns.length ? `
+    <div class="flex flex-wrap items-center gap-1.5">
+      ${warns.map((w) => `<span class="text-[11px] px-2 py-1 rounded-lg bg-amber-50 ring-1 ring-amber-200 text-amber-900">${w}</span>`).join("")}
+    </div>` : "";
 
   const cell = (v, tone) => `<td class="px-3 py-2 text-right tabular-nums ${tone || ""}">${v}</td>`;
 
-  // ---- table 1: what the screener says ----
-  const readTable = `
-    <div class="bg-white rounded-2xl ring-1 ring-slate-100 overflow-hidden">
-      <div class="px-4 py-3 border-b border-slate-100">
-        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Step 3 · This month's basket</div>
-        <div class="text-xs text-slate-500 mt-0.5">${escapeHtml(plan.strategy.name)} · top ${plan.rows.length} on ${fmtDateDMY(plan.anchorDate)}. Amber = worth a second look.</div>
-      </div>
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead class="bg-slate-50/70 text-[10px] uppercase tracking-wider text-slate-500">
-            <tr><th class="px-3 py-2 text-left">Stock</th><th class="px-3 py-2 text-right">Score</th><th class="px-3 py-2 text-right">Price</th>
-            <th class="px-3 py-2 text-right" title="Average daily move">ATR</th><th class="px-3 py-2 text-right" title="Momentum 0-100; above 75 has run">RSI</th>
-            <th class="px-3 py-2 text-right" title="Moves this much per 1% of index">Beta</th><th class="px-3 py-2 text-right" title="Rupees traded daily">ADTV</th>
-            <th class="px-3 py-2 text-right" title="How far below its 1-year high">Off high</th><th class="px-3 py-2 text-left">Sector</th></tr>
-          </thead>
-          <tbody>
-            ${plan.rows.map((r) => `
-              <tr class="border-t border-slate-100 ${r.hot ? "bg-amber-50/40" : ""}">
-                <td class="px-3 py-2 font-semibold text-slate-900">${escapeHtml(r.name)}<div class="text-[10px] font-mono text-slate-400">${escapeHtml(r.ticker)}</div></td>
-                ${cell(r.composite, "font-bold text-indigo-700")}
-                ${cell(inr(r.price))}
-                ${cell(r.atr != null ? r.atr + "%" : "—", r.atr > 4 ? "text-rose-600 font-semibold" : "")}
-                ${cell(r.rsi ?? "—", r.hot ? "text-rose-600 font-bold" : r.rsi < 60 ? "text-emerald-700 font-semibold" : "")}
-                ${cell(r.beta ?? "—")}
-                ${cell(r.adtv != null ? "₹" + r.adtv + " Cr" : "—", r.thin ? "text-amber-700 font-bold" : "")}
-                ${cell(r.d52 != null ? r.d52 + "%" : "—", r.atHigh ? "text-amber-700 font-bold" : "")}
-                <td class="px-3 py-2 text-xs text-slate-500">${escapeHtml(String(r.sector).slice(0, 22))}</td>
-              </tr>`).join("")}
-          </tbody>
-        </table>
-      </div>
-    </div>`;
-
-  // ---- table 2: the orders ----
+  // ---- the one table you trade from -----------------------------------
+  // Was two tables of eight and nine columns -- what the screener says,
+  // then what to buy -- read together on every single order. Merged into
+  // one, with the diagnostic columns (ATR, RSI, beta, ADTV, off-high)
+  // moved behind an expander since they inform the flags above rather
+  // than the order itself.
   const deployPct = plan.capital > 0 ? (plan.totalCost / plan.capital) * 100 : 0;
   const riskPct = plan.capital > 0 ? (plan.totalRisk / plan.capital) * 100 : 0;
   const orderTable = `
     <div class="bg-white rounded-2xl ring-1 ring-slate-100 overflow-hidden">
-      <div class="px-4 py-3 border-b border-slate-100">
-        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Step 4 · Your orders for ${inr(plan.capital)}</div>
-        <div class="text-xs text-slate-500 mt-0.5">Stop = entry − ${plan.strategy.stopAtr ?? PLAN_STOP_ATR} × ATR. <b>Pay up to</b> allows for the market's own gap (today ${plan.tolerancePct.toFixed(2)}%), capped at half the stock's ATR — never chase the stock itself.</div>
+      <div class="px-4 py-3 border-b border-slate-100 flex flex-wrap items-baseline justify-between gap-2">
+        <div class="font-semibold text-slate-900 text-sm">Buy these ${plan.rows.length}</div>
+        <div class="text-[11px] text-slate-500">Limit orders only · stop = ${plan.strategy.stopAtr ?? PLAN_STOP_ATR} × ATR below entry</div>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
           <thead class="bg-slate-50/70 text-[10px] uppercase tracking-wider text-slate-500">
-            <tr><th class="px-3 py-2 text-left">Stock</th><th class="px-3 py-2 text-right" title="What we would like to pay">Ideal</th>
-            <th class="px-3 py-2 text-right" title="The most we will pay if the whole market gapped up">Pay up to</th>
-            <th class="px-3 py-2 text-right" title="Above this it is a different trade — take a bench name instead">Skip above</th>
-            <th class="px-3 py-2 text-right">Shares</th>
-            <th class="px-3 py-2 text-right">Cost</th><th class="px-3 py-2 text-right">Stop-loss</th><th class="px-3 py-2 text-right">Risk</th></tr>
+            <tr><th class="px-3 py-2 text-left">Stock</th>
+            <th class="px-3 py-2 text-right" title="The most to pay — allows for the market's own gap">Buy up to</th>
+            <th class="px-3 py-2 text-right" title="Above this, take a bench name instead">Skip above</th>
+            <th class="px-3 py-2 text-right">Shares</th><th class="px-3 py-2 text-right">Cost</th>
+            <th class="px-3 py-2 text-right">Stop</th><th class="px-3 py-2 text-right">Risk</th></tr>
           </thead>
           <tbody>
             ${plan.rows.map((r) => `
-              <tr class="border-t border-slate-100 ${r.tradable ? "" : "bg-amber-50/40"}">
-                <td class="px-3 py-2 font-semibold text-slate-900">${escapeHtml(r.name)}${r.promoted ? `<span class="ml-1.5 text-[9px] font-bold uppercase tracking-wider px-1 py-0.5 rounded bg-sky-100 text-sky-700">from bench</span>` : ""}</td>
-                ${cell(inr(r.limitIdeal), "text-slate-500")}
+              <tr class="border-t border-slate-100">
+                <td class="px-3 py-2">
+                  <span class="font-semibold text-slate-900">${escapeHtml(r.name)}</span>
+                  ${r.promoted ? `<span class="ml-1.5 text-[9px] font-bold uppercase px-1 py-0.5 rounded bg-sky-100 text-sky-700">bench</span>` : ""}
+                  <div class="text-[10px] text-slate-400">${escapeHtml(String(r.sector).slice(0, 24))}</div>
+                </td>
                 ${cell(inr(r.limitMax), "font-semibold text-slate-900")}
                 ${cell(inr(r.skipAbove), "text-slate-400")}
                 ${cell(`<span class="text-base font-bold ${r.tradable ? "text-slate-900" : "text-amber-700"}">${r.shares}</span>`)}
                 ${cell(inr(r.cost), "font-semibold")}
                 ${cell(inr(r.stop), "text-rose-700 font-bold")}
-                ${cell(inr(r.risk), "text-slate-600")}
+                ${cell(inr(r.risk), "text-slate-500")}
               </tr>`).join("")}
           </tbody>
           <tfoot class="bg-slate-50 border-t-2 border-slate-200 font-bold">
-            <tr><td class="px-3 py-2.5">Total</td><td></td><td></td><td></td><td></td>
+            <tr><td class="px-3 py-2.5">Total</td><td></td><td></td><td></td>
               ${cell(inr(plan.totalCost))}
               <td class="px-3 py-2.5 text-right text-[10px] uppercase tracking-wider text-slate-500">at risk</td>
               ${cell(inr(plan.totalRisk), "text-rose-700")}</tr>
           </tfoot>
         </table>
       </div>
-      <div class="px-4 py-3 bg-slate-50/60 border-t border-slate-100 flex flex-wrap gap-x-6 gap-y-1 text-xs text-slate-600">
-        <span>Deploying <span class="font-bold text-slate-900">${deployPct.toFixed(1)}%</span> of capital</span>
-        <span>Total at risk <span class="font-bold ${riskPct > 12 ? "text-rose-700" : "text-slate-900"}">${riskPct.toFixed(1)}%</span> if every stop hits</span>
-        <span class="text-slate-400">Shares round down, then spare cash buys one more of whatever sits furthest below target — so no slot is overspent.</span>
+      <div class="px-4 py-2.5 bg-slate-50/60 border-t border-slate-100 text-xs text-slate-600">
+        <span class="font-bold text-slate-900">${deployPct.toFixed(0)}%</span> deployed ·
+        <span class="font-bold ${riskPct > 12 ? "text-rose-700" : "text-slate-900"}">${riskPct.toFixed(1)}%</span> at risk if every stop hits ·
+        <span class="text-slate-400">${plan.roundTripPct.toFixed(2)}% charges a round trip</span>
       </div>
+      <details class="border-t border-slate-100">
+        <summary class="cursor-pointer px-4 py-2 text-[11px] font-semibold text-slate-500 hover:text-slate-700 select-none">Why these names ▾</summary>
+        <div class="overflow-x-auto pb-2">
+          <table class="w-full text-sm">
+            <thead class="bg-slate-50/70 text-[10px] uppercase tracking-wider text-slate-500">
+              <tr><th class="px-3 py-2 text-left">Stock</th><th class="px-3 py-2 text-right">Score</th>
+              <th class="px-3 py-2 text-right">Price</th><th class="px-3 py-2 text-right">ATR</th>
+              <th class="px-3 py-2 text-right">RSI</th><th class="px-3 py-2 text-right">Beta</th>
+              <th class="px-3 py-2 text-right">ADTV</th><th class="px-3 py-2 text-right">Off high</th></tr>
+            </thead>
+            <tbody>
+              ${plan.rows.map((r) => `
+                <tr class="border-t border-slate-100 ${r.hot ? "bg-amber-50/40" : ""}">
+                  <td class="px-3 py-2 text-slate-700">${escapeHtml(r.name)}</td>
+                  ${cell(r.composite, "font-bold text-indigo-700")}
+                  ${cell(inr(r.price))}
+                  ${cell(r.atr != null ? r.atr + "%" : "—", r.atr > 4 ? "text-rose-600" : "")}
+                  ${cell(r.rsi ?? "—", r.hot ? "text-rose-600 font-bold" : "")}
+                  ${cell(r.beta ?? "—")}
+                  ${cell(r.adtv != null ? "₹" + r.adtv + " Cr" : "—", r.thin ? "text-amber-700 font-bold" : "")}
+                  ${cell(r.d52 != null ? r.d52 + "%" : "—", r.atHigh ? "text-amber-700" : "")}
+                </tr>`).join("")}
+            </tbody>
+          </table>
+        </div>
+      </details>
     </div>`;
 
-  // ---- sizing feasibility ----
-  // A flat rupee slot says nothing about whether the position is buildable.
-  // One share of a ₹2,400 stock inside a ₹3,500 slot is 68% of the slot in a
-  // single tick — the risk weighting above becomes decoration. Say so, and
-  // say what capital or basket size would fix it.
-  const sizeWarn = (plan.skipped.length || plan.tooSmall.length) ? `
-    <div class="bg-amber-50 ring-1 ring-amber-200 rounded-2xl p-4">
-      <div class="text-[10px] font-bold uppercase tracking-wider text-amber-700 mb-1.5">Sizing notes</div>
-      <div class="text-[13px] text-amber-900 leading-snug space-y-1">
-        ${plan.skipped.map((k) => {
-          const swap = plan.rows.find((r) => r.replaces === k.name);
-          return `<div><span class="font-semibold">${escapeHtml(k.name)}</span> skipped — one share costs ${inr(k.price)}, more than its ${inr(k.target)} slot.${swap ? ` Replaced with <span class="font-semibold">${escapeHtml(swap.name)}</span> from the bench.` : ` No affordable bench name, so its money went to the rest of the basket.`}</div>`;
-        }).join("")}
-        ${plan.tooSmall.length ? `<div>${plan.tooSmall.map((r) => `<span class="font-semibold">${escapeHtml(r.name)}</span> — only ${r.shares} share${r.shares === 1 ? "" : "s"} fit in its ${inr(r.target)} slot`).join("; ")}. Below about three shares the risk weighting is approximate.</div>` : ""}
-      </div>
-    </div>` : "";
-
-  // ---- the bench ----
-  // The whole point: on entry morning a name will have gapped away, and the
-  // replacement has to be already chosen and already sized. Deciding this at
-  // 9:20 with the market moving is how baskets end up half-built.
+  // ---- the bench, four columns ----------------------------------------
   const bufferTable = plan.buffer.length ? `
     <div class="bg-white rounded-2xl ring-1 ring-slate-100 overflow-hidden">
-      <div class="px-4 py-3 border-b border-slate-100">
-        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500">The bench · ${plan.buffer.length} reserves</div>
-        <div class="text-xs text-slate-500 mt-0.5">If a name above gaps past its skip price, buy the top bench name instead — sized at its own price and ATR, so the risk stays where it was.</div>
+      <div class="px-4 py-2.5 border-b border-slate-100 flex flex-wrap items-baseline justify-between gap-2">
+        <div class="font-semibold text-slate-900 text-sm">Bench · ${plan.buffer.length}</div>
+        <div class="text-[11px] text-slate-500">If one above gaps past its skip price, buy the top bench name instead</div>
       </div>
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead class="bg-slate-50/70 text-[10px] uppercase tracking-wider text-slate-500">
-            <tr><th class="px-3 py-2 text-left">#</th><th class="px-3 py-2 text-left">Stock</th><th class="px-3 py-2 text-right">Score</th>
-            <th class="px-3 py-2 text-right">Pay up to</th><th class="px-3 py-2 text-right">Skip above</th>
-            <th class="px-3 py-2 text-right">Shares</th><th class="px-3 py-2 text-right">Stop-loss</th><th class="px-3 py-2 text-left">Sector</th></tr>
-          </thead>
-          <tbody>
-            ${plan.buffer.map((r, i) => `
-              <tr class="border-t border-slate-100">
-                <td class="px-3 py-2 text-slate-400 tabular-nums">${plan.rows.length + i + 1}</td>
-                <td class="px-3 py-2 font-semibold text-slate-900">${escapeHtml(r.name)}<div class="text-[10px] font-mono text-slate-400">${escapeHtml(r.ticker)}</div></td>
-                ${cell(r.composite, "font-bold text-indigo-700")}
-                ${cell(inr(r.limitMax), "font-semibold")}
-                ${cell(inr(r.skipAbove), "text-slate-400")}
-                ${cell(`<span class="font-bold">${r.shares}</span>`)}
-                ${cell(inr(r.stop), "text-rose-700 font-semibold")}
-                <td class="px-3 py-2 text-xs text-slate-500">${escapeHtml(String(r.sector).slice(0, 22))}</td>
-              </tr>`).join("")}
-          </tbody>
-        </table>
-      </div>
+      <table class="w-full text-sm">
+        <tbody>
+          ${plan.buffer.map((r) => `
+            <tr class="border-t border-slate-100 first:border-t-0">
+              <td class="px-3 py-2"><span class="font-semibold text-slate-800">${escapeHtml(r.name)}</span></td>
+              ${cell(`<span class="text-slate-400 text-[11px]">buy up to</span> ${inr(r.limitMax)}`)}
+              ${cell(`<span class="font-bold">${r.shares}</span> <span class="text-slate-400 text-[11px]">shares</span>`)}
+              ${cell(`<span class="text-slate-400 text-[11px]">stop</span> <span class="text-rose-700 font-semibold">${inr(r.stop)}</span>`)}
+            </tr>`).join("")}
+        </tbody>
+      </table>
     </div>` : "";
 
   const entryMonitor = renderEntryMonitor(plan);
 
-  // ---- upside, expressed in R ----
-  // R is the stop distance. Risking 1R to make 2R is the standard way to
-  // judge a trade before you know the outcome, and it is the only honest
-  // framing available: nobody can tell you a stock's maximum return in
-  // advance. What CAN be stated is the ratio you are accepting.
-  //
-  // Deliberately no fixed rupee "target" here. In momentum, selling winners
-  // at a fixed level is the main way the strategy loses money -- the few
-  // large winners are what pay for the many small stops. Let them run and
-  // raise the stop behind them instead.
+  // ---- upside, folded away ---------------------------------------------
+  // Reference levels, consulted rarely. It was a seven-column table plus
+  // three tiles plus two paragraphs, sitting open above the paper results.
   const r2Total = plan.rows.reduce((a, r) => a + r.cost * r.stopPct * 2, 0);
-  const r3Total = plan.rows.reduce((a, r) => a + r.cost * r.stopPct * 3, 0);
   const upCard = `
-    <div class="bg-white rounded-2xl ring-1 ring-slate-100 overflow-hidden">
-      <div class="px-4 py-3 border-b border-slate-100">
-        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Step 5 · What the upside looks like</div>
-        <div class="text-xs text-slate-500 mt-0.5"><span class="font-semibold">R</span> = the stop distance. 2R means the stock rose twice as far as your stop sits below. These are <span class="font-semibold">reference levels, not predictions</span>.</div>
-      </div>
-      <div class="overflow-x-auto">
+    <details class="bg-white rounded-2xl ring-1 ring-slate-100 overflow-hidden">
+      <summary class="cursor-pointer px-4 py-3 flex flex-wrap items-baseline justify-between gap-2 hover:bg-slate-50 select-none">
+        <span class="font-semibold text-slate-900 text-sm">Upside reference</span>
+        <span class="text-[11px] text-slate-500">Every stop hits <b class="text-rose-700">−${inr(plan.totalRisk)}</b> · every name reaches 2R <b class="text-emerald-700">+${inr(r2Total)}</b></span>
+      </summary>
+      <div class="overflow-x-auto border-t border-slate-100">
         <table class="w-full text-sm">
           <thead class="bg-slate-50/70 text-[10px] uppercase tracking-wider text-slate-500">
-            <tr><th class="px-3 py-2 text-left">Stock</th><th class="px-3 py-2 text-right">Stop (−1R)</th><th class="px-3 py-2 text-right">Entry</th>
-            <th class="px-3 py-2 text-right">+1R</th><th class="px-3 py-2 text-right">+2R</th><th class="px-3 py-2 text-right">+3R</th>
-            <th class="px-3 py-2 text-right">Gain at 2R</th></tr>
+            <tr><th class="px-3 py-2 text-left">Stock</th><th class="px-3 py-2 text-right">Stop</th>
+            <th class="px-3 py-2 text-right">Entry</th><th class="px-3 py-2 text-right">+1R</th>
+            <th class="px-3 py-2 text-right">+2R</th><th class="px-3 py-2 text-right">+3R</th></tr>
           </thead>
           <tbody>
             ${plan.rows.map((r) => `
               <tr class="border-t border-slate-100">
-                <td class="px-3 py-2 font-semibold text-slate-900">${escapeHtml(r.name)}</td>
-                ${cell(inr(r.stop), "text-rose-700 font-semibold")}
+                <td class="px-3 py-2 text-slate-700">${escapeHtml(r.name)}</td>
+                ${cell(inr(r.stop), "text-rose-700")}
                 ${cell(inr(r.price), "text-slate-500")}
                 ${cell(inr(r.price * (1 + r.stopPct)), "text-emerald-700")}
                 ${cell(inr(r.price * (1 + r.stopPct * 2)), "text-emerald-700 font-bold")}
                 ${cell(inr(r.price * (1 + r.stopPct * 3)), "text-emerald-700")}
-                ${cell("+" + inr(r.cost * r.stopPct * 2), "font-semibold")}
               </tr>`).join("")}
           </tbody>
         </table>
       </div>
-      <div class="px-4 py-3 bg-slate-50/60 border-t border-slate-100 grid sm:grid-cols-3 gap-3 text-xs">
-        <div><div class="text-[10px] uppercase tracking-wider text-slate-500">Every stop hits</div><div class="font-bold text-rose-700 text-base tabular-nums">−${inr(plan.totalRisk)} · ${riskPct.toFixed(1)}%</div></div>
-        <div><div class="text-[10px] uppercase tracking-wider text-slate-500">Every stock reaches 2R</div><div class="font-bold text-emerald-700 text-base tabular-nums">+${inr(r2Total)} · ${(r2Total / plan.capital * 100).toFixed(1)}%</div></div>
-        <div><div class="text-[10px] uppercase tracking-wider text-slate-500">Every stock reaches 3R</div><div class="font-bold text-emerald-700 text-base tabular-nums">+${inr(r3Total)} · ${(r3Total / plan.capital * 100).toFixed(1)}%</div></div>
-      </div>
-      <div class="px-4 py-3 border-t border-slate-100 text-[11px] text-slate-500 leading-snug">
-        Neither extreme happens. In practice a momentum basket stops out on roughly half its positions and pays for them with a few large winners — which is exactly why there is no fixed sell target here. <span class="font-semibold text-slate-700">Use the Backtesting tab</span> to see what this basket rule actually returned month by month on your own history.
-      </div>
+      <div class="px-4 py-2.5 text-[11px] text-slate-500 border-t border-slate-100">R = the stop distance. Reference levels, not predictions — momentum pays through a few large winners, so there is no fixed sell target here.</div>
+    </details>`;
+
+  const conditions = `
+    <div class="flex flex-wrap items-center gap-2">
+      ${regimeChip}
+      ${regime.last ? `<span class="text-[11px] text-slate-500 tabular-nums">Smallcap 250 ${Math.round(regime.last).toLocaleString("en-IN")} vs ${regime.days}d avg ${Math.round(regime.ma).toLocaleString("en-IN")}</span>` : ""}
     </div>`;
 
-  return `<div class="space-y-4">${pills}${context}${capBox}${regimeCard}${warnCard}${entryMonitor}${readTable}${sizeWarn}${orderTable}${bufferTable}${upCard}${renderPaperResults()}</div>`;
+  return `<div class="space-y-3">${pills}${context}${conditions}${capBox}${warnRow}${entryMonitor}${orderTable}${bufferTable}${upCard}${renderPaperResults()}</div>`;
 }
 
 // ============================================================
@@ -6168,9 +6136,9 @@ function renderPaperResults() {
 // likes on the AI Basket page — one click, no scroll.
 function renderStrategySubNav(sub) {
   const tabs = [
+    { k: "overview",  icon: "📈", label: "Overview" },
     { k: "plan",      icon: "🧾", label: "Trade Plan" },
     { k: "compare",   icon: "⚖️", label: "Compare" },
-    { k: "overview",  icon: "📈", label: "Overview" },
     { k: "accuracy",  icon: "🎯", label: "Accuracy" },
     { k: "balancing", icon: "🧭", label: "Balancing" },
   ];
@@ -6329,18 +6297,19 @@ async function refreshLiveQuotes(tickers) {
   const h = state.cache.history;
   if (!h || !tickers?.length) return;
   const now = Date.now();
-  if (state.cache.quotesFetchedAt && now - state.cache.quotesFetchedAt < QUOTE_TTL_MS) return;
+  if (state.cache.quotesFetchedAt && now - state.cache.quotesFetchedAt < QUOTE_TTL_MS) return false;
   state.cache.quotesFetchedAt = now;
 
   const uniq = [...new Set(tickers.filter(Boolean))].slice(0, 20);
   const results = await Promise.all(uniq.map(async (t) => [t, await fetchQuoteDirect(t)]));
   let ok = 0;
   for (const [t, q] of results) if (q) { h.livePrices[t] = q; ok++; }
-  if (!ok) return;                       // API unreachable — committed file stands
+  if (!ok) return false;                 // API unreachable — committed file stands
   h.livePricesGeneratedAt = new Date().toISOString();
   h.livePricesSource = `browser · ${ok}/${uniq.length} quotes`;
   // Display prices follow the fresh quotes too, not just the hit detection.
   for (const [t, q] of results) if (q?.current != null) h.todayClose[t] = q.current;
+  return true;
 }
 
 // Is live-prices.json actually from today? The file is committed by a
