@@ -34,8 +34,13 @@ const SNAP_DIR  = resolve(DATA_DIR, "snapshots");
 const COHORT_SIZE = Number(process.env.LIVE_COHORT_SIZE || 10);
 const OUT_PATH  = resolve(DATA_DIR, "live-prices.json");
 const API       = "https://fastapi.muns.io/stock-data";
+// Per-request ceiling. Without one, a hanging endpoint blocks fetch()
+// forever: on 3 Aug the quote API stopped responding, the job sat until
+// its 10-minute limit, was cancelled, and wrote nothing at all -- so the
+// dashboard showed Friday's closes through a live session and called them
+// current. A slow API must degrade to partial data, never to no data.
+const REQ_TIMEOUT_MS = 8000;
 
-run().catch((e) => { console.error("Fatal:", e.stack || e.message); process.exit(1); });
 
 // Mirror of app.js pickTop7 — keep the two in step. Returns [] when no
 // snapshot exists yet, which makes this a safe no-op before tracking starts.
@@ -71,44 +76,101 @@ async function run() {
   console.log(`Fetching live quotes for ${list.length} tickers: ${list.join(", ")}`);
 
   const prices = {};
+  const srcCounts = { munshot: 0, yahoo: 0 };
   let ok = 0, fail = 0;
   for (const ticker of list) {
     const q = await fetchQuote(ticker);
-    if (q) { prices[ticker] = q; ok++; process.stdout.write("."); }
+    if (q) { srcCounts[q.source] = (srcCounts[q.source] || 0) + 1; delete q.source; prices[ticker] = q; ok++; process.stdout.write(q === null ? "x" : "."); }
     else   { fail++; process.stdout.write("x"); }
     await new Promise((r) => setTimeout(r, 200));
   }
 
   const payload = {
     generated_at: new Date().toISOString(),
-    source: "Munshot quote API (fastapi.muns.io/stock-data)",
+    source: srcCounts.yahoo ? `Munshot quote API (${srcCounts.munshot} tickers) + Yahoo fallback (${srcCounts.yahoo})` : "Munshot quote API (fastapi.muns.io/stock-data)",
     note: "Live intraday snapshot per basket ticker. dayHigh/dayLow drive intraday target/SL touch detection; current is the latest traded price.",
     ticker_count: Object.keys(prices).length,
     prices,
   };
   mkdirSync(DATA_DIR, { recursive: true });
   writeFileSync(OUT_PATH, JSON.stringify(payload, null, 2) + "\n");
-  console.log(`\nWrote ${OUT_PATH} — ${ok} ok, ${fail} failed.`);
+  console.log(`\nWrote ${OUT_PATH} — ${ok} ok (${srcCounts.munshot} munshot, ${srcCounts.yahoo} yahoo), ${fail} failed.`);
+  // A run that fetched nothing must not be mistaken for a successful one:
+  // it would overwrite good quotes with an empty file.
+  if (ok === 0) { console.error("No quotes retrieved from either source — leaving the previous file in place."); process.exit(1); }
 }
 
 // One quote → { current, open, prevClose, dayHigh, dayLow, week52High,
 // week52Low, ma50, ma200, vol10d, marketCap, yearlyChangePct }. Returns
 // null on any error so a single bad ticker never aborts the run.
+// Munshot first, Yahoo second. Yahoo's chart meta carries every field this
+// file needs -- last price, the day's high and low, previous close -- so a
+// dead primary costs freshness of source, not the feed itself.
+// Once the primary has timed out twice in a row it is treated as down for
+// the rest of the run. Retrying it per ticker costs 24 seconds each and
+// pushed a ten-ticker job past its timeout -- the exact failure this
+// fallback exists to prevent.
+let munshotDown = false, munshotMisses = 0;
+
 async function fetchQuote(ticker) {
-  for (let attempt = 0; attempt < 3; attempt++) {
+  const primary = munshotDown ? null : await fetchFromMunshot(ticker);
+  if (!primary) {
+    if (++munshotMisses >= 2 && !munshotDown) {
+      munshotDown = true;
+      console.log("\n  primary quote API unresponsive — using Yahoo for the rest of this run");
+    }
+  } else munshotMisses = 0;
+  if (primary) return { ...primary, source: "munshot" };
+  const fallback = await fetchFromYahoo(ticker);
+  return fallback ? { ...fallback, source: "yahoo" } : null;
+}
+
+async function fetchFromYahoo(ticker) {
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ticker)}.NS?range=1d&interval=5m`;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const r = await fetch(url, {
+        headers: { "User-Agent": "Mozilla/5.0 (compatible; VNSmallcapBot/1.0)" },
+        signal: AbortSignal.timeout(REQ_TIMEOUT_MS),
+      });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const m = (await r.json())?.chart?.result?.[0]?.meta;
+      if (!m || m.regularMarketPrice == null) throw new Error("no meta");
+      return {
+        current: m.regularMarketPrice,
+        open: m.regularMarketOpen ?? null,
+        prevClose: m.chartPreviousClose ?? m.previousClose ?? null,
+        dayHigh: m.regularMarketDayHigh ?? null,
+        dayLow: m.regularMarketDayLow ?? null,
+        week52High: m.fiftyTwoWeekHigh ?? null,
+        week52Low: m.fiftyTwoWeekLow ?? null,
+        ma50: null, ma200: null, vol10d: null,
+        marketCap: null, yearlyChangePct: null,
+      };
+    } catch {
+      if (attempt === 1) return null;
+      await new Promise((res) => setTimeout(res, 500));
+    }
+  }
+  return null;
+}
+
+async function fetchFromMunshot(ticker) {
+  for (let attempt = 0; attempt < 2; attempt++) {
     try {
       const r = await fetch(API, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ticker_symbol: ticker, type: "stockquote", country: "india" }),
+        signal: AbortSignal.timeout(REQ_TIMEOUT_MS),
       });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const body = await r.json();               // API returns a quoted CSV string
       if (typeof body !== "string") throw new Error("unexpected shape");
       return parseQuote(body);
     } catch (e) {
-      if (attempt === 2) return null;
-      await new Promise((res) => setTimeout(res, 600 * (attempt + 1)));
+      if (attempt === 1) return null;
+      await new Promise((res) => setTimeout(res, 400));
     }
   }
   return null;
@@ -146,3 +208,7 @@ function parseQuote(str) {
     yearlyChangePct: num(kv["Yearly Change (%)"]),
   };
 }
+
+// Invoked last: the circuit-breaker state above is let-bound, so calling
+// run() earlier in the file hits the temporal dead zone.
+run().catch((e) => { console.error("Fatal:", e.stack || e.message); process.exit(1); });

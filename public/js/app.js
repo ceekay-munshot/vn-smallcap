@@ -1693,6 +1693,9 @@ async function ensureHistoryCache() {
     return r.json();
   });
   if (!idx.dates?.length) throw new Error("no snapshot dates");
+  // Where rebuilt history stops and real forward tracking starts. Written by
+  // backfill-from-history.mjs; absent on a repo that was never backfilled.
+  state.cache.liveFrom = idx.live_from || null;
   const snapshots = await Promise.all(idx.dates.map((d) =>
     fetch(`data/snapshots/${d}.json`).then((r) => r.json())
   ));
@@ -3278,10 +3281,18 @@ function wireHistorySubViewSwitch() {
 const AI_TARGET_PCT = 0.05;      // +5%
 const AI_SL_PCT     = 0.20;      // −20%
 
+// Detection runs on daily CLOSES for past days -- all a snapshot stores --
+// but for TODAY it widens to the live intraday HIGH / LOW, matching what
+// buildSegmentedEquityCurve already did. Without this the two disagreed:
+// the basket curve booked Deep Industries at its +5% target off an intraday
+// high of 646, while this panel called the same position OPEN because the
+// close had not printed yet. A level that trades is a level that fills.
 function computeHitStatus(ticker, entryDate, entryPrice, target, sl, snapshots, todayDate) {
   if (!ticker || entryPrice == null || target == null || sl == null) {
     return { status: "OPEN", currentClose: null };
   }
+  const liveQ = liveQuotesToday();
+  const live = liveQ ? state.cache.history?.livePrices?.[ticker] : null;
   // Walk forward from entry day onwards looking for the first close
   // that hits either side.
   let lastClose = null;
@@ -3291,6 +3302,31 @@ function computeHitStatus(ticker, entryDate, entryPrice, target, sl, snapshots, 
     const s = snap.stocks.find((x) => x.ticker === ticker);
     if (!s || s.close == null) continue;
     lastClose = s.close;
+    // Today only: a target touched intraday counts as hit even if the
+    // close came back under it.
+    const isToday = snap.date === todayDate || (liveQ && snap.date === snapshots[snapshots.length - 1].date);
+    const hi = isToday && live?.dayHigh != null ? Math.max(s.close, live.dayHigh) : s.close;
+    const lo = isToday && live?.dayLow != null ? Math.min(s.close, live.dayLow) : s.close;
+    if (hi >= target) {
+      return {
+        status: "TARGET_HIT",
+        hitDate: snap.date,
+        daysToHit: daysBetween(entryDate, snap.date),
+        exitPrice: target,
+        intraday: hi > s.close,
+        hitToday: true,
+      };
+    }
+    if (lo <= sl) {
+      return {
+        status: "SL_HIT",
+        hitDate: snap.date,
+        daysToHit: daysBetween(entryDate, snap.date),
+        exitPrice: sl,
+        intraday: lo < s.close,
+        hitToday: true,
+      };
+    }
     if (s.close >= target) {
       return {
         status: "TARGET_HIT",
@@ -6255,6 +6291,8 @@ function renderDataFreshness() {
   const mcAge = hoursSince(state.cache.marketContext?.generated_at);
   const fresh = liveQuotesToday();
 
+  const liveFrom = state.cache.liveFrom;
+  const recon = liveFrom && snaps.length && snaps[0].date < liveFrom;
   const rows = [
     { label: "Daily snapshot", value: lastSnap ? fmtDateDMY(lastSnap) : "none",
       bad: !lastSnap, warn: lastSnap && lastSnap < istTodayDate() },
@@ -6271,6 +6309,7 @@ function renderDataFreshness() {
       <span class="text-[10px] font-bold uppercase tracking-wider text-${tone}-700">Data freshness</span>
       ${rows.map((r) => `<span class="text-[11px] text-slate-600">${r.label}
         <b class="${r.bad ? "text-amber-800" : r.warn ? "text-slate-700" : "text-emerald-700"}">${r.value}</b></span>`).join("")}
+      ${recon ? `<span class="text-[11px] text-slate-500">History before <b class="text-slate-700">${fmtDateDMY(liveFrom)}</b> is rebuilt from past prices, not a live record</span>` : ""}
       ${anyBad ? `<span class="text-[11px] text-amber-900 ml-auto">A feed hasn't landed — figures below are the last good data, not today's.</span>` : ""}
     </div>`;
 }
@@ -6480,6 +6519,11 @@ function renderStrategyCompare() {
       [...live.runs.map((r) => ({ label: r.def.name, color: r.def.color, curve: r.curve })),
        { label: "Smallcap 250", color: "#94a3b8", curve: live.bench, dash: "5 4" }],
       "All five, side by side", "Real prices from the daily snapshots. One new point every trading day.") : "";
+    const lf = state.cache.liveFrom;
+    const reconNote = lf && live.days.length && live.days[0].date < lf ? `
+      <div class="bg-slate-50 ring-1 ring-slate-200 rounded-2xl px-4 py-2.5 text-[12px] text-slate-600 leading-snug">
+        Everything before <b>${fmtDateDMY(lf)}</b> is <b>rebuilt</b> from real past prices and real technical scores — but the fundamentals 30% is held at today's value, because no historical record of it exists. Read it as a well-grounded rehearsal, not as picks we actually made. From ${fmtDateDMY(lf)} onward it is a live record.
+      </div>` : "";
     const young = `
       <div class="bg-sky-50 ring-1 ring-sky-200 rounded-2xl px-4 py-3 text-[13px] text-sky-900 leading-snug">
         <b>${live.days.length} trading day${live.days.length === 1 ? "" : "s"} in.</b>
@@ -6490,7 +6534,7 @@ function renderStrategyCompare() {
       view === "monthly" ? renderCompareMonthly(rows) :
       view === "trades"  ? renderCompareTrades(rows) :
       renderCompareSummary(rows, { capital: simPrefs.capital }, primary);
-    return `<div class="space-y-3">${header}${live.days.length < 25 ? young : ""}${chart}${body}</div>`;
+    return `<div class="space-y-3">${header}${reconNote}${live.days.length < 25 ? young : ""}${chart}${body}</div>`;
   }
 
   // ---- backtest branch ----------------------------------------------
