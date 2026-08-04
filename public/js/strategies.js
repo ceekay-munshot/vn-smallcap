@@ -246,7 +246,15 @@ export function consensusPicks(baseSelections, strategy) {
     // strategies stop at 7 -- that is a difference in basket size, not a
     // disagreement about the stock, and it was quietly penalising exactly
     // the names the wider baskets were added to capture.
-    for (const p of [...sel.core, ...(sel.buffer || [])]) {
+    // Vote on the CORE basket — the names a strategy actually BUYS — not
+    // core+buffer. Counting the bench too handed every top-10 name four
+    // votes and flattened the signal. On the core: a top-7 name sits in
+    // Core, Equal-risk and Spread's baskets (3 votes) plus Balanced's if it
+    // clears the sector cap (4), while a rank 8-10 name only reaches the
+    // two wide baskets — so the vote count once again means something.
+    // (Core and Equal-risk select identically, differing only in sizing, so
+    // they vote together by design: that is the founder's "in the top 7".)
+    for (const p of sel.core) {
       const cur = votes.get(p.ticker) || { ...p, votes: 0 };
       cur.votes++;
       votes.set(p.ticker, cur);
@@ -418,8 +426,12 @@ export function backtest(ctx, strategy, charger = ZERO_CHARGER, opts = {}) {
         if (holdings.has(pick.ticker)) continue;
         const px = closesBy[pick.ticker][i];
         if (px == null || px <= 0) continue;
-        const convict = pick.convictionWeight ?? 1;
-        const slot = deployable * weightOf(pick) * convict;
+        // weightOf already folds conviction in (see invAtrWeights) and is
+        // normalised to sum to 1. Multiplying by conviction a SECOND time
+        // here quartered half-conviction names and left ~12% of a Consensus
+        // book idle in cash, so the backtest disagreed with the live track
+        // (app.js runLiveStrategy sizes on weightOf alone). One application only.
+        const slot = deployable * weightOf(pick);
         const spend = Math.min(slot, Math.max(0, cash) * 0.98);
         if (spend < px) continue;                       // cannot afford one share
         const units = Math.floor(spend / px);
@@ -471,8 +483,12 @@ export function invAtrWeights(picks, strategy) {
   // happily put a third of the book into one unusually quiet stock (an
   // InvIT or a utility), which is a concentration risk arriving through
   // the back door of a risk-control rule. Excess is redistributed across
-  // the uncapped names; two passes settles it.
-  const cap = strategy.maxWeight ?? 2 / want;
+  // the uncapped names; two passes settles it. The "equal share" is 1 over
+  // however many names actually deploy -- for consensus that is the count
+  // that qualified, not the nominal basket size, so the cap doesn't quietly
+  // force cash on a concentrated agreed book.
+  const deployCount = strategy.consensus ? Math.max(1, picks.length) : want;
+  const cap = strategy.maxWeight ?? 2 / deployCount;
   for (let pass = 0; pass < 3; pass++) {
     let excess = 0;
     const under = [];
@@ -486,11 +502,13 @@ export function invAtrWeights(picks, strategy) {
     for (const k of under) w.set(k, w.get(k) + excess * ((cap - w.get(k)) / room));
   }
 
-  // A full basket is deployed completely, just tilted -- half-weighting a
-  // name should shift money to the higher-conviction names, not park it in
-  // cash. A SHORT basket keeps the shortfall in cash on purpose: if only
-  // five names qualify, holding five and sitting on the rest is the point.
-  const scale = picks.length >= want ? 1 : picks.length / want;
+  // A full basket is deployed completely, just tilted. A short NON-consensus
+  // basket keeps the shortfall in cash on purpose: if only five names clear
+  // a strategy's gates, holding five and sitting on the rest is the point.
+  // Consensus is the exception -- the names all four strategies agree on ARE
+  // the basket, so it deploys fully across however many qualify rather than
+  // parking half the book in cash when agreement is narrow.
+  const scale = (strategy.consensus || picks.length >= want) ? 1 : picks.length / want;
   return (p) => (w.get(p.ticker) || 0) * scale;
 }
 
@@ -529,18 +547,27 @@ export function metrics(result, benchCurve = null) {
   const years = Math.max(curve.length / 252, 1e-6);
   const cagr = (Math.pow(1 + last / 100, 1 / years) - 1) * 100;
 
-  // Drawdown and how long it took to get back.
-  let peak = -Infinity, maxDD = 0, peakIdx = 0, ddStart = 0, recoveryDays = null, inDD = false;
+  // Drawdown, and how long the DEEPEST one took to recover. recoveryDays
+  // must belong to the max-DD episode, so it is stamped when that episode
+  // ends -- not on the first dip that happens to recover (the old `== null`
+  // guard captured a shallow early dip and never updated).
+  let peak = -Infinity, maxDD = 0, peakIdx = 0, maxDDStart = 0, maxDDIdx = 0, recoveryDays = null;
   curve.forEach((pt, i) => {
     const f = 1 + pt.retPct / 100;
-    if (f >= peak) {
-      if (inDD && recoveryDays == null) recoveryDays = i - ddStart;
-      peak = f; peakIdx = i; inDD = false;
-    } else {
+    if (f >= peak) { peak = f; peakIdx = i; }
+    else {
       const dd = (f / peak - 1) * 100;
-      if (dd < maxDD) { maxDD = dd; ddStart = peakIdx; inDD = true; }
+      if (dd < maxDD) { maxDD = dd; maxDDStart = peakIdx; maxDDIdx = i; recoveryDays = null; }
     }
   });
+  // Walk forward from the deepest trough to the first day that reclaims its
+  // prior peak; null if it never recovered within the window.
+  if (maxDD < 0) {
+    const peakVal = 1 + curve[maxDDStart].retPct / 100;
+    for (let i = maxDDIdx; i < curve.length; i++) {
+      if (1 + curve[i].retPct / 100 >= peakVal) { recoveryDays = i - maxDDStart; break; }
+    }
+  }
 
   // Daily volatility -> annualised.
   const rets = [];
@@ -552,17 +579,21 @@ export function metrics(result, benchCurve = null) {
   const varr = rets.length > 1 ? rets.reduce((x, y) => x + (y - mean) ** 2, 0) / (rets.length - 1) : 0;
   const vol = Math.sqrt(varr) * Math.sqrt(252) * 100;
 
-  // Monthly returns, compounded off the curve.
-  const byMonth = new Map();
-  for (const pt of curve) {
-    const k = monthKey(pt.date);
-    if (!byMonth.has(k)) byMonth.set(k, { first: pt.retPct, last: pt.retPct });
-    else byMonth.get(k).last = pt.retPct;
-  }
-  const months = [...byMonth.entries()].map(([m, v]) => ({
-    month: m,
-    retPct: ((1 + v.last / 100) / (1 + v.first / 100) - 1) * 100,
-  }));
+  // Monthly returns off the curve. Each month runs from the PREVIOUS
+  // month's closing factor to this month's, so the month-boundary day is
+  // not dropped and the months compound back to the total return. (The old
+  // version measured first-to-last WITHIN each month, silently losing every
+  // boundary move and understating best/worst month.)
+  const endFactorByMonth = new Map();
+  for (const pt of curve) endFactorByMonth.set(monthKey(pt.date), 1 + pt.retPct / 100);
+  const monthKeys = [...endFactorByMonth.keys()];
+  let prevFactor = 1;
+  const months = monthKeys.map((m) => {
+    const end = endFactorByMonth.get(m);
+    const retPct = (end / prevFactor - 1) * 100;
+    prevFactor = end;
+    return { month: m, retPct };
+  });
   const wins = months.filter((m) => m.retPct > 0).length;
   const best = months.reduce((a, b) => (!a || b.retPct > a.retPct ? b : a), null);
   const worst = months.reduce((a, b) => (!a || b.retPct < a.retPct ? b : a), null);

@@ -35,10 +35,10 @@ next month. 2-year backtest, net of charges, technicals only:
 | | Adds | 2-yr net | CAGR | Worst fall |
 |---|---|---|---|---|
 | 1 Core | top 7, equal money (control) | +56.4% | 25.0% | −15.9% |
-| 2 Equal risk **← what runs today** | inverse-ATR sizing | **+66.6%** | **29.1%** | −13.6% |
+| 2 Equal risk **← what runs today** | inverse-ATR sizing | +66.6% | 29.1% | −13.6% |
 | 3 Spread | 10 names instead of 7 | +56.7% | 25.2% | −12.4% |
 | 4 Balanced | max 2 per sector | +43.1% | 19.6% | −14.1% |
-| 5 Consensus | conviction weighting | +60.8% | 26.8% | **−10.3%** |
+| 5 Consensus | only names all 4 agree on, full weight | **+79.5%** | **34.0%** | **−12.2%** |
 
 These are five *approaches*, not a ladder where each beats the last — with ~24
 rebalances on 7 concentrated names, the numbers are very sensitive to timing and

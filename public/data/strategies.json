@@ -109,5 +109,5 @@
       "consensusHalf": 3
     }
   ],
-  "primaryNote": "On the 2-year backtest, Equal risk (S2) \u2014 the plan already being run \u2014 led on return, and Consensus (S5) had the lowest drawdown. But a backtest is a rehearsal and these numbers are highly sensitive to rebalance timing, so #1 stays on the current plan until the live track earns a change."
+  "primaryNote": "On the corrected 2-year backtest, Consensus (S5) \u2014 the concentrated basket of names all four strategies agree on \u2014 led on both return and drawdown, with Equal risk (S2, the plan already being run) close behind. But a backtest is a rehearsal and these numbers are highly sensitive to rebalance timing, so #1 stays on the current plan until the live track earns a change."
 }
