@@ -2726,6 +2726,31 @@ function staticAnchorDate(snapshots) {
   return snapshots[0].date;
 }
 
+// The AI basket's production entry anchor. Founder's rule (Aug 2026): rank and
+// enter from the PRIOR month's last close — the previous trading day before the
+// 1st (an August basket anchors to 31 July) — so day-one's return captures the
+// 1st's gap and the entry limit IS that close.
+//
+// BUT only once that prior month-end is a LIVE snapshot. Everything before
+// state.cache.liveFrom is backfilled with a reconstructed technical score
+// (e.g. 31 Jul's SJS reads tech 98.7% rebuilt vs 77% live), so picking from it
+// would hand you a different basket than the live model — and retroactively
+// change a holding that was actually locked on the first live day. Until the
+// prior month-end is itself live, fall back to the first snapshot of the held
+// month (the first live basket). This makes the rule bite from the first full
+// month after go-live and leaves the transition month on its real basket.
+function productionAnchorDate(snapshots) {
+  if (!snapshots?.length) return null;
+  const priorEnd = staticAnchorDate(snapshots);
+  const liveFrom = state.cache.liveFrom;
+  if (liveFrom && priorEnd && priorEnd < liveFrom) {
+    const heldMonth = istTodayDate().slice(0, 7);
+    const firstHeld = snapshots.find((s) => s.date.slice(0, 7) === heldMonth);
+    return firstHeld ? firstHeld.date : priorEnd;
+  }
+  return priorEnd;
+}
+
 // Derive the anchor date — the day the client uploaded their basket.
 // Founder's rule: "the clock starts the day client gave us the basket".
 // Falls back to most-recent month-end snapshot if no LKP file exists
@@ -2791,24 +2816,27 @@ function renderManualMonthSelector(months, selectedMonth, lkp, snapshots) {
   `;
 }
 
-// Cohort anchor: the first snapshot of the CURRENT month. The basket is
-// picked on the first trading day of each month and held for the month, so
-// that date is both the selection day and the cost basis.
+// Cohort anchor for the SPIP production basket: the LAST snapshot of the
+// PRIOR month — i.e. the previous trading day before the 1st. Founder's rule
+// (Aug 2026): the top 7 are picked from that close and the entry limit IS that
+// close, so an August basket anchors to 31 July. That one date is both the
+// selection day AND the cost basis — the average return is measured from it,
+// so the first-of-month gap (up or down) is captured in day-one's return
+// rather than hidden.
 //
-// Previously this keyed off lkp.generated_at -- the day the client handed
-// over their basket. With no manual basket that date does not exist, and the
-// old fallback walked BACK to the previous month's last snapshot, which
-// would have anchored an August cohort to a July date.
+// This deliberately reverses an earlier decision to anchor at the first of the
+// held month: that split the "measured-from" date from the "picked-from" date
+// and drifted after day one, because the first-of-month snapshot is written
+// provisionally pre-open (carrying the prior close) and then overwritten with
+// the real close after the session — so the entry price silently changed. The
+// prior month-end snapshot is a settled past close and never moves.
 //
-// The lkp argument is retained so existing call sites keep working.
+// The lkp argument is retained so existing call sites keep working; a real
+// uploaded manual basket still anchors at its own upload date via
+// manualMonthAnchor, this is only the AI basket's fallback/production anchor.
 function lkpAnchorDate(lkp, snapshots) {
   if (!snapshots.length) return null;
-  const ym = snapshots[snapshots.length - 1].date.slice(0, 7);
-  const firstOfMonth = snapshots.find((s) => s.date.slice(0, 7) === ym);
-  // Snapshots are ordered oldest -> newest, so find() gives the FIRST one in
-  // the current month. Every snapshot belongs to some month, so this always
-  // resolves once the trail is non-empty; the fallback is belt-and-braces.
-  return firstOfMonth ? firstOfMonth.date : snapshots[0].date;
+  return productionAnchorDate(snapshots);
 }
 
 // Build the cohort. Returns a single object with `segments` — one entry
@@ -3291,7 +3319,7 @@ function wireHistorySubViewSwitch() {
 
 // ---------------- Accuracy view ----------------
 // Per-stock target / stop-loss tracker. AI picks use the framework
-// uniform +5% target / −20% SL (from the founder call). Manual picks
+// uniform +5% target / −8% SL (from the founder call). Manual picks
 // use TGT1 + SL columns from the LKP upload (per-stock).
 //
 // For each pick we scan forward through the snapshot trail from its
@@ -3299,8 +3327,8 @@ function wireHistorySubViewSwitch() {
 // Status: TARGET_HIT, SL_HIT, OPEN. Includes daysToHit and a flag
 // for "hit happened in today's snapshot" so the UI can highlight
 // fresh outcomes.
-const AI_TARGET_PCT = 0.05;      // +5%
-const AI_SL_PCT     = 0.20;      // −20%
+const AI_TARGET_PCT = 0.05;      // +5%  — book the gain here
+const AI_SL_PCT     = 0.08;      // −8%  — the desk's fixed stop (founder's rule: +5% up / −8% down, one number everywhere in the Overview)
 
 // Detection runs on daily CLOSES for past days -- all a snapshot stores --
 // but for TODAY it widens to the live intraday HIGH / LOW, matching what
@@ -3450,7 +3478,7 @@ function computePeakStats(ticker, entryDate, entryPrice, snapshots, todayDate) {
 
 // Build the rows + summary for the Accuracy view.
 //   cohort      → the AI cohort currently active (Static/Monthly/Weekly).
-//                  Each segment's top 7 contributes 7 picks (5% TGT / 20% SL).
+//                  Each segment's top 7 contributes 7 picks (5% TGT / 8% SL).
 //                  In Weekly mode that's one row per (week × stock), so the
 //                  table grows as more weeks accumulate (founder's ask).
 //   manualPicks → the LKP basket (in-universe rows have ticker + tgt1 + sl).
@@ -3469,7 +3497,7 @@ function buildAccuracyData(cohort, manualPicks, snapshots) {
   // — all needed for the sort + tint pass below.
   function enrichRow(row) {
     if (row.notCovered) return row;
-    const range = row.targetPct - row.slPct;                          // e.g. 5 − (−20) = 25
+    const range = row.targetPct - row.slPct;                          // e.g. 5 − (−8) = 13
     const curRet = row.currentClose != null && row.entryPrice
       ? (row.currentClose / row.entryPrice - 1) * 100
       : null;
@@ -4997,7 +5025,7 @@ function buildActiveSegmentChain(snapshots, anchorDate, periodDays) {
 // The charger nets out transaction costs: each
 // re-lock is a round-trip (sell the old basket, buy the new one), and
 // the very first segment is a buy only. Pass 0 for the gross curve.
-// opts.booked (default off): once a name reaches its +5% target or −20% SL,
+// opts.booked (default off): once a name reaches its +5% target or −8% SL,
 // its contribution freezes at that LEVEL for the rest of the segment — the
 // real exit, so a runaway winner can't keep inflating the basket. Mirrors
 // the manual basket's book-at-first-target rule so the AI and Manual curves
@@ -5158,7 +5186,7 @@ function buildBasketStockCurves(segments, manualPicks, snapshots, anchorDate, da
   const lastSeg = (segments || [])[(segments || []).length - 1];
   const aiEntry = {}, aiName = {};
   for (const s of (lastSeg?.top7 || [])) if (s.ticker && typeof s.close === "number") { aiEntry[s.ticker] = s.close; aiName[s.ticker] = s.name || s.ticker; }
-  // AI names book at their uniform +5% / −20% level the day they first hit it —
+  // AI names book at their uniform +5% / −8% level the day they first hit it —
   // mirror the basket's booked convention so the two curves stay compatible.
   const aiBooking = new Map();
   for (const p of (aiPicks || [])) {
@@ -5189,7 +5217,7 @@ function buildBasketStockCurves(segments, manualPicks, snapshots, anchorDate, da
 // fresh accuracy-tracked pick. If the same stock re-enters multiple
 // times, each entry is tracked separately (per founder confirmation —
 // every entry is a fresh prediction with its own entry close).
-// Targets follow the framework's uniform +5% / −20% bands.
+// Targets follow the framework's uniform +5% / −8% bands.
 // Map ticker → GICS-style industry (finer than sector). Industry is a
 // stable attribute of a stock, so we read it from the snapshots (last-seen
 // wins) rather than threading it through every trade/holding — accurate
@@ -5387,8 +5415,15 @@ function planRows(capital, strategy) {
   const cache = state.cache.history;
   const snapshots = cache?.snapshots || [];
   if (!snapshots.length) return null;
+  // Entry base = the PRIOR month's last close (founder's rule): the top 7 are
+  // ranked on that close and the buy limit IS that close, so an August plan
+  // anchors to 31 July. staticAnchorDate returns that date; ym stays the HELD
+  // month so labels still read "August". Falls back to the first snapshot of
+  // the held month only if no prior-month snapshot exists yet.
   const ym = snapshots[snapshots.length - 1].date.slice(0, 7);
-  const first = snapshots.find((s) => s.date.slice(0, 7) === ym);
+  const anchorDay = productionAnchorDate(snapshots);
+  const first = snapshots.find((s) => s.date === anchorDay)
+    || snapshots.find((s) => s.date.slice(0, 7) === ym);
   if (!first) return null;
 
   const st = strategy || { basketSize: 7, bufferSize: 3, stopAtr: PLAN_STOP_ATR, invAtrSizing: true, gates: {} };
@@ -5634,16 +5669,17 @@ function renderEntryMonitor(plan) {
   // trading days the basket is bought and held, so comparing today's live
   // price against a day-one limit just flags every winner as "missed".
   // Count trading days since the basket was locked, and hide it after that.
-  const cal = state.cache.history?.benchmark?.indices?.["NIFTYSMLCAP250.NS"]?.closes || {};
-  const anchor = plan.anchorDate;
-  const today = istTodayDate();
-  let tradedSince = 0;
-  for (const d of Object.keys(cal)) if (d > anchor && d <= today) tradedSince++;
-  // Once a full trading day has closed since the basket locked, entry is
-  // over — you either filled or you didn't, and the Overview shows what you
-  // now hold. Only show this on entry morning itself (no completed session
-  // yet) and only when we actually have live prices to compare against.
-  if (tradedSince >= 1 || !liveQuotesToday()) return "";
+  // Entry day is the first trading session of the HELD month. The plan is now
+  // anchored to the prior month-end close, so counting "sessions since the
+  // anchor" would make entry morning itself look like day 1 and hide the
+  // monitor exactly when it is needed. Instead show it only while the held
+  // month still has at most its one entry-day snapshot — once the next session
+  // closes the basket is simply held, and the Overview shows what you own.
+  // Live quotes are required to compare the limit against.
+  const heldMonth = istTodayDate().slice(0, 7);
+  const heldSnapCount = (state.cache.history?.snapshots || [])
+    .filter((s) => s.date.slice(0, 7) === heldMonth).length;
+  if (heldSnapCount > 1 || !liveQuotesToday()) return "";
   const rows = plan.rows.map((r) => ({ r, st: entryStatus(r, livePrices[r.ticker]) }));
   const known = rows.filter((x) => x.st.code !== "unknown");
   if (!known.length) return "";
@@ -5943,7 +5979,7 @@ function renderTradePlan() {
   // basis, so a stock's price here matches its "bought at" in Overview.
   const intro = `
     <div class="text-[12px] text-slate-500 leading-snug px-1">
-      <b class="text-slate-700">What to buy this month</b> — the list, the price to buy at, and where the stop sits. All prices are this month's entry (${fmtDateDMY(plan.anchorDate)}). For how the basket is doing since then, see <b class="text-slate-600">Overview</b>.
+      <b class="text-slate-700">What to buy this month</b> — the list, the price to buy at, and where the stop sits. All prices anchor to the entry close (${fmtDateDMY(plan.anchorDate)}) — that close is both the ranking and your buy limit for the 1st. For how the basket is doing since then, see <b class="text-slate-600">Overview</b>.
     </div>`;
   return `<div class="space-y-3">${pills}${intro}${context}${conditions}${capBox}${warnRow}${entryMonitor}${orderTable}${bufferTable}${upCard}${renderPaperResults()}</div>`;
 }
@@ -5974,9 +6010,25 @@ function paperMonths() {
 
 function paperTrack(ym) {
   const cache = state.cache.history;
-  const snaps = (cache?.snapshots || []).filter((s) => s.date.slice(0, 7) === ym);
-  if (!snaps.length) return null;
-  const anchor = snaps[0];
+  const all = cache?.snapshots || [];
+  const monthSnaps = all.filter((s) => s.date.slice(0, 7) === ym);
+  if (!monthSnaps.length) return null;
+  // Entry base = the PRIOR month's last close (founder's rule), so an August
+  // track anchors to 31 July and day-one's return captures the 1 Aug gap.
+  // Tracking runs from that anchor through this month's last snapshot. Falls
+  // back to the month's own first snapshot if no prior-month snapshot exists.
+  const firstOfMonth = monthSnaps[0].date;
+  let anchorSnap = null;
+  for (let i = all.length - 1; i >= 0; i--) { if (all[i].date < firstOfMonth) { anchorSnap = all[i]; break; } }
+  // Only anchor to the prior month-end when it is a LIVE snapshot; pre-live
+  // months are backfilled rehearsals, so fall back to this month's own first
+  // snapshot (mirrors productionAnchorDate for the per-month paper track).
+  if (!anchorSnap || (state.cache.liveFrom && anchorSnap.date < state.cache.liveFrom)) {
+    anchorSnap = monthSnaps[0];
+  }
+  const lastOfMonth = monthSnaps[monthSnaps.length - 1].date;
+  const snaps = all.filter((s) => s.date >= anchorSnap.date && s.date <= lastOfMonth);
+  const anchor = anchorSnap;
 
   const top = anchor.stocks
     .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed)
@@ -6005,9 +6057,14 @@ function paperTrack(ym) {
   // snapshot close -- one holding, two "now" prices. Feeds the stop check,
   // the current value and the curve endpoint alike.
   const lastDate = dates[dates.length - 1];
-  for (const t of Object.keys(px)) {
-    const liveNow = cache.todayClose?.[t];
-    if (typeof liveNow === "number") px[t][lastDate] = liveNow;
+  // Only the CURRENT month's last date is "today" — overlaying today's live
+  // quote onto a PAST month's final close would rewrite settled history.
+  const isCurrentMonth = ym === (all[all.length - 1]?.date.slice(0, 7));
+  if (isCurrentMonth) {
+    for (const t of Object.keys(px)) {
+      const liveNow = cache.todayClose?.[t];
+      if (typeof liveNow === "number") px[t][lastDate] = liveNow;
+    }
   }
 
   const positions = top.map((s) => {
@@ -8715,6 +8772,19 @@ function openHistoryDrill(pick) {
   const todayDate = state.cache.history.idx.dates[state.cache.history.idx.dates.length - 1];
 
   const points = pick.points.filter((p) => typeof p.close === "number");
+  // Overlay the live quote onto the final point so the drill's price line ends
+  // at the SAME "now" the roster row showed — one live price per holding, never
+  // "chart says ₹2,129 while the row says ₹2,169". todayClose is the snapshot
+  // close with the live quote laid over it, so this is the live price during a
+  // session and the settled close otherwise. Only the latest session's point is
+  // "today"; earlier points keep their real closes.
+  if (points.length) {
+    const nowPx = state.cache.history?.todayClose?.[pick.ticker];
+    const lastPt = points[points.length - 1];
+    if (typeof nowPx === "number" && lastPt.date === todayDate) {
+      points[points.length - 1] = { ...lastPt, close: nowPx };
+    }
+  }
   // Was < 2, which silently did nothing on the FIRST day of a cohort --
   // exactly when the basket is locked in and you most want to inspect a
   // pick. The real constraint was xAt() dividing by (points.length - 1);
@@ -8738,7 +8808,7 @@ function openHistoryDrill(pick) {
 
   // Target / Stop-loss levels for the overlay. LKP picks carry explicit
   // tgt1 + sl from the client upload; AI / cohort picks use the framework's
-  // uniform +5% / −20% bands around the entry close. Either side can be
+  // uniform +5% / −8% bands around the entry close. Either side can be
   // missing (e.g. cohort pick built from snapshot trail with no entry
   // close) — we render whichever line we can.
   let targetPrice = null, slPrice = null, levelAnchor = null;
@@ -12328,5 +12398,58 @@ function wireAlertsInputs(root, rerender) {
   if (reset) reset.addEventListener("click", () => { alertPrefs = JSON.parse(JSON.stringify(ALERT_DEFAULTS)); saveAlertPrefs(alertPrefs); rerender(); });
 }
 
+// ── Live auto-refresh ────────────────────────────────────────────────────
+// The workflow rewrites live-prices.json every 30 min during market hours, but
+// a page left open never re-read it — the browser only re-fetched quotes when
+// the Strategy tab happened to re-render. Poll the quote API on the same 30-min
+// cadence so the Overview's average return, the roster and the drill keep
+// moving on their own, and refresh the instant the user returns to the tab.
+// Basket names only (the ~10 we hold), so this is a handful of quote calls, not
+// the whole 724-name universe.
+const LIVE_AUTO_REFRESH_MS = 30 * 60 * 1000;   // 30 min — matches the server workflow
+
+function basketTickersForRefresh() {
+  const h = state.cache.history;
+  if (!h) return [];
+  const live = Object.keys(h.livePrices || {});
+  // Also derive the current cohort from the prior-month-end anchor snapshot, so
+  // a name that just entered the basket starts getting live quotes even before
+  // the committed file that carries it lands.
+  let cohort = [];
+  try {
+    const snaps = h.snapshots || [];
+    if (snaps.length) {
+      const anchorDay = productionAnchorDate(snaps);
+      const anchorSnap = snaps.find((s) => s.date === anchorDay) || snaps[snaps.length - 1];
+      const want = (strat5.strategyById(strat5.primaryId())?.basketSize || 7) + 3;
+      cohort = (anchorSnap?.stocks || [])
+        .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed)
+        .sort((a, b) => b.composite - a.composite).slice(0, want).map((s) => s.ticker);
+    }
+  } catch {}
+  return [...new Set([...cohort, ...live])];
+}
+
+async function liveAutoRefreshTick() {
+  try {
+    const changed = await refreshLiveQuotes(basketTickersForRefresh());
+    // Re-render the live-price view. The Overview (Strategy tab) is the one
+    // that tracks the live average return; the drill picks up fresh quotes when
+    // it is next opened (it reads todayClose, which refreshLiveQuotes updates).
+    if (changed && state.activeTab === "active") renderActive();
+  } catch (e) { console.warn("live auto-refresh skipped:", e?.message); }
+}
+
+function startLiveAutoRefresh() {
+  setInterval(liveAutoRefreshTick, LIVE_AUTO_REFRESH_MS);
+  // Refresh the moment the tab regains focus, so a page parked in the
+  // background is current the instant it is looked at again. The 60s TTL inside
+  // refreshLiveQuotes stops rapid tab-switching from hammering the API.
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") liveAutoRefreshTick();
+  });
+}
+
 wire();
 switchTab("fundamentals");
+startLiveAutoRefresh();

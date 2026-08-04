@@ -42,7 +42,22 @@ const API       = "https://fastapi.muns.io/stock-data";
 const REQ_TIMEOUT_MS = 8000;
 
 
-// Mirror of app.js pickTop7 — keep the two in step. Returns [] when no
+// IST calendar today — the scraper runs in UTC on GitHub Actions, but the
+// held month must be reckoned in the market's timezone (mirrors app.js
+// istTodayDate) so a month-rollover morning anchors correctly.
+function istToday() {
+  return new Date(Date.now() + 5.5 * 3600 * 1000).toISOString().slice(0, 10);
+}
+function readLiveFrom() {
+  try { return JSON.parse(readFileSync(resolve(SNAP_DIR, "index.json"), "utf8")).live_from || null; }
+  catch { return null; }
+}
+
+// Mirror of app.js productionAnchorDate — keep the two in step. The cohort is
+// the top COHORT_SIZE from the PRIOR month's last close (the previous trading
+// day before the 1st), but only once that snapshot is a LIVE record; before
+// then it falls back to the first snapshot of the held month, because pre-live
+// snapshots are backfilled with a reconstructed score. Returns [] when no
 // snapshot exists yet, which makes this a safe no-op before tracking starts.
 function currentCohortTickers() {
   if (!existsSync(SNAP_DIR)) return [];
@@ -51,11 +66,18 @@ function currentCohortTickers() {
     .map((f) => f.slice(0, 10))
     .sort();
   if (!dates.length) return [];
-  // First snapshot of the LATEST month present — the month-start basket.
-  const ym = dates[dates.length - 1].slice(0, 7);
-  const first = dates.find((d) => d.slice(0, 7) === ym);
+  const heldMonth = istToday().slice(0, 7);
+  const liveFrom = readLiveFrom();
+  // Prior month-end = last snapshot not in the held month.
+  let anchor = null;
+  for (let i = dates.length - 1; i >= 0; i--) { if (dates[i].slice(0, 7) !== heldMonth) { anchor = dates[i]; break; } }
+  // Guard: only use the prior month-end when it is live; else the first
+  // snapshot of the held month (the first live basket).
+  if (!anchor || (liveFrom && anchor < liveFrom)) {
+    anchor = dates.find((d) => d.slice(0, 7) === heldMonth) || dates[dates.length - 1];
+  }
   let snap;
-  try { snap = JSON.parse(readFileSync(resolve(SNAP_DIR, `${first}.json`), "utf8")); }
+  try { snap = JSON.parse(readFileSync(resolve(SNAP_DIR, `${anchor}.json`), "utf8")); }
   catch { return []; }
   return (snap.stocks || [])
     .filter((x) => x.composite != null && x.dataComplete && !x.hardFailed)
