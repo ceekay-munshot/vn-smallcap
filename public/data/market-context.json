@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-04T00:15:12.784Z",
+  "generated_at": "2026-08-04T03:37:34.682Z",
   "source": "Yahoo Finance chart endpoint",
   "note": "Pre-open context. GIFT Nifty has no free stable feed; S&P futures plus the Asian session carry the same overnight information.",
   "giftNifty": null,
@@ -9,30 +9,30 @@
       "symbol": "ES=F",
       "label": "S&P 500 futures",
       "role": "overnight",
-      "last": 7634.75,
+      "last": 7643,
       "prevClose": 7351.25,
-      "changePct": 3.856486992008157,
-      "asOf": "2026-08-04T00:05:06.000Z"
+      "changePct": 3.968712803944907,
+      "asOf": "2026-08-04T03:27:30.000Z"
     },
     "nikkei": {
       "key": "nikkei",
       "symbol": "^N225",
       "label": "Nikkei 225",
       "role": "asia",
-      "last": 63919.57,
+      "last": 63333.35,
       "prevClose": 61434.19,
-      "changePct": 4.045597410822865,
-      "asOf": "2026-08-04T00:00:10.000Z"
+      "changePct": 3.091373061156988,
+      "asOf": "2026-08-04T02:35:02.000Z"
     },
     "hangSeng": {
       "key": "hangSeng",
       "symbol": "^HSI",
       "label": "Hang Seng",
       "role": "asia",
-      "last": 26009.4,
-      "prevClose": 25207.18,
-      "changePct": 3.1825059368005615,
-      "asOf": "2026-08-03T08:08:32.000Z"
+      "last": 25920.52,
+      "prevClose": 25310.85,
+      "changePct": 2.4087298530077073,
+      "asOf": "2026-08-04T03:22:32.000Z"
     },
     "vix": {
       "key": "vix",
@@ -49,24 +49,24 @@
       "symbol": "^NSEI",
       "label": "Nifty 50",
       "role": "home",
-      "last": 24774.3,
+      "last": 24703.9,
       "prevClose": 23985.35,
-      "changePct": 3.2892995099091715,
-      "asOf": "2026-08-03T10:01:38.000Z"
+      "changePct": 2.995787011655038,
+      "asOf": "2026-08-04T03:37:32.000Z"
     },
     "smallcap": {
       "key": "smallcap",
       "symbol": "NIFTYSMLCAP250.NS",
       "label": "Nifty Smallcap 250",
       "role": "home",
-      "last": 18166.65,
+      "last": 18208.5,
       "prevClose": 17741.45,
-      "changePct": 2.396647399169738,
-      "asOf": "2026-08-03T10:01:38.000Z"
+      "changePct": 2.6325356721124793,
+      "asOf": "2026-08-04T03:37:33.000Z"
     }
   },
   "signal": {
-    "lean": 3.7352693329099353,
+    "lean": 3.3593821305136276,
     "dir": "up",
     "vix": 11.925,
     "vixChange": -5.055732484076437,
