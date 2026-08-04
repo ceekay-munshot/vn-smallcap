@@ -176,10 +176,22 @@ function rebuildIndex() {
     .filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f))
     .map((f) => f.replace(".json", ""))
     .sort();
+  // Preserve live_from: the reconstructed/real boundary written by
+  // backfill-from-history.mjs. Rewriting the manifest without it wiped the
+  // marker every daily run, so the dashboard lost the "history before X is
+  // rebuilt" note. Derive it from the files themselves as the fallback.
+  let liveFrom = null;
+  try { liveFrom = JSON.parse(readFileSync(INDEX_PATH, "utf8")).live_from ?? null; } catch {}
+  if (!liveFrom) {
+    for (const d of files) {
+      try { if (!JSON.parse(readFileSync(resolve(SNAPSHOTS_DIR, `${d}.json`), "utf8")).reconstructed) { liveFrom = d; break; } } catch {}
+    }
+  }
   const idx = {
     generated_at: new Date().toISOString(),
     framework_version: FRAMEWORK_VERSION,
     count: files.length,
+    live_from: liveFrom,
     dates: files,
   };
   writeFileSync(INDEX_PATH, JSON.stringify(idx, null, 2));

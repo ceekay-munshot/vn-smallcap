@@ -4762,7 +4762,10 @@ function buildActiveView(snapshots, anchorDate, todayDate, cadence, niftyOn, man
   // like-to-like comparison: booked freezes each name at its first target / SL.
   // Trading calendar straight off the benchmark: if the index has no close
   // for a date, the market was shut and nothing may be plotted there.
-  const tradingDays = new Set(Object.keys(state.cache.history?.benchmark?.indices?.["NIFTYSMLCAP250.NS"]?.closes || {}));
+  // Trading calendar robust to the benchmark lagging the snapshots (see
+  // tradingDaySet). Without this, Aug sessions dropped out of the passive
+  // curve and the chart's X-axis ran backwards.
+  const tradingDays = tradingDaySet();
   const curveOpts = { booked: state.manualReturnMode !== "held", todayDate, livePrices: state.cache.history?.livePrices || {}, tradingDays };
   const equityCurve = buildSegmentedEquityCurve(segments, snapshots, anchorDate, chg, { ...curveOpts, capital: simPrefs.capital });
   const grossCurve = buildSegmentedEquityCurve(segments, snapshots, anchorDate, ZERO_CHARGER, curveOpts);
@@ -6362,16 +6365,37 @@ async function refreshLiveQuotes(tickers) {
 // traded -- which is exactly what the chart did. Before the 09:15 open the
 // session is the previous trading day, and either way we walk back to a
 // date the exchange actually opened.
+// The set of real trading days. The benchmark index (Yahoo) is the source
+// for the historical range because it correctly excludes holidays -- but it
+// LAGS the daily snapshots by a few days, and when it does, everything that
+// keyed off it broke: recent sessions vanished from the chart and the live
+// mark got stamped onto the last stale index date (04-Aug's gain plotted at
+// 31-Jul, reversing the whole axis). So beyond the benchmark's last date we
+// trust weekday snapshots instead: the daily refresh writes one per session,
+// and a Mon-Fri snapshot in that short lag window is a trading day.
+function tradingDaySet() {
+  const cal = state.cache.history?.benchmark?.indices?.["NIFTYSMLCAP250.NS"]?.closes || {};
+  const set = new Set(Object.keys(cal));
+  let lastCal = "0000-00-00";
+  for (const d of set) if (d > lastCal) lastCal = d;
+  for (const s of (state.cache.history?.snapshots || [])) {
+    if (s.date <= lastCal) continue;                    // in range → trust the index (knows holidays)
+    const dow = new Date(s.date + "T00:00:00Z").getUTCDay();
+    if (dow !== 0 && dow !== 6) set.add(s.date);         // beyond it → trust recent weekday sessions
+  }
+  return set;
+}
+
 function quoteSessionDate() {
   const istMs = Date.now() + 5.5 * 3600 * 1000;
   const ist = new Date(istMs);
   const minutes = ist.getUTCHours() * 60 + ist.getUTCMinutes();
   let d = ist.toISOString().slice(0, 10);
   if (minutes < 9 * 60 + 15) d = shiftDateStr(d, -1);   // pre-open: still yesterday's session
-  const cal = state.cache.history?.benchmark?.indices?.["NIFTYSMLCAP250.NS"]?.closes;
-  if (cal) {
-    for (let i = 0; i < 10 && cal[d] == null; i++) d = shiftDateStr(d, -1);
-    if (cal[d] == null) return null;
+  const days = tradingDaySet();
+  if (days.size) {
+    for (let i = 0; i < 10 && !days.has(d); i++) d = shiftDateStr(d, -1);
+    if (!days.has(d)) return null;
   }
   return d;
 }
@@ -6438,12 +6462,13 @@ function renderDataFreshness() {
 }
 
 function liveTradingDays(snapshots) {
-  // The benchmark is the trading calendar. Snapshots are written every
-  // calendar day, so without this a Saturday carrying Friday's closes
-  // becomes a data point.
-  const cal = state.cache.history?.benchmark?.indices?.["NIFTYSMLCAP250.NS"]?.closes;
-  if (!cal) return snapshots;
-  return snapshots.filter((s) => cal[s.date] != null);
+  // Trading calendar robust to the benchmark lagging the snapshots. Snapshots
+  // are written every calendar day, so a Saturday carrying Friday's closes
+  // must be dropped -- but a recent weekday session must NOT be dropped just
+  // because the index feed hasn't caught up (see tradingDaySet).
+  const days = tradingDaySet();
+  if (!days.size) return snapshots;
+  return snapshots.filter((s) => days.has(s.date));
 }
 
 // One snapshot -> ranked candidates in the shape the selection helpers want.
