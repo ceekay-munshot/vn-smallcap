@@ -18,8 +18,16 @@ on:
     # 00:53 UTC == 06:23 IST. Staggered 30 min after the large-cap repo. Off the :00/:15/:30/:45 marks where GitHub's
     # cron scheduler queues up runs and frequently delays / skips during
     # high load.
-    - cron: "11 0 * * *"   # 05:41 IST. Off the :00/:15/:30/:45 marks, where
-                           # GitHub queues scheduled runs and often delays them.
+    - cron: "11 0 * * *"    # 05:41 IST pre-open. Refreshes scores + writes a
+                            # provisional snapshot (still carrying the prior
+                            # close) so the morning dashboard is current.
+    # AFTER THE CLOSE. The morning run captures a snapshot before the market
+    # has traded, so that day's point held a stale morning price -- 03-Aug's
+    # snapshot showed 03-Aug's 09:55 value, not its close. This second run,
+    # ~40 min after the 15:30 IST close, re-scrapes and OVERWRITES today's
+    # snapshot with the actual closing prices (write-snapshot is idempotent),
+    # so every day's point on the chart is finally that day's real close.
+    - cron: "41 10 * * 1-5"  # 16:11 IST, Mon-Fri
 
 jobs:
   refresh:
