@@ -373,6 +373,14 @@ function saveStrategySubTab(v) {
 // true to bring the rotation strategies back exactly as they were.
 const SHOW_ROTATION_STRATEGIES = false;
 
+// Benchmark comparison (Nifty Smallcap 250 / Midcap 150) on the Strategy
+// tab. Turned off at the founder's request: the Yahoo index feed lags and
+// occasionally drops a day, which repeatedly showed up as stale or broken
+// comparison lines. The trading calendar no longer depends on it (it is
+// snapshot-driven now), so hiding these lines costs nothing but the market
+// comparison itself. Flip to true to bring it back once the feed is trusted.
+const SHOW_BENCHMARK = false;
+
 // ── Simulation inputs: capital, cash buffer, transaction charges ──────
 // Everything here is adjustable from the Strategy tab's "Capital &
 // charges" panel and persisted locally — the "real world" layer on top
@@ -4770,12 +4778,14 @@ function buildActiveView(snapshots, anchorDate, todayDate, cadence, niftyOn, man
   const equityCurve = buildSegmentedEquityCurve(segments, snapshots, anchorDate, chg, { ...curveOpts, capital: simPrefs.capital });
   const grossCurve = buildSegmentedEquityCurve(segments, snapshots, anchorDate, ZERO_CHARGER, curveOpts);
   const dates = equityCurve.map((e) => e.date);
-  const niftyCurve = buildNiftyCurve(dates, niftyOn);
+  // Benchmark curves are empty when SHOW_BENCHMARK is off, so every line,
+  // KPI row and alpha figure downstream simply has nothing to draw.
+  const niftyCurve = SHOW_BENCHMARK ? buildNiftyCurve(dates, niftyOn) : [];
   const { manualRows, manualSummary, manualCurve, manualBooked } = buildManualBundle(manualPicks, snapshots, anchorDate, todayDate, dates);
   const finalReturn = equityCurve.length ? equityCurve[equityCurve.length - 1].retPct : 0;
   const grossFinalReturn = grossCurve.length ? grossCurve[grossCurve.length - 1].retPct : finalReturn;
   const niftyRet = niftyCurve.length ? niftyCurve[niftyCurve.length - 1].retPct : null;
-  const nifty500Curve = buildNiftyCurve(dates, nifty500On);
+  const nifty500Curve = SHOW_BENCHMARK ? buildNiftyCurve(dates, nifty500On) : [];
   const nifty500Ret = nifty500Curve.length ? (nifty500Curve[nifty500Curve.length - 1].retPct ?? null) : null;
   const { aiStockCurves, manualStockCurves } = buildBasketStockCurves(segments, manualPicks, snapshots, anchorDate, dates, picks, manualRows);
   const capital = simPrefs.capital ?? ACTIVE_INITIAL_CAPITAL;
@@ -6376,12 +6386,16 @@ async function refreshLiveQuotes(tickers) {
 function tradingDaySet() {
   const cal = state.cache.history?.benchmark?.indices?.["NIFTYSMLCAP250.NS"]?.closes || {};
   const set = new Set(Object.keys(cal));
-  let lastCal = "0000-00-00";
-  for (const d of set) if (d > lastCal) lastCal = d;
+  // The benchmark index (Yahoo) both LAGS the snapshots AND occasionally has
+  // holes -- a null close on a day the market really traded (e.g. it had
+  // 31-Jul and 04-Aug but nothing for 03-Aug). Either failure must never veto
+  // a real session, so every WEEKDAY that has its own snapshot is a trading
+  // day, full stop. Weekends stay out; a rare weekday holiday would show a
+  // flat point, which is far better than silently dropping a day the market
+  // actually moved (which erased 03-Aug from the chart and left a 2-point line).
   for (const s of (state.cache.history?.snapshots || [])) {
-    if (s.date <= lastCal) continue;                    // in range → trust the index (knows holidays)
     const dow = new Date(s.date + "T00:00:00Z").getUTCDay();
-    if (dow !== 0 && dow !== 6) set.add(s.date);         // beyond it → trust recent weekday sessions
+    if (dow !== 0 && dow !== 6) set.add(s.date);
   }
   return set;
 }
@@ -6665,7 +6679,7 @@ function renderStrategyCompare() {
     const enough = live.curveDays >= 2;
     const chart = enough ? renderMultiCurveChart(
       [...live.runs.map((r) => ({ label: r.def.name, color: r.def.color, curve: r.curve })),
-       { label: "Smallcap 250", color: "#94a3b8", curve: live.bench, dash: "5 4" }],
+       ...(SHOW_BENCHMARK ? [{ label: "Smallcap 250", color: "#94a3b8", curve: live.bench, dash: "5 4" }] : [])],
       "All five, side by side", "Real prices from the daily snapshots. One new point every trading day.") : "";
     const lf = state.cache.liveFrom;
     const reconNote = lf && live.days.length && live.days[0].date < lf ? `
@@ -7022,9 +7036,8 @@ function renderStrategyCommandBar(view, cadence, mode, hits) {
       <div class="flex items-center gap-3 ml-auto flex-wrap">
         <div class="flex items-stretch rounded-xl ring-1 ring-slate-200 bg-slate-50/40 divide-x divide-slate-200/70">
           ${stat("AI", view.finalReturn, aiDD, "text-indigo-700")}
-          
-          ${stat("Smallcap 250", view.niftyRet, niftyDD, "text-slate-500")}
-          ${stat("Midcap 150", view.nifty500Ret, nifty500DD, "text-sky-600")}
+          ${SHOW_BENCHMARK ? stat("Smallcap 250", view.niftyRet, niftyDD, "text-slate-500") : ""}
+          ${SHOW_BENCHMARK ? stat("Midcap 150", view.nifty500Ret, nifty500DD, "text-sky-600") : ""}
         </div>
         <div class="h-9 w-px bg-slate-200 hidden sm:block"></div>
         <div class="flex items-center gap-2">
@@ -7227,8 +7240,8 @@ function renderStrategyKpis(view) {
             ${view.grossFinalReturn != null ? `<div class="text-[10px] text-slate-400 tabular-nums">${fmtPct(view.grossFinalReturn)} before charges</div>` : ""}
           </span>
         </div>
-        ${row("bg-slate-400", "Smallcap 250", niftyFinal)}
-        ${row("bg-sky-500", "Midcap 150", nifty500Final)}
+        ${SHOW_BENCHMARK ? row("bg-slate-400", "Smallcap 250", niftyFinal) : ""}
+        ${SHOW_BENCHMARK ? row("bg-sky-500", "Midcap 150", nifty500Final) : ""}
       </div>    </div>`;
 
   const cardUpside = `
@@ -7239,8 +7252,8 @@ function renderStrategyKpis(view) {
       </div>
       <div class="space-y-1.5">
         ${row("bg-indigo-500", "AI", aiUp)}
-        ${row("bg-slate-400", "Smallcap 250", niftyUp)}
-        ${row("bg-sky-500", "Midcap 150", nifty500Up)}
+        ${SHOW_BENCHMARK ? row("bg-slate-400", "Smallcap 250", niftyUp) : ""}
+        ${SHOW_BENCHMARK ? row("bg-sky-500", "Midcap 150", nifty500Up) : ""}
       </div>    </div>`;
 
   const cardDrawdown = `
@@ -7251,8 +7264,8 @@ function renderStrategyKpis(view) {
       </div>
       <div class="space-y-1.5">
         ${row("bg-indigo-500", "AI", aiDD)}
-        ${row("bg-slate-400", "Smallcap 250", niftyDD)}
-        ${row("bg-sky-500", "Midcap 150", nifty500DD)}
+        ${SHOW_BENCHMARK ? row("bg-slate-400", "Smallcap 250", niftyDD) : ""}
+        ${SHOW_BENCHMARK ? row("bg-sky-500", "Midcap 150", nifty500DD) : ""}
       </div>    </div>`;
 
   const alphaRow = (dotCls, label, value) => `
@@ -7276,11 +7289,11 @@ function renderStrategyKpis(view) {
       </div>    </div>`;
 
   return `
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+    <div class="grid grid-cols-1 sm:grid-cols-2 ${SHOW_BENCHMARK ? "lg:grid-cols-4" : "lg:grid-cols-3"} gap-3">
       ${cardNet}
       ${cardUpside}
       ${cardDrawdown}
-      ${cardAlpha}
+      ${SHOW_BENCHMARK ? cardAlpha : ""}
     </div>
   `;
 }
@@ -7385,7 +7398,7 @@ function renderActiveCumulativeChart(view) {
   const legend = `
     <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-0.5" style="background:${color.ai}"></span>AI basket</span>
     ${hasManual ? `<span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-0.5" style="background:${color.manual}"></span>Manual basket</span>` : ""}
-    <span class="inline-flex items-center gap-1.5" title="Benchmark"><span class="w-2.5 h-0.5 border-t border-dashed" style="border-color:${color.nifty}"></span>Smallcap 250</span>
+    ${SHOW_BENCHMARK ? `<span class="inline-flex items-center gap-1.5" title="Benchmark"><span class="w-2.5 h-0.5 border-t border-dashed" style="border-color:${color.nifty}"></span>Smallcap 250</span>` : ""}
     ${hasN500 ? `<span class="inline-flex items-center gap-1.5" title="Benchmark — Nifty Midcap 150">​<span class="w-2.5 h-0.5 border-t border-dashed" style="border-color:${color.nifty500}"></span>Midcap 150</span>` : ""}`;
 
   const body = `
