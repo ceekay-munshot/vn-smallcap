@@ -1,13 +1,39 @@
 {
-  "generated_at": "2026-08-05T03:32:53.136Z",
+  "generated_at": "2026-08-05T12:29:25.732Z",
   "source_count": 4,
   "curated_baseline_count": 0,
   "total_entities_seen": 10,
-  "flagged_companies": {},
+  "flagged_companies": {
+    "MUTHOOTMF": {
+      "primary_name": "Muthoot Microfin",
+      "order_type": "other",
+      "snippet": "Muthoot Microfin case: Sebi exempts six family trusts from open offer obligation",
+      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
+      "source_label": "Economic Times — SEBI topic (news)",
+      "origins": [
+        "scraper"
+      ],
+      "mentions": [
+        {
+          "source": "Economic Times — SEBI topic (news)",
+          "origin": "scraper",
+          "order_type": "other",
+          "snippet": "Muthoot Microfin case: Sebi exempts six family trusts from open offer obligation"
+        }
+      ],
+      "first_seen_at": "2026-08-05T12:29:25.732Z"
+    }
+  },
   "unmatched_sample": [
     {
       "name": "Zee",
-      "type": "sebi-order",
+      "type": "sebi-ban",
+      "source": "Mint — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "HCL Technologies",
+      "type": "sebi-investigation",
       "source": "Mint — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -24,14 +50,8 @@
       "origin": "scraper"
     },
     {
-      "name": "Zee Entertainment",
+      "name": "Zee Entertainment Enterprises Limited",
       "type": "sebi-ban",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Zee Entertainment",
-      "type": "sebi-fine",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -42,25 +62,19 @@
       "origin": "scraper"
     },
     {
-      "name": "Zee Entertainment",
+      "name": "Zee Entertainment Enterprises Limited",
       "type": "sebi-enforcement-order",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Zee Entertainment",
-      "type": "sebi-ban",
+      "name": "Zee Entertainment Enterprises Limited",
+      "type": "sebi-fine",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Zee Entertainment",
-      "type": "sebi-enforcement-order",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "CDSL",
+      "name": "Zee Entertainment Enterprises Limited",
       "type": "sebi-fine",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
@@ -71,32 +85,49 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-05T03:32:35.895Z",
+      "at": "2026-08-05T12:28:59.902Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 1,
-      "total_extracted": 1,
+      "total_extracted_raw": 3,
+      "total_extracted": 3,
       "prefilter_sample": [
         {
           "name": "Zee",
-          "order_type": "sebi-order",
+          "order_type": "sebi-ban",
           "is_listed_entity": true,
           "snippet": "Sebi order against Zee likely to delay planned ₹3,143-crore fundraise."
+        },
+        {
+          "name": "SpiceJet",
+          "order_type": "sebi-enforcement-order",
+          "is_listed_entity": true,
+          "snippet": "Delhi HC closes contempt case against SpiceJet's Ajay Singh in lessor dispute."
+        },
+        {
+          "name": "HCL Technologies",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": true,
+          "snippet": "Sebi’s closing auction for stocks could rein in manipulation."
         }
       ],
-      "after_filter_count": 1,
+      "after_filter_count": 2,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 0,
+        "no_sebi_signal_in_snippet": 1,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
           "name": "Zee",
-          "order_type": "sebi-order",
+          "order_type": "sebi-ban",
           "snippet": "Sebi order against Zee likely to delay planned ₹3,143-crore fundraise."
+        },
+        {
+          "name": "HCL Technologies",
+          "order_type": "sebi-investigation",
+          "snippet": "Sebi’s closing auction for stocks could rein in manipulation."
         }
       ]
     },
@@ -104,12 +135,12 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-05T03:32:38.524Z",
+      "at": "2026-08-05T12:29:03.488Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 4,
-      "total_extracted": 4,
+      "total_extracted_raw": 3,
+      "total_extracted": 3,
       "prefilter_sample": [
         {
           "name": "Zee",
@@ -124,12 +155,6 @@
           "snippet": "Sebi fines SME firm Kalahridhaan Trendz, promoters over disclosure lapses"
         },
         {
-          "name": "Sebi",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": false,
-          "snippet": "Sebi clears NSE settlement in colo, dark-fibre cases ahead of IPO"
-        },
-        {
           "name": "Viresh Joshi",
           "order_type": "sebi-ban",
           "is_listed_entity": false,
@@ -138,7 +163,7 @@
       ],
       "after_filter_count": 2,
       "dropped_counts": {
-        "not_listed": 2,
+        "not_listed": 1,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
@@ -160,7 +185,7 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-05T03:32:45.354Z",
+      "at": "2026-08-05T12:29:07.999Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -168,16 +193,10 @@
       "total_extracted": 8,
       "prefilter_sample": [
         {
-          "name": "Zee Entertainment",
+          "name": "Zee Entertainment Enterprises Limited",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
           "snippet": "Zee shares tumble 12% after Sebi action against Subhash Chandra, Punit Goenka"
-        },
-        {
-          "name": "Zee Entertainment",
-          "order_type": "sebi-fine",
-          "is_listed_entity": true,
-          "snippet": "Sebi imposes penalty of Rs 1.48 crore on Zee Entertainment"
         },
         {
           "name": "Kalahridhaan Trendz",
@@ -186,53 +205,54 @@
           "snippet": "Sebi penalises SME firm Kalahridhaan Trendz, promoters for misleading disclosures"
         },
         {
-          "name": "Zee Entertainment",
+          "name": "Zee Entertainment Enterprises Limited",
           "order_type": "sebi-enforcement-order",
           "is_listed_entity": true,
           "snippet": "ZEE promoter fundraise plan faces uncertainty after Sebi's market ban"
         },
         {
-          "name": "Zee Entertainment",
-          "order_type": "sebi-ban",
+          "name": "Zee Entertainment Enterprises Limited",
+          "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Sebi bans Zee's Subhash Chandra, Punit Goenka from markets for a year"
+          "snippet": "Sebi imposes penalty of Rs 1.48 crore on Zee Entertainment"
         },
         {
-          "name": "Zee Entertainment",
-          "order_type": "sebi-enforcement-order",
+          "name": "Muthoot Microfin",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Muthoot Microfin case: Sebi exempts six family trusts from open offer obligation"
+        },
+        {
+          "name": "Zee Entertainment Enterprises Limited",
+          "order_type": "sebi-fine",
           "is_listed_entity": true,
           "snippet": "Seeking legal advise on SEBI order in land pledge case, no bearing on ongoing fundraising: Zee"
         },
         {
-          "name": "CDSL",
-          "order_type": "sebi-fine",
-          "is_listed_entity": true,
-          "snippet": "Sebi imposes Rs 1 crore penalty on CDSL over 2022 malware attack"
-        },
-        {
-          "name": "Vadilal Industries",
+          "name": "Adani Energy Solutions",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Vadilal Industries challenges order granting interim relief to Mumbai faction"
+          "snippet": "Adani Energy QIP gets 3.1x bids"
+        },
+        {
+          "name": "Adani Energy Solutions",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Adani Energy launches Rs 3,500 crore QIP, sets floor price at Rs 1,698 per share"
         }
       ],
-      "after_filter_count": 7,
+      "after_filter_count": 6,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 1,
+        "no_sebi_signal_in_snippet": 2,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
-          "name": "Zee Entertainment",
+          "name": "Zee Entertainment Enterprises Limited",
           "order_type": "sebi-ban",
           "snippet": "Zee shares tumble 12% after Sebi action against Subhash Chandra, Punit Goenka"
-        },
-        {
-          "name": "Zee Entertainment",
-          "order_type": "sebi-fine",
-          "snippet": "Sebi imposes penalty of Rs 1.48 crore on Zee Entertainment"
         },
         {
           "name": "Kalahridhaan Trendz",
@@ -240,24 +260,24 @@
           "snippet": "Sebi penalises SME firm Kalahridhaan Trendz, promoters for misleading disclosures"
         },
         {
-          "name": "Zee Entertainment",
+          "name": "Zee Entertainment Enterprises Limited",
           "order_type": "sebi-enforcement-order",
           "snippet": "ZEE promoter fundraise plan faces uncertainty after Sebi's market ban"
         },
         {
-          "name": "Zee Entertainment",
-          "order_type": "sebi-ban",
-          "snippet": "Sebi bans Zee's Subhash Chandra, Punit Goenka from markets for a year"
-        },
-        {
-          "name": "Zee Entertainment",
-          "order_type": "sebi-enforcement-order",
-          "snippet": "Seeking legal advise on SEBI order in land pledge case, no bearing on ongoing fundraising: Zee"
-        },
-        {
-          "name": "CDSL",
+          "name": "Zee Entertainment Enterprises Limited",
           "order_type": "sebi-fine",
-          "snippet": "Sebi imposes Rs 1 crore penalty on CDSL over 2022 malware attack"
+          "snippet": "Sebi imposes penalty of Rs 1.48 crore on Zee Entertainment"
+        },
+        {
+          "name": "Muthoot Microfin",
+          "order_type": "other",
+          "snippet": "Muthoot Microfin case: Sebi exempts six family trusts from open offer obligation"
+        },
+        {
+          "name": "Zee Entertainment Enterprises Limited",
+          "order_type": "sebi-fine",
+          "snippet": "Seeking legal advise on SEBI order in land pledge case, no bearing on ongoing fundraising: Zee"
         }
       ]
     },
@@ -265,7 +285,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-08-05T03:32:50.947Z",
+      "at": "2026-08-05T12:29:22.558Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
