@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-05T09:20:39.981Z",
+  "generated_at": "2026-08-05T12:29:44.727Z",
   "source": "Yahoo Finance chart endpoint",
   "note": "Pre-open context. GIFT Nifty has no free stable feed; S&P futures plus the Asian session carry the same overnight information.",
   "giftNifty": null,
@@ -9,10 +9,10 @@
       "symbol": "ES=F",
       "label": "S&P 500 futures",
       "role": "overnight",
-      "last": 7787,
+      "last": 7801.5,
       "prevClose": 7519.25,
-      "changePct": 3.5608604581574,
-      "asOf": "2026-08-05T09:10:37.000Z"
+      "changePct": 3.7536988396449145,
+      "asOf": "2026-08-05T12:19:35.000Z"
     },
     "nikkei": {
       "key": "nikkei",
@@ -39,37 +39,37 @@
       "symbol": "^INDIAVIX",
       "label": "India VIX",
       "role": "vol",
-      "last": 12.485,
+      "last": 12.06,
       "prevClose": 12.16,
-      "changePct": 2.6726973684210398,
-      "asOf": "2026-08-05T09:20:37.000Z"
+      "changePct": -0.8223684210526327,
+      "asOf": "2026-08-05T10:12:44.000Z"
     },
     "nifty": {
       "key": "nifty",
       "symbol": "^NSEI",
       "label": "Nifty 50",
       "role": "home",
-      "last": 24514.2,
+      "last": 24624.65,
       "prevClose": 24317.15,
-      "changePct": 0.8103334477930213,
-      "asOf": "2026-08-05T09:20:38.000Z"
+      "changePct": 1.264539635606976,
+      "asOf": "2026-08-05T10:01:16.000Z"
     },
     "smallcap": {
       "key": "smallcap",
       "symbol": "NIFTYSMLCAP250.NS",
       "label": "Nifty Smallcap 250",
       "role": "home",
-      "last": 18332.65,
+      "last": 18321.95,
       "prevClose": 17845.6,
-      "changePct": 2.7292441834401826,
-      "asOf": "2026-08-05T09:20:38.000Z"
+      "changePct": 2.6692854260994325,
+      "asOf": "2026-08-05T10:01:16.000Z"
     }
   },
   "signal": {
-    "lean": 3.6762867162734305,
+    "lean": 3.7727059070171873,
     "dir": "up",
-    "vix": 12.485,
-    "vixChange": 2.6726973684210398,
+    "vix": 12.06,
+    "vixChange": -0.8223684210526327,
     "vixBand": "calm",
     "tolerancePct": 1.5,
     "headline": "Overnight positive — expect a higher open, limits may not fill"
