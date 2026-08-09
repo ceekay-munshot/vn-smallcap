@@ -42,8 +42,14 @@ const API       = "https://fastapi.muns.io/stock-data";
 const REQ_TIMEOUT_MS = 8000;
 
 
-// Mirror of app.js pickTop7 — keep the two in step. Returns [] when no
-// snapshot exists yet, which makes this a safe no-op before tracking starts.
+const readJsonSafe = (p) => { try { return JSON.parse(readFileSync(p, "utf8")); } catch { return null; } };
+
+// The tickers the dashboard is actually holding this month, so every basket
+// name gets a live quote. Prefer the captured cohort-entries record for the
+// current month (the locked framework basket, whose selection day and
+// cost-basis day differ, so it can't be re-derived from one snapshot). Fall
+// back to the first-snapshot-of-month top-N for a month not yet captured, and
+// to [] before tracking starts (safe no-op). Mirror of the app's resolution.
 function currentCohortTickers() {
   if (!existsSync(SNAP_DIR)) return [];
   const dates = readdirSync(SNAP_DIR)
@@ -51,8 +57,16 @@ function currentCohortTickers() {
     .map((f) => f.slice(0, 10))
     .sort();
   if (!dates.length) return [];
-  // First snapshot of the LATEST month present — the month-start basket.
   const ym = dates[dates.length - 1].slice(0, 7);
+
+  // Captured cohort for this month wins.
+  const ce = readJsonSafe(resolve(DATA_DIR, "cohort-entries.json"));
+  const rec = ce?.months?.[ym];
+  if (Array.isArray(rec?.tickers) && rec.tickers.length) {
+    return rec.tickers.map((t) => String(t).toUpperCase()).filter(Boolean);
+  }
+
+  // Fallback: first snapshot of the latest month, top-N by composite.
   const first = dates.find((d) => d.slice(0, 7) === ym);
   let snap;
   try { snap = JSON.parse(readFileSync(resolve(SNAP_DIR, `${first}.json`), "utf8")); }

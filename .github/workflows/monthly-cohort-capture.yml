@@ -1,0 +1,74 @@
+name: Monthly cohort + entry capture
+
+# Locks in the Strategy basket for each month, per the client's rule:
+#   SELECT  the top-7 by the PREVIOUS month's LAST TRADING DAY close, and
+#   ENTER   each name at the AVERAGE of its first 15-minute candle's HIGH and
+#           LOW (09:15-09:30 IST) on the month's FIRST TRADING DAY.
+# The result is written to public/data/cohort-entries.json — the single source
+# the dashboard (Strategy tab), pin-holdings.mjs and the live-price feed all
+# read, so selection, pinning and live quotes can never disagree.
+#
+# Runs every weekday at ~09:50 IST, just after the first 15-min candle closes.
+# scrape-first15-entry.mjs is a safe no-op once a month is fully captured, and
+# only records once a REAL first-15-min bar exists — so a holiday at month
+# start defers the anchor to the first day the market actually trades, with no
+# hardcoded calendar. Two runs give a second chance if Yahoo's intraday data
+# lags the first.
+
+on:
+  workflow_dispatch:
+    inputs:
+      month:     { description: "Force month (YYYY-MM)", required: false }
+      anchor:    { description: "Force first trading day (YYYY-MM-DD)", required: false }
+      selection: { description: "Force selection day (YYYY-MM-DD)", required: false }
+  schedule:
+    - cron: "20 4 * * 1-5"   # 09:50 IST, Mon-Fri
+    - cron: "5 5 * * 1-5"    # 10:35 IST, Mon-Fri (retry if the first lagged)
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Capture cohort + first-15-min entries
+        run: |
+          args=""
+          [ -n "${{ github.event.inputs.month }}" ]     && args="$args --month ${{ github.event.inputs.month }}"
+          [ -n "${{ github.event.inputs.anchor }}" ]    && args="$args --anchor ${{ github.event.inputs.anchor }}"
+          [ -n "${{ github.event.inputs.selection }}" ] && args="$args --selection ${{ github.event.inputs.selection }}"
+          echo "Running: node screener-test/scrape-first15-entry.mjs $args"
+          node screener-test/scrape-first15-entry.mjs $args
+
+      - name: Commit cohort-entries.json to main
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/cohort-entries.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No cohort change to commit (already captured, or not a trading day)."
+            exit 0
+          fi
+          git commit -m "Capture monthly cohort entries ($(TZ=Asia/Kolkata date +%Y-%m-%d))"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then
+              echo "Pushed on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — fetching + rebasing onto fresh main..."
+            git fetch origin main
+            git rebase origin/main || { echo "Rebase failed — aborting."; git rebase --abort; exit 1; }
+            sleep $((attempt * 2))
+          done
+          echo "Push still failing after 4 attempts."
+          exit 1
