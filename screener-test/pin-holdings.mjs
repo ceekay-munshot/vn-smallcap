@@ -91,7 +91,10 @@ function run() {
   writeOut(pins, { lost });
 }
 
-// Mirror of app.js pickTop7 — keep the two in step.
+// The cohort members to keep tracking, across the newest TRACK_MONTHS months.
+// For each month, prefer the captured cohort-entries basket (the locked
+// framework holding, matching the app + the live-price feed); fall back to the
+// first-snapshot-of-month top-N by composite for a month with no record.
 function activeCohortTickers() {
   if (!existsSync(SNAP_DIR)) return new Set();
   const dates = readdirSync(SNAP_DIR)
@@ -105,8 +108,18 @@ function activeCohortTickers() {
   for (const d of dates) if (!firstOfMonth.has(d.slice(0, 7))) firstOfMonth.set(d.slice(0, 7), d);
   const months = [...firstOfMonth.keys()].sort().slice(-TRACK_MONTHS);
 
+  const cohortEntries = readJson(resolve(DATA_DIR, "cohort-entries.json"));
   const out = new Set();
   for (const m of months) {
+    // Only a COMPLETE record wins (every held name has an entry) -- matches the
+    // dashboard, which falls back to the snapshot cohort until the record fills.
+    const rec = cohortEntries?.months?.[m];
+    const recReady = rec && Array.isArray(rec.tickers) && rec.tickers.length
+      && rec.tickers.every((t) => typeof rec.entries?.[t] === "number");
+    if (recReady) {
+      rec.tickers.forEach((t) => t && out.add(String(t).toUpperCase()));
+      continue;
+    }
     const snap = readJson(resolve(SNAP_DIR, `${firstOfMonth.get(m)}.json`));
     const stocks = snap?.stocks || [];
     stocks

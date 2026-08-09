@@ -1,0 +1,29 @@
+{
+  "months": {
+    "2026-08": {
+      "selectionDate": "2026-08-01",
+      "anchorDate": "2026-08-03",
+      "tickers": [
+        "THEJO",
+        "ASKAUTOLTD",
+        "SJS",
+        "FIEMIND",
+        "GAEL",
+        "LUMAXTECH",
+        "DEEPINDS"
+      ],
+      "entries": {
+        "THEJO": 2134.4,
+        "ASKAUTOLTD": 534.08,
+        "SJS": 2438.4,
+        "FIEMIND": 2338.75,
+        "GAEL": 174.19,
+        "LUMAXTECH": 1601.45,
+        "DEEPINDS": 626.13
+      },
+      "complete": true
+    }
+  },
+  "generated_at": "2026-08-09T16:03:54.266Z",
+  "cohort_size": 7
+}

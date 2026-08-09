@@ -1739,6 +1739,17 @@ async function ensureHistoryCache() {
     .catch(() => null);
   const livePrices = livePricesRaw?.prices || {};
 
+  // Captured monthly cohorts + entry prices (cohort-entries.json, written by
+  // scrape-first15-entry.mjs). For each framework month it pins the basket
+  // (tickers, chosen from the prior month's last trading-day close) and the
+  // cost basis (entry = average of the first 15-min candle's high & low on the
+  // first trading day). Absent / a month with no record = pre-framework, and
+  // the Strategy tab falls back to the snapshot-close cohort. See
+  // buildActiveSegmentChain + the anchor override in renderActive.
+  const cohortEntries = await fetch("data/cohort-entries.json")
+    .then((r) => (r.ok ? r.json() : null))
+    .catch(() => null);
+
   // Inject synthetic stock entries for out-of-coverage tickers (LKP picks
   // below our ~Rs 12,500 Cr universe, e.g. ELECON). Once they look like
   // ordinary snapshot stocks with rating: null, every downstream lookup
@@ -1821,7 +1832,7 @@ async function ensureHistoryCache() {
   const lkpPicksList = lkpForCache ? buildLkpPickList(lkpForCache.picks || [], byTicker, todayClose) : [];
   const lkpPicksByTicker = new Map(lkpPicksList.filter((p) => p.ticker).map((p) => [p.ticker, p]));
   const cohortAnchor = lkpAnchorDate(lkp, snapshots);
-  Object.assign(state.cache.history, { byTicker, todayClose, lkpPicksByTicker, cohortAnchor });
+  Object.assign(state.cache.history, { byTicker, todayClose, lkpPicksByTicker, cohortAnchor, cohortEntries });
   return state.cache.history;
 }
 
@@ -4468,6 +4479,24 @@ function computeActiveStats(sim, niftyOn) {
 // Weekly and Monthly cells re-use buildCohort with weekly mode + a new
 // 30-day chain extension so segments re-lock at the named cadence and
 // hold frozen during each segment.
+// A captured cohort-entries month is usable only when EVERY cohort ticker has a
+// numeric entry price. A partial capture (a failed / absent first-15-min bar for
+// some name) is rejected so the basket never mixes first-15-min entries with
+// snapshot closes; every consumer falls back to the snapshot-close cohort until
+// a retry completes the record. `complete` is written by the capture script; we
+// re-derive it from the entries here so a hand-edited or legacy file is safe.
+function cohortMonthReady(ce) {
+  return !!ce && Array.isArray(ce.tickers) && ce.tickers.length > 0
+    && ce.tickers.every((t) => typeof ce.entries?.[t] === "number");
+}
+
+// The captured record for the month a date falls in, but only when ready.
+function readyCohortFor(dateOrMonth) {
+  if (!dateOrMonth) return null;
+  const ce = state.cache.history?.cohortEntries?.months?.[dateOrMonth.slice(0, 7)];
+  return cohortMonthReady(ce) ? ce : null;
+}
+
 async function renderActive() {
   const host = $("#active-content");
   if (!host) return;
@@ -4523,11 +4552,24 @@ async function renderActive() {
     // Report-month selection — June stays reachable after July is uploaded.
     // Default = latest month; each month anchors at its own report date.
     const lkpForMonths = lkpOverride() || lkp;
-    const manualMonths = availableManualMonths(lkpForMonths, snapshots);
+    // Selectable months = client-basket months (none on this dashboard) PLUS
+    // every READY captured cohort month, so a past captured basket stays
+    // reachable once a newer month is captured. The picker only renders when
+    // more than one month exists, so August alone still shows no picker.
+    const cohortEntriesMonths = state.cache.history?.cohortEntries?.months || {};
+    const readyCeMonths = Object.keys(cohortEntriesMonths).filter((m) => cohortMonthReady(cohortEntriesMonths[m]));
+    const manualMonths = [...new Set([...availableManualMonths(lkpForMonths, snapshots), ...readyCeMonths])].sort();
     const selectedMonth = (state.manualMonth && manualMonths.includes(state.manualMonth))
       ? state.manualMonth
       : (manualMonths[manualMonths.length - 1] || null);
-    const anchorDate = manualMonthAnchor(lkpForMonths, selectedMonth, snapshots);
+    let anchorDate = manualMonthAnchor(lkpForMonths, selectedMonth, snapshots);
+    // Framework months: a READY captured cohort-entries record pins the basket
+    // and its first-15-min entry, anchored on the first TRADING day of the month
+    // (not the raw first snapshot, which may be a weekend). Anchor there so the
+    // curve baseline and cost basis start on the real entry day. A partial or
+    // absent record leaves manualMonthAnchor's value untouched (pre-framework).
+    const ceForAnchor = readyCohortFor(anchorDate);
+    if (ceForAnchor?.anchorDate) anchorDate = ceForAnchor.anchorDate;
     const monthSelectorHtml = renderManualMonthSelector(manualMonths, selectedMonth, lkpForMonths, snapshots);
     // A basket is tracked for its 4-month life. Once past the hold window,
     // stop the clock at month 4 (both baskets) — any still-open pick is
@@ -4586,9 +4628,15 @@ async function renderActive() {
     try {
       const anchorSnap = snapshots.find((s) => s.date === anchorDate) || snapshots[snapshots.length - 1];
       const want = (strat5.strategyById(strat5.primaryId())?.basketSize || 7) + 3;
-      const cohort = (anchorSnap?.stocks || [])
-        .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed)
-        .sort((a, b) => b.composite - a.composite).slice(0, want).map((s) => s.ticker);
+      // Framework month: quote exactly the captured cohort (the names actually
+      // held) so every basket ticker has a live price. Else the anchor
+      // snapshot's top-N by composite. Fixes 6/7 held names lacking live quotes
+      // when selection and cost-basis days diverge.
+      const cohort = ceForAnchor?.tickers?.length
+        ? ceForAnchor.tickers
+        : (anchorSnap?.stocks || [])
+            .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed)
+            .sort((a, b) => b.composite - a.composite).slice(0, want).map((s) => s.ticker);
       refreshLiveQuotes([...cohort, ...Object.keys(state.cache.history.livePrices || {})])
         .then((changed) => { if (changed && state.activeTab === "active") renderActive(); })
         .catch(() => {});
@@ -4963,6 +5011,31 @@ function buildActiveSegmentChain(snapshots, anchorDate, periodDays) {
     .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed)
     .sort((a, b) => b.composite - a.composite)
     .slice(0, 7);
+  // Framework months: a captured cohort-entries record pins the basket (picked
+  // from the prior month's last trading-day close) and each name's entry price
+  // (avg of the first 15-min candle's high & low on the first trading day). We
+  // return those stocks with identity from the entry-day snapshot but `close`
+  // overridden to the entry price, because buildSegmentedEquityCurve uses
+  // top7[].close as the cost-basis denominator. Null (=> fall back to pickTop7)
+  // for months with no record, so pre-framework history is unchanged.
+  const cohortMonths = state.cache.history?.cohortEntries?.months || {};
+  const usedCe = new Set(); // apply each month's record once — to its anchor segment
+  const capturedTop7 = (entry) => {
+    const m = entry.date.slice(0, 7);
+    const ce = cohortMonths[m];
+    // Apply a READY record to the FIRST segment landing on/after its anchor in
+    // that month. Matching by MONTH (not exact anchor-date equality) means a
+    // missing anchor-day snapshot doesn't discard the record — identity resolves
+    // from whatever snapshot the segment actually starts on. A partial record is
+    // rejected (cohortMonthReady) so the basket never mixes entry prices with
+    // snapshot closes.
+    if (!cohortMonthReady(ce) || usedCe.has(m) || entry.date < ce.anchorDate) return null;
+    usedCe.add(m);
+    return ce.tickers.map((ticker) => {
+      const s = entry.stocks.find((x) => x.ticker === ticker) || { ticker, name: ticker };
+      return { ...s, close: ce.entries[ticker] };
+    });
+  };
 
   let cursorMs = dateToMs(anchorDate);
   const todayMs = dateToMs(today);
@@ -4973,6 +5046,7 @@ function buildActiveSegmentChain(snapshots, anchorDate, periodDays) {
     const entry = snapshots.find((s) => s.date >= winStart && s.date <= winEnd);
     if (!entry) { cursorMs += periodDays * 86400000; continue; }
     const tracking = snapshots.filter((s) => s.date >= entry.date && s.date <= winEnd);
+    const captured = capturedTop7(entry);
     segments.push({
       index: segments.length,
       label: periodDays === 1
@@ -4983,7 +5057,11 @@ function buildActiveSegmentChain(snapshots, anchorDate, periodDays) {
       startDate: entry.date,
       endDate: tracking[tracking.length - 1].date,
       entrySnap: entry,
-      top7: pickTop7(entry),
+      top7: captured || pickTop7(entry),
+      // Cost basis is the first-15-min entry (not the anchor-day close), so the
+      // equity curve must PROCESS the anchor day rather than pin it to 0 —
+      // otherwise that first session's move (and any target/SL it hits) is lost.
+      captureEntry: !!captured,
       tracking,
     });
     cursorMs += periodDays * 86400000;
@@ -5035,7 +5113,11 @@ function buildSegmentedEquityCurve(segments, snapshots, anchorDate, chg = ZERO_C
     const frozenFactor = {};   // ticker -> locked factor (target / SL level)
     let lastFactor = 1.0;
     for (const day of seg.tracking) {
-      if (day.date === anchorDate) continue;
+      // Skip the anchor day only when the cost basis IS that day's close (day 0
+      // = 0% by definition). For a captured first-15-min entry the anchor day's
+      // close is a real move from the entry, so process it — otherwise that
+      // first session (and any target/SL it reaches) never lands on the curve.
+      if (day.date === anchorDate && !seg.captureEntry) continue;
       if (!isTradingDay(day.date)) continue;
       let sum = 0, n = 0;
       for (const ticker of Object.keys(entryCloses)) {
@@ -5393,41 +5475,62 @@ function planRows(capital, strategy) {
 
   const st = strategy || { basketSize: 7, bufferSize: 3, stopAtr: PLAN_STOP_ATR, invAtrSizing: true, gates: {} };
   const adtvBy = state.cache.planAdtv || {};
-  const live = cache.todayClose || {};
-
-  // Rank once, then let the strategy's own gates decide what it will hold.
-  const ranked = first.stocks
-    .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed)
-    .sort((a, b) => b.composite - a.composite)
-    .map((s) => {
-      const tv = s.techVals || {};
-      return {
-        ticker: s.ticker, name: s.name, sector: s.sector || "—", score: s.composite,
-        ind: { rsi: tv.rsi, atr: tv.atr, d52: tv.d52, adtv: adtvBy[s.ticker] ?? null,
-               aboveMa50: tv.e50, aboveMa200: tv.d200, macdPositive: tv.macd },
-        techVals: tv, close: s.close,
-      };
-    });
-  if (!ranked.length) return null;
-
-  // Ask for a deeper bench than we intend to show. Some core names turn out
-  // to be unbuildable at this capital and get replaced from the bench, and
-  // the bench still has to have three names left afterwards -- its real job
-  // is covering entries we miss on the morning, not patching sizing.
+  // Deeper bench than we show: some core names are unbuildable at this capital
+  // and get replaced from the bench, which must still leave three names.
   const wantBuffer = st.bufferSize || 3;
-  const sel = strat5.selectFromRanked(ranked, { ...st, bufferSize: wantBuffer + 4 }, {});
-  if (!sel.core.length) return null;
+
+  // Ranked-row shape the sizing / substitution below consumes. `entryPx`, when
+  // given, becomes the reference price (a captured first-15-min entry); else the
+  // snapshot close.
+  const toRanked = (s, entryPx) => {
+    const tv = s.techVals || {};
+    return {
+      ticker: s.ticker, name: s.name, sector: s.sector || "—", score: s.composite,
+      ind: { rsi: tv.rsi, atr: tv.atr, d52: tv.d52, adtv: adtvBy[s.ticker] ?? null,
+             aboveMa50: tv.e50, aboveMa200: tv.d200, macdPositive: tv.macd },
+      techVals: tv, close: (typeof entryPx === "number") ? entryPx : s.close,
+    };
+  };
+
+  // Framework month: the plan's CORE must equal the Overview basket -- the SAME
+  // captured tickers at the SAME first-15-min entry price for every order, stop
+  // and limit. (Re-ranking the month-start snapshot here would drift from the
+  // basket shown beside it -- different names in a fresh month, a different
+  // price always.) Substitutes come from the SELECTION snapshot's next-ranked
+  // names, which carry their selection close since no capture exists for them.
+  const ce = readyCohortFor(ym);
+  let sel;
+  if (ce) {
+    const anchorSnap = snapshots.find((s) => s.date >= ce.anchorDate) || first;
+    const selSnap = snapshots.find((s) => s.date === ce.selectionDate) || anchorSnap;
+    const held = new Set(ce.tickers);
+    const core = ce.tickers.map((t) => {
+      const s = anchorSnap.stocks.find((x) => x.ticker === t) || { ticker: t, name: t, composite: null };
+      return toRanked(s, ce.entries[t]);
+    });
+    const buffer = selSnap.stocks
+      .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed && !held.has(s.ticker))
+      .sort((a, b) => b.composite - a.composite)
+      .slice(0, wantBuffer + 4)
+      .map((s) => toRanked(s));
+    sel = { core, buffer };
+  } else {
+    // Pre-framework: rank the month-start snapshot and let the strategy gates
+    // choose, priced off that snapshot close (the founder's month-start rule).
+    const ranked = first.stocks
+      .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed)
+      .sort((a, b) => b.composite - a.composite)
+      .map((s) => toRanked(s));
+    if (!ranked.length) return null;
+    sel = strat5.selectFromRanked(ranked, { ...st, bufferSize: wantBuffer + 4 }, {});
+    if (!sel.core.length) return null;
+  }
 
   const decorate = (c) => {
     const tv = c.techVals || {};
-    // Anchor every price to the MONTH-START close, exactly as the founder
-    // asked ("1 tarik ka closing ko entry limit bana raha hai"). The buy
-    // limit, the stop and the entry are all decided off that one number,
-    // so the price shown here is the same one the Overview tracks the
-    // position from. Letting today's live price in here produced a "buy up
-    // to ₹578" for a stock already held from ₹528 -- three prices for one
-    // holding. The live price belongs to the Entry Monitor and the
-    // Overview, not to the plan's reference price.
+    // The reference price is c.close = the captured entry (framework) or the
+    // month-start close (pre-framework) -- the SAME number the Overview tracks
+    // the position from, so the plan never shows a third price for one holding.
     const price = c.close;
     return {
       ticker: c.ticker, name: c.name, sector: c.sector, composite: c.score,
@@ -5974,14 +6077,24 @@ function paperMonths() {
 
 function paperTrack(ym) {
   const cache = state.cache.history;
-  const snaps = (cache?.snapshots || []).filter((s) => s.date.slice(0, 7) === ym);
-  if (!snaps.length) return null;
-  const anchor = snaps[0];
+  const allSnaps = (cache?.snapshots || []).filter((s) => s.date.slice(0, 7) === ym);
+  if (!allSnaps.length) return null;
 
-  const top = anchor.stocks
-    .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed)
-    .sort((a, b) => b.composite - a.composite)
-    .slice(0, 7);
+  // Framework month: track the SAME captured basket at the SAME first-15-min
+  // entry as the Overview and Trade Plan, anchored on the captured first
+  // trading day (so this table can't show a different entry / return for a
+  // holding than the basket beside it). Else the month-start snapshot's top-7
+  // at its close (pre-framework).
+  const ce = readyCohortFor(ym);
+  const anchor = ce ? (allSnaps.find((s) => s.date >= ce.anchorDate) || allSnaps[0]) : allSnaps[0];
+  const snaps = allSnaps.filter((s) => s.date >= anchor.date);
+
+  const top = ce
+    ? ce.tickers.map((t) => anchor.stocks.find((x) => x.ticker === t) || { ticker: t, name: t, techVals: {} })
+    : anchor.stocks
+        .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed)
+        .sort((a, b) => b.composite - a.composite)
+        .slice(0, 7);
   if (!top.length) return null;
 
   // Same inverse-ATR weights the plan told you to buy with.
@@ -6012,7 +6125,10 @@ function paperTrack(ym) {
 
   const positions = top.map((s) => {
     const atr = atrOf(s), weight = (1 / atr) / invSum;
-    const entry = px[s.ticker]?.[anchor.date] ?? s.close;
+    // Framework month: the captured first-15-min entry, matching the Overview.
+    const entry = (ce && typeof ce.entries?.[s.ticker] === "number")
+      ? ce.entries[s.ticker]
+      : (px[s.ticker]?.[anchor.date] ?? s.close);
     const stopPct = PLAN_STOP_ATR * atr / 100;
     const stop = entry * (1 - stopPct);
     let exit = null, exitDate = null, status = "open";
@@ -7057,7 +7173,11 @@ function renderStrategyCommandBar(view, cadence, mode, hits) {
 // winner can't flatter the basket. If held marks to market ("what if we
 // never sold"). Flips the headline, chart lines and every basket row.
 function renderManualReturnToggle(view) {
-  if (view.manualFinalReturn == null) return "";
+  // The toggle governs the AI / passive basket too, not just the manual one.
+  // On this dashboard there is no manual basket, so gating on manualFinalReturn
+  // alone hid the only control that reaches the AI basket's "if held"
+  // (mark-to-market) view. Show it whenever either basket has a return.
+  if (view.finalReturn == null && view.manualFinalReturn == null) return "";
   const mode = state.manualReturnMode === "held" ? "held" : "booked";
   const pill = (k, label) => {
     const on = mode === k;

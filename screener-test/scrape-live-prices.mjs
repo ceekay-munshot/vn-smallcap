@@ -42,8 +42,14 @@ const API       = "https://fastapi.muns.io/stock-data";
 const REQ_TIMEOUT_MS = 8000;
 
 
-// Mirror of app.js pickTop7 — keep the two in step. Returns [] when no
-// snapshot exists yet, which makes this a safe no-op before tracking starts.
+const readJsonSafe = (p) => { try { return JSON.parse(readFileSync(p, "utf8")); } catch { return null; } };
+
+// The tickers the dashboard is actually holding this month, so every basket
+// name gets a live quote. Prefer the captured cohort-entries record for the
+// current month (the locked framework basket, whose selection day and
+// cost-basis day differ, so it can't be re-derived from one snapshot). Fall
+// back to the first-snapshot-of-month top-N for a month not yet captured, and
+// to [] before tracking starts (safe no-op). Mirror of the app's resolution.
 function currentCohortTickers() {
   if (!existsSync(SNAP_DIR)) return [];
   const dates = readdirSync(SNAP_DIR)
@@ -51,8 +57,34 @@ function currentCohortTickers() {
     .map((f) => f.slice(0, 10))
     .sort();
   if (!dates.length) return [];
-  // First snapshot of the LATEST month present — the month-start basket.
   const ym = dates[dates.length - 1].slice(0, 7);
+
+  // Captured cohort for this month wins -- but only when COMPLETE (every held
+  // name has an entry), so a partial capture never diverges from the dashboard,
+  // which also falls back until the record fills. Then append the next-ranked
+  // SELECTION names as substitutes, so ranks 8..COHORT_SIZE still get quotes
+  // (the 7-plus-3 rule: on entry morning we must be able to price a substitute
+  // when a core order is missed).
+  const ce = readJsonSafe(resolve(DATA_DIR, "cohort-entries.json"));
+  const rec = ce?.months?.[ym];
+  const recReady = rec && Array.isArray(rec.tickers) && rec.tickers.length
+    && rec.tickers.every((t) => typeof rec.entries?.[t] === "number");
+  if (recReady) {
+    const held = rec.tickers.map((t) => String(t).toUpperCase());
+    const out = [...held];
+    const heldSet = new Set(held);
+    const selSnap = rec.selectionDate ? readJsonSafe(resolve(SNAP_DIR, `${rec.selectionDate}.json`)) : null;
+    for (const t of (selSnap?.stocks || [])
+      .filter((x) => x.composite != null && x.dataComplete && !x.hardFailed)
+      .sort((a, b) => b.composite - a.composite)
+      .map((x) => String(x.ticker || "").toUpperCase())) {
+      if (out.length >= COHORT_SIZE) break;
+      if (t && !heldSet.has(t)) { out.push(t); heldSet.add(t); }
+    }
+    return out;
+  }
+
+  // Fallback: first snapshot of the latest month, top-N by composite.
   const first = dates.find((d) => d.slice(0, 7) === ym);
   let snap;
   try { snap = JSON.parse(readFileSync(resolve(SNAP_DIR, `${first}.json`), "utf8")); }
