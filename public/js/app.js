@@ -1716,27 +1716,9 @@ async function ensureHistoryCache() {
   // Where rebuilt history stops and real forward tracking starts. Written by
   // backfill-from-history.mjs; absent on a repo that was never backfilled.
   state.cache.liveFrom = idx.live_from || null;
-  let snapshots = await Promise.all(idx.dates.map((d) =>
+  const snapshots = await Promise.all(idx.dates.map((d) =>
     fetch(`data/snapshots/${d}.json`).then((r) => r.json())
   ));
-
-  // ---- Trading days only: drop weekend snapshots ----
-  // The daily job runs every morning (incl. weekends), so Saturday/Sunday
-  // snapshots exist — each carrying the previous Friday's close. Left in, they
-  // (a) draw phantom weekend points and (b) — the real damage — make
-  // "first snapshot of the month" resolve to a SATURDAY, so a monthly basket
-  // anchors its cost basis on the weekend (the prior Friday's close) instead of
-  // the first trading day, inflating its average return. Dropping the weekend
-  // snapshots snaps every anchor to a real trading day. Weekday snapshots are
-  // untouched, and the cohort builder still selects from the prior close
-  // (selectionDate), so there is no look-ahead.
-  const isWeekday = (dateStr) => {
-    const dow = new Date(dateStr + "T00:00:00Z").getUTCDay(); // 0=Sun … 6=Sat
-    return dow >= 1 && dow <= 5;
-  };
-  snapshots = snapshots.filter((s) => isWeekday(s.date));
-  idx.dates = idx.dates.filter(isWeekday);
-
   const benchmark = await fetch("data/benchmark-history.json")
     .then((r) => (r.ok ? r.json() : null))
     .catch(() => null);
@@ -4546,11 +4528,6 @@ async function renderActive() {
       ? state.manualMonth
       : (manualMonths[manualMonths.length - 1] || null);
     const anchorDate = manualMonthAnchor(lkpForMonths, selectedMonth, snapshots);
-    // Selection date = the last close BEFORE the basket's first trading day, so
-    // the top-7 ranking uses only pre-entry data (no look-ahead). Entry / cost
-    // basis stays at anchorDate. Mirrors the History tab's prior-month-end rule.
-    const priorSnap = anchorDate ? [...snapshots].reverse().find((s) => s.date < anchorDate) : null;
-    const selectionDate = priorSnap ? priorSnap.date : null;
     const monthSelectorHtml = renderManualMonthSelector(manualMonths, selectedMonth, lkpForMonths, snapshots);
     // A basket is tracked for its 4-month life. Once past the hold window,
     // stop the clock at month 4 (both baskets) — any still-open pick is
@@ -4617,7 +4594,7 @@ async function renderActive() {
         .catch(() => {});
     } catch (e) { console.warn("live quote refresh skipped:", e?.message); }
 
-    const view = buildActiveView(viewSnaps, anchorDate, todayDate, cadence, niftyOn, manualPicks, nifty500On, selectionDate);
+    const view = buildActiveView(viewSnaps, anchorDate, todayDate, cadence, niftyOn, manualPicks, nifty500On);
 
     // Alerts section (lives inside the Strategy tab, not a separate tab).
     if (!customTechByTicker) {
@@ -4733,7 +4710,7 @@ async function renderActive() {
 // Build everything the Active shell needs for a given cadence. Returns
 // { kind, sim?, segments?, picks, hitSummary, equityCurve, niftyCurve,
 //   manualCurve, manualPicks, manualSummary, periodLabel, ... }.
-function buildActiveView(snapshots, anchorDate, todayDate, cadence, niftyOn, manualPicks, nifty500On = () => null, selectionDate = null) {
+function buildActiveView(snapshots, anchorDate, todayDate, cadence, niftyOn, manualPicks, nifty500On = () => null) {
   if (cadence === "daily") {
     const sim = simulateActiveBasket(snapshots, anchorDate, simPrefs);
     if (!sim || !sim.equity.length) return null;
@@ -4784,7 +4761,7 @@ function buildActiveView(snapshots, anchorDate, todayDate, cadence, niftyOn, man
   // Returns the same { segments, equityCurve, picks, ... } contract so
   // the chart / accuracy / per-pick rows render uniformly.
   const periodDays = cadence === "weekly" ? 7 : cadence === "monthly" ? 30 : 99999;
-  const segments = buildActiveSegmentChain(snapshots, anchorDate, periodDays, selectionDate);
+  const segments = buildActiveSegmentChain(snapshots, anchorDate, periodDays);
   if (!segments.length) return null;
   const picks = buildActiveSegmentedPicks(segments, snapshots, todayDate);
   const hitSummary = computeOverallHitSummary(picks);
@@ -4977,7 +4954,7 @@ function buildManualBundle(manualPicks, snapshots, anchorDate, todayDate, dates)
 // Re-pick top 7 every periodDays from anchorDate. Each segment locks at
 // its start snapshot and tracks closes through the segment window.
 // Returns [{ index, label, startDate, endDate, entrySnap, top7, tracking }].
-function buildActiveSegmentChain(snapshots, anchorDate, periodDays, selectionDate = null) {
+function buildActiveSegmentChain(snapshots, anchorDate, periodDays) {
   if (!snapshots.length || !anchorDate) return [];
   const today = snapshots[snapshots.length - 1].date;
   const dateToMs = (d) => Date.UTC(Number(d.slice(0, 4)), Number(d.slice(5, 7)) - 1, Number(d.slice(8, 10)));
@@ -4986,15 +4963,6 @@ function buildActiveSegmentChain(snapshots, anchorDate, periodDays, selectionDat
     .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed)
     .sort((a, b) => b.composite - a.composite)
     .slice(0, 7);
-  // Pick the top 7 from the SELECTION snapshot (prior close), but re-base each
-  // stock's close to the ENTRY snapshot (first trading day) so day-0 = the real
-  // entry and returns measure from there — no look-ahead. Mirrors buildCohort's
-  // remapTop7. Applied to the anchor segment only; weekly/monthly re-lock
-  // segments still pick from their own start.
-  const remapTop7 = (selSnap, entrySnap) => pickTop7(selSnap).map((s) => {
-    const eS = entrySnap.stocks.find((x) => x.ticker === s.ticker);
-    return { ...s, close: eS?.close ?? s.close };
-  });
 
   let cursorMs = dateToMs(anchorDate);
   const todayMs = dateToMs(today);
@@ -5005,9 +4973,6 @@ function buildActiveSegmentChain(snapshots, anchorDate, periodDays, selectionDat
     const entry = snapshots.find((s) => s.date >= winStart && s.date <= winEnd);
     if (!entry) { cursorMs += periodDays * 86400000; continue; }
     const tracking = snapshots.filter((s) => s.date >= entry.date && s.date <= winEnd);
-    const selSnap = (segments.length === 0 && selectionDate)
-      ? (snapshots.find((s) => s.date >= selectionDate) || entry)
-      : null;
     segments.push({
       index: segments.length,
       label: periodDays === 1
@@ -5018,7 +4983,7 @@ function buildActiveSegmentChain(snapshots, anchorDate, periodDays, selectionDat
       startDate: entry.date,
       endDate: tracking[tracking.length - 1].date,
       entrySnap: entry,
-      top7: (selSnap && selSnap.date !== entry.date) ? remapTop7(selSnap, entry) : pickTop7(entry),
+      top7: pickTop7(entry),
       tracking,
     });
     cursorMs += periodDays * 86400000;
