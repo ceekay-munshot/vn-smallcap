@@ -111,8 +111,12 @@ function activeCohortTickers() {
   const cohortEntries = readJson(resolve(DATA_DIR, "cohort-entries.json"));
   const out = new Set();
   for (const m of months) {
+    // Only a COMPLETE record wins (every held name has an entry) -- matches the
+    // dashboard, which falls back to the snapshot cohort until the record fills.
     const rec = cohortEntries?.months?.[m];
-    if (Array.isArray(rec?.tickers) && rec.tickers.length) {
+    const recReady = rec && Array.isArray(rec.tickers) && rec.tickers.length
+      && rec.tickers.every((t) => typeof rec.entries?.[t] === "number");
+    if (recReady) {
       rec.tickers.forEach((t) => t && out.add(String(t).toUpperCase()));
       continue;
     }

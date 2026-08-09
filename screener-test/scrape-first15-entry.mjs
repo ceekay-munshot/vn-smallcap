@@ -84,20 +84,6 @@ async function run() {
   store.months = store.months || {};
   const existing = store.months[month] || null;
 
-  // ANCHOR — the first trading day of `month`. Forced value wins (backfill);
-  // otherwise it's today, but only once the market has actually traded (a real
-  // first-15-min bar exists). We only ever set the anchor for the FIRST such
-  // day: once entries are recorded for the month we leave it alone.
-  let anchorDate = forceAnchor || existing?.anchorDate || null;
-  if (!anchorDate) {
-    if (today.slice(0, 7) !== month) {
-      console.log(`Auto mode: today (${today}) is not in ${month}; nothing to do.`);
-      return;
-    }
-    if (!isWeekday(today)) { console.log(`${today} is a weekend — market shut, nothing to capture.`); return; }
-    anchorDate = today; // provisional; confirmed below only if a real bar exists
-  }
-
   // SELECTION — last trading day strictly before this month. Forced value wins.
   let selectionDate = forceSelection || existing?.selectionDate || null;
   if (!selectionDate) {
@@ -109,6 +95,31 @@ async function run() {
   // Cohort — top-COHORT_SIZE by composite from the selection-day snapshot.
   const tickers = existing?.tickers?.length ? existing.tickers : pickTop7(selectionDate);
   if (!tickers.length) { console.log(`Selection snapshot ${selectionDate} has no rankable stocks.`); return; }
+
+  // ANCHOR — the month's FIRST TRADING DAY. A forced value (backfill) or a prior
+  // partial run's recorded anchor wins. Otherwise DISCOVER it: probe the month's
+  // weekday snapshot days (<= today) in ascending order and take the earliest
+  // whose first 15-min candle actually exists. Probing the real sessions -- not
+  // assuming "today" -- means a fully-missed first morning (both runs skipped,
+  // or Yahoo down) still anchors on the TRUE first session once a later run
+  // succeeds, because Yahoo keeps intraday history. Holidays have no bar and are
+  // skipped automatically, so no hardcoded calendar is needed.
+  let anchorDate = forceAnchor || existing?.anchorDate || null;
+  if (!anchorDate) {
+    if (today.slice(0, 7) !== month) {
+      console.log(`Auto mode: today (${today}) is not in ${month}; nothing to do.`);
+      return;
+    }
+    const candidates = dates.filter((d) => d.slice(0, 7) === month && d <= today);
+    for (const cand of candidates) {
+      process.stdout.write(`  probing ${cand} (via ${tickers[0]})... `);
+      let probe = null;
+      try { probe = await first15HL(`${tickers[0]}.NS`, cand); } catch (e) { console.log(`probe error: ${e.message}`); continue; }
+      if (probe) { anchorDate = cand; console.log("session found — first trading day of the month."); break; }
+      console.log("no session (holiday / missed) — trying next.");
+    }
+    if (!anchorDate) { console.log(`No trading session with first-15-min bars in ${month} yet — will retry next morning.`); return; }
+  }
 
   console.log(`Month ${month} · selection ${selectionDate} · anchor ${anchorDate}`);
   console.log(`  cohort (${tickers.length}): ${tickers.join(", ")}`);
@@ -123,35 +134,28 @@ async function run() {
   console.log(`  to capture: ${todo.join(", ")}`);
 
   const entries = { ...prevEntries };
-  let gotABar = Object.keys(prevEntries).length > 0; // backfill of an existing partial
   for (const t of todo) {
     process.stdout.write(`  ${t}... `);
     try {
       const hl = await first15HL(`${t}.NS`, anchorDate);
-      if (!hl) { console.log("no first-15-min bar yet"); continue; }
+      if (!hl) { console.log("no first-15-min bar"); continue; }
       const entry = Number(((hl.high + hl.low) / 2).toFixed(2));
       entries[t] = entry;
-      gotABar = true;
       console.log(`H ${hl.high} · L ${hl.low} → entry ${entry}`);
     } catch (e) { console.log(`FAILED: ${e.message}`); }
   }
 
-  // Auto mode with no forced anchor: if the market has not traded yet today
-  // (no bar for anyone), do NOT record — this is a non-trading day (weekend
-  // already excluded, so most likely a holiday). Try again next morning; the
-  // real first trading day will be the one that finally produces bars.
-  if (!forceAnchor && !existing && !gotABar) {
-    console.log(`No first-15-min bars on ${anchorDate} — not a trading day (holiday). Will retry next morning.`);
-    return;
-  }
-
   const captured = tickers.filter((t) => entries[t] != null).length;
   const complete = captured === tickers.length;
-  console.log(`\nCaptured ${captured}/${tickers.length}${complete ? " — complete" : " — partial (rerun to fill the rest)"}`);
+  console.log(`\nCaptured ${captured}/${tickers.length}${complete ? " — complete" : " — PARTIAL: record marked complete:false; the dashboard, pins and live feed all ignore it until a rerun fills every entry"}`);
+
+  // Never write an empty record: with nothing captured, leave the month absent
+  // so every consumer keeps the snapshot-close fallback instead of a hollow one.
+  if (!captured) { console.log("No entries captured — leaving the file unchanged."); return; }
 
   store.generated_at = new Date().toISOString();
   store.cohort_size  = COHORT_SIZE;
-  store.months[month] = { selectionDate, anchorDate, tickers, entries };
+  store.months[month] = { selectionDate, anchorDate, tickers, entries, complete };
 
   if (DRY) { console.log("\n[dry run — not writing]\n" + JSON.stringify(store.months[month], null, 2)); return; }
   writeFileSync(OUT_PATH, JSON.stringify(store, null, 2) + "\n");
