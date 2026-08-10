@@ -4660,6 +4660,7 @@ async function renderActive() {
     wireManualReturnToggle();
     wireStrategySubNav();
     wireManualMonthPills();
+    document.getElementById("live-refresh-btn")?.addEventListener("click", handleLiveRefresh);
     // Client-basket upload (Excel / CSV) — surfaced here on the Strategy tab.
     $("#lkp-upload-btn")?.addEventListener("click", () => $("#lkp-file-input")?.click());
     $("#lkp-file-input")?.addEventListener("change", (e) => { const f = e.target.files?.[0]; if (f) handleLkpExcelUpload(f); e.target.value = ""; });
@@ -6587,9 +6588,61 @@ function renderDataFreshness() {
       ${rows.map((r) => `<span class="text-[11px] text-slate-600"${r.note ? ` title="${escapeHtml(r.note)}"` : ""}>${r.label}
         <b class="${r.bad ? "text-amber-800" : r.warn ? "text-slate-700" : "text-emerald-700"}">${r.value}</b></span>`).join("")}
       ${recon ? `<span class="text-[11px] text-slate-500">History before <b class="text-slate-700">${fmtDateDMY(liveFrom)}</b> is rebuilt from past prices, not a live record</span>` : ""}
-      ${anyBad ? `<span class="text-[11px] text-amber-900 ml-auto">A feed hasn't landed — figures below are the last good data, not today's.</span>` : ""}
+      ${anyBad ? `<span class="text-[11px] text-amber-900">A feed hasn't landed — figures below are the last good data, not today's.</span>` : ""}
+      <button id="live-refresh-btn" type="button" class="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded-md ring-1 ring-slate-200 bg-white hover:bg-indigo-50 hover:ring-indigo-200 text-indigo-600 font-semibold text-[11px] whitespace-nowrap transition" title="Fetch the latest live prices right now (this session)">↻ Refresh</button>
     </div>`;
 }
+
+// On-demand live-price refresh. vn-smallcap already pulls quotes straight from
+// the quote API in the browser (refreshLiveQuotes, 60s TTL) on each render, so
+// this just FORCES an immediate pull (bypassing the TTL) and shows a modal, then
+// re-renders so every live figure + the freshness stamp update. No repo write.
+async function handleLiveRefresh() {
+  const btn = document.getElementById("live-refresh-btn");
+  if (btn?.dataset.busy === "1") return;                 // ignore double-clicks
+  if (btn) { btn.dataset.busy = "1"; btn.disabled = true; }
+  showLiveRefreshModal("loading");
+
+  const h = state.cache.history || {};
+  const tickers = Object.keys(h.livePrices || {});
+  state.cache.quotesFetchedAt = 0;                        // bypass the 60s TTL
+  try {
+    const changed = await refreshLiveQuotes(tickers);    // browser -> quote API
+    if (!changed) throw new Error("no quotes retrieved");
+    showLiveRefreshModal("done", `Live prices updated ${relativeTimeFrom(h.livePricesGeneratedAt)}`);
+    if (state.activeTab === "active") renderActive();     // reflect the new prices
+  } catch {
+    showLiveRefreshModal("error", "Couldn't refresh live prices right now — showing the last good quotes.");
+    if (btn) { btn.dataset.busy = "0"; btn.disabled = false; }
+  }
+}
+
+// Tiny body-level overlay so it survives the re-render of #active-content.
+function showLiveRefreshModal(kind, msg) {
+  let el = document.getElementById("live-refresh-modal");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "live-refresh-modal";
+    el.className = "fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm";
+    el.addEventListener("click", (e) => { if (e.target === el) closeLiveRefreshModal(); });
+    document.body.appendChild(el);
+  }
+  const card = (ring, icon, title, sub) => `
+    <div class="bg-white rounded-2xl shadow-xl ring-1 ${ring} px-6 py-5 flex items-center gap-3 max-w-sm mx-4">
+      ${icon}
+      <div><div class="text-sm font-semibold text-slate-800">${title}</div>${sub ? `<div class="text-xs text-slate-500 mt-0.5">${escapeHtml(sub)}</div>` : ""}</div>
+    </div>`;
+  if (kind === "loading") {
+    el.innerHTML = card("ring-slate-200", `<span class="inline-block w-5 h-5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></span>`, "Refreshing live prices…", "Fetching the latest quotes");
+  } else if (kind === "done") {
+    el.innerHTML = card("ring-emerald-200", `<span class="text-emerald-500 text-xl leading-none">✓</span>`, "Prices refreshed", msg);
+    setTimeout(closeLiveRefreshModal, 1800);
+  } else {
+    el.innerHTML = card("ring-rose-200", `<span class="text-rose-500 text-xl leading-none">!</span>`, "Refresh failed", msg);
+    setTimeout(closeLiveRefreshModal, 2800);
+  }
+}
+function closeLiveRefreshModal() { document.getElementById("live-refresh-modal")?.remove(); }
 
 function liveTradingDays(snapshots) {
   // Trading calendar robust to the benchmark lagging the snapshots. Snapshots
