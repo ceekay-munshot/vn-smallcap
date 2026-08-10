@@ -4637,7 +4637,14 @@ async function renderActive() {
         : (anchorSnap?.stocks || [])
             .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed)
             .sort((a, b) => b.composite - a.composite).slice(0, want).map((s) => s.ticker);
-      refreshLiveQuotes([...cohort, ...Object.keys(state.cache.history.livePrices || {})])
+      // The basket this view holds, unioned with any already-cached names.
+      // Stashed so the manual Refresh button quotes the SAME set: when
+      // live-prices.json is absent or empty (livePrices == {}), cached keys
+      // alone are empty, and the button would otherwise have nothing to fetch
+      // and report failure on every retry even with a healthy API.
+      const liveTickers = [...new Set([...cohort, ...Object.keys(state.cache.history.livePrices || {})].filter(Boolean))];
+      state.cache.liveTickers = liveTickers;
+      refreshLiveQuotes(liveTickers)
         .then((changed) => { if (changed && state.activeTab === "active") renderActive(); })
         .catch(() => {});
     } catch (e) { console.warn("live quote refresh skipped:", e?.message); }
@@ -6462,23 +6469,36 @@ async function fetchQuoteDirect(ticker) {
 // Refresh quotes for the basket in place. Anything that fails keeps whatever
 // the committed file had, so a partial outage degrades one row rather than
 // blanking the basket.
-async function refreshLiveQuotes(tickers) {
+async function refreshLiveQuotes(tickers, { force = false } = {}) {
   const h = state.cache.history;
-  if (!h || !tickers?.length) return;
+  if (!h || !tickers?.length) return false;
+  // Coalesce concurrent callers onto ONE in-flight fetch. Without this, a
+  // manual Refresh clicked while the render-time background pull is still
+  // running would start a SECOND request: two fetches, two re-renders, and
+  // whichever batch lands last overwrites the other's prices and freshness
+  // stamp -- an earlier-captured batch could clobber a fresher one. Both
+  // awaits now resolve to the same result.
+  if (state.cache.quotesInFlight) return state.cache.quotesInFlight;
   const now = Date.now();
-  if (state.cache.quotesFetchedAt && now - state.cache.quotesFetchedAt < QUOTE_TTL_MS) return false;
-  state.cache.quotesFetchedAt = now;
+  // The 60s TTL stops every sub-tab click from refetching; an explicit
+  // Refresh (force) may bypass it, but never the in-flight guard above.
+  if (!force && state.cache.quotesFetchedAt && now - state.cache.quotesFetchedAt < QUOTE_TTL_MS) return false;
 
-  const uniq = [...new Set(tickers.filter(Boolean))].slice(0, 20);
-  const results = await Promise.all(uniq.map(async (t) => [t, await fetchQuoteDirect(t)]));
-  let ok = 0;
-  for (const [t, q] of results) if (q) { h.livePrices[t] = q; ok++; }
-  if (!ok) return false;                 // API unreachable — committed file stands
-  h.livePricesGeneratedAt = new Date().toISOString();
-  h.livePricesSource = `browser · ${ok}/${uniq.length} quotes`;
-  // Display prices follow the fresh quotes too, not just the hit detection.
-  for (const [t, q] of results) if (q?.current != null) h.todayClose[t] = q.current;
-  return true;
+  const job = (async () => {
+    state.cache.quotesFetchedAt = now;
+    const uniq = [...new Set(tickers.filter(Boolean))].slice(0, 20);
+    const results = await Promise.all(uniq.map(async (t) => [t, await fetchQuoteDirect(t)]));
+    let ok = 0;
+    for (const [t, q] of results) if (q) { h.livePrices[t] = q; ok++; }
+    if (!ok) return false;                 // API unreachable — committed file stands
+    h.livePricesGeneratedAt = new Date().toISOString();
+    h.livePricesSource = `browser · ${ok}/${uniq.length} quotes`;
+    // Display prices follow the fresh quotes too, not just the hit detection.
+    for (const [t, q] of results) if (q?.current != null) h.todayClose[t] = q.current;
+    return true;
+  })();
+  state.cache.quotesInFlight = job;
+  try { return await job; } finally { state.cache.quotesInFlight = null; }
 }
 
 // Is live-prices.json actually from today? The file is committed by a
@@ -6604,10 +6624,17 @@ async function handleLiveRefresh() {
   showLiveRefreshModal("loading");
 
   const h = state.cache.history || {};
-  const tickers = Object.keys(h.livePrices || {});
-  state.cache.quotesFetchedAt = 0;                        // bypass the 60s TTL
+  // Quote the SAME basket the background refresh uses (cohort + cached names),
+  // stashed by renderActive. Falling back to cached keys alone would fetch
+  // nothing when live-prices.json never landed -- the exact case where a
+  // manual refresh matters most.
+  const tickers = state.cache.liveTickers?.length
+    ? state.cache.liveTickers
+    : Object.keys(h.livePrices || {});
   try {
-    const changed = await refreshLiveQuotes(tickers);    // browser -> quote API
+    // force: bypass the 60s TTL for an explicit click; the in-flight guard
+    // inside still prevents overlapping the background pull.
+    const changed = await refreshLiveQuotes(tickers, { force: true });
     if (!changed) throw new Error("no quotes retrieved");
     showLiveRefreshModal("done", `Live prices updated ${relativeTimeFrom(h.livePricesGeneratedAt)}`);
     if (state.activeTab === "active") renderActive();     // reflect the new prices
