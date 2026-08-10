@@ -4637,8 +4637,15 @@ async function renderActive() {
         : (anchorSnap?.stocks || [])
             .filter((s) => s.composite != null && s.dataComplete && !s.hardFailed)
             .sort((a, b) => b.composite - a.composite).slice(0, want).map((s) => s.ticker);
-      refreshLiveQuotes([...cohort, ...Object.keys(state.cache.history.livePrices || {})])
-        .then((changed) => { if (changed && state.activeTab === "active") renderActive(); })
+      // The basket this view holds, unioned with any already-cached names.
+      // Stashed so the manual Refresh button quotes the SAME set: when
+      // live-prices.json is absent or empty (livePrices == {}), cached keys
+      // alone are empty, and the button would otherwise have nothing to fetch
+      // and report failure on every retry even with a healthy API.
+      const liveTickers = [...new Set([...cohort, ...Object.keys(state.cache.history.livePrices || {})].filter(Boolean))];
+      state.cache.liveTickers = liveTickers;
+      refreshLiveQuotes(liveTickers)
+        .then((r) => { if (r?.ok && state.activeTab === "active") renderActive(); })
         .catch(() => {});
     } catch (e) { console.warn("live quote refresh skipped:", e?.message); }
 
@@ -4660,6 +4667,7 @@ async function renderActive() {
     wireManualReturnToggle();
     wireStrategySubNav();
     wireManualMonthPills();
+    document.getElementById("live-refresh-btn")?.addEventListener("click", handleLiveRefresh);
     // Client-basket upload (Excel / CSV) — surfaced here on the Strategy tab.
     $("#lkp-upload-btn")?.addEventListener("click", () => $("#lkp-file-input")?.click());
     $("#lkp-file-input")?.addEventListener("change", (e) => { const f = e.target.files?.[0]; if (f) handleLkpExcelUpload(f); e.target.value = ""; });
@@ -6461,23 +6469,50 @@ async function fetchQuoteDirect(ticker) {
 // Refresh quotes for the basket in place. Anything that fails keeps whatever
 // the committed file had, so a partial outage degrades one row rather than
 // blanking the basket.
-async function refreshLiveQuotes(tickers) {
+// Returns { ok, total }: how many of the requested tickers came back, out of
+// how many were asked for. Callers treat ok > 0 as "something changed"; the
+// manual button uses ok vs total to tell a full refresh from a partial one.
+async function refreshLiveQuotes(tickers, { force = false } = {}) {
   const h = state.cache.history;
-  if (!h || !tickers?.length) return;
-  const now = Date.now();
-  if (state.cache.quotesFetchedAt && now - state.cache.quotesFetchedAt < QUOTE_TTL_MS) return false;
-  state.cache.quotesFetchedAt = now;
-
+  if (!h || !tickers?.length) return { ok: 0, total: 0 };
   const uniq = [...new Set(tickers.filter(Boolean))].slice(0, 20);
-  const results = await Promise.all(uniq.map(async (t) => [t, await fetchQuoteDirect(t)]));
-  let ok = 0;
-  for (const [t, q] of results) if (q) { h.livePrices[t] = q; ok++; }
-  if (!ok) return false;                 // API unreachable — committed file stands
-  h.livePricesGeneratedAt = new Date().toISOString();
-  h.livePricesSource = `browser · ${ok}/${uniq.length} quotes`;
-  // Display prices follow the fresh quotes too, not just the hit detection.
-  for (const [t, q] of results) if (q?.current != null) h.todayClose[t] = q.current;
-  return true;
+  const key = uniq.slice().sort().join(",");
+  // Coalesce onto an in-flight fetch ONLY when it is for the SAME basket. Same
+  // set -> share the one fetch (no double request, no clobber). A DIFFERENT set
+  // (the month/basket was switched while a fetch was still running) must NOT be
+  // handed the old batch's result -- that would leave the newly-selected names
+  // stale until the TTL expired. Instead it waits for the in-flight batch, then
+  // fetches its own set, so the two never run concurrently and can't overwrite
+  // each other's prices or freshness stamp.
+  const inflight = state.cache.quotesInFlight;
+  if (inflight && inflight.key === key) return inflight.promise;
+  const now = Date.now();
+  // The 60s TTL stops every sub-tab click from refetching -- but only for the
+  // SAME basket. A different basket (the month was switched) is different data,
+  // so it must NOT be TTL-blocked by the previous basket's fetch; it falls
+  // through to the job below, waits for any in-flight batch, then fetches its
+  // own set. An explicit Refresh (force) bypasses the TTL for its own basket
+  // too; neither ever bypasses the in-flight guard above.
+  if (!force && state.cache.quotesFetchedKey === key && state.cache.quotesFetchedAt && now - state.cache.quotesFetchedAt < QUOTE_TTL_MS) return { ok: 0, total: uniq.length };
+
+  const job = (async () => {
+    if (inflight && inflight.key !== key) { try { await inflight.promise; } catch {} }
+    state.cache.quotesFetchedAt = Date.now();
+    state.cache.quotesFetchedKey = key;
+    const results = await Promise.all(uniq.map(async (t) => [t, await fetchQuoteDirect(t)]));
+    let ok = 0;
+    for (const [t, q] of results) if (q) { h.livePrices[t] = q; ok++; }
+    if (ok) {                              // whatever failed keeps its committed price
+      h.livePricesGeneratedAt = new Date().toISOString();
+      h.livePricesSource = `browser · ${ok}/${uniq.length} quotes`;
+      // Display prices follow the fresh quotes too, not just the hit detection.
+      for (const [t, q] of results) if (q?.current != null) h.todayClose[t] = q.current;
+    }
+    return { ok, total: uniq.length };
+  })();
+  const entry = { key, promise: job };
+  state.cache.quotesInFlight = entry;
+  try { return await job; } finally { if (state.cache.quotesInFlight === entry) state.cache.quotesInFlight = null; }
 }
 
 // Is live-prices.json actually from today? The file is committed by a
@@ -6587,9 +6622,77 @@ function renderDataFreshness() {
       ${rows.map((r) => `<span class="text-[11px] text-slate-600"${r.note ? ` title="${escapeHtml(r.note)}"` : ""}>${r.label}
         <b class="${r.bad ? "text-amber-800" : r.warn ? "text-slate-700" : "text-emerald-700"}">${r.value}</b></span>`).join("")}
       ${recon ? `<span class="text-[11px] text-slate-500">History before <b class="text-slate-700">${fmtDateDMY(liveFrom)}</b> is rebuilt from past prices, not a live record</span>` : ""}
-      ${anyBad ? `<span class="text-[11px] text-amber-900 ml-auto">A feed hasn't landed — figures below are the last good data, not today's.</span>` : ""}
+      ${anyBad ? `<span class="text-[11px] text-amber-900">A feed hasn't landed — figures below are the last good data, not today's.</span>` : ""}
+      <button id="live-refresh-btn" type="button" class="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded-md ring-1 ring-slate-200 bg-white hover:bg-indigo-50 hover:ring-indigo-200 text-indigo-600 font-semibold text-[11px] whitespace-nowrap transition" title="Fetch the latest live prices right now (this session)">↻ Refresh</button>
     </div>`;
 }
+
+// On-demand live-price refresh. vn-smallcap already pulls quotes straight from
+// the quote API in the browser (refreshLiveQuotes, 60s TTL) on each render, so
+// this just FORCES an immediate pull (bypassing the TTL) and shows a modal, then
+// re-renders so every live figure + the freshness stamp update. No repo write.
+async function handleLiveRefresh() {
+  const btn = document.getElementById("live-refresh-btn");
+  if (btn?.dataset.busy === "1") return;                 // ignore double-clicks
+  if (btn) { btn.dataset.busy = "1"; btn.disabled = true; }
+  showLiveRefreshModal("loading");
+
+  const h = state.cache.history || {};
+  // Quote the SAME basket the background refresh uses (cohort + cached names),
+  // stashed by renderActive. Falling back to cached keys alone would fetch
+  // nothing when live-prices.json never landed -- the exact case where a
+  // manual refresh matters most.
+  const tickers = state.cache.liveTickers?.length
+    ? state.cache.liveTickers
+    : Object.keys(h.livePrices || {});
+  try {
+    // force: bypass the 60s TTL for an explicit click; the in-flight guard
+    // inside still prevents overlapping the background pull.
+    const { ok, total } = await refreshLiveQuotes(tickers, { force: true });
+    if (!ok) throw new Error("no quotes retrieved");
+    if (ok < total) {
+      // Some names came back, some didn't — say so, rather than claiming a
+      // full refresh while part of the basket still shows its old price.
+      showLiveRefreshModal("partial", `Refreshed ${ok} of ${total} — the rest kept their last price.`);
+    } else {
+      showLiveRefreshModal("done", `Live prices updated ${relativeTimeFrom(h.livePricesGeneratedAt)}`);
+    }
+    if (state.activeTab === "active") renderActive();     // reflect the new prices
+  } catch {
+    showLiveRefreshModal("error", "Couldn't refresh live prices right now — showing the last good quotes.");
+    if (btn) { btn.dataset.busy = "0"; btn.disabled = false; }
+  }
+}
+
+// Tiny body-level overlay so it survives the re-render of #active-content.
+function showLiveRefreshModal(kind, msg) {
+  let el = document.getElementById("live-refresh-modal");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "live-refresh-modal";
+    el.className = "fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm";
+    el.addEventListener("click", (e) => { if (e.target === el) closeLiveRefreshModal(); });
+    document.body.appendChild(el);
+  }
+  const card = (ring, icon, title, sub) => `
+    <div class="bg-white rounded-2xl shadow-xl ring-1 ${ring} px-6 py-5 flex items-center gap-3 max-w-sm mx-4">
+      ${icon}
+      <div><div class="text-sm font-semibold text-slate-800">${title}</div>${sub ? `<div class="text-xs text-slate-500 mt-0.5">${escapeHtml(sub)}</div>` : ""}</div>
+    </div>`;
+  if (kind === "loading") {
+    el.innerHTML = card("ring-slate-200", `<span class="inline-block w-5 h-5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></span>`, "Refreshing live prices…", "Fetching the latest quotes");
+  } else if (kind === "done") {
+    el.innerHTML = card("ring-emerald-200", `<span class="text-emerald-500 text-xl leading-none">✓</span>`, "Prices refreshed", msg);
+    setTimeout(closeLiveRefreshModal, 1800);
+  } else if (kind === "partial") {
+    el.innerHTML = card("ring-amber-200", `<span class="text-amber-500 text-xl leading-none">⚠</span>`, "Partly refreshed", msg);
+    setTimeout(closeLiveRefreshModal, 2800);
+  } else {
+    el.innerHTML = card("ring-rose-200", `<span class="text-rose-500 text-xl leading-none">!</span>`, "Refresh failed", msg);
+    setTimeout(closeLiveRefreshModal, 2800);
+  }
+}
+function closeLiveRefreshModal() { document.getElementById("live-refresh-modal")?.remove(); }
 
 function liveTradingDays(snapshots) {
   // Trading calendar robust to the benchmark lagging the snapshots. Snapshots
