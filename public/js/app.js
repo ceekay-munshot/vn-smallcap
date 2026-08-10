@@ -6487,13 +6487,18 @@ async function refreshLiveQuotes(tickers, { force = false } = {}) {
   const inflight = state.cache.quotesInFlight;
   if (inflight && inflight.key === key) return inflight.promise;
   const now = Date.now();
-  // The 60s TTL stops every sub-tab click from refetching; an explicit
-  // Refresh (force) may bypass it, but never the in-flight guard above.
-  if (!force && state.cache.quotesFetchedAt && now - state.cache.quotesFetchedAt < QUOTE_TTL_MS) return { ok: 0, total: uniq.length };
+  // The 60s TTL stops every sub-tab click from refetching -- but only for the
+  // SAME basket. A different basket (the month was switched) is different data,
+  // so it must NOT be TTL-blocked by the previous basket's fetch; it falls
+  // through to the job below, waits for any in-flight batch, then fetches its
+  // own set. An explicit Refresh (force) bypasses the TTL for its own basket
+  // too; neither ever bypasses the in-flight guard above.
+  if (!force && state.cache.quotesFetchedKey === key && state.cache.quotesFetchedAt && now - state.cache.quotesFetchedAt < QUOTE_TTL_MS) return { ok: 0, total: uniq.length };
 
   const job = (async () => {
     if (inflight && inflight.key !== key) { try { await inflight.promise; } catch {} }
     state.cache.quotesFetchedAt = Date.now();
+    state.cache.quotesFetchedKey = key;
     const results = await Promise.all(uniq.map(async (t) => [t, await fetchQuoteDirect(t)]));
     let ok = 0;
     for (const [t, q] of results) if (q) { h.livePrices[t] = q; ok++; }
