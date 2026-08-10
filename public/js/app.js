@@ -4645,7 +4645,7 @@ async function renderActive() {
       const liveTickers = [...new Set([...cohort, ...Object.keys(state.cache.history.livePrices || {})].filter(Boolean))];
       state.cache.liveTickers = liveTickers;
       refreshLiveQuotes(liveTickers)
-        .then((changed) => { if (changed && state.activeTab === "active") renderActive(); })
+        .then((r) => { if (r?.ok && state.activeTab === "active") renderActive(); })
         .catch(() => {});
     } catch (e) { console.warn("live quote refresh skipped:", e?.message); }
 
@@ -6469,36 +6469,45 @@ async function fetchQuoteDirect(ticker) {
 // Refresh quotes for the basket in place. Anything that fails keeps whatever
 // the committed file had, so a partial outage degrades one row rather than
 // blanking the basket.
+// Returns { ok, total }: how many of the requested tickers came back, out of
+// how many were asked for. Callers treat ok > 0 as "something changed"; the
+// manual button uses ok vs total to tell a full refresh from a partial one.
 async function refreshLiveQuotes(tickers, { force = false } = {}) {
   const h = state.cache.history;
-  if (!h || !tickers?.length) return false;
-  // Coalesce concurrent callers onto ONE in-flight fetch. Without this, a
-  // manual Refresh clicked while the render-time background pull is still
-  // running would start a SECOND request: two fetches, two re-renders, and
-  // whichever batch lands last overwrites the other's prices and freshness
-  // stamp -- an earlier-captured batch could clobber a fresher one. Both
-  // awaits now resolve to the same result.
-  if (state.cache.quotesInFlight) return state.cache.quotesInFlight;
+  if (!h || !tickers?.length) return { ok: 0, total: 0 };
+  const uniq = [...new Set(tickers.filter(Boolean))].slice(0, 20);
+  const key = uniq.slice().sort().join(",");
+  // Coalesce onto an in-flight fetch ONLY when it is for the SAME basket. Same
+  // set -> share the one fetch (no double request, no clobber). A DIFFERENT set
+  // (the month/basket was switched while a fetch was still running) must NOT be
+  // handed the old batch's result -- that would leave the newly-selected names
+  // stale until the TTL expired. Instead it waits for the in-flight batch, then
+  // fetches its own set, so the two never run concurrently and can't overwrite
+  // each other's prices or freshness stamp.
+  const inflight = state.cache.quotesInFlight;
+  if (inflight && inflight.key === key) return inflight.promise;
   const now = Date.now();
   // The 60s TTL stops every sub-tab click from refetching; an explicit
   // Refresh (force) may bypass it, but never the in-flight guard above.
-  if (!force && state.cache.quotesFetchedAt && now - state.cache.quotesFetchedAt < QUOTE_TTL_MS) return false;
+  if (!force && state.cache.quotesFetchedAt && now - state.cache.quotesFetchedAt < QUOTE_TTL_MS) return { ok: 0, total: uniq.length };
 
   const job = (async () => {
-    state.cache.quotesFetchedAt = now;
-    const uniq = [...new Set(tickers.filter(Boolean))].slice(0, 20);
+    if (inflight && inflight.key !== key) { try { await inflight.promise; } catch {} }
+    state.cache.quotesFetchedAt = Date.now();
     const results = await Promise.all(uniq.map(async (t) => [t, await fetchQuoteDirect(t)]));
     let ok = 0;
     for (const [t, q] of results) if (q) { h.livePrices[t] = q; ok++; }
-    if (!ok) return false;                 // API unreachable — committed file stands
-    h.livePricesGeneratedAt = new Date().toISOString();
-    h.livePricesSource = `browser · ${ok}/${uniq.length} quotes`;
-    // Display prices follow the fresh quotes too, not just the hit detection.
-    for (const [t, q] of results) if (q?.current != null) h.todayClose[t] = q.current;
-    return true;
+    if (ok) {                              // whatever failed keeps its committed price
+      h.livePricesGeneratedAt = new Date().toISOString();
+      h.livePricesSource = `browser · ${ok}/${uniq.length} quotes`;
+      // Display prices follow the fresh quotes too, not just the hit detection.
+      for (const [t, q] of results) if (q?.current != null) h.todayClose[t] = q.current;
+    }
+    return { ok, total: uniq.length };
   })();
-  state.cache.quotesInFlight = job;
-  try { return await job; } finally { state.cache.quotesInFlight = null; }
+  const entry = { key, promise: job };
+  state.cache.quotesInFlight = entry;
+  try { return await job; } finally { if (state.cache.quotesInFlight === entry) state.cache.quotesInFlight = null; }
 }
 
 // Is live-prices.json actually from today? The file is committed by a
@@ -6634,9 +6643,15 @@ async function handleLiveRefresh() {
   try {
     // force: bypass the 60s TTL for an explicit click; the in-flight guard
     // inside still prevents overlapping the background pull.
-    const changed = await refreshLiveQuotes(tickers, { force: true });
-    if (!changed) throw new Error("no quotes retrieved");
-    showLiveRefreshModal("done", `Live prices updated ${relativeTimeFrom(h.livePricesGeneratedAt)}`);
+    const { ok, total } = await refreshLiveQuotes(tickers, { force: true });
+    if (!ok) throw new Error("no quotes retrieved");
+    if (ok < total) {
+      // Some names came back, some didn't — say so, rather than claiming a
+      // full refresh while part of the basket still shows its old price.
+      showLiveRefreshModal("partial", `Refreshed ${ok} of ${total} — the rest kept their last price.`);
+    } else {
+      showLiveRefreshModal("done", `Live prices updated ${relativeTimeFrom(h.livePricesGeneratedAt)}`);
+    }
     if (state.activeTab === "active") renderActive();     // reflect the new prices
   } catch {
     showLiveRefreshModal("error", "Couldn't refresh live prices right now — showing the last good quotes.");
@@ -6664,6 +6679,9 @@ function showLiveRefreshModal(kind, msg) {
   } else if (kind === "done") {
     el.innerHTML = card("ring-emerald-200", `<span class="text-emerald-500 text-xl leading-none">✓</span>`, "Prices refreshed", msg);
     setTimeout(closeLiveRefreshModal, 1800);
+  } else if (kind === "partial") {
+    el.innerHTML = card("ring-amber-200", `<span class="text-amber-500 text-xl leading-none">⚠</span>`, "Partly refreshed", msg);
+    setTimeout(closeLiveRefreshModal, 2800);
   } else {
     el.innerHTML = card("ring-rose-200", `<span class="text-rose-500 text-xl leading-none">!</span>`, "Refresh failed", msg);
     setTimeout(closeLiveRefreshModal, 2800);
