@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-08-09T02:29:59.942Z",
+  "generated_at": "2026-08-10T02:35:11.363Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 4,
+  "total_entities_seen": 8,
   "flagged_companies": {
     "INDNIPPON": {
       "primary_name": "India Power Corporation",
@@ -21,10 +21,22 @@
           "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh"
         }
       ],
-      "first_seen_at": "2026-08-09T02:29:59.942Z"
+      "first_seen_at": "2026-08-10T02:35:11.362Z"
     }
   },
   "unmatched_sample": [
+    {
+      "name": "Ola Electric",
+      "type": "sebi-fine",
+      "source": "Mint — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Delhivery",
+      "type": "sebi-investigation",
+      "source": "Mint — SEBI topic (news)",
+      "origin": "scraper"
+    },
     {
       "name": "Zee",
       "type": "sebi-ban",
@@ -42,6 +54,18 @@
       "type": "sebi-fine",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
+    },
+    {
+      "name": "Zee Entertainment",
+      "type": "sebi-fine",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Zee Entertainment",
+      "type": "sebi-ban",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
     }
   ],
   "sources": [
@@ -49,34 +73,81 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-09T02:29:40.426Z",
+      "at": "2026-08-10T02:34:49.881Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 1,
-      "total_extracted": 1,
+      "total_extracted_raw": 7,
+      "total_extracted": 7,
       "prefilter_sample": [
         {
-          "name": "Diageo",
+          "name": "Ola Electric",
+          "order_type": "sebi-fine",
+          "is_listed_entity": true,
+          "snippet": "Auditor red-flags Ola Electric’s results over PLI fine reversal move."
+        },
+        {
+          "name": "Technocraft Ventures",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "India warned Diageo that its whisky's ‘matured in American oak casks’ claim was misleading."
+          "snippet": "Technocraft Ventures IPO Day 2 LIVE: GMP jumps! Subscription status, review, other details — apply or not?"
+        },
+        {
+          "name": "Ardee Industries",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Ardee Industries IPO allotment status in focus. GMP, how to check status online — a step-by-step guide."
+        },
+        {
+          "name": "Vodafone Idea",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Stocks to watch: Vodafone Idea, SBI, Titan among shares in focus today; check list here."
+        },
+        {
+          "name": "Delhivery",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": true,
+          "snippet": "SEBI reveals ₹3,811 crore unclaimed in mutual funds in FY26."
+        },
+        {
+          "name": "SBI",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Stocks to watch: Vodafone Idea, SBI, Titan among shares in focus today; check list here."
+        },
+        {
+          "name": "Titan",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Stocks to watch: Vodafone Idea, SBI, Titan among shares in focus today; check list here."
         }
       ],
-      "after_filter_count": 0,
+      "after_filter_count": 2,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 1,
+        "no_sebi_signal_in_snippet": 5,
         "resolved_in_favour": 0,
         "no_name": 0
       },
-      "sample": []
+      "sample": [
+        {
+          "name": "Ola Electric",
+          "order_type": "sebi-fine",
+          "snippet": "Auditor red-flags Ola Electric’s results over PLI fine reversal move."
+        },
+        {
+          "name": "Delhivery",
+          "order_type": "sebi-investigation",
+          "snippet": "SEBI reveals ₹3,811 crore unclaimed in mutual funds in FY26."
+        }
+      ]
     },
     {
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-09T02:29:45.259Z",
+      "at": "2026-08-10T02:34:57.518Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -109,13 +180,19 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-09T02:29:49.948Z",
+      "at": "2026-08-10T02:35:00.762Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 3,
-      "total_extracted": 3,
+      "total_extracted_raw": 5,
+      "total_extracted": 5,
       "prefilter_sample": [
+        {
+          "name": "India Power Corporation",
+          "order_type": "settlement",
+          "is_listed_entity": true,
+          "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh"
+        },
         {
           "name": "Zee Entertainment",
           "order_type": "sebi-ban",
@@ -129,13 +206,19 @@
           "snippet": "Sebi penalises SME firm Kalahridhaan Trendz, promoters for misleading disclosures"
         },
         {
-          "name": "India Power Corporation",
-          "order_type": "settlement",
+          "name": "Zee Entertainment",
+          "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh"
+          "snippet": "Sebi imposes penalty of Rs 1.48 crore on Zee Entertainment"
+        },
+        {
+          "name": "Zee Entertainment",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bans Zee's Subhash Chandra, Punit Goenka from markets for a year"
         }
       ],
-      "after_filter_count": 3,
+      "after_filter_count": 5,
       "dropped_counts": {
         "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
@@ -144,6 +227,11 @@
       },
       "sample": [
         {
+          "name": "India Power Corporation",
+          "order_type": "settlement",
+          "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh"
+        },
+        {
           "name": "Zee Entertainment",
           "order_type": "sebi-ban",
           "snippet": "Zee shares tumble 12% after Sebi action against Subhash Chandra, Punit Goenka"
@@ -154,9 +242,14 @@
           "snippet": "Sebi penalises SME firm Kalahridhaan Trendz, promoters for misleading disclosures"
         },
         {
-          "name": "India Power Corporation",
-          "order_type": "settlement",
-          "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh"
+          "name": "Zee Entertainment",
+          "order_type": "sebi-fine",
+          "snippet": "Sebi imposes penalty of Rs 1.48 crore on Zee Entertainment"
+        },
+        {
+          "name": "Zee Entertainment",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bans Zee's Subhash Chandra, Punit Goenka from markets for a year"
         }
       ]
     },
@@ -164,7 +257,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-08-09T02:29:58.219Z",
+      "at": "2026-08-10T02:35:09.040Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
