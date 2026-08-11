@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-08-10T11:36:56.862Z",
+  "generated_at": "2026-08-11T02:28:36.889Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 5,
+  "total_entities_seen": 8,
   "flagged_companies": {
     "INDNIPPON": {
       "primary_name": "India Power Corporation",
       "order_type": "settlement",
-      "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh.",
+      "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh",
       "source_url": "https://economictimes.indiatimes.com/topic/sebi",
       "source_label": "Economic Times — SEBI topic (news)",
       "origins": [
@@ -18,28 +18,46 @@
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
           "order_type": "settlement",
-          "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh."
-        },
-        {
-          "source": "Economic Times — SEBI topic (news)",
-          "origin": "scraper",
-          "order_type": "settlement",
-          "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh."
+          "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh"
         }
       ],
-      "first_seen_at": "2026-08-10T11:36:56.862Z"
+      "first_seen_at": "2026-08-11T02:28:36.889Z"
     }
   },
   "unmatched_sample": [
     {
+      "name": "SEBI",
+      "type": "other",
+      "source": "Mint — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "SEBI",
+      "type": "other",
+      "source": "Mint — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "SEBI",
+      "type": "other",
+      "source": "Mint — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
       "name": "Zee",
-      "type": "sebi-ban",
+      "type": "sebi-fine",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Zee Entertainment",
+      "name": "Zee Entertainment Enterprises Limited",
       "type": "sebi-ban",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Zee Entertainment Enterprises Limited",
+      "type": "sebi-fine",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -55,76 +73,62 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-10T11:36:15.040Z",
+      "at": "2026-08-11T02:28:23.646Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 8,
-      "total_extracted": 8,
+      "total_extracted_raw": 3,
+      "total_extracted": 3,
       "prefilter_sample": [
         {
           "name": "SEBI",
           "order_type": "other",
-          "is_listed_entity": false,
+          "is_listed_entity": true,
           "snippet": "SEBI reveals ₹3,811 crore unclaimed in mutual funds in FY26; all FAQs answered on how you can check and recover it"
         },
         {
           "name": "SEBI",
           "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Mutual fund schemes with negative returns surge 3-fold in FY26; only 198 deliver over 10% returns: SEBI annual report"
+          "is_listed_entity": true,
+          "snippet": "SEBI sees fewer SAT appeals, sharp fall in settlement collections in FY26"
         },
         {
           "name": "SEBI",
           "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "SEBI’s Project Sudarsan flags 20,000 fraudulent posts as 62% of investors are influenced by finfluencers"
-        },
-        {
-          "name": "SEBI",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi to cut routine checks by two-thirds, focus on high-risk players"
-        },
-        {
-          "name": "SEBI",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi pitches greater role for clearing corporations in settlements"
-        },
-        {
-          "name": "SEBI",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi sees fewer SAT appeals, sharp fall in settlement collections in FY26"
-        },
-        {
-          "name": "SEBI",
-          "order_type": "other",
-          "is_listed_entity": false,
+          "is_listed_entity": true,
           "snippet": "Sebi to simplify rules, deepen markets, ramp up technology use in FY27"
-        },
-        {
-          "name": "SEBI",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi releases consultation paper on separate rulebook for clearing corporations; seeks public comments till Aug 27"
         }
       ],
-      "after_filter_count": 0,
+      "after_filter_count": 3,
       "dropped_counts": {
-        "not_listed": 8,
+        "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
-      "sample": []
+      "sample": [
+        {
+          "name": "SEBI",
+          "order_type": "other",
+          "snippet": "SEBI reveals ₹3,811 crore unclaimed in mutual funds in FY26; all FAQs answered on how you can check and recover it"
+        },
+        {
+          "name": "SEBI",
+          "order_type": "other",
+          "snippet": "SEBI sees fewer SAT appeals, sharp fall in settlement collections in FY26"
+        },
+        {
+          "name": "SEBI",
+          "order_type": "other",
+          "snippet": "Sebi to simplify rules, deepen markets, ramp up technology use in FY27"
+        }
+      ]
     },
     {
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-10T11:36:21.900Z",
+      "at": "2026-08-11T02:28:28.738Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -133,7 +137,7 @@
       "prefilter_sample": [
         {
           "name": "Zee",
-          "order_type": "sebi-ban",
+          "order_type": "sebi-fine",
           "is_listed_entity": true,
           "snippet": "Sebi bars Punit Goenka, Chandra for a year; fines Zee ₹1.48 crore"
         }
@@ -148,7 +152,7 @@
       "sample": [
         {
           "name": "Zee",
-          "order_type": "sebi-ban",
+          "order_type": "sebi-fine",
           "snippet": "Sebi bars Punit Goenka, Chandra for a year; fines Zee ₹1.48 crore"
         }
       ]
@@ -157,7 +161,7 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-10T11:36:32.228Z",
+      "at": "2026-08-11T02:28:30.983Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -165,28 +169,28 @@
       "total_extracted": 4,
       "prefilter_sample": [
         {
-          "name": "Zee Entertainment",
-          "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Zee shares tumble 12% after Sebi action against Subhash Chandra, Punit Goenka"
-        },
-        {
           "name": "India Power Corporation",
           "order_type": "settlement",
           "is_listed_entity": true,
-          "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh."
+          "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh"
+        },
+        {
+          "name": "Zee Entertainment Enterprises Limited",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars Zee's Subhash Chandra, Punit Goenka from markets for a year"
+        },
+        {
+          "name": "Zee Entertainment Enterprises Limited",
+          "order_type": "sebi-fine",
+          "is_listed_entity": true,
+          "snippet": "Sebi imposes penalty of Rs 1.48 crore on Zee Entertainment"
         },
         {
           "name": "Kalahridhaan Trendz",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Sebi penalises SME firm Kalahridhaan Trendz, promoters for misleading disclosures."
-        },
-        {
-          "name": "India Power Corporation",
-          "order_type": "settlement",
-          "is_listed_entity": true,
-          "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh."
+          "snippet": "Sebi penalises SME firm Kalahridhaan Trendz, promoters for misleading disclosures"
         }
       ],
       "after_filter_count": 4,
@@ -198,24 +202,24 @@
       },
       "sample": [
         {
-          "name": "Zee Entertainment",
-          "order_type": "sebi-ban",
-          "snippet": "Zee shares tumble 12% after Sebi action against Subhash Chandra, Punit Goenka"
-        },
-        {
           "name": "India Power Corporation",
           "order_type": "settlement",
-          "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh."
+          "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh"
+        },
+        {
+          "name": "Zee Entertainment Enterprises Limited",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars Zee's Subhash Chandra, Punit Goenka from markets for a year"
+        },
+        {
+          "name": "Zee Entertainment Enterprises Limited",
+          "order_type": "sebi-fine",
+          "snippet": "Sebi imposes penalty of Rs 1.48 crore on Zee Entertainment"
         },
         {
           "name": "Kalahridhaan Trendz",
           "order_type": "sebi-fine",
-          "snippet": "Sebi penalises SME firm Kalahridhaan Trendz, promoters for misleading disclosures."
-        },
-        {
-          "name": "India Power Corporation",
-          "order_type": "settlement",
-          "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh."
+          "snippet": "Sebi penalises SME firm Kalahridhaan Trendz, promoters for misleading disclosures"
         }
       ]
     },
@@ -223,29 +227,16 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-08-10T11:36:41.398Z",
+      "at": "2026-08-11T02:28:35.074Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 2,
-      "total_extracted": 2,
-      "prefilter_sample": [
-        {
-          "name": "CITRUS CHECK INNS LIMITED",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)."
-        },
-        {
-          "name": "ROYAL TWINKLE STAR CLUB PVT. LTD",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)."
-        }
-      ],
+      "total_extracted_raw": 0,
+      "total_extracted": 0,
+      "prefilter_sample": [],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 2,
+        "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
