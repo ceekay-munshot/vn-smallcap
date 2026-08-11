@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-11T07:47:53.361Z",
+  "generated_at": "2026-08-11T11:30:09.676Z",
   "source": "Yahoo Finance chart endpoint",
   "note": "Pre-open context. GIFT Nifty has no free stable feed; S&P futures plus the Asian session carry the same overnight information.",
   "giftNifty": null,
@@ -9,10 +9,10 @@
       "symbol": "ES=F",
       "label": "S&P 500 futures",
       "role": "overnight",
-      "last": 7777,
+      "last": 7788,
       "prevClose": 7734.75,
-      "changePct": 0.5462361420860429,
-      "asOf": "2026-08-11T07:37:48.000Z"
+      "changePct": 0.6884514690196797,
+      "asOf": "2026-08-11T11:20:03.000Z"
     },
     "nikkei": {
       "key": "nikkei",
@@ -29,49 +29,49 @@
       "symbol": "^HSI",
       "label": "Hang Seng",
       "role": "asia",
-      "last": 25671.79,
+      "last": 25652.82,
       "prevClose": 25852.92,
-      "changePct": -0.7006171836682173,
-      "asOf": "2026-08-11T07:32:50.000Z"
+      "changePct": -0.7739938080495334,
+      "asOf": "2026-08-11T08:08:34.000Z"
     },
     "vix": {
       "key": "vix",
       "symbol": "^INDIAVIX",
       "label": "India VIX",
       "role": "vol",
-      "last": 12.085,
+      "last": 11.855,
       "prevClose": 12.06,
-      "changePct": 0.20729684908789014,
-      "asOf": "2026-08-11T07:47:51.000Z"
+      "changePct": -1.6998341625207303,
+      "asOf": "2026-08-11T10:12:53.000Z"
     },
     "nifty": {
       "key": "nifty",
       "symbol": "^NSEI",
       "label": "Nifty 50",
       "role": "home",
-      "last": 24445.5,
+      "last": 24471.7,
       "prevClose": 24624.65,
-      "changePct": -0.7275230307842051,
-      "asOf": "2026-08-11T07:47:51.000Z"
+      "changePct": -0.621125579449866,
+      "asOf": "2026-08-11T10:01:12.000Z"
     },
     "smallcap": {
       "key": "smallcap",
       "symbol": "NIFTYSMLCAP250.NS",
       "label": "Nifty Smallcap 250",
       "role": "home",
-      "last": 18374.25,
+      "last": 18381.85,
       "prevClose": 18321.95,
-      "changePct": 0.28544996575146087,
-      "asOf": "2026-08-11T07:47:52.000Z"
+      "changePct": 0.32693026670194136,
+      "asOf": "2026-08-11T10:01:12.000Z"
     }
   },
   "signal": {
-    "lean": 1.2755772633266522,
+    "lean": 1.3283407706981416,
     "dir": "up",
-    "vix": 12.085,
-    "vixChange": 0.20729684908789014,
+    "vix": 11.855,
+    "vixChange": -1.6998341625207303,
     "vixBand": "calm",
-    "tolerancePct": 1.27,
+    "tolerancePct": 1.3,
     "headline": "Overnight positive — expect a higher open, limits may not fill"
   }
 }
