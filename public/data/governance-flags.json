@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-08-11T02:28:36.889Z",
+  "generated_at": "2026-08-11T11:29:46.311Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 8,
+  "total_entities_seen": 9,
   "flagged_companies": {
     "INDNIPPON": {
       "primary_name": "India Power Corporation",
@@ -21,49 +21,55 @@
           "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh"
         }
       ],
-      "first_seen_at": "2026-08-11T02:28:36.889Z"
+      "first_seen_at": "2026-08-11T11:29:46.310Z"
     }
   },
   "unmatched_sample": [
     {
-      "name": "SEBI",
+      "name": "Zee Entertainment Enterprises",
       "type": "other",
-      "source": "Mint — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "SEBI",
-      "type": "other",
-      "source": "Mint — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "SEBI",
-      "type": "other",
-      "source": "Mint — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Zee",
-      "type": "sebi-fine",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Zee Entertainment Enterprises Limited",
+      "name": "Zostel",
+      "type": "other",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Ardee Industries",
+      "type": "other",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Zee Entertainment",
       "type": "sebi-ban",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Zee Entertainment Enterprises Limited",
-      "type": "sebi-fine",
+      "name": "Zee Entertainment",
+      "type": "sebi-action",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
       "name": "Kalahridhaan Trendz",
       "type": "sebi-fine",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Zee Entertainment",
+      "type": "sebi-penalty",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Zee Entertainment",
+      "type": "sebi-ban",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -73,87 +79,129 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-11T02:28:23.646Z",
+      "at": "2026-08-11T11:28:52.014Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 3,
-      "total_extracted": 3,
+      "total_extracted_raw": 6,
+      "total_extracted": 6,
       "prefilter_sample": [
         {
-          "name": "SEBI",
+          "name": "Securities Appellate Tribunal",
           "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "SEBI reveals ₹3,811 crore unclaimed in mutual funds in FY26; all FAQs answered on how you can check and recover it"
+          "is_listed_entity": false,
+          "snippet": "SAT backlog hits six-year high as old cases pile up"
         },
         {
           "name": "SEBI",
           "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "SEBI sees fewer SAT appeals, sharp fall in settlement collections in FY26"
+          "is_listed_entity": false,
+          "snippet": "Sebi proposes more room for companies to spread out debt repayments"
         },
         {
           "name": "SEBI",
           "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Sebi to simplify rules, deepen markets, ramp up technology use in FY27"
+          "is_listed_entity": false,
+          "snippet": "Sebi reveals ₹3,811 crore unclaimed in mutual funds in FY26; all FAQs answered on how you can check and recover it"
+        },
+        {
+          "name": "SEBI",
+          "order_type": "other",
+          "is_listed_entity": false,
+          "snippet": "Mutual fund schemes with negative returns surge 3-fold in FY26; only 198 deliver over 10% returns: SEBI annual report"
+        },
+        {
+          "name": "SEBI",
+          "order_type": "other",
+          "is_listed_entity": false,
+          "snippet": "SEBI’s Project Sudarsan flags 20,000 fraudulent posts as 62% of investors are influenced by finfluencers"
+        },
+        {
+          "name": "SEBI",
+          "order_type": "other",
+          "is_listed_entity": false,
+          "snippet": "Sebi sees fewer SAT appeals, sharp fall in settlement collections in FY26"
         }
       ],
-      "after_filter_count": 3,
+      "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 0,
+        "not_listed": 6,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
-      "sample": [
-        {
-          "name": "SEBI",
-          "order_type": "other",
-          "snippet": "SEBI reveals ₹3,811 crore unclaimed in mutual funds in FY26; all FAQs answered on how you can check and recover it"
-        },
-        {
-          "name": "SEBI",
-          "order_type": "other",
-          "snippet": "SEBI sees fewer SAT appeals, sharp fall in settlement collections in FY26"
-        },
-        {
-          "name": "SEBI",
-          "order_type": "other",
-          "snippet": "Sebi to simplify rules, deepen markets, ramp up technology use in FY27"
-        }
-      ]
+      "sample": []
     },
     {
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-11T02:28:28.738Z",
+      "at": "2026-08-11T11:29:25.892Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 1,
-      "total_extracted": 1,
+      "total_extracted_raw": 6,
+      "total_extracted": 6,
       "prefilter_sample": [
         {
-          "name": "Zee",
-          "order_type": "sebi-fine",
+          "name": "Siemens",
+          "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Sebi bars Punit Goenka, Chandra for a year; fines Zee ₹1.48 crore"
+          "snippet": "Siemens Q1 results profit declines 18% to ₹343 cr; revenue at ₹4,714 cr"
+        },
+        {
+          "name": "HDFC Bank",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "HDFC Bank stock hits 2-year low, tanks 12% in one month"
+        },
+        {
+          "name": "Zee Entertainment Enterprises",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Zee, CEO Goenka approach SAT against Sebi order restricting market access"
+        },
+        {
+          "name": "Zostel",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Zostel withdraws plea seeking Sebi action over claimed 7% stake in Oyo"
+        },
+        {
+          "name": "Ardee Industries",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Sebi approves nine IPOs; Ardee Industries IPO booked 133.66x on Day 3"
+        },
+        {
+          "name": "Shiprocket",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Shiprocket's ₹1,617.5-crore IPO to open Aug 12; price band fixed at ₹92-97"
         }
       ],
-      "after_filter_count": 1,
+      "after_filter_count": 3,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 0,
+        "no_sebi_signal_in_snippet": 3,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
-          "name": "Zee",
-          "order_type": "sebi-fine",
-          "snippet": "Sebi bars Punit Goenka, Chandra for a year; fines Zee ₹1.48 crore"
+          "name": "Zee Entertainment Enterprises",
+          "order_type": "other",
+          "snippet": "Zee, CEO Goenka approach SAT against Sebi order restricting market access"
+        },
+        {
+          "name": "Zostel",
+          "order_type": "other",
+          "snippet": "Zostel withdraws plea seeking Sebi action over claimed 7% stake in Oyo"
+        },
+        {
+          "name": "Ardee Industries",
+          "order_type": "other",
+          "snippet": "Sebi approves nine IPOs; Ardee Industries IPO booked 133.66x on Day 3"
         }
       ]
     },
@@ -161,12 +209,12 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-11T02:28:30.983Z",
+      "at": "2026-08-11T11:29:32.106Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 4,
-      "total_extracted": 4,
+      "total_extracted_raw": 6,
+      "total_extracted": 6,
       "prefilter_sample": [
         {
           "name": "India Power Corporation",
@@ -175,25 +223,37 @@
           "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh"
         },
         {
-          "name": "Zee Entertainment Enterprises Limited",
+          "name": "Zee Entertainment",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Sebi bars Zee's Subhash Chandra, Punit Goenka from markets for a year"
+          "snippet": "Zee shares tumble 12% after Sebi action against Subhash Chandra, Punit Goenka"
         },
         {
-          "name": "Zee Entertainment Enterprises Limited",
-          "order_type": "sebi-fine",
+          "name": "Zee Entertainment",
+          "order_type": "sebi-action",
           "is_listed_entity": true,
-          "snippet": "Sebi imposes penalty of Rs 1.48 crore on Zee Entertainment"
+          "snippet": "ZEE promoter fundraise plan faces uncertainty after Sebi's market ban"
         },
         {
           "name": "Kalahridhaan Trendz",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
           "snippet": "Sebi penalises SME firm Kalahridhaan Trendz, promoters for misleading disclosures"
+        },
+        {
+          "name": "Zee Entertainment",
+          "order_type": "sebi-penalty",
+          "is_listed_entity": true,
+          "snippet": "Sebi imposes penalty of Rs 1.48 crore on Zee Entertainment"
+        },
+        {
+          "name": "Zee Entertainment",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bans Zee's Subhash Chandra, Punit Goenka from markets for a year"
         }
       ],
-      "after_filter_count": 4,
+      "after_filter_count": 6,
       "dropped_counts": {
         "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
@@ -207,19 +267,29 @@
           "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh"
         },
         {
-          "name": "Zee Entertainment Enterprises Limited",
+          "name": "Zee Entertainment",
           "order_type": "sebi-ban",
-          "snippet": "Sebi bars Zee's Subhash Chandra, Punit Goenka from markets for a year"
+          "snippet": "Zee shares tumble 12% after Sebi action against Subhash Chandra, Punit Goenka"
         },
         {
-          "name": "Zee Entertainment Enterprises Limited",
-          "order_type": "sebi-fine",
-          "snippet": "Sebi imposes penalty of Rs 1.48 crore on Zee Entertainment"
+          "name": "Zee Entertainment",
+          "order_type": "sebi-action",
+          "snippet": "ZEE promoter fundraise plan faces uncertainty after Sebi's market ban"
         },
         {
           "name": "Kalahridhaan Trendz",
           "order_type": "sebi-fine",
           "snippet": "Sebi penalises SME firm Kalahridhaan Trendz, promoters for misleading disclosures"
+        },
+        {
+          "name": "Zee Entertainment",
+          "order_type": "sebi-penalty",
+          "snippet": "Sebi imposes penalty of Rs 1.48 crore on Zee Entertainment"
+        },
+        {
+          "name": "Zee Entertainment",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bans Zee's Subhash Chandra, Punit Goenka from markets for a year"
         }
       ]
     },
@@ -227,7 +297,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-08-11T02:28:35.074Z",
+      "at": "2026-08-11T11:29:44.174Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
