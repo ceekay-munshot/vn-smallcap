@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-08-12T11:29:00.358Z",
+  "generated_at": "2026-08-13T02:48:02.694Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 9,
+  "total_entities_seen": 10,
   "flagged_companies": {
     "INDNIPPON": {
       "primary_name": "India Power Corporation",
@@ -21,19 +21,31 @@
           "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh"
         }
       ],
-      "first_seen_at": "2026-08-12T11:29:00.358Z"
+      "first_seen_at": "2026-08-13T02:48:02.694Z"
     }
   },
   "unmatched_sample": [
     {
-      "name": "HCLTech",
-      "type": "sebi-investigation",
+      "name": "Zee Entertainment",
+      "type": "sebi-ban",
       "source": "Mint — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Zee",
+      "name": "Paytm",
+      "type": "show-cause",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Calcutta Stock Exchange",
       "type": "other",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Zee",
+      "type": "enforcement-order",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -44,20 +56,8 @@
       "origin": "scraper"
     },
     {
-      "name": "Ardee Industries",
-      "type": "other",
-      "source": "Business Standard — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Zee Entertainment Enterprises Limited",
-      "type": "sebi-ban",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Zee Entertainment Enterprises Limited",
-      "type": "sebi-ban",
+      "name": "Paytm",
+      "type": "sebi-fine",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -68,7 +68,13 @@
       "origin": "scraper"
     },
     {
-      "name": "Zee Entertainment Enterprises Limited",
+      "name": "Zee Entertainment",
+      "type": "sebi-ban",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Zee Entertainment",
       "type": "sebi-fine",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
@@ -79,50 +85,62 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-12T11:28:38.743Z",
+      "at": "2026-08-13T02:47:22.815Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 4,
-      "total_extracted": 4,
+      "total_extracted_raw": 6,
+      "total_extracted": 6,
       "prefilter_sample": [
         {
-          "name": "SEBI",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "SEBI reveals ₹3,811 crore unclaimed in mutual funds in FY26; all FAQs answered on how you can check and recover it."
-        },
-        {
-          "name": "SEBI",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "SEBI’s Project Sudarsan flags 20,000 fraudulent posts as 62% of investors are influenced by finfluencers."
-        },
-        {
-          "name": "SEBI",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi proposes more room for companies to spread out debt repayments."
-        },
-        {
-          "name": "HCLTech",
-          "order_type": "sebi-investigation",
+          "name": "Zee Entertainment",
+          "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "HCLTech hacking claims: IT major says no evidence of systems or client breach, further investigation underway."
+          "snippet": "Zee’s counsel said the funds are needed for day-to-day operations, while Sebi defended the market-access ban over alleged promoter-linked violations"
+        },
+        {
+          "name": "Sebi",
+          "order_type": "sebi-propose",
+          "is_listed_entity": false,
+          "snippet": "Sebi proposes wider FPI access to non-agri commodity derivatives"
+        },
+        {
+          "name": "Sebi",
+          "order_type": "sebi-propose",
+          "is_listed_entity": false,
+          "snippet": "Sebi proposes more room for companies to spread out debt repayments"
+        },
+        {
+          "name": "Sebi",
+          "order_type": "sebi-reveal",
+          "is_listed_entity": false,
+          "snippet": "SEBI reveals ₹3,811 crore unclaimed in mutual funds in FY26; all FAQs answered on how you can check and recover it"
+        },
+        {
+          "name": "Sebi",
+          "order_type": "sebi-propose",
+          "is_listed_entity": false,
+          "snippet": "Sebi proposes more room for companies to spread out debt repayments"
+        },
+        {
+          "name": "Sebi",
+          "order_type": "sebi-reveal",
+          "is_listed_entity": false,
+          "snippet": "SEBI reveals ₹3,811 crore unclaimed in mutual funds in FY26; all FAQs answered on how you can check and recover it"
         }
       ],
       "after_filter_count": 1,
       "dropped_counts": {
-        "not_listed": 3,
+        "not_listed": 5,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
-          "name": "HCLTech",
-          "order_type": "sebi-investigation",
-          "snippet": "HCLTech hacking claims: IT major says no evidence of systems or client breach, further investigation underway."
+          "name": "Zee Entertainment",
+          "order_type": "sebi-ban",
+          "snippet": "Zee’s counsel said the funds are needed for day-to-day operations, while Sebi defended the market-access ban over allege"
         }
       ]
     },
@@ -130,72 +148,65 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-12T11:28:44.900Z",
+      "at": "2026-08-13T02:47:29.620Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 6,
-      "total_extracted": 6,
+      "total_extracted_raw": 4,
+      "total_extracted": 4,
       "prefilter_sample": [
         {
-          "name": "Zee",
+          "name": "Paytm",
+          "order_type": "show-cause",
+          "is_listed_entity": true,
+          "snippet": "Paytm CEO, CFO get Sebi notice over 2023 disclosure curbing small loans."
+        },
+        {
+          "name": "Calcutta Stock Exchange",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Zee, CEO Goenka approach SAT against Sebi order restricting market access"
+          "snippet": "Calcutta Stock Exchange has not submitted formal revival plan to Sebi: Govt."
+        },
+        {
+          "name": "Zee",
+          "order_type": "enforcement-order",
+          "is_listed_entity": true,
+          "snippet": "Zee, CEO Goenka approach SAT against Sebi order restricting market access."
         },
         {
           "name": "Zostel",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Zostel withdraws plea seeking Sebi action over claimed 7% stake in Oyo"
-        },
-        {
-          "name": "Sebi",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi measures reduce equity F&O losses for retail investors in FY26"
-        },
-        {
-          "name": "HDFC Bank",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "HDFC Bank stock hits 2-year low, tanks 12% in one month"
-        },
-        {
-          "name": "Shiprocket",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Shiprocket's ₹1,617.5-crore IPO to open Aug 12; price band fixed at ₹92-97"
-        },
-        {
-          "name": "Ardee Industries",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Sebi approves nine IPOs; Ardee Industries IPO booked 133.66x on Day 3"
+          "snippet": "Zostel withdraws plea seeking Sebi action over claimed 7% stake in Oyo."
         }
       ],
-      "after_filter_count": 3,
+      "after_filter_count": 4,
       "dropped_counts": {
-        "not_listed": 1,
-        "no_sebi_signal_in_snippet": 2,
+        "not_listed": 0,
+        "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
-          "name": "Zee",
+          "name": "Paytm",
+          "order_type": "show-cause",
+          "snippet": "Paytm CEO, CFO get Sebi notice over 2023 disclosure curbing small loans."
+        },
+        {
+          "name": "Calcutta Stock Exchange",
           "order_type": "other",
-          "snippet": "Zee, CEO Goenka approach SAT against Sebi order restricting market access"
+          "snippet": "Calcutta Stock Exchange has not submitted formal revival plan to Sebi: Govt."
+        },
+        {
+          "name": "Zee",
+          "order_type": "enforcement-order",
+          "snippet": "Zee, CEO Goenka approach SAT against Sebi order restricting market access."
         },
         {
           "name": "Zostel",
           "order_type": "other",
-          "snippet": "Zostel withdraws plea seeking Sebi action over claimed 7% stake in Oyo"
-        },
-        {
-          "name": "Ardee Industries",
-          "order_type": "other",
-          "snippet": "Sebi approves nine IPOs; Ardee Industries IPO booked 133.66x on Day 3"
+          "snippet": "Zostel withdraws plea seeking Sebi action over claimed 7% stake in Oyo."
         }
       ]
     },
@@ -203,30 +214,24 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-12T11:28:51.958Z",
+      "at": "2026-08-13T02:47:42.129Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 6,
-      "total_extracted": 6,
+      "total_extracted_raw": 5,
+      "total_extracted": 5,
       "prefilter_sample": [
+        {
+          "name": "Paytm",
+          "order_type": "sebi-fine",
+          "is_listed_entity": true,
+          "snippet": "Paytm senior executives get Sebi notice for 'timing' of 2023 regulatory disclosure"
+        },
         {
           "name": "India Power Corporation",
           "order_type": "settlement",
           "is_listed_entity": true,
           "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh"
-        },
-        {
-          "name": "Zee Entertainment Enterprises Limited",
-          "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Zee shares tumble 12% after Sebi action against Subhash Chandra, Punit Goenka"
-        },
-        {
-          "name": "Zee Entertainment Enterprises Limited",
-          "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "ZEE promoter fundraise plan faces uncertainty after Sebi's market ban"
         },
         {
           "name": "Kalahridhaan Trendz",
@@ -235,40 +240,35 @@
           "snippet": "Sebi penalises SME firm Kalahridhaan Trendz, promoters for misleading disclosures"
         },
         {
-          "name": "Zee Entertainment Enterprises Limited",
+          "name": "Zee Entertainment",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Zee shares tumble 12% after Sebi action against Subhash Chandra, Punit Goenka"
+        },
+        {
+          "name": "Zee Entertainment",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
           "snippet": "Sebi imposes penalty of Rs 1.48 crore on Zee Entertainment"
-        },
-        {
-          "name": "Viresh Joshi",
-          "order_type": "sebi-ban",
-          "is_listed_entity": false,
-          "snippet": "Sebi bars former Axis MF dealer Viresh Joshi from securities markets for 7 years front-running case"
         }
       ],
       "after_filter_count": 5,
       "dropped_counts": {
-        "not_listed": 1,
+        "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
+          "name": "Paytm",
+          "order_type": "sebi-fine",
+          "snippet": "Paytm senior executives get Sebi notice for 'timing' of 2023 regulatory disclosure"
+        },
+        {
           "name": "India Power Corporation",
           "order_type": "settlement",
           "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh"
-        },
-        {
-          "name": "Zee Entertainment Enterprises Limited",
-          "order_type": "sebi-ban",
-          "snippet": "Zee shares tumble 12% after Sebi action against Subhash Chandra, Punit Goenka"
-        },
-        {
-          "name": "Zee Entertainment Enterprises Limited",
-          "order_type": "sebi-ban",
-          "snippet": "ZEE promoter fundraise plan faces uncertainty after Sebi's market ban"
         },
         {
           "name": "Kalahridhaan Trendz",
@@ -276,7 +276,12 @@
           "snippet": "Sebi penalises SME firm Kalahridhaan Trendz, promoters for misleading disclosures"
         },
         {
-          "name": "Zee Entertainment Enterprises Limited",
+          "name": "Zee Entertainment",
+          "order_type": "sebi-ban",
+          "snippet": "Zee shares tumble 12% after Sebi action against Subhash Chandra, Punit Goenka"
+        },
+        {
+          "name": "Zee Entertainment",
           "order_type": "sebi-fine",
           "snippet": "Sebi imposes penalty of Rs 1.48 crore on Zee Entertainment"
         }
@@ -286,7 +291,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-08-12T11:28:58.587Z",
+      "at": "2026-08-13T02:47:53.104Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
