@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-16T02:00:02.192Z",
+  "generated_at": "2026-08-17T01:57:06.948Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 10,
+  "total_entities_seen": 8,
   "flagged_companies": {
     "INDNIPPON": {
-      "primary_name": "India Power Corp",
+      "primary_name": "India Power Corporation",
       "order_type": "settlement",
       "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh.",
       "source_url": "https://economictimes.indiatimes.com/topic/sebi",
@@ -21,19 +21,13 @@
           "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh."
         }
       ],
-      "first_seen_at": "2026-08-16T02:00:02.191Z"
+      "first_seen_at": "2026-08-17T01:57:06.947Z"
     }
   },
   "unmatched_sample": [
     {
       "name": "Zee Entertainment",
-      "type": "sebi-penalty",
-      "source": "Mint — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Zee Entertainment",
-      "type": "sebi-investigation",
+      "type": "sebi-ban",
       "source": "Mint — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -51,19 +45,13 @@
     },
     {
       "name": "Paytm",
-      "type": "other",
+      "type": "show-cause",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
     {
       "name": "Zee Entertainment",
       "type": "sebi-ban",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Zee Entertainment",
-      "type": "sebi-fine",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -85,16 +73,16 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-16T01:59:13.109Z",
+      "at": "2026-08-17T01:56:54.014Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 3,
-      "total_extracted": 3,
+      "total_extracted_raw": 2,
+      "total_extracted": 2,
       "prefilter_sample": [
         {
           "name": "Zee Entertainment",
-          "order_type": "sebi-penalty",
+          "order_type": "sebi-ban",
           "is_listed_entity": true,
           "snippet": "Tribunal allows Zee to proceed with fundraise, but keeps market ban intact"
         },
@@ -103,15 +91,9 @@
           "order_type": "sebi-investigation",
           "is_listed_entity": true,
           "snippet": "Sebi said to have examined Deloitte’s role in Zee Entertainment case, given clean chit"
-        },
-        {
-          "name": "Zee Entertainment",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "Zee Entertainment seeks Sebi relief to unlock ₹1,200 crore mutual fund investments"
         }
       ],
-      "after_filter_count": 3,
+      "after_filter_count": 2,
       "dropped_counts": {
         "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
@@ -121,18 +103,13 @@
       "sample": [
         {
           "name": "Zee Entertainment",
-          "order_type": "sebi-penalty",
+          "order_type": "sebi-ban",
           "snippet": "Tribunal allows Zee to proceed with fundraise, but keeps market ban intact"
         },
         {
           "name": "Zee Entertainment",
           "order_type": "sebi-investigation",
           "snippet": "Sebi said to have examined Deloitte’s role in Zee Entertainment case, given clean chit"
-        },
-        {
-          "name": "Zee Entertainment",
-          "order_type": "sebi-investigation",
-          "snippet": "Zee Entertainment seeks Sebi relief to unlock ₹1,200 crore mutual fund investments"
         }
       ]
     },
@@ -140,7 +117,7 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-16T01:59:19.218Z",
+      "at": "2026-08-17T01:56:57.612Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -155,7 +132,7 @@
         },
         {
           "name": "Paytm",
-          "order_type": "other",
+          "order_type": "show-cause",
           "is_listed_entity": true,
           "snippet": "Paytm CEO, CFO get Sebi notice over 2023 disclosure curbing small loans"
         }
@@ -175,7 +152,7 @@
         },
         {
           "name": "Paytm",
-          "order_type": "other",
+          "order_type": "show-cause",
           "snippet": "Paytm CEO, CFO get Sebi notice over 2023 disclosure curbing small loans"
         }
       ]
@@ -184,12 +161,12 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-16T01:59:26.934Z",
+      "at": "2026-08-17T01:57:00.149Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 5,
-      "total_extracted": 5,
+      "total_extracted_raw": 4,
+      "total_extracted": 4,
       "prefilter_sample": [
         {
           "name": "Zee Entertainment",
@@ -198,31 +175,25 @@
           "snippet": "Sebi bans Zee's Subhash Chandra, Punit Goenka from markets for a year."
         },
         {
-          "name": "Zee Entertainment",
-          "order_type": "sebi-fine",
-          "is_listed_entity": true,
-          "snippet": "Sebi imposes penalty of Rs 1.48 crore on Zee Entertainment."
-        },
-        {
           "name": "Paytm",
           "order_type": "show-cause",
           "is_listed_entity": true,
           "snippet": "Paytm management gets Sebi show cause notice over timing of 2023 loan disclosure announcement."
         },
         {
+          "name": "India Power Corporation",
+          "order_type": "settlement",
+          "is_listed_entity": true,
+          "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh."
+        },
+        {
           "name": "Kalahridhaan Trendz",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
           "snippet": "Sebi penalises SME firm Kalahridhaan Trendz, promoters for misleading disclosures."
-        },
-        {
-          "name": "India Power Corp",
-          "order_type": "settlement",
-          "is_listed_entity": true,
-          "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh."
         }
       ],
-      "after_filter_count": 5,
+      "after_filter_count": 4,
       "dropped_counts": {
         "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
@@ -236,24 +207,19 @@
           "snippet": "Sebi bans Zee's Subhash Chandra, Punit Goenka from markets for a year."
         },
         {
-          "name": "Zee Entertainment",
-          "order_type": "sebi-fine",
-          "snippet": "Sebi imposes penalty of Rs 1.48 crore on Zee Entertainment."
-        },
-        {
           "name": "Paytm",
           "order_type": "show-cause",
           "snippet": "Paytm management gets Sebi show cause notice over timing of 2023 loan disclosure announcement."
         },
         {
+          "name": "India Power Corporation",
+          "order_type": "settlement",
+          "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh."
+        },
+        {
           "name": "Kalahridhaan Trendz",
           "order_type": "sebi-fine",
           "snippet": "Sebi penalises SME firm Kalahridhaan Trendz, promoters for misleading disclosures."
-        },
-        {
-          "name": "India Power Corp",
-          "order_type": "settlement",
-          "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh."
         }
       ]
     },
@@ -261,7 +227,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-08-16T01:59:50.236Z",
+      "at": "2026-08-17T01:57:04.130Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
