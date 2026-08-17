@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-16T02:00:46.759Z",
+  "generated_at": "2026-08-17T01:57:49.369Z",
   "source": "Munshot quote API (8 tickers) + Yahoo fallback (1)",
   "note": "Live intraday snapshot per basket ticker. dayHigh/dayLow drive intraday target/SL touch detection; current is the latest traded price.",
   "ticker_count": 9,
@@ -103,7 +103,7 @@
       "yearlyChangePct": 22.37
     },
     "ARTEMISMED": {
-      "current": 314.75,
+      "current": 314.2,
       "open": null,
       "prevClose": 317.85,
       "dayHigh": 319,
