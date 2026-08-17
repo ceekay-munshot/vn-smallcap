@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-17T11:04:55.358Z",
+  "generated_at": "2026-08-17T23:33:44.038Z",
   "source": "Yahoo Finance chart endpoint",
   "note": "Pre-open context. GIFT Nifty has no free stable feed; S&P futures plus the Asian session carry the same overnight information.",
   "giftNifty": null,
@@ -9,10 +9,10 @@
       "symbol": "ES=F",
       "label": "S&P 500 futures",
       "role": "overnight",
-      "last": 7816.75,
+      "last": 7764,
       "prevClose": 7770.5,
-      "changePct": 0.5951997940930376,
-      "asOf": "2026-08-17T10:54:50.000Z"
+      "changePct": -0.08364970079145495,
+      "asOf": "2026-08-17T23:23:20.000Z"
     },
     "nikkei": {
       "key": "nikkei",
@@ -40,8 +40,8 @@
       "label": "India VIX",
       "role": "vol",
       "last": 11.325,
-      "prevClose": 11.86,
-      "changePct": -4.510961214165265,
+      "prevClose": 11.69,
+      "changePct": -3.122326775021389,
       "asOf": "2026-08-17T10:12:44.000Z"
     },
     "nifty": {
@@ -60,18 +60,18 @@
       "label": "Nifty Smallcap 250",
       "role": "home",
       "last": 18312.2,
-      "prevClose": 18381.85,
-      "changePct": -0.37890636687818446,
+      "prevClose": 18335.65,
+      "changePct": -0.12789292989340284,
       "asOf": "2026-08-17T10:01:07.000Z"
     }
   },
   "signal": {
-    "lean": 0.6707798565097817,
-    "dir": "up",
+    "lean": 0.3313551090675354,
+    "dir": "flat",
     "vix": 11.325,
-    "vixChange": -4.510961214165265,
+    "vixChange": -3.122326775021389,
     "vixBand": "calm",
-    "tolerancePct": 0.9,
-    "headline": "Overnight positive — expect a higher open, limits may not fill"
+    "tolerancePct": 0.7,
+    "headline": "Overnight quiet — a normal open"
   }
 }
