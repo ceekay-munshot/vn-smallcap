@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-17T11:04:36.243Z",
+  "generated_at": "2026-08-18T01:52:43.434Z",
   "source_count": 4,
   "curated_baseline_count": 0,
   "total_entities_seen": 9,
@@ -21,13 +21,13 @@
           "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh."
         }
       ],
-      "first_seen_at": "2026-08-17T11:04:36.243Z"
+      "first_seen_at": "2026-08-18T01:52:43.434Z"
     }
   },
   "unmatched_sample": [
     {
       "name": "Zee Entertainment",
-      "type": "sebi-ban",
+      "type": "sebi-penalty",
       "source": "Mint — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -39,7 +39,7 @@
     },
     {
       "name": "Zee Entertainment",
-      "type": "sebi-investigation",
+      "type": "sebi-relief",
       "source": "Mint — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -51,7 +51,7 @@
     },
     {
       "name": "Paytm",
-      "type": "other",
+      "type": "show-cause",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -79,7 +79,7 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-17T11:04:12.289Z",
+      "at": "2026-08-18T01:52:17.344Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -88,7 +88,7 @@
       "prefilter_sample": [
         {
           "name": "Zee Entertainment",
-          "order_type": "sebi-ban",
+          "order_type": "sebi-penalty",
           "is_listed_entity": true,
           "snippet": "Tribunal allows Zee to proceed with fundraise, but keeps market ban intact"
         },
@@ -96,13 +96,13 @@
           "name": "Zee Entertainment",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Zee Entertainment seeks Sebi relief to unlock ₹1,200 crore mutual fund investments"
+          "snippet": "Sebi said to have examined Deloitte’s role in Zee Entertainment case, given clean chit"
         },
         {
           "name": "Zee Entertainment",
-          "order_type": "sebi-investigation",
+          "order_type": "sebi-relief",
           "is_listed_entity": true,
-          "snippet": "Sebi said to have examined Deloitte’s role in Zee Entertainment case, given clean chit"
+          "snippet": "Zee Entertainment seeks Sebi relief to unlock ₹1,200 crore mutual fund investments"
         }
       ],
       "after_filter_count": 3,
@@ -115,18 +115,18 @@
       "sample": [
         {
           "name": "Zee Entertainment",
-          "order_type": "sebi-ban",
+          "order_type": "sebi-penalty",
           "snippet": "Tribunal allows Zee to proceed with fundraise, but keeps market ban intact"
         },
         {
           "name": "Zee Entertainment",
           "order_type": "sebi-fine",
-          "snippet": "Zee Entertainment seeks Sebi relief to unlock ₹1,200 crore mutual fund investments"
+          "snippet": "Sebi said to have examined Deloitte’s role in Zee Entertainment case, given clean chit"
         },
         {
           "name": "Zee Entertainment",
-          "order_type": "sebi-investigation",
-          "snippet": "Sebi said to have examined Deloitte’s role in Zee Entertainment case, given clean chit"
+          "order_type": "sebi-relief",
+          "snippet": "Zee Entertainment seeks Sebi relief to unlock ₹1,200 crore mutual fund investments"
         }
       ]
     },
@@ -134,7 +134,7 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-17T11:04:17.016Z",
+      "at": "2026-08-18T01:52:21.212Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -149,7 +149,7 @@
         },
         {
           "name": "Paytm",
-          "order_type": "other",
+          "order_type": "show-cause",
           "is_listed_entity": true,
           "snippet": "Paytm CEO, CFO get Sebi notice over 2023 disclosure curbing small loans"
         }
@@ -169,7 +169,7 @@
         },
         {
           "name": "Paytm",
-          "order_type": "other",
+          "order_type": "show-cause",
           "snippet": "Paytm CEO, CFO get Sebi notice over 2023 disclosure curbing small loans"
         }
       ]
@@ -178,7 +178,7 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-17T11:04:21.903Z",
+      "at": "2026-08-18T01:52:24.764Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -244,7 +244,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-08-17T11:04:34.270Z",
+      "at": "2026-08-18T01:52:31.401Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
