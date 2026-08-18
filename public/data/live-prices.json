@@ -1,22 +1,22 @@
 {
-  "generated_at": "2026-08-17T11:05:22.308Z",
-  "source": "Munshot quote API (7 tickers) + Yahoo fallback (2)",
+  "generated_at": "2026-08-18T01:53:24.911Z",
+  "source": "Munshot quote API (8 tickers) + Yahoo fallback (1)",
   "note": "Live intraday snapshot per basket ticker. dayHigh/dayLow drive intraday target/SL touch detection; current is the latest traded price.",
   "ticker_count": 9,
   "prices": {
     "THEJO": {
       "current": 2118.1,
-      "open": null,
+      "open": 2094.4,
       "prevClose": 2104.9,
       "dayHigh": 2135.8,
       "dayLow": 2077.3,
       "week52High": 2286.6,
       "week52Low": 1443.6,
-      "ma50": null,
-      "ma200": null,
-      "vol10d": null,
-      "marketCap": null,
-      "yearlyChangePct": null
+      "ma50": 1891.77,
+      "ma200": 1741.7,
+      "vol10d": 8602,
+      "marketCap": 22975992317.4,
+      "yearlyChangePct": 0
     },
     "ASKAUTOLTD": {
       "current": 649.2,
@@ -26,25 +26,25 @@
       "dayLow": 633.25,
       "week52High": 687.7,
       "week52Low": 375.3,
-      "ma50": 502.3,
-      "ma200": 463.5,
-      "vol10d": 3252494,
-      "marketCap": 127984978326.53,
-      "yearlyChangePct": 27.24
+      "ma50": 503.87,
+      "ma200": 463.35,
+      "vol10d": 3193782,
+      "marketCap": 127984975920,
+      "yearlyChangePct": 0
     },
     "SJS": {
-      "current": 2536.6,
-      "open": 2553.4,
-      "prevClose": 2539.6,
-      "dayHigh": 2583,
-      "dayLow": 2520.9,
-      "week52High": 2586.5,
-      "week52Low": 1193.5,
-      "ma50": 2253.15,
-      "ma200": 1875.65,
-      "vol10d": 10399,
-      "marketCap": 81238813664,
-      "yearlyChangePct": 108.63
+      "current": 2534.5,
+      "open": 2559.1,
+      "prevClose": 2547.2,
+      "dayHigh": 2584.7,
+      "dayLow": 2519.9,
+      "week52High": 2590,
+      "week52Low": 1210,
+      "ma50": 2257.89,
+      "ma200": 1876.28,
+      "vol10d": 260694,
+      "marketCap": 81171554563,
+      "yearlyChangePct": 0
     },
     "FIEMIND": {
       "current": 2281.7,
@@ -53,26 +53,26 @@
       "dayHigh": 2352,
       "dayLow": 2261.5,
       "week52High": 2674.8,
-      "week52Low": 1861,
-      "ma50": 2322.03,
-      "ma200": 2240.03,
-      "vol10d": 202149,
+      "week52Low": 1868.5,
+      "ma50": 2322.11,
+      "ma200": 2240.91,
+      "vol10d": 206811,
       "marketCap": 60053566936.86,
-      "yearlyChangePct": 18.65
+      "yearlyChangePct": 9.07
     },
     "GAEL": {
-      "current": 171.9,
-      "open": 174.15,
-      "prevClose": 172.85,
+      "current": 172.75,
+      "open": 173.35,
+      "prevClose": 172.51,
       "dayHigh": 174.15,
-      "dayLow": 169.65,
-      "week52High": 184,
-      "week52Low": 101.4,
-      "ma50": 160.2,
-      "ma200": 141.93,
-      "vol10d": 103014,
-      "marketCap": 78845483654.5,
-      "yearlyChangePct": 66.6
+      "dayLow": 169.6,
+      "week52High": 184.03,
+      "week52Low": 101.2,
+      "ma50": 160.26,
+      "ma200": 142.17,
+      "vol10d": 1215958,
+      "marketCap": 79235356515,
+      "yearlyChangePct": 0
     },
     "LUMAXTECH": {
       "current": 2049,
@@ -82,11 +82,11 @@
       "dayLow": 2026.2,
       "week52High": 2110,
       "week52Low": 1024.6,
-      "ma50": 1594.4,
-      "ma200": 1568.05,
-      "vol10d": 853106,
+      "ma50": 1594.1,
+      "ma200": 1570.13,
+      "vol10d": 835692,
       "marketCap": 139655137545,
-      "yearlyChangePct": 84.1
+      "yearlyChangePct": 0
     },
     "DEEPINDS": {
       "current": 680.7,
@@ -96,11 +96,11 @@
       "dayLow": 664,
       "week52High": 699,
       "week52Low": 330,
-      "ma50": 518.6,
-      "ma200": 454.7,
-      "vol10d": 888117,
-      "marketCap": 43564800781.25,
-      "yearlyChangePct": 22.37
+      "ma50": 518.76,
+      "ma200": 454.6,
+      "vol10d": 556149,
+      "marketCap": 43564800000,
+      "yearlyChangePct": 0
     },
     "ARTEMISMED": {
       "current": 314.4,
@@ -124,11 +124,11 @@
       "dayLow": 327.35,
       "week52High": 349.5,
       "week52Low": 166.3,
-      "ma50": 285.65,
-      "ma200": 225.29,
-      "vol10d": 682322,
+      "ma50": 287.81,
+      "ma200": 225.75,
+      "vol10d": 526449,
       "marketCap": 51364851159.48,
-      "yearlyChangePct": 26.68
+      "yearlyChangePct": 27.02
     }
   }
 }
