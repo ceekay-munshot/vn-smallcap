@@ -1,57 +1,57 @@
 {
-  "generated_at": "2026-08-18T09:42:28.462Z",
-  "source": "Munshot quote API (0 tickers) + Yahoo fallback (9)",
+  "generated_at": "2026-08-18T10:38:28.632Z",
+  "source": "Munshot quote API (3 tickers) + Yahoo fallback (6)",
   "note": "Live intraday snapshot per basket ticker. dayHigh/dayLow drive intraday target/SL touch detection; current is the latest traded price.",
   "ticker_count": 9,
   "prices": {
     "THEJO": {
-      "current": 2054.9,
-      "open": null,
+      "current": 2051.4,
+      "open": 2129,
       "prevClose": 2118.1,
       "dayHigh": 2142.6,
       "dayLow": 2044,
       "week52High": 2286.6,
       "week52Low": 1443.6,
-      "ma50": null,
-      "ma200": null,
-      "vol10d": null,
-      "marketCap": null,
-      "yearlyChangePct": null
+      "ma50": 1896.29,
+      "ma200": 1743.6,
+      "vol10d": 8602,
+      "marketCap": 22252466076.28,
+      "yearlyChangePct": 9.76
     },
     "ASKAUTOLTD": {
-      "current": 642.6,
-      "open": null,
+      "current": 638.25,
+      "open": 651,
       "prevClose": 649.2,
       "dayHigh": 654.95,
       "dayLow": 633,
       "week52High": 687.7,
       "week52Low": 375.3,
-      "ma50": null,
-      "ma200": null,
-      "vol10d": null,
-      "marketCap": null,
-      "yearlyChangePct": null
+      "ma50": 506.78,
+      "ma200": 464.28,
+      "vol10d": 3193810,
+      "marketCap": 125826264450,
+      "yearlyChangePct": 25.63
     },
     "SJS": {
-      "current": 2503.8,
-      "open": null,
-      "prevClose": 2534.5,
+      "current": 2500.2,
+      "open": 2446.9,
+      "prevClose": 2521,
       "dayHigh": 2516.7,
       "dayLow": 2410.2,
       "week52High": 2590,
       "week52Low": 1210,
-      "ma50": null,
-      "ma200": null,
-      "vol10d": null,
-      "marketCap": null,
-      "yearlyChangePct": null
+      "ma50": 2263.42,
+      "ma200": 1879.58,
+      "vol10d": 260694,
+      "marketCap": 80073038767,
+      "yearlyChangePct": 94.04
     },
     "FIEMIND": {
-      "current": 2217.4,
+      "current": 2219.1,
       "open": null,
       "prevClose": 2281.7,
       "dayHigh": 2293.9,
-      "dayLow": 2216,
+      "dayLow": 2214.1,
       "week52High": 2674.8,
       "week52Low": 1868.5,
       "ma50": null,
@@ -61,7 +61,7 @@
       "yearlyChangePct": null
     },
     "GAEL": {
-      "current": 177.5,
+      "current": 177.76,
       "open": null,
       "prevClose": 172.75,
       "dayHigh": 178.8,
@@ -75,11 +75,11 @@
       "yearlyChangePct": null
     },
     "LUMAXTECH": {
-      "current": 2018.3,
+      "current": 2014.7,
       "open": null,
       "prevClose": 2049,
       "dayHigh": 2055,
-      "dayLow": 2003,
+      "dayLow": 2000,
       "week52High": 2110,
       "week52Low": 1024.6,
       "ma50": null,
@@ -89,7 +89,7 @@
       "yearlyChangePct": null
     },
     "DEEPINDS": {
-      "current": 719,
+      "current": 717.95,
       "open": null,
       "prevClose": 680.7,
       "dayHigh": 720,
@@ -103,7 +103,7 @@
       "yearlyChangePct": null
     },
     "ARTEMISMED": {
-      "current": 311.75,
+      "current": 312.15,
       "open": null,
       "prevClose": 314.4,
       "dayHigh": 315.4,
@@ -117,11 +117,11 @@
       "yearlyChangePct": null
     },
     "QUESS": {
-      "current": 339.35,
+      "current": 336.9,
       "open": null,
       "prevClose": 343.9,
       "dayHigh": 350.75,
-      "dayLow": 336.1,
+      "dayLow": 333.35,
       "week52High": 350.75,
       "week52Low": 166.3,
       "ma50": null,
