@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-17T23:33:44.038Z",
+  "generated_at": "2026-08-18T01:53:04.569Z",
   "source": "Yahoo Finance chart endpoint",
   "note": "Pre-open context. GIFT Nifty has no free stable feed; S&P futures plus the Asian session carry the same overnight information.",
   "giftNifty": null,
@@ -9,30 +9,30 @@
       "symbol": "ES=F",
       "label": "S&P 500 futures",
       "role": "overnight",
-      "last": 7764,
+      "last": 7762.75,
       "prevClose": 7770.5,
-      "changePct": -0.08364970079145495,
-      "asOf": "2026-08-17T23:23:20.000Z"
+      "changePct": -0.0997361817128839,
+      "asOf": "2026-08-18T01:43:01.000Z"
     },
     "nikkei": {
       "key": "nikkei",
       "symbol": "^N225",
       "label": "Nikkei 225",
       "role": "asia",
-      "last": 69220.25,
-      "prevClose": 66970.22,
-      "changePct": 3.3597470636948845,
-      "asOf": "2026-08-17T06:45:03.000Z"
+      "last": 68781.56,
+      "prevClose": 67524.06,
+      "changePct": 1.8622991567746272,
+      "asOf": "2026-08-18T01:38:00.000Z"
     },
     "hangSeng": {
       "key": "hangSeng",
       "symbol": "^HSI",
       "label": "Hang Seng",
       "role": "asia",
-      "last": 25453.23,
-      "prevClose": 25937.49,
-      "changePct": -1.867027225841833,
-      "asOf": "2026-08-17T08:08:54.000Z"
+      "last": 25404.74,
+      "prevClose": 25652.82,
+      "changePct": -0.967067168443847,
+      "asOf": "2026-08-18T01:38:02.000Z"
     },
     "vix": {
       "key": "vix",
@@ -40,8 +40,8 @@
       "label": "India VIX",
       "role": "vol",
       "last": 11.325,
-      "prevClose": 11.69,
-      "changePct": -3.122326775021389,
+      "prevClose": 11.86,
+      "changePct": -4.510961214165265,
       "asOf": "2026-08-17T10:12:44.000Z"
     },
     "nifty": {
@@ -60,18 +60,18 @@
       "label": "Nifty Smallcap 250",
       "role": "home",
       "last": 18312.2,
-      "prevClose": 18335.65,
-      "changePct": -0.12789292989340284,
+      "prevClose": 18381.85,
+      "changePct": -0.37890636687818446,
       "asOf": "2026-08-17T10:01:07.000Z"
     }
   },
   "signal": {
-    "lean": 0.3313551090675354,
+    "lean": 0.1739399062262531,
     "dir": "flat",
     "vix": 11.325,
-    "vixChange": -3.122326775021389,
+    "vixChange": -4.510961214165265,
     "vixBand": "calm",
-    "tolerancePct": 0.7,
+    "tolerancePct": 0.6,
     "headline": "Overnight quiet — a normal open"
   }
 }
