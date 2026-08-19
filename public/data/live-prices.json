@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-19T09:43:28.863Z",
+  "generated_at": "2026-08-19T10:38:38.913Z",
   "source": "Munshot quote API (0 tickers) + Yahoo fallback (9)",
   "note": "Live intraday snapshot per basket ticker. dayHigh/dayLow drive intraday target/SL touch detection; current is the latest traded price.",
   "ticker_count": 9,
   "prices": {
     "THEJO": {
-      "current": 2079.2,
+      "current": 2124.6,
       "open": null,
       "prevClose": 2051.4,
       "dayHigh": 2174.9,
@@ -33,13 +33,13 @@
       "yearlyChangePct": null
     },
     "SJS": {
-      "current": 2503.6,
+      "current": 2508,
       "open": null,
       "prevClose": 2500.2,
       "dayHigh": 2520.4,
       "dayLow": 2460,
       "week52High": 2590,
-      "week52Low": 1210,
+      "week52Low": 1285.9,
       "ma50": null,
       "ma200": null,
       "vol10d": null,
@@ -47,7 +47,7 @@
       "yearlyChangePct": null
     },
     "FIEMIND": {
-      "current": 2240.1,
+      "current": 2241,
       "open": null,
       "prevClose": 2219.1,
       "dayHigh": 2262,
@@ -61,11 +61,11 @@
       "yearlyChangePct": null
     },
     "GAEL": {
-      "current": 173.51,
+      "current": 173.83,
       "open": null,
       "prevClose": 177.76,
       "dayHigh": 177.76,
-      "dayLow": 173.21,
+      "dayLow": 173,
       "week52High": 184.03,
       "week52Low": 101.2,
       "ma50": null,
@@ -75,7 +75,7 @@
       "yearlyChangePct": null
     },
     "LUMAXTECH": {
-      "current": 1989,
+      "current": 1987.1,
       "open": null,
       "prevClose": 2014.7,
       "dayHigh": 2038,
@@ -89,11 +89,11 @@
       "yearlyChangePct": null
     },
     "DEEPINDS": {
-      "current": 665.85,
+      "current": 667.35,
       "open": null,
       "prevClose": 717.95,
       "dayHigh": 720,
-      "dayLow": 665,
+      "dayLow": 656.7,
       "week52High": 720,
       "week52Low": 330,
       "ma50": null,
@@ -103,7 +103,7 @@
       "yearlyChangePct": null
     },
     "ARTEMISMED": {
-      "current": 313.6,
+      "current": 313.95,
       "open": null,
       "prevClose": 312.15,
       "dayHigh": 318,
@@ -117,7 +117,7 @@
       "yearlyChangePct": null
     },
     "QUESS": {
-      "current": 336.8,
+      "current": 336.55,
       "open": null,
       "prevClose": 336.9,
       "dayHigh": 337.15,
