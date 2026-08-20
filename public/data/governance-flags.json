@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-08-20T01:53:21.522Z",
+  "generated_at": "2026-08-20T11:04:55.969Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 8,
+  "total_entities_seen": 6,
   "flagged_companies": {
     "501945": {
       "primary_name": "Dhenu Buildcon",
       "order_type": "sebi-ban",
-      "snippet": "Sebi bars six from selling Dhenu Buildcon shares over alleged manipulation",
+      "snippet": "Sebi bars six from selling Dhenu Buildcon shares over alleged manipulation.",
       "source_url": "https://www.business-standard.com/topic/sebi",
       "source_label": "Business Standard — SEBI topic (news)",
       "origins": [
@@ -18,20 +18,20 @@
           "source": "Business Standard — SEBI topic (news)",
           "origin": "scraper",
           "order_type": "sebi-ban",
-          "snippet": "Sebi bars six from selling Dhenu Buildcon shares over alleged manipulation"
+          "snippet": "Sebi bars six from selling Dhenu Buildcon shares over alleged manipulation."
         },
         {
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
-          "order_type": "enforcement-order",
+          "order_type": "sebi-investigation",
           "snippet": "Sebi’s interim order alleges Dhenu Buildcon routed Rs 1,000 crore through connected entities as loans."
         }
       ],
-      "first_seen_at": "2026-08-20T01:53:21.521Z"
+      "first_seen_at": "2026-08-20T11:04:55.969Z"
     },
     "INDNIPPON": {
       "primary_name": "India Power Corp",
-      "order_type": "settlement",
+      "order_type": "sebi-settlement",
       "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh.",
       "source_url": "https://economictimes.indiatimes.com/topic/sebi",
       "source_label": "Economic Times — SEBI topic (news)",
@@ -42,11 +42,11 @@
         {
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
-          "order_type": "settlement",
+          "order_type": "sebi-settlement",
           "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh."
         }
       ],
-      "first_seen_at": "2026-08-20T01:53:21.521Z"
+      "first_seen_at": "2026-08-20T11:04:55.969Z"
     }
   },
   "unmatched_sample": [
@@ -57,20 +57,8 @@
       "origin": "scraper"
     },
     {
-      "name": "Corporate Capital Ventures",
-      "type": "sebi-ban",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Copthall Mauritius",
-      "type": "sebi-ban",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Mansi Share and Stock Broking",
-      "type": "sebi-ban",
+      "name": "Zee Entertainment",
+      "type": "sebi-order",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -86,66 +74,42 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-20T01:52:48.792Z",
+      "at": "2026-08-20T11:04:36.479Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 8,
-      "total_extracted": 8,
+      "total_extracted_raw": 4,
+      "total_extracted": 4,
       "prefilter_sample": [
         {
           "name": "Sebi",
           "order_type": "other",
           "is_listed_entity": false,
-          "snippet": "Sebi adjudication proceedings hit a decade low as compliance improves, focus shifts to serious violations"
-        },
-        {
-          "name": "Sebi",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi considers guardrails to curb surge in launches of copycat passive mutual funds"
-        },
-        {
-          "name": "Copthall Mauritius Investment",
-          "order_type": "sebi-ban",
-          "is_listed_entity": false,
           "snippet": "Sebi bars two entities from markets over manipulation in CAS, orders ₹3.68 crore disgorgement"
-        },
-        {
-          "name": "Mansi Share and Stock Broking",
-          "order_type": "sebi-ban",
-          "is_listed_entity": false,
-          "snippet": "Sebi bars two entities from markets over manipulation in CAS, orders ₹3.68 crore disgorgement"
-        },
-        {
-          "name": "Sebi",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi asks brokers to accept orders in first five minutes of closing auction"
-        },
-        {
-          "name": "Sebi",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "SEBI eases entry process for mutual fund AMCs but retains strict checks: What investors should know"
-        },
-        {
-          "name": "Sebi",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Boost in the offing — Sebi may ease SME trading, market-making rules as costs, liquidity under scrutiny"
         },
         {
           "name": "Shalimar Paints",
-          "order_type": "other",
+          "order_type": "sebi-investigation",
           "is_listed_entity": true,
           "snippet": "Shalimar Paints' 20% spike days before Hella Infra share-swap disclosure risks regulatory scrutiny"
+        },
+        {
+          "name": "LIC",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "LIC gets RBI approval to raise stake in HDFC Bank from 4% to 10%. Details here"
+        },
+        {
+          "name": "HDFC Bank",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "LIC gets RBI approval to raise stake in HDFC Bank from 4% to 10%. Details here"
         }
       ],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 7,
-        "no_sebi_signal_in_snippet": 1,
+        "not_listed": 1,
+        "no_sebi_signal_in_snippet": 3,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -155,7 +119,7 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-20T01:52:57.818Z",
+      "at": "2026-08-20T11:04:40.566Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -163,22 +127,22 @@
       "total_extracted": 3,
       "prefilter_sample": [
         {
-          "name": "Paytm",
-          "order_type": "show-cause",
-          "is_listed_entity": true,
-          "snippet": "Sebi issues show-cause notice to Paytm officials over Dec 2023 disclosure"
+          "name": "CAS",
+          "order_type": "sebi-ban",
+          "is_listed_entity": false,
+          "snippet": "Sebi bars two players from market over CAS 'trade manipulation'."
         },
         {
           "name": "Dhenu Buildcon",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Sebi bars six from selling Dhenu Buildcon shares over alleged manipulation"
+          "snippet": "Sebi bars six from selling Dhenu Buildcon shares over alleged manipulation."
         },
         {
-          "name": "CAS",
-          "order_type": "sebi-ban",
-          "is_listed_entity": false,
-          "snippet": "Sebi bars two players from market over CAS 'trade manipulation'}]},"
+          "name": "Paytm",
+          "order_type": "show-cause",
+          "is_listed_entity": true,
+          "snippet": "Sebi issues show-cause notice to Paytm officials over Dec 2023 disclosure."
         }
       ],
       "after_filter_count": 2,
@@ -190,14 +154,14 @@
       },
       "sample": [
         {
-          "name": "Paytm",
-          "order_type": "show-cause",
-          "snippet": "Sebi issues show-cause notice to Paytm officials over Dec 2023 disclosure"
-        },
-        {
           "name": "Dhenu Buildcon",
           "order_type": "sebi-ban",
-          "snippet": "Sebi bars six from selling Dhenu Buildcon shares over alleged manipulation"
+          "snippet": "Sebi bars six from selling Dhenu Buildcon shares over alleged manipulation."
+        },
+        {
+          "name": "Paytm",
+          "order_type": "show-cause",
+          "snippet": "Sebi issues show-cause notice to Paytm officials over Dec 2023 disclosure."
         }
       ]
     },
@@ -205,7 +169,7 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-20T01:53:07.909Z",
+      "at": "2026-08-20T11:04:43.885Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -215,82 +179,72 @@
         {
           "name": "Corporate Capital Ventures",
           "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Sebi bars merchant banker Corporate Capital Ventures from taking new assignments for one month due to multiple compliance lapses."
+          "is_listed_entity": false,
+          "snippet": "Sebi bars merchant banker Corporate Capital Ventures from new assignments for one month due to multiple compliance lapses."
         },
         {
           "name": "Dhenu Buildcon",
-          "order_type": "enforcement-order",
+          "order_type": "sebi-investigation",
           "is_listed_entity": true,
           "snippet": "Sebi’s interim order alleges Dhenu Buildcon routed Rs 1,000 crore through connected entities as loans."
         },
         {
           "name": "Copthall Mauritius",
-          "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Sebi barred Copthall Mauritius Investment and Mansi Share and Stock Broking from securities market access."
+          "order_type": "sebi-fine",
+          "is_listed_entity": false,
+          "snippet": "Sebi issued an interim order against Copthall Mauritius and Mansi Share and Stock Broking for manipulative trading."
         },
         {
           "name": "Mansi Share and Stock Broking",
-          "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Sebi barred Copthall Mauritius Investment and Mansi Share and Stock Broking from securities market access."
+          "order_type": "sebi-fine",
+          "is_listed_entity": false,
+          "snippet": "Sebi issued an interim order against Copthall Mauritius and Mansi Share and Stock Broking for manipulative trading."
         },
         {
           "name": "Zee Entertainment",
-          "order_type": "show-cause",
+          "order_type": "sebi-order",
           "is_listed_entity": true,
-          "snippet": "Zee Entertainment's shares experienced a surge following the Securities Appellate Tribunal's grant of interim relief."
+          "snippet": "Zee Entertainment shares surge following SAT granting interim relief in Sebi order."
         },
         {
           "name": "Paytm",
           "order_type": "show-cause",
           "is_listed_entity": true,
-          "snippet": "Paytm management gets Sebi show-cause notice over timing of 2023 loan disclosure announcement."
+          "snippet": "Paytm management receives a Sebi show-cause notice over timing of 2023 loan disclosure announcement."
         },
         {
           "name": "India Power Corp",
-          "order_type": "settlement",
+          "order_type": "sebi-settlement",
           "is_listed_entity": true,
           "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh."
         }
       ],
-      "after_filter_count": 6,
+      "after_filter_count": 4,
       "dropped_counts": {
-        "not_listed": 0,
-        "no_sebi_signal_in_snippet": 1,
+        "not_listed": 3,
+        "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
-          "name": "Corporate Capital Ventures",
-          "order_type": "sebi-ban",
-          "snippet": "Sebi bars merchant banker Corporate Capital Ventures from taking new assignments for one month due to multiple complianc"
-        },
-        {
           "name": "Dhenu Buildcon",
-          "order_type": "enforcement-order",
+          "order_type": "sebi-investigation",
           "snippet": "Sebi’s interim order alleges Dhenu Buildcon routed Rs 1,000 crore through connected entities as loans."
         },
         {
-          "name": "Copthall Mauritius",
-          "order_type": "sebi-ban",
-          "snippet": "Sebi barred Copthall Mauritius Investment and Mansi Share and Stock Broking from securities market access."
-        },
-        {
-          "name": "Mansi Share and Stock Broking",
-          "order_type": "sebi-ban",
-          "snippet": "Sebi barred Copthall Mauritius Investment and Mansi Share and Stock Broking from securities market access."
+          "name": "Zee Entertainment",
+          "order_type": "sebi-order",
+          "snippet": "Zee Entertainment shares surge following SAT granting interim relief in Sebi order."
         },
         {
           "name": "Paytm",
           "order_type": "show-cause",
-          "snippet": "Paytm management gets Sebi show-cause notice over timing of 2023 loan disclosure announcement."
+          "snippet": "Paytm management receives a Sebi show-cause notice over timing of 2023 loan disclosure announcement."
         },
         {
           "name": "India Power Corp",
-          "order_type": "settlement",
+          "order_type": "sebi-settlement",
           "snippet": "Sebi settles case against India Power Corp's Raghav Raj Kanoria for Rs 24.7 lakh."
         }
       ]
@@ -299,16 +253,29 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-08-20T01:53:19.404Z",
+      "at": "2026-08-20T11:04:52.364Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 0,
-      "total_extracted": 0,
-      "prefilter_sample": [],
+      "total_extracted_raw": 2,
+      "total_extracted": 2,
+      "prefilter_sample": [
+        {
+          "name": "CITRUS CHECK INNS LIMITED",
+          "order_type": "other",
+          "is_listed_entity": false,
+          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
+        },
+        {
+          "name": "ROYAL TWINKLE STAR CLUB PVT. LTD",
+          "order_type": "other",
+          "is_listed_entity": false,
+          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
+        }
+      ],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 0,
+        "not_listed": 2,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
