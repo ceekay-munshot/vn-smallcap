@@ -1,22 +1,22 @@
 {
-  "generated_at": "2026-08-19T11:03:55.275Z",
-  "source": "Munshot quote API (5 tickers) + Yahoo fallback (4)",
+  "generated_at": "2026-08-20T01:54:12.096Z",
+  "source": "Munshot quote API (8 tickers) + Yahoo fallback (1)",
   "note": "Live intraday snapshot per basket ticker. dayHigh/dayLow drive intraday target/SL touch detection; current is the latest traded price.",
   "ticker_count": 9,
   "prices": {
     "THEJO": {
       "current": 2124.6,
-      "open": null,
+      "open": 2174.9,
       "prevClose": 2051.4,
       "dayHigh": 2174.9,
       "dayLow": 2040,
       "week52High": 2286.6,
       "week52Low": 1443.6,
-      "ma50": null,
-      "ma200": null,
-      "vol10d": null,
-      "marketCap": null,
-      "yearlyChangePct": null
+      "ma50": 1918.51,
+      "ma200": 1746.47,
+      "vol10d": 9657,
+      "marketCap": 23046501827.72,
+      "yearlyChangePct": 8.07
     },
     "ASKAUTOLTD": {
       "current": 646.35,
@@ -26,11 +26,11 @@
       "dayLow": 640.55,
       "week52High": 687.7,
       "week52Low": 375.3,
-      "ma50": 510.97,
-      "ma200": 464.96,
-      "vol10d": 3192680,
-      "marketCap": 127423114696.95,
-      "yearlyChangePct": 26.01
+      "ma50": 512.66,
+      "ma200": 464.87,
+      "vol10d": 1415164,
+      "marketCap": 127423119510,
+      "yearlyChangePct": 0
     },
     "SJS": {
       "current": 2508,
@@ -40,11 +40,11 @@
       "dayLow": 2460,
       "week52High": 2590,
       "week52Low": 1285.9,
-      "ma50": 2271.86,
-      "ma200": 1884.2,
-      "vol10d": 256313,
+      "ma50": 2275.82,
+      "ma200": 1885.56,
+      "vol10d": 238681,
       "marketCap": 80322848232,
-      "yearlyChangePct": 84.46
+      "yearlyChangePct": 0
     },
     "FIEMIND": {
       "current": 2241,
@@ -54,25 +54,25 @@
       "dayLow": 2205.2,
       "week52High": 2674.8,
       "week52Low": 1868.5,
-      "ma50": 2320.53,
-      "ma200": 2241.53,
-      "vol10d": 215781,
+      "ma50": 2322.22,
+      "ma200": 2242.3,
+      "vol10d": 184496,
       "marketCap": 58982358060,
-      "yearlyChangePct": 6.55
+      "yearlyChangePct": 0
     },
     "GAEL": {
       "current": 173.83,
-      "open": null,
+      "open": 177.76,
       "prevClose": 177.76,
       "dayHigh": 177.76,
       "dayLow": 173,
       "week52High": 184.03,
       "week52Low": 101.2,
-      "ma50": null,
-      "ma200": null,
-      "vol10d": null,
-      "marketCap": null,
-      "yearlyChangePct": null
+      "ma50": 160.94,
+      "ma200": 142.86,
+      "vol10d": 1130586,
+      "marketCap": 79730720827.8,
+      "yearlyChangePct": 0
     },
     "LUMAXTECH": {
       "current": 1987.1,
@@ -82,11 +82,11 @@
       "dayLow": 1969.6,
       "week52High": 2110,
       "week52Low": 1024.6,
-      "ma50": 1610.62,
-      "ma200": 1576.96,
-      "vol10d": 831536,
-      "marketCap": 135436173941.49,
-      "yearlyChangePct": 73.34
+      "ma50": 1610.58,
+      "ma200": 1579.23,
+      "vol10d": 810520,
+      "marketCap": 135436175605.5,
+      "yearlyChangePct": 0
     },
     "DEEPINDS": {
       "current": 667.35,
@@ -96,11 +96,11 @@
       "dayLow": 656.7,
       "week52High": 720,
       "week52Low": 330,
-      "ma50": 525.97,
-      "ma200": 456.96,
-      "vol10d": 510902,
+      "ma50": 529.37,
+      "ma200": 457.88,
+      "vol10d": 519353,
       "marketCap": 42710398437.5,
-      "yearlyChangePct": 25.98
+      "yearlyChangePct": 17.79
     },
     "ARTEMISMED": {
       "current": 313.95,
@@ -118,17 +118,17 @@
     },
     "QUESS": {
       "current": 336.55,
-      "open": null,
+      "open": 333.75,
       "prevClose": 336.9,
       "dayHigh": 337.15,
       "dayLow": 329.35,
       "week52High": 350.75,
       "week52Low": 166.3,
-      "ma50": null,
-      "ma200": null,
-      "vol10d": null,
-      "marketCap": null,
-      "yearlyChangePct": null
+      "ma50": 291.77,
+      "ma200": 226.69,
+      "vol10d": 473351,
+      "marketCap": 50267055357.71,
+      "yearlyChangePct": 23.91
     }
   }
 }
