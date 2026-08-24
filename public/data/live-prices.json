@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-24T07:14:21.974Z",
+  "generated_at": "2026-08-24T08:23:01.597Z",
   "source": "Munshot quote API (0 tickers) + Yahoo fallback (9)",
   "note": "Live intraday snapshot per basket ticker. dayHigh/dayLow drive intraday target/SL touch detection; current is the latest traded price.",
   "ticker_count": 9,
   "prices": {
     "THEJO": {
-      "current": 2042.4,
+      "current": 2040,
       "open": null,
       "prevClose": 2057.8,
       "dayHigh": 2078.9,
@@ -19,11 +19,11 @@
       "yearlyChangePct": null
     },
     "ASKAUTOLTD": {
-      "current": 620.05,
+      "current": 615.8,
       "open": null,
       "prevClose": 621.15,
       "dayHigh": 634.6,
-      "dayLow": 619.6,
+      "dayLow": 614.05,
       "week52High": 687.7,
       "week52Low": 375.3,
       "ma50": null,
@@ -33,7 +33,7 @@
       "yearlyChangePct": null
     },
     "SJS": {
-      "current": 2569.5,
+      "current": 2548,
       "open": null,
       "prevClose": 2497.4,
       "dayHigh": 2578,
@@ -47,11 +47,11 @@
       "yearlyChangePct": null
     },
     "FIEMIND": {
-      "current": 2187.2,
+      "current": 2179.7,
       "open": null,
       "prevClose": 2198.8,
       "dayHigh": 2217.5,
-      "dayLow": 2186.1,
+      "dayLow": 2177.1,
       "week52High": 2674.8,
       "week52Low": 1868.5,
       "ma50": null,
@@ -61,7 +61,7 @@
       "yearlyChangePct": null
     },
     "GAEL": {
-      "current": 180.82,
+      "current": 179.65,
       "open": null,
       "prevClose": 177.46,
       "dayHigh": 184.54,
@@ -75,11 +75,11 @@
       "yearlyChangePct": null
     },
     "LUMAXTECH": {
-      "current": 1954.9,
+      "current": 1951.8,
       "open": null,
       "prevClose": 1988.8,
       "dayHigh": 2007.4,
-      "dayLow": 1950,
+      "dayLow": 1944.5,
       "week52High": 2110,
       "week52Low": 1024.6,
       "ma50": null,
@@ -89,7 +89,7 @@
       "yearlyChangePct": null
     },
     "DEEPINDS": {
-      "current": 683.45,
+      "current": 680,
       "open": null,
       "prevClose": 688.05,
       "dayHigh": 694.6,
@@ -103,11 +103,11 @@
       "yearlyChangePct": null
     },
     "ARTEMISMED": {
-      "current": 328.55,
+      "current": 326.7,
       "open": null,
       "prevClose": 326.1,
       "dayHigh": 333.7,
-      "dayLow": 326.6,
+      "dayLow": 326.4,
       "week52High": 333.7,
       "week52Low": 203.35,
       "ma50": null,
@@ -117,7 +117,7 @@
       "yearlyChangePct": null
     },
     "QUESS": {
-      "current": 339.4,
+      "current": 340.35,
       "open": null,
       "prevClose": 335.85,
       "dayHigh": 346.35,
