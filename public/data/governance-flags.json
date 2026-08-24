@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-23T02:02:21.371Z",
+  "generated_at": "2026-08-24T02:00:02.394Z",
   "source_count": 4,
   "curated_baseline_count": 0,
   "total_entities_seen": 11,
@@ -23,33 +23,20 @@
         {
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
-          "order_type": "enforcement-order",
-          "snippet": "Sebi’s interim order alleges Dhenu Buildcon routed Rs 1,000 crore through connected entities as loans, later converting Rs 840 crore into equity."
+          "order_type": "sebi-investigation",
+          "snippet": "Sebi’s interim order alleges Dhenu Buildcon routed Rs 1,000 crore through connected entities as loans."
         }
       ],
-      "first_seen_at": "2026-08-23T02:02:21.370Z"
-    },
-    "INDNIPPON": {
-      "primary_name": "India Exposition Mart",
-      "order_type": "sebi-fine",
-      "snippet": "India Exposition Mart has filed draft IPO papers with Sebi, comprising a fresh issue of up to 75 lakh shares.",
-      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
-      "source_label": "Economic Times — SEBI topic (news)",
-      "origins": [
-        "scraper"
-      ],
-      "mentions": [
-        {
-          "source": "Economic Times — SEBI topic (news)",
-          "origin": "scraper",
-          "order_type": "sebi-fine",
-          "snippet": "India Exposition Mart has filed draft IPO papers with Sebi, comprising a fresh issue of up to 75 lakh shares."
-        }
-      ],
-      "first_seen_at": "2026-08-23T02:02:21.371Z"
+      "first_seen_at": "2026-08-24T02:00:02.393Z"
     }
   },
   "unmatched_sample": [
+    {
+      "name": "Copthall Mauritius Investment",
+      "type": "sebi-ban",
+      "source": "Mint — SEBI topic (news)",
+      "origin": "scraper"
+    },
     {
       "name": "Mansi Share and Stock Broking",
       "type": "sebi-ban",
@@ -57,14 +44,14 @@
       "origin": "scraper"
     },
     {
-      "name": "Air India",
-      "type": "sebi-ban",
+      "name": "Online Instruments",
+      "type": "sebi-approval",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Online Instruments",
-      "type": "sebi-approval",
+      "name": "JPMorgan",
+      "type": "sebi-ban",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -87,14 +74,14 @@
       "origin": "scraper"
     },
     {
-      "name": "Paytm",
-      "type": "show-cause",
+      "name": "Zee Entertainment",
+      "type": "sebi-show-cause",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Gemini Edibles & Fats India",
-      "type": "sebi-fine",
+      "name": "Paytm",
+      "type": "sebi-show-cause",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -104,34 +91,45 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-23T02:01:37.481Z",
+      "at": "2026-08-24T01:59:43.251Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 2,
-      "total_extracted": 2,
+      "total_extracted_raw": 3,
+      "total_extracted": 3,
       "prefilter_sample": [
         {
-          "name": "Mansi Share and Stock Broking",
+          "name": "Shalimar Paints",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": true,
+          "snippet": "Shalimar Paints' 20% spike days before Hella Infra share-swap disclosure risks regulatory scrutiny."
+        },
+        {
+          "name": "Copthall Mauritius Investment",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
           "snippet": "Sebi bars two entities from markets over manipulation in CAS, orders ₹3.68 crore disgorgement."
         },
         {
-          "name": "Copthall Mauritius Investment",
+          "name": "Mansi Share and Stock Broking",
           "order_type": "sebi-ban",
-          "is_listed_entity": false,
+          "is_listed_entity": true,
           "snippet": "Sebi bars two entities from markets over manipulation in CAS, orders ₹3.68 crore disgorgement."
         }
       ],
-      "after_filter_count": 1,
+      "after_filter_count": 2,
       "dropped_counts": {
-        "not_listed": 1,
-        "no_sebi_signal_in_snippet": 0,
+        "not_listed": 0,
+        "no_sebi_signal_in_snippet": 1,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
+        {
+          "name": "Copthall Mauritius Investment",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars two entities from markets over manipulation in CAS, orders ₹3.68 crore disgorgement."
+        },
         {
           "name": "Mansi Share and Stock Broking",
           "order_type": "sebi-ban",
@@ -143,25 +141,13 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-23T02:01:44.329Z",
+      "at": "2026-08-24T01:59:46.456Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 4,
-      "total_extracted": 4,
+      "total_extracted_raw": 6,
+      "total_extracted": 6,
       "prefilter_sample": [
-        {
-          "name": "Air India",
-          "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Sebi bars two players from market over CAS 'trade manipulation'"
-        },
-        {
-          "name": "Dhenu Buildcon",
-          "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Sebi bars six from selling Dhenu Buildcon shares over alleged manipulation"
-        },
         {
           "name": "Online Instruments",
           "order_type": "sebi-approval",
@@ -170,33 +156,57 @@
         },
         {
           "name": "JPMorgan",
-          "order_type": "sebi-enforcement",
-          "is_listed_entity": false,
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
           "snippet": "Sebi's swift action against JPMorgan unit seen as warning to traders"
+        },
+        {
+          "name": "Dhenu Buildcon",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars six from selling Dhenu Buildcon shares over alleged manipulation"
+        },
+        {
+          "name": "two entities",
+          "order_type": "sebi-ban",
+          "is_listed_entity": false,
+          "snippet": "Sebi bars two players from market over CAS 'trade manipulation'"
+        },
+        {
+          "name": "15 investment advisers",
+          "order_type": "sebi-ban",
+          "is_listed_entity": false,
+          "snippet": "Sebi cancels registration of 15 investment advisers, 25 research analysts"
+        },
+        {
+          "name": "25 research analysts",
+          "order_type": "sebi-ban",
+          "is_listed_entity": false,
+          "snippet": "Sebi cancels registration of 15 investment advisers, 25 research analysts"
         }
       ],
       "after_filter_count": 3,
       "dropped_counts": {
-        "not_listed": 1,
+        "not_listed": 3,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
-          "name": "Air India",
+          "name": "Online Instruments",
+          "order_type": "sebi-approval",
+          "snippet": "Online Instruments India gets Sebi approval to float IPO worth ₹750 cr"
+        },
+        {
+          "name": "JPMorgan",
           "order_type": "sebi-ban",
-          "snippet": "Sebi bars two players from market over CAS 'trade manipulation'"
+          "snippet": "Sebi's swift action against JPMorgan unit seen as warning to traders"
         },
         {
           "name": "Dhenu Buildcon",
           "order_type": "sebi-ban",
           "snippet": "Sebi bars six from selling Dhenu Buildcon shares over alleged manipulation"
-        },
-        {
-          "name": "Online Instruments",
-          "order_type": "sebi-approval",
-          "snippet": "Online Instruments India gets Sebi approval to float IPO worth ₹750 cr"
         }
       ]
     },
@@ -204,12 +214,12 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-23T02:01:51.949Z",
+      "at": "2026-08-24T01:59:54.866Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 8,
-      "total_extracted": 8,
+      "total_extracted_raw": 6,
+      "total_extracted": 6,
       "prefilter_sample": [
         {
           "name": "Corporate Capital Ventures",
@@ -219,51 +229,39 @@
         },
         {
           "name": "Dhenu Buildcon",
-          "order_type": "enforcement-order",
+          "order_type": "sebi-investigation",
           "is_listed_entity": true,
-          "snippet": "Sebi’s interim order alleges Dhenu Buildcon routed Rs 1,000 crore through connected entities as loans, later converting Rs 840 crore into equity."
+          "snippet": "Sebi’s interim order alleges Dhenu Buildcon routed Rs 1,000 crore through connected entities as loans."
         },
         {
           "name": "Copthall Mauritius",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Sebi issued an interim order against Copthall Mauritius for manipulative trading during the August 13, 2026, Closing Auction Session."
+          "snippet": "Sebi flagged manipulative trades during CAS on Sensex expiry day, fines two entities including Copthall Mauritius."
         },
         {
           "name": "Mansi Share and Stock Broking",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Sebi impounded Rs 3.67 crore in alleged wrongful gains from these two entities."
+          "snippet": "Sebi flagged manipulative trades during CAS on Sensex expiry day, fines two entities including Mansi Share and Stock Broking."
         },
         {
           "name": "Zee Entertainment",
-          "order_type": "show-cause",
+          "order_type": "sebi-show-cause",
           "is_listed_entity": true,
-          "snippet": "Zee Entertainment shares experienced a surge following the Securities Appellate Tribunal's grant of interim relief."
+          "snippet": "Zee Entertainment shares rally 8% after SAT grants interim relief in Sebi order."
         },
         {
           "name": "Paytm",
-          "order_type": "show-cause",
+          "order_type": "sebi-show-cause",
           "is_listed_entity": true,
-          "snippet": "Paytm management gets Sebi show-cause notice over timing of 2023 loan disclosure announcement."
-        },
-        {
-          "name": "Gemini Edibles & Fats India",
-          "order_type": "sebi-fine",
-          "is_listed_entity": true,
-          "snippet": "Gemini Edibles & Fats India, maker of Freedom Oils, filed IPO papers with Sebi for an offer-for-sale issue."
-        },
-        {
-          "name": "India Exposition Mart",
-          "order_type": "sebi-fine",
-          "is_listed_entity": true,
-          "snippet": "India Exposition Mart has filed draft IPO papers with Sebi, comprising a fresh issue of up to 75 lakh shares."
+          "snippet": "Paytm management gets Sebi show cause notice over timing of 2023 loan disclosure announcement."
         }
       ],
-      "after_filter_count": 7,
+      "after_filter_count": 6,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 1,
+        "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -275,33 +273,28 @@
         },
         {
           "name": "Dhenu Buildcon",
-          "order_type": "enforcement-order",
-          "snippet": "Sebi’s interim order alleges Dhenu Buildcon routed Rs 1,000 crore through connected entities as loans, later converting "
+          "order_type": "sebi-investigation",
+          "snippet": "Sebi’s interim order alleges Dhenu Buildcon routed Rs 1,000 crore through connected entities as loans."
         },
         {
           "name": "Copthall Mauritius",
           "order_type": "sebi-fine",
-          "snippet": "Sebi issued an interim order against Copthall Mauritius for manipulative trading during the August 13, 2026, Closing Auc"
+          "snippet": "Sebi flagged manipulative trades during CAS on Sensex expiry day, fines two entities including Copthall Mauritius."
         },
         {
           "name": "Mansi Share and Stock Broking",
           "order_type": "sebi-fine",
-          "snippet": "Sebi impounded Rs 3.67 crore in alleged wrongful gains from these two entities."
+          "snippet": "Sebi flagged manipulative trades during CAS on Sensex expiry day, fines two entities including Mansi Share and Stock Bro"
+        },
+        {
+          "name": "Zee Entertainment",
+          "order_type": "sebi-show-cause",
+          "snippet": "Zee Entertainment shares rally 8% after SAT grants interim relief in Sebi order."
         },
         {
           "name": "Paytm",
-          "order_type": "show-cause",
-          "snippet": "Paytm management gets Sebi show-cause notice over timing of 2023 loan disclosure announcement."
-        },
-        {
-          "name": "Gemini Edibles & Fats India",
-          "order_type": "sebi-fine",
-          "snippet": "Gemini Edibles & Fats India, maker of Freedom Oils, filed IPO papers with Sebi for an offer-for-sale issue."
-        },
-        {
-          "name": "India Exposition Mart",
-          "order_type": "sebi-fine",
-          "snippet": "India Exposition Mart has filed draft IPO papers with Sebi, comprising a fresh issue of up to 75 lakh shares."
+          "order_type": "sebi-show-cause",
+          "snippet": "Paytm management gets Sebi show cause notice over timing of 2023 loan disclosure announcement."
         }
       ]
     },
@@ -309,16 +302,29 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-08-23T02:02:02.178Z",
+      "at": "2026-08-24T01:59:59.522Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 0,
-      "total_extracted": 0,
-      "prefilter_sample": [],
+      "total_extracted_raw": 2,
+      "total_extracted": 2,
+      "prefilter_sample": [
+        {
+          "name": "CITRUS CHECK INNS LIMITED",
+          "order_type": "public-notice",
+          "is_listed_entity": false,
+          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
+        },
+        {
+          "name": "ROYAL TWINKLE STAR CLUB PVT. LTD",
+          "order_type": "public-notice",
+          "is_listed_entity": false,
+          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
+        }
+      ],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 0,
+        "not_listed": 2,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
