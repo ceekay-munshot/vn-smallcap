@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-24T23:32:37.837Z",
+  "generated_at": "2026-08-25T01:55:37.421Z",
   "source": "Yahoo Finance chart endpoint",
   "note": "Pre-open context. GIFT Nifty has no free stable feed; S&P futures plus the Asian session carry the same overnight information.",
   "giftNifty": null,
@@ -9,30 +9,30 @@
       "symbol": "ES=F",
       "label": "S&P 500 futures",
       "role": "overnight",
-      "last": 7674.5,
+      "last": 7675,
       "prevClose": 7729,
-      "changePct": -0.7051364989002495,
-      "asOf": "2026-08-24T23:20:43.000Z"
+      "changePct": -0.6986673567085044,
+      "asOf": "2026-08-25T01:45:28.000Z"
     },
     "nikkei": {
       "key": "nikkei",
       "symbol": "^N225",
       "label": "Nikkei 225",
       "role": "asia",
-      "last": 65528.09,
-      "prevClose": 67460.73,
-      "changePct": -2.864837068914017,
-      "asOf": "2026-08-24T06:45:03.000Z"
+      "last": 65253.6,
+      "prevClose": 65326.42,
+      "changePct": -0.1114709791229962,
+      "asOf": "2026-08-25T01:40:30.000Z"
     },
     "hangSeng": {
       "key": "hangSeng",
       "symbol": "^HSI",
       "label": "Hang Seng",
       "role": "asia",
-      "last": 25517.33,
-      "prevClose": 25453.23,
-      "changePct": 0.251834443015686,
-      "asOf": "2026-08-24T08:08:42.000Z"
+      "last": 25527.15,
+      "prevClose": 25471.15,
+      "changePct": 0.2198565828398058,
+      "asOf": "2026-08-25T01:40:34.000Z"
     },
     "vix": {
       "key": "vix",
@@ -66,12 +66,12 @@
     }
   },
   "signal": {
-    "lean": -1.0058189059247076,
-    "dir": "down",
+    "lean": -0.3222372774250498,
+    "dir": "flat",
     "vix": 11.525,
     "vixChange": 1.1852502194907855,
     "vixBand": "calm",
-    "tolerancePct": 0.25,
-    "headline": "Overnight negative — expect a lower open, limits should fill easily"
+    "tolerancePct": 0.31,
+    "headline": "Overnight quiet — a normal open"
   }
 }
