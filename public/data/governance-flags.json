@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-24T11:09:29.638Z",
+  "generated_at": "2026-08-25T01:55:15.132Z",
   "source_count": 4,
   "curated_baseline_count": 0,
   "total_entities_seen": 7,
@@ -23,16 +23,22 @@
         {
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
-          "order_type": "other",
+          "order_type": "sebi-investigation",
           "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge"
         }
       ],
-      "first_seen_at": "2026-08-24T11:09:29.638Z"
+      "first_seen_at": "2026-08-25T01:55:15.132Z"
     }
   },
   "unmatched_sample": [
     {
       "name": "Online Instruments India",
+      "type": "sebi-investigation",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "JPMorgan",
       "type": "sebi-investigation",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
@@ -44,20 +50,14 @@
       "origin": "scraper"
     },
     {
-      "name": "Online Instruments",
+      "name": "Online Instruments India",
       "type": "other",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
       "name": "Zee Entertainment",
-      "type": "sebi-fine",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Paytm",
-      "type": "sebi-show-cause",
+      "type": "sebi-investigation",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -67,7 +67,7 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-24T11:08:35.184Z",
+      "at": "2026-08-25T01:54:56.075Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -100,13 +100,19 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-24T11:08:48.367Z",
+      "at": "2026-08-25T01:55:00.548Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 5,
-      "total_extracted": 5,
+      "total_extracted_raw": 10,
+      "total_extracted": 10,
       "prefilter_sample": [
+        {
+          "name": "Dhenu Buildcon",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars six from selling Dhenu Buildcon shares over alleged manipulation"
+        },
         {
           "name": "Online Instruments India",
           "order_type": "sebi-investigation",
@@ -115,46 +121,75 @@
         },
         {
           "name": "JPMorgan",
-          "order_type": "sebi-enforcement-order",
-          "is_listed_entity": false,
+          "order_type": "sebi-investigation",
+          "is_listed_entity": true,
           "snippet": "Sebi's swift action against JPMorgan unit seen as warning to traders"
         },
         {
-          "name": "Dhenu Buildcon",
-          "order_type": "sebi-ban",
+          "name": "Copthall",
+          "order_type": "sebi-investigation",
           "is_listed_entity": true,
-          "snippet": "Sebi bars six from selling Dhenu Buildcon shares over alleged manipulation"
+          "snippet": "Behind CAS spikes: Copthall's aggressive buys, Mansi's sell orders"
         },
         {
-          "name": "two players",
-          "order_type": "sebi-ban",
-          "is_listed_entity": false,
-          "snippet": "Sebi bars two players from market over CAS 'trade manipulation'"
+          "name": "Mansi",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": true,
+          "snippet": "Behind CAS spikes: Copthall's aggressive buys, Mansi's sell orders"
         },
         {
           "name": "Sebi",
-          "order_type": "other",
+          "order_type": "sebi-investigation",
           "is_listed_entity": false,
-          "snippet": "Sebi cancels registration of 15 investment advisers, 25 research analysts"
+          "snippet": "Sebi proposes channel partners to expand retail access to bonds in India"
+        },
+        {
+          "name": "Sebi",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": false,
+          "snippet": "Sebi proposes tighter curbs on promotional claims by online bond platforms"
+        },
+        {
+          "name": "Sebi",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": false,
+          "snippet": "Framework for monitoring utilisation of issue proceeds under review: Sebi"
+        },
+        {
+          "name": "Sebi",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": false,
+          "snippet": "Sebi bets on trading reforms to reverse outflow of foreign capital"
+        },
+        {
+          "name": "Sebi",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": false,
+          "snippet": "Sebi to test bond tokenisation, eyes deeper corporate bond repo market"
         }
       ],
-      "after_filter_count": 2,
+      "after_filter_count": 3,
       "dropped_counts": {
-        "not_listed": 3,
-        "no_sebi_signal_in_snippet": 0,
+        "not_listed": 5,
+        "no_sebi_signal_in_snippet": 2,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
+        {
+          "name": "Dhenu Buildcon",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars six from selling Dhenu Buildcon shares over alleged manipulation"
+        },
         {
           "name": "Online Instruments India",
           "order_type": "sebi-investigation",
           "snippet": "Online Instruments India gets Sebi approval to float IPO worth ₹750 cr"
         },
         {
-          "name": "Dhenu Buildcon",
-          "order_type": "sebi-ban",
-          "snippet": "Sebi bars six from selling Dhenu Buildcon shares over alleged manipulation"
+          "name": "JPMorgan",
+          "order_type": "sebi-investigation",
+          "snippet": "Sebi's swift action against JPMorgan unit seen as warning to traders"
         }
       ]
     },
@@ -162,12 +197,12 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-24T11:08:57.927Z",
+      "at": "2026-08-25T01:55:06.261Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 11,
-      "total_extracted": 11,
+      "total_extracted_raw": 9,
+      "total_extracted": 9,
       "prefilter_sample": [
         {
           "name": "Adani",
@@ -183,12 +218,12 @@
         },
         {
           "name": "Dhenu Buildcon",
-          "order_type": "other",
+          "order_type": "sebi-investigation",
           "is_listed_entity": true,
           "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge"
         },
         {
-          "name": "Copthall Mauritius",
+          "name": "Copthall Mauritius Investment",
           "order_type": "sebi-ban",
           "is_listed_entity": false,
           "snippet": "Sebi bars two entities for 'manipulating' CAS"
@@ -200,46 +235,34 @@
           "snippet": "Sebi bars two entities for 'manipulating' CAS"
         },
         {
-          "name": "Copthall Mauritius",
-          "order_type": "sebi-fine",
-          "is_listed_entity": false,
-          "snippet": "Sebi flags manipulative trades during CAS on Sensex expiry day, fines two entities"
-        },
-        {
-          "name": "Mansi Share and Stock Broking",
-          "order_type": "sebi-fine",
-          "is_listed_entity": false,
-          "snippet": "Sebi flags manipulative trades during CAS on Sensex expiry day, fines two entities"
-        },
-        {
-          "name": "Online Instruments",
+          "name": "Online Instruments India",
           "order_type": "other",
           "is_listed_entity": true,
           "snippet": "Online Instruments India gets Sebi approval to float IPO"
         },
         {
           "name": "Zee Entertainment",
-          "order_type": "sebi-fine",
+          "order_type": "sebi-investigation",
           "is_listed_entity": true,
           "snippet": "Zee Entertainment shares rise 8% after SAT grants interim relief in Sebi order"
         },
         {
-          "name": "Zee Entertainment",
+          "name": "JBM Auto",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Zee Entertainment allots 20.94 cr convertible warrants to promoter group entity"
+          "snippet": "JBM Auto responds to Bain EV investment report, says no material disclosure required"
         },
         {
-          "name": "Paytm",
-          "order_type": "sebi-show-cause",
+          "name": "Zing",
+          "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Paytm management gets Sebi show cause notice over timing of 2023 loan disclosure announcement"
+          "snippet": "Zing files for IPO as parent company seeks to raise funds"
         }
       ],
-      "after_filter_count": 5,
+      "after_filter_count": 4,
       "dropped_counts": {
-        "not_listed": 5,
-        "no_sebi_signal_in_snippet": 1,
+        "not_listed": 3,
+        "no_sebi_signal_in_snippet": 2,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -251,23 +274,18 @@
         },
         {
           "name": "Dhenu Buildcon",
-          "order_type": "other",
+          "order_type": "sebi-investigation",
           "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge"
         },
         {
-          "name": "Online Instruments",
+          "name": "Online Instruments India",
           "order_type": "other",
           "snippet": "Online Instruments India gets Sebi approval to float IPO"
         },
         {
           "name": "Zee Entertainment",
-          "order_type": "sebi-fine",
+          "order_type": "sebi-investigation",
           "snippet": "Zee Entertainment shares rise 8% after SAT grants interim relief in Sebi order"
-        },
-        {
-          "name": "Paytm",
-          "order_type": "sebi-show-cause",
-          "snippet": "Paytm management gets Sebi show cause notice over timing of 2023 loan disclosure announcement"
         }
       ]
     },
@@ -275,7 +293,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-08-24T11:09:08.603Z",
+      "at": "2026-08-25T01:55:12.432Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
