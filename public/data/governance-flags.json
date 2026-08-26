@@ -1,31 +1,12 @@
 {
-  "generated_at": "2026-08-26T02:01:36.992Z",
+  "generated_at": "2026-08-26T11:09:00.864Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 13,
+  "total_entities_seen": 10,
   "flagged_companies": {
-    "501945": {
-      "primary_name": "Dhenu Buildcon",
-      "order_type": "other",
-      "snippet": "Sebi’s interim order alleges Dhenu Buildcon routed Rs 1,000 crore through connected entities.",
-      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
-      "source_label": "Economic Times — SEBI topic (news)",
-      "origins": [
-        "scraper"
-      ],
-      "mentions": [
-        {
-          "source": "Economic Times — SEBI topic (news)",
-          "origin": "scraper",
-          "order_type": "other",
-          "snippet": "Sebi’s interim order alleges Dhenu Buildcon routed Rs 1,000 crore through connected entities."
-        }
-      ],
-      "first_seen_at": "2026-08-26T02:01:36.991Z"
-    },
     "511144": {
       "primary_name": "Axis Group",
-      "order_type": "other",
+      "order_type": "show-cause",
       "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss",
       "source_url": "https://www.business-standard.com/topic/sebi",
       "source_label": "Business Standard — SEBI topic (news)",
@@ -36,26 +17,14 @@
         {
           "source": "Business Standard — SEBI topic (news)",
           "origin": "scraper",
-          "order_type": "other",
+          "order_type": "show-cause",
           "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
-        },
-        {
-          "source": "Economic Times — SEBI topic (news)",
-          "origin": "scraper",
-          "order_type": "other",
-          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses."
         }
       ],
-      "first_seen_at": "2026-08-26T02:01:36.991Z"
+      "first_seen_at": "2026-08-26T11:09:00.864Z"
     }
   },
   "unmatched_sample": [
-    {
-      "name": "Varanium Cloud",
-      "type": "sebi-ban",
-      "source": "Mint — SEBI topic (news)",
-      "origin": "scraper"
-    },
     {
       "name": "Max-Axis Bank",
       "type": "other",
@@ -63,14 +32,14 @@
       "origin": "scraper"
     },
     {
-      "name": "Max Financial Services",
-      "type": "other",
+      "name": "Varanium Cloud",
+      "type": "sebi-ban",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Online Instruments India",
-      "type": "other",
+      "name": "Max Financial Services",
+      "type": "show-cause",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -82,7 +51,7 @@
     },
     {
       "name": "Adani",
-      "type": "sebi-investigation",
+      "type": "other",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -93,13 +62,13 @@
       "origin": "scraper"
     },
     {
-      "name": "Zee Entertainment",
+      "name": "Bharti Airtel",
       "type": "other",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Online Instruments India",
+      "name": "Online Instruments",
       "type": "other",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
@@ -116,7 +85,7 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-26T02:00:41.713Z",
+      "at": "2026-08-26T11:08:41.446Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -126,17 +95,141 @@
         {
           "name": "Varanium Cloud",
           "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years, orders ₹128.8 crore disgorgement"
+          "is_listed_entity": false,
+          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years, orders ₹128.8 crore disgorgement."
         },
         {
           "name": "Max-Axis Bank",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Sebi drops fraud, disclosure charges in Max-Axis Bank case"
+          "snippet": "Sebi drops fraud, disclosure charges in Max-Axis Bank case."
         }
       ],
-      "after_filter_count": 2,
+      "after_filter_count": 1,
+      "dropped_counts": {
+        "not_listed": 1,
+        "no_sebi_signal_in_snippet": 0,
+        "resolved_in_favour": 0,
+        "no_name": 0
+      },
+      "sample": [
+        {
+          "name": "Max-Axis Bank",
+          "order_type": "other",
+          "snippet": "Sebi drops fraud, disclosure charges in Max-Axis Bank case."
+        }
+      ]
+    },
+    {
+      "url": "https://www.business-standard.com/topic/sebi",
+      "label": "Business Standard — SEBI topic (news)",
+      "mode": "news",
+      "at": "2026-08-26T11:08:44.123Z",
+      "fc_status": 200,
+      "outcome": "ok",
+      "upstream_status": 200,
+      "total_extracted_raw": 4,
+      "total_extracted": 4,
+      "prefilter_sample": [
+        {
+          "name": "Varanium Cloud",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars Varanium Cloud, promoter from securities market for seven years"
+        },
+        {
+          "name": "Max Financial Services",
+          "order_type": "show-cause",
+          "is_listed_entity": true,
+          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
+        },
+        {
+          "name": "Axis Group",
+          "order_type": "show-cause",
+          "is_listed_entity": true,
+          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
+        },
+        {
+          "name": "JPMorgan",
+          "order_type": "other",
+          "is_listed_entity": false,
+          "snippet": "JPMorgan India unit to argue that any regulatory breach was technical"
+        }
+      ],
+      "after_filter_count": 3,
+      "dropped_counts": {
+        "not_listed": 1,
+        "no_sebi_signal_in_snippet": 0,
+        "resolved_in_favour": 0,
+        "no_name": 0
+      },
+      "sample": [
+        {
+          "name": "Varanium Cloud",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars Varanium Cloud, promoter from securities market for seven years"
+        },
+        {
+          "name": "Max Financial Services",
+          "order_type": "show-cause",
+          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
+        },
+        {
+          "name": "Axis Group",
+          "order_type": "show-cause",
+          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
+        }
+      ]
+    },
+    {
+      "url": "https://economictimes.indiatimes.com/topic/sebi",
+      "label": "Economic Times — SEBI topic (news)",
+      "mode": "news",
+      "at": "2026-08-26T11:08:50.491Z",
+      "fc_status": 200,
+      "outcome": "ok",
+      "upstream_status": 200,
+      "total_extracted_raw": 6,
+      "total_extracted": 6,
+      "prefilter_sample": [
+        {
+          "name": "Varanium Cloud",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years from markets"
+        },
+        {
+          "name": "Adani",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Sebi turns down Adani-linked FPIs' settlement applications"
+        },
+        {
+          "name": "Max Financial",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses"
+        },
+        {
+          "name": "Bharti Airtel",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Sebi proposes stricter norms for private placement of securities that could impact Bharti Airtel"
+        },
+        {
+          "name": "Online Instruments",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Online Instruments India gets Sebi approval to float IPO"
+        },
+        {
+          "name": "Gemini Edibles & Fats India",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Freedom Oils maker Gemini Edibles & Fats India files DRHP with Sebi for IPO"
+        }
+      ],
+      "after_filter_count": 6,
       "dropped_counts": {
         "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
@@ -147,213 +240,32 @@
         {
           "name": "Varanium Cloud",
           "order_type": "sebi-ban",
-          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years, orders ₹128.8 crore disgorgement"
-        },
-        {
-          "name": "Max-Axis Bank",
-          "order_type": "other",
-          "snippet": "Sebi drops fraud, disclosure charges in Max-Axis Bank case"
-        }
-      ]
-    },
-    {
-      "url": "https://www.business-standard.com/topic/sebi",
-      "label": "Business Standard — SEBI topic (news)",
-      "mode": "news",
-      "at": "2026-08-26T02:00:49.489Z",
-      "fc_status": 200,
-      "outcome": "ok",
-      "upstream_status": 200,
-      "total_extracted_raw": 6,
-      "total_extracted": 6,
-      "prefilter_sample": [
-        {
-          "name": "Max Financial Services",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
-        },
-        {
-          "name": "Axis Group",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
-        },
-        {
-          "name": "JPMorgan",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "JPMorgan India unit to argue that any regulatory breach was technical"
-        },
-        {
-          "name": "Online Instruments India",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Online Instruments India gets Sebi approval to float IPO worth ₹750 cr"
-        },
-        {
-          "name": "Hindustan Copper",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Hindustan Copper Share Price falls 7% as Govt OFS opens floor price at 10% discount"
-        },
-        {
-          "name": "Vodafone Idea",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Vodafone Idea Share price surges 5% in weak market on huge volume."
-        }
-      ],
-      "after_filter_count": 3,
-      "dropped_counts": {
-        "not_listed": 0,
-        "no_sebi_signal_in_snippet": 3,
-        "resolved_in_favour": 0,
-        "no_name": 0
-      },
-      "sample": [
-        {
-          "name": "Max Financial Services",
-          "order_type": "other",
-          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
-        },
-        {
-          "name": "Axis Group",
-          "order_type": "other",
-          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
-        },
-        {
-          "name": "Online Instruments India",
-          "order_type": "other",
-          "snippet": "Online Instruments India gets Sebi approval to float IPO worth ₹750 cr"
-        }
-      ]
-    },
-    {
-      "url": "https://economictimes.indiatimes.com/topic/sebi",
-      "label": "Economic Times — SEBI topic (news)",
-      "mode": "news",
-      "at": "2026-08-26T02:01:01.440Z",
-      "fc_status": 200,
-      "outcome": "ok",
-      "upstream_status": 200,
-      "total_extracted_raw": 11,
-      "total_extracted": 11,
-      "prefilter_sample": [
-        {
-          "name": "Varanium Cloud",
-          "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Sebi bars Varanium Cloud, promoter Harshawardhan Sabale from the securities market for seven years."
+          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years from markets"
         },
         {
           "name": "Adani",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "Sebi turns down Adani-linked FPIs' settlement applications."
+          "order_type": "other",
+          "snippet": "Sebi turns down Adani-linked FPIs' settlement applications"
         },
         {
           "name": "Max Financial",
           "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses."
+          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses"
         },
         {
-          "name": "Axis Bank",
+          "name": "Bharti Airtel",
           "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses."
+          "snippet": "Sebi proposes stricter norms for private placement of securities that could impact Bharti Airtel"
         },
         {
-          "name": "Copthall Mauritius Investment",
-          "order_type": "sebi-ban",
-          "is_listed_entity": false,
-          "snippet": "Sebi bars Copthall Mauritius Investment and Mansi Share and Stock Broking from securities market access."
-        },
-        {
-          "name": "Mansi Share and Stock Broking",
-          "order_type": "sebi-ban",
-          "is_listed_entity": false,
-          "snippet": "Sebi bars Copthall Mauritius Investment and Mansi Share and Stock Broking from securities market access."
-        },
-        {
-          "name": "Dhenu Buildcon",
+          "name": "Online Instruments",
           "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Sebi’s interim order alleges Dhenu Buildcon routed Rs 1,000 crore through connected entities."
-        },
-        {
-          "name": "Zee Entertainment",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Zee Entertainment shares rally 8% after SAT grants interim relief in Sebi order."
-        },
-        {
-          "name": "Online Instruments India",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Online Instruments India gets Sebi approval to float IPO."
+          "snippet": "Online Instruments India gets Sebi approval to float IPO"
         },
         {
           "name": "Gemini Edibles & Fats India",
           "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Gemini Edibles & Fats India files DRHP with Sebi for IPO."
-        },
-        {
-          "name": "Zee",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "SAT allows Zee, Goenka to proceed with warrant issue."
-        }
-      ],
-      "after_filter_count": 8,
-      "dropped_counts": {
-        "not_listed": 2,
-        "no_sebi_signal_in_snippet": 1,
-        "resolved_in_favour": 0,
-        "no_name": 0
-      },
-      "sample": [
-        {
-          "name": "Varanium Cloud",
-          "order_type": "sebi-ban",
-          "snippet": "Sebi bars Varanium Cloud, promoter Harshawardhan Sabale from the securities market for seven years."
-        },
-        {
-          "name": "Adani",
-          "order_type": "sebi-investigation",
-          "snippet": "Sebi turns down Adani-linked FPIs' settlement applications."
-        },
-        {
-          "name": "Max Financial",
-          "order_type": "other",
-          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses."
-        },
-        {
-          "name": "Axis Bank",
-          "order_type": "other",
-          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses."
-        },
-        {
-          "name": "Dhenu Buildcon",
-          "order_type": "other",
-          "snippet": "Sebi’s interim order alleges Dhenu Buildcon routed Rs 1,000 crore through connected entities."
-        },
-        {
-          "name": "Zee Entertainment",
-          "order_type": "other",
-          "snippet": "Zee Entertainment shares rally 8% after SAT grants interim relief in Sebi order."
-        },
-        {
-          "name": "Online Instruments India",
-          "order_type": "other",
-          "snippet": "Online Instruments India gets Sebi approval to float IPO."
-        },
-        {
-          "name": "Gemini Edibles & Fats India",
-          "order_type": "other",
-          "snippet": "Gemini Edibles & Fats India files DRHP with Sebi for IPO."
+          "snippet": "Freedom Oils maker Gemini Edibles & Fats India files DRHP with Sebi for IPO"
         }
       ]
     },
@@ -361,7 +273,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-08-26T02:01:27.658Z",
+      "at": "2026-08-26T11:08:56.729Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
