@@ -1,293 +1,46 @@
 {
-  "generated_at": "2026-08-26T11:09:00.864Z",
+  "generated_at": "2026-08-27T09:41:23.829Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 10,
-  "flagged_companies": {
-    "511144": {
-      "primary_name": "Axis Group",
-      "order_type": "show-cause",
-      "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss",
-      "source_url": "https://www.business-standard.com/topic/sebi",
-      "source_label": "Business Standard — SEBI topic (news)",
-      "origins": [
-        "scraper"
-      ],
-      "mentions": [
-        {
-          "source": "Business Standard — SEBI topic (news)",
-          "origin": "scraper",
-          "order_type": "show-cause",
-          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
-        }
-      ],
-      "first_seen_at": "2026-08-26T11:09:00.864Z"
-    }
-  },
-  "unmatched_sample": [
-    {
-      "name": "Max-Axis Bank",
-      "type": "other",
-      "source": "Mint — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Varanium Cloud",
-      "type": "sebi-ban",
-      "source": "Business Standard — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Max Financial Services",
-      "type": "show-cause",
-      "source": "Business Standard — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Varanium Cloud",
-      "type": "sebi-ban",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Adani",
-      "type": "other",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Max Financial",
-      "type": "other",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Bharti Airtel",
-      "type": "other",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Online Instruments",
-      "type": "other",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Gemini Edibles & Fats India",
-      "type": "other",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    }
-  ],
+  "total_entities_seen": 0,
+  "flagged_companies": {},
+  "unmatched_sample": [],
   "sources": [
     {
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-26T11:08:41.446Z",
-      "fc_status": 200,
-      "outcome": "ok",
-      "upstream_status": 200,
-      "total_extracted_raw": 2,
-      "total_extracted": 2,
-      "prefilter_sample": [
-        {
-          "name": "Varanium Cloud",
-          "order_type": "sebi-ban",
-          "is_listed_entity": false,
-          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years, orders ₹128.8 crore disgorgement."
-        },
-        {
-          "name": "Max-Axis Bank",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Sebi drops fraud, disclosure charges in Max-Axis Bank case."
-        }
-      ],
-      "after_filter_count": 1,
-      "dropped_counts": {
-        "not_listed": 1,
-        "no_sebi_signal_in_snippet": 0,
-        "resolved_in_favour": 0,
-        "no_name": 0
-      },
-      "sample": [
-        {
-          "name": "Max-Axis Bank",
-          "order_type": "other",
-          "snippet": "Sebi drops fraud, disclosure charges in Max-Axis Bank case."
-        }
-      ]
+      "at": "2026-08-27T09:41:21.235Z",
+      "fc_status": 402,
+      "outcome": "fc_http_error",
+      "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
     },
     {
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-26T11:08:44.123Z",
-      "fc_status": 200,
-      "outcome": "ok",
-      "upstream_status": 200,
-      "total_extracted_raw": 4,
-      "total_extracted": 4,
-      "prefilter_sample": [
-        {
-          "name": "Varanium Cloud",
-          "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Sebi bars Varanium Cloud, promoter from securities market for seven years"
-        },
-        {
-          "name": "Max Financial Services",
-          "order_type": "show-cause",
-          "is_listed_entity": true,
-          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
-        },
-        {
-          "name": "Axis Group",
-          "order_type": "show-cause",
-          "is_listed_entity": true,
-          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
-        },
-        {
-          "name": "JPMorgan",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "JPMorgan India unit to argue that any regulatory breach was technical"
-        }
-      ],
-      "after_filter_count": 3,
-      "dropped_counts": {
-        "not_listed": 1,
-        "no_sebi_signal_in_snippet": 0,
-        "resolved_in_favour": 0,
-        "no_name": 0
-      },
-      "sample": [
-        {
-          "name": "Varanium Cloud",
-          "order_type": "sebi-ban",
-          "snippet": "Sebi bars Varanium Cloud, promoter from securities market for seven years"
-        },
-        {
-          "name": "Max Financial Services",
-          "order_type": "show-cause",
-          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
-        },
-        {
-          "name": "Axis Group",
-          "order_type": "show-cause",
-          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
-        }
-      ]
+      "at": "2026-08-27T09:41:21.957Z",
+      "fc_status": 402,
+      "outcome": "fc_http_error",
+      "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
     },
     {
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-26T11:08:50.491Z",
-      "fc_status": 200,
-      "outcome": "ok",
-      "upstream_status": 200,
-      "total_extracted_raw": 6,
-      "total_extracted": 6,
-      "prefilter_sample": [
-        {
-          "name": "Varanium Cloud",
-          "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years from markets"
-        },
-        {
-          "name": "Adani",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Sebi turns down Adani-linked FPIs' settlement applications"
-        },
-        {
-          "name": "Max Financial",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses"
-        },
-        {
-          "name": "Bharti Airtel",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Sebi proposes stricter norms for private placement of securities that could impact Bharti Airtel"
-        },
-        {
-          "name": "Online Instruments",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Online Instruments India gets Sebi approval to float IPO"
-        },
-        {
-          "name": "Gemini Edibles & Fats India",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Freedom Oils maker Gemini Edibles & Fats India files DRHP with Sebi for IPO"
-        }
-      ],
-      "after_filter_count": 6,
-      "dropped_counts": {
-        "not_listed": 0,
-        "no_sebi_signal_in_snippet": 0,
-        "resolved_in_favour": 0,
-        "no_name": 0
-      },
-      "sample": [
-        {
-          "name": "Varanium Cloud",
-          "order_type": "sebi-ban",
-          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years from markets"
-        },
-        {
-          "name": "Adani",
-          "order_type": "other",
-          "snippet": "Sebi turns down Adani-linked FPIs' settlement applications"
-        },
-        {
-          "name": "Max Financial",
-          "order_type": "other",
-          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses"
-        },
-        {
-          "name": "Bharti Airtel",
-          "order_type": "other",
-          "snippet": "Sebi proposes stricter norms for private placement of securities that could impact Bharti Airtel"
-        },
-        {
-          "name": "Online Instruments",
-          "order_type": "other",
-          "snippet": "Online Instruments India gets Sebi approval to float IPO"
-        },
-        {
-          "name": "Gemini Edibles & Fats India",
-          "order_type": "other",
-          "snippet": "Freedom Oils maker Gemini Edibles & Fats India files DRHP with Sebi for IPO"
-        }
-      ]
+      "at": "2026-08-27T09:41:22.593Z",
+      "fc_status": 402,
+      "outcome": "fc_http_error",
+      "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
     },
     {
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-08-26T11:08:56.729Z",
-      "fc_status": 200,
-      "outcome": "ok",
-      "upstream_status": 200,
-      "total_extracted_raw": 0,
-      "total_extracted": 0,
-      "prefilter_sample": [],
-      "after_filter_count": 0,
-      "dropped_counts": {
-        "not_listed": 0,
-        "no_sebi_signal_in_snippet": 0,
-        "resolved_in_favour": 0,
-        "no_name": 0
-      },
-      "sample": []
+      "at": "2026-08-27T09:41:23.187Z",
+      "fc_status": 402,
+      "outcome": "fc_http_error",
+      "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
     }
   ]
 }
