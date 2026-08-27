@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-27T09:41:42.372Z",
+  "generated_at": "2026-08-27T17:52:06.810Z",
   "source": "Yahoo Finance chart endpoint",
   "note": "Pre-open context. GIFT Nifty has no free stable feed; S&P futures plus the Asian session carry the same overnight information.",
   "giftNifty": null,
@@ -9,10 +9,10 @@
       "symbol": "ES=F",
       "label": "S&P 500 futures",
       "role": "overnight",
-      "last": 7727.5,
+      "last": 7749.75,
       "prevClose": 7669.75,
-      "changePct": 0.7529580494801014,
-      "asOf": "2026-08-27T09:31:36.000Z"
+      "changePct": 1.0430587698425642,
+      "asOf": "2026-08-27T17:42:00.000Z"
     },
     "nikkei": {
       "key": "nikkei",
@@ -39,39 +39,39 @@
       "symbol": "^INDIAVIX",
       "label": "India VIX",
       "role": "vol",
-      "last": 11.023,
+      "last": 11.068,
       "prevClose": 11.2,
-      "changePct": -1.5803571428571361,
-      "asOf": "2026-08-27T09:41:40.000Z"
+      "changePct": -1.1785714285714288,
+      "asOf": "2026-08-27T10:14:03.000Z"
     },
     "nifty": {
       "key": "nifty",
       "symbol": "^NSEI",
       "label": "Nifty 50",
       "role": "home",
-      "last": 24144.4,
+      "last": 24090.85,
       "prevClose": 24252,
-      "changePct": -0.4436747484743431,
-      "asOf": "2026-08-27T09:41:40.000Z"
+      "changePct": -0.6644812798944466,
+      "asOf": "2026-08-27T10:01:28.000Z"
     },
     "smallcap": {
       "key": "smallcap",
       "symbol": "NIFTYSMLCAP250.NS",
       "label": "Nifty Smallcap 250",
       "role": "home",
-      "last": 18434.65,
+      "last": 18432.75,
       "prevClose": 18414.45,
-      "changePct": 0.10969646120302379,
-      "asOf": "2026-08-27T09:41:41.000Z"
+      "changePct": 0.09937847722847337,
+      "asOf": "2026-08-27T10:01:28.000Z"
     }
   },
   "signal": {
-    "lean": 0.29112179705590435,
+    "lean": 0.43617215723713576,
     "dir": "flat",
-    "vix": 11.023,
-    "vixChange": -1.5803571428571361,
+    "vix": 11.068,
+    "vixChange": -1.1785714285714288,
     "vixBand": "calm",
-    "tolerancePct": 0.67,
+    "tolerancePct": 0.76,
     "headline": "Overnight quiet — a normal open"
   }
 }
