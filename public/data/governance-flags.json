@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-27T20:47:23.554Z",
+  "generated_at": "2026-08-28T11:23:02.333Z",
   "source_count": 4,
   "curated_baseline_count": 0,
   "total_entities_seen": 0,
@@ -10,7 +10,7 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-27T20:47:21.021Z",
+      "at": "2026-08-28T11:22:59.599Z",
       "fc_status": 402,
       "outcome": "fc_http_error",
       "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
@@ -19,7 +19,7 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-27T20:47:21.671Z",
+      "at": "2026-08-28T11:23:00.387Z",
       "fc_status": 402,
       "outcome": "fc_http_error",
       "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
@@ -28,7 +28,7 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-27T20:47:22.338Z",
+      "at": "2026-08-28T11:23:01.119Z",
       "fc_status": 402,
       "outcome": "fc_http_error",
       "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
@@ -37,7 +37,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-08-27T20:47:22.970Z",
+      "at": "2026-08-28T11:23:01.731Z",
       "fc_status": 402,
       "outcome": "fc_http_error",
       "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
