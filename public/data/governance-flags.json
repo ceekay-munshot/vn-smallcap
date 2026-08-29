@@ -1,46 +1,332 @@
 {
-  "generated_at": "2026-08-28T21:18:07.642Z",
+  "generated_at": "2026-08-29T07:05:19.935Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 0,
-  "flagged_companies": {},
-  "unmatched_sample": [],
+  "total_entities_seen": 13,
+  "flagged_companies": {
+    "501945": {
+      "primary_name": "Dhenu Buildcon",
+      "order_type": "other",
+      "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge",
+      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
+      "source_label": "Economic Times — SEBI topic (news)",
+      "origins": [
+        "scraper"
+      ],
+      "mentions": [
+        {
+          "source": "Economic Times — SEBI topic (news)",
+          "origin": "scraper",
+          "order_type": "other",
+          "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge"
+        }
+      ],
+      "first_seen_at": "2026-08-29T07:05:19.935Z"
+    }
+  },
+  "unmatched_sample": [
+    {
+      "name": "Varanium Cloud",
+      "type": "sebi-ban",
+      "source": "Mint — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Debock Industries",
+      "type": "sebi-ban",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Trafiksol ITS",
+      "type": "sebi-ban",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Jio Platforms",
+      "type": "other",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Varanium Cloud",
+      "type": "sebi-ban",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Max Financial Services",
+      "type": "other",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Trafiksol",
+      "type": "sebi-ban",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Varanium Cloud",
+      "type": "sebi-ban",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Max Financial",
+      "type": "other",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Corporate Capital Ventures",
+      "type": "sebi-ban",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Capri Global",
+      "type": "sebi-fine",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Jio Platforms",
+      "type": "other",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    }
+  ],
   "sources": [
     {
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-28T21:18:04.845Z",
-      "fc_status": 402,
-      "outcome": "fc_http_error",
-      "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
+      "at": "2026-08-29T07:04:52.007Z",
+      "fc_status": 200,
+      "outcome": "ok",
+      "upstream_status": 200,
+      "total_extracted_raw": 1,
+      "total_extracted": 1,
+      "prefilter_sample": [
+        {
+          "name": "Varanium Cloud",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years, orders ₹128.8 crore disgorgement."
+        }
+      ],
+      "after_filter_count": 1,
+      "dropped_counts": {
+        "not_listed": 0,
+        "no_sebi_signal_in_snippet": 0,
+        "resolved_in_favour": 0,
+        "no_name": 0
+      },
+      "sample": [
+        {
+          "name": "Varanium Cloud",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years, orders ₹128.8 crore disgorgement."
+        }
+      ]
     },
     {
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-28T21:18:05.697Z",
-      "fc_status": 402,
-      "outcome": "fc_http_error",
-      "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
+      "at": "2026-08-29T07:04:57.580Z",
+      "fc_status": 200,
+      "outcome": "ok",
+      "upstream_status": 200,
+      "total_extracted_raw": 5,
+      "total_extracted": 5,
+      "prefilter_sample": [
+        {
+          "name": "Debock Industries",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars Debock Industries, promoter for seven years in fraud case"
+        },
+        {
+          "name": "Trafiksol ITS",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars Trafiksol ITS, promoters from securities market for one year"
+        },
+        {
+          "name": "Jio Platforms",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Sebi gives green light to Jio Platforms IPO, six other public offers"
+        },
+        {
+          "name": "Varanium Cloud",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars Varanium Cloud, promoter from securities market for seven years"
+        },
+        {
+          "name": "Max Financial Services",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
+        }
+      ],
+      "after_filter_count": 5,
+      "dropped_counts": {
+        "not_listed": 0,
+        "no_sebi_signal_in_snippet": 0,
+        "resolved_in_favour": 0,
+        "no_name": 0
+      },
+      "sample": [
+        {
+          "name": "Debock Industries",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars Debock Industries, promoter for seven years in fraud case"
+        },
+        {
+          "name": "Trafiksol ITS",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars Trafiksol ITS, promoters from securities market for one year"
+        },
+        {
+          "name": "Jio Platforms",
+          "order_type": "other",
+          "snippet": "Sebi gives green light to Jio Platforms IPO, six other public offers"
+        },
+        {
+          "name": "Varanium Cloud",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars Varanium Cloud, promoter from securities market for seven years"
+        },
+        {
+          "name": "Max Financial Services",
+          "order_type": "other",
+          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
+        }
+      ]
     },
     {
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-28T21:18:06.379Z",
-      "fc_status": 402,
-      "outcome": "fc_http_error",
-      "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
+      "at": "2026-08-29T07:05:04.659Z",
+      "fc_status": 200,
+      "outcome": "ok",
+      "upstream_status": 200,
+      "total_extracted_raw": 7,
+      "total_extracted": 7,
+      "prefilter_sample": [
+        {
+          "name": "Trafiksol",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars Trafiksol ITS, promoters for 1 year for misleading IPO disclosures"
+        },
+        {
+          "name": "Varanium Cloud",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "IPO fund diversion: Sebi bars Varanium Cloud, promoter for 7 years from markets"
+        },
+        {
+          "name": "Max Financial",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses"
+        },
+        {
+          "name": "Corporate Capital Ventures",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars merchant banker Corporate Capital Ventures from new assignments for one month"
+        },
+        {
+          "name": "Dhenu Buildcon",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge"
+        },
+        {
+          "name": "Capri Global",
+          "order_type": "sebi-fine",
+          "is_listed_entity": true,
+          "snippet": "Capri Global faces Rs 74,000 penalty from NSE, BSE over compliance lapses"
+        },
+        {
+          "name": "Jio Platforms",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Jio Platform gets Sebi's nod for Rs 37,000 crore IPO"
+        }
+      ],
+      "after_filter_count": 7,
+      "dropped_counts": {
+        "not_listed": 0,
+        "no_sebi_signal_in_snippet": 0,
+        "resolved_in_favour": 0,
+        "no_name": 0
+      },
+      "sample": [
+        {
+          "name": "Trafiksol",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars Trafiksol ITS, promoters for 1 year for misleading IPO disclosures"
+        },
+        {
+          "name": "Varanium Cloud",
+          "order_type": "sebi-ban",
+          "snippet": "IPO fund diversion: Sebi bars Varanium Cloud, promoter for 7 years from markets"
+        },
+        {
+          "name": "Max Financial",
+          "order_type": "other",
+          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses"
+        },
+        {
+          "name": "Corporate Capital Ventures",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars merchant banker Corporate Capital Ventures from new assignments for one month"
+        },
+        {
+          "name": "Dhenu Buildcon",
+          "order_type": "other",
+          "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge"
+        },
+        {
+          "name": "Capri Global",
+          "order_type": "sebi-fine",
+          "snippet": "Capri Global faces Rs 74,000 penalty from NSE, BSE over compliance lapses"
+        },
+        {
+          "name": "Jio Platforms",
+          "order_type": "other",
+          "snippet": "Jio Platform gets Sebi's nod for Rs 37,000 crore IPO"
+        }
+      ]
     },
     {
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-08-28T21:18:07.021Z",
-      "fc_status": 402,
-      "outcome": "fc_http_error",
-      "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
+      "at": "2026-08-29T07:05:11.285Z",
+      "fc_status": 200,
+      "outcome": "ok",
+      "upstream_status": 200,
+      "total_extracted_raw": 0,
+      "total_extracted": 0,
+      "prefilter_sample": [],
+      "after_filter_count": 0,
+      "dropped_counts": {
+        "not_listed": 0,
+        "no_sebi_signal_in_snippet": 0,
+        "resolved_in_favour": 0,
+        "no_name": 0
+      },
+      "sample": []
     }
   ]
 }
