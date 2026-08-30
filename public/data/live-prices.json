@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-29T07:05:56.487Z",
+  "generated_at": "2026-08-30T05:24:30.170Z",
   "source": "Munshot quote API (8 tickers) + Yahoo fallback (1)",
   "note": "Live intraday snapshot per basket ticker. dayHigh/dayLow drive intraday target/SL touch detection; current is the latest traded price.",
   "ticker_count": 9,
@@ -54,11 +54,11 @@
       "dayLow": 2067.2,
       "week52High": 2674.8,
       "week52Low": 1868.5,
-      "ma50": 2300.93,
-      "ma200": 2243.92,
-      "vol10d": 88616,
-      "marketCap": 54947554182,
-      "yearlyChangePct": 0
+      "ma50": 2296.67,
+      "ma200": 2243.14,
+      "vol10d": 88626,
+      "marketCap": 54947552896.86,
+      "yearlyChangePct": -4.78
     },
     "GAEL": {
       "current": 166.98,
@@ -68,11 +68,11 @@
       "dayLow": 165.56,
       "week52High": 184.99,
       "week52Low": 101.2,
-      "ma50": 163.63,
-      "ma200": 145.25,
-      "vol10d": 1337588,
-      "marketCap": 76588826806.8,
-      "yearlyChangePct": 0
+      "ma50": 163.7,
+      "ma200": 145.35,
+      "vol10d": 1337598,
+      "marketCap": 76588824847.15,
+      "yearlyChangePct": 62.05
     },
     "LUMAXTECH": {
       "current": 1985.5,
@@ -96,11 +96,11 @@
       "dayLow": 666,
       "week52High": 720,
       "week52Low": 330,
-      "ma50": 551.11,
-      "ma200": 462.93,
-      "vol10d": 383416,
-      "marketCap": 43164800000,
-      "yearlyChangePct": 0
+      "ma50": 553.57,
+      "ma200": 463.99,
+      "vol10d": 383417,
+      "marketCap": 43164800781.25,
+      "yearlyChangePct": 20.65
     },
     "ARTEMISMED": {
       "current": 319.25,
@@ -124,11 +124,11 @@
       "dayLow": 356.85,
       "week52High": 376.5,
       "week52Low": 166.3,
-      "ma50": 305.01,
-      "ma200": 230.4,
+      "ma50": 306.35,
+      "ma200": 231.11,
       "vol10d": 1066722,
       "marketCap": 55599203790.25,
-      "yearlyChangePct": 0
+      "yearlyChangePct": 38.07
     }
   }
 }
