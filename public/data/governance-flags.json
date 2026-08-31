@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-30T05:23:51.081Z",
+  "generated_at": "2026-08-31T05:31:36.358Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 16,
+  "total_entities_seen": 18,
   "flagged_companies": {
     "501945": {
       "primary_name": "Dhenu Buildcon",
-      "order_type": "other",
+      "order_type": "sebi-investigation",
       "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge",
       "source_url": "https://economictimes.indiatimes.com/topic/sebi",
       "source_label": "Economic Times — SEBI topic (news)",
@@ -17,23 +17,17 @@
         {
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
-          "order_type": "other",
+          "order_type": "sebi-investigation",
           "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge"
         }
       ],
-      "first_seen_at": "2026-08-30T05:23:51.081Z"
+      "first_seen_at": "2026-08-31T05:31:36.358Z"
     }
   },
   "unmatched_sample": [
     {
       "name": "Varanium Cloud",
       "type": "sebi-ban",
-      "source": "Mint — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "NSE",
-      "type": "other",
       "source": "Mint — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -50,9 +44,39 @@
       "origin": "scraper"
     },
     {
+      "name": "Jio Platforms",
+      "type": "other",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Pushp Brand",
+      "type": "other",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
       "name": "Varanium Cloud",
       "type": "sebi-ban",
       "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Max Financial Services",
+      "type": "other",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Adani",
+      "type": "other",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Trafiksol",
+      "type": "sebi-ban",
+      "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
@@ -69,13 +93,13 @@
     },
     {
       "name": "Max Financial",
-      "type": "other",
+      "type": "show-cause",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Corporate Capital Ventures",
-      "type": "sebi-ban",
+      "name": "Adani",
+      "type": "show-cause",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -86,32 +110,20 @@
       "origin": "scraper"
     },
     {
-      "name": "Copthall Mauritius Investment",
+      "name": "Jio Platforms",
+      "type": "settlement",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Online Instruments",
+      "type": "settlement",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Corporate Capital Ventures",
       "type": "sebi-ban",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Mansi Share and Stock Broking",
-      "type": "sebi-ban",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "NTPC",
-      "type": "sebi-fine",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "SJVN",
-      "type": "sebi-fine",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "REC",
-      "type": "sebi-fine",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -121,42 +133,24 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-30T05:23:36.752Z",
+      "at": "2026-08-31T05:31:06.392Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 4,
-      "total_extracted": 4,
+      "total_extracted_raw": 1,
+      "total_extracted": 1,
       "prefilter_sample": [
         {
           "name": "Varanium Cloud",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
           "snippet": "Sebi bars Varanium Cloud, promoter for 7 years, orders ₹128.8 crore disgorgement."
-        },
-        {
-          "name": "NSE",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Sebi ‘close’ to approving NSE IPO: Tuhin Kanta Pandey."
-        },
-        {
-          "name": "Sembcorp Green Infra",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Temasek-backed Sembcorp Green Infra files for ₹3,750 cr IPO."
-        },
-        {
-          "name": "Avaada Electro",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Avaada Electro cuts IPO size to ₹7,600 crore amid valuation, concentration concerns."
         }
       ],
-      "after_filter_count": 2,
+      "after_filter_count": 1,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 2,
+        "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -165,11 +159,6 @@
           "name": "Varanium Cloud",
           "order_type": "sebi-ban",
           "snippet": "Sebi bars Varanium Cloud, promoter for 7 years, orders ₹128.8 crore disgorgement."
-        },
-        {
-          "name": "NSE",
-          "order_type": "other",
-          "snippet": "Sebi ‘close’ to approving NSE IPO: Tuhin Kanta Pandey."
         }
       ]
     },
@@ -177,12 +166,12 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-30T05:23:40.635Z",
+      "at": "2026-08-31T05:31:11.372Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 3,
-      "total_extracted": 3,
+      "total_extracted_raw": 7,
+      "total_extracted": 7,
       "prefilter_sample": [
         {
           "name": "Debock Industries",
@@ -197,13 +186,37 @@
           "snippet": "Sebi bars Trafiksol ITS, promoters from securities market for one year"
         },
         {
+          "name": "Jio Platforms",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Sebi gives green light to Jio Platforms IPO, six other public offers"
+        },
+        {
+          "name": "Pushp Brand",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Pushp Brand gets Sebi nod for IPO, investors to partially divest stake"
+        },
+        {
           "name": "Varanium Cloud",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
           "snippet": "Sebi bars Varanium Cloud, promoter from securities market for seven years"
+        },
+        {
+          "name": "Max Financial Services",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
+        },
+        {
+          "name": "Adani",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Sebi rejects settlement applications by 13 foreign funds in Adani probe"
         }
       ],
-      "after_filter_count": 3,
+      "after_filter_count": 7,
       "dropped_counts": {
         "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
@@ -222,9 +235,29 @@
           "snippet": "Sebi bars Trafiksol ITS, promoters from securities market for one year"
         },
         {
+          "name": "Jio Platforms",
+          "order_type": "other",
+          "snippet": "Sebi gives green light to Jio Platforms IPO, six other public offers"
+        },
+        {
+          "name": "Pushp Brand",
+          "order_type": "other",
+          "snippet": "Pushp Brand gets Sebi nod for IPO, investors to partially divest stake"
+        },
+        {
           "name": "Varanium Cloud",
           "order_type": "sebi-ban",
           "snippet": "Sebi bars Varanium Cloud, promoter from securities market for seven years"
+        },
+        {
+          "name": "Max Financial Services",
+          "order_type": "other",
+          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
+        },
+        {
+          "name": "Adani",
+          "order_type": "other",
+          "snippet": "Sebi rejects settlement applications by 13 foreign funds in Adani probe"
         }
       ]
     },
@@ -232,13 +265,19 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-08-30T05:23:43.241Z",
+      "at": "2026-08-31T05:31:21.163Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 11,
-      "total_extracted": 11,
+      "total_extracted_raw": 10,
+      "total_extracted": 10,
       "prefilter_sample": [
+        {
+          "name": "Trafiksol",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars Trafiksol ITS, its promoters from securities market for 1 year; slaps Rs 1.05 cr fine"
+        },
         {
           "name": "Trafiksol",
           "order_type": "sebi-ban",
@@ -253,15 +292,15 @@
         },
         {
           "name": "Max Financial",
-          "order_type": "other",
+          "order_type": "show-cause",
           "is_listed_entity": true,
           "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses"
         },
         {
-          "name": "Corporate Capital Ventures",
-          "order_type": "sebi-ban",
+          "name": "Adani",
+          "order_type": "show-cause",
           "is_listed_entity": true,
-          "snippet": "Sebi bars merchant banker Corporate Capital Ventures from new assignments for one month"
+          "snippet": "Sebi turns down Adani-linked FPIs' settlement applications"
         },
         {
           "name": "Capri Global",
@@ -270,43 +309,31 @@
           "snippet": "Capri Global faces Rs 74,000 penalty from NSE, BSE over compliance lapses"
         },
         {
+          "name": "Jio Platforms",
+          "order_type": "settlement",
+          "is_listed_entity": true,
+          "snippet": "Sebi approves 7 IPOs including Jio Platforms, Paras Healthcare and Bharat PET"
+        },
+        {
+          "name": "Online Instruments",
+          "order_type": "settlement",
+          "is_listed_entity": true,
+          "snippet": "Online Instruments India gets Sebi approval to float IPO"
+        },
+        {
           "name": "Dhenu Buildcon",
-          "order_type": "other",
+          "order_type": "sebi-investigation",
           "is_listed_entity": true,
           "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge"
         },
         {
-          "name": "Copthall Mauritius Investment",
+          "name": "Corporate Capital Ventures",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Sebi bars two entities for 'manipulating' CAS"
-        },
-        {
-          "name": "Mansi Share and Stock Broking",
-          "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Sebi bars two entities for 'manipulating' CAS"
-        },
-        {
-          "name": "NTPC",
-          "order_type": "sebi-fine",
-          "is_listed_entity": true,
-          "snippet": "BSE, NSE impose over Rs 59 lakh penalty on NTPC, SJVN, REC for non-compliance"
-        },
-        {
-          "name": "SJVN",
-          "order_type": "sebi-fine",
-          "is_listed_entity": true,
-          "snippet": "BSE, NSE impose over Rs 59 lakh penalty on NTPC, SJVN, REC for non-compliance"
-        },
-        {
-          "name": "REC",
-          "order_type": "sebi-fine",
-          "is_listed_entity": true,
-          "snippet": "BSE, NSE impose over Rs 59 lakh penalty on NTPC, SJVN, REC for non-compliance"
+          "snippet": "Sebi bars merchant banker Corporate Capital Ventures from new assignments for one month"
         }
       ],
-      "after_filter_count": 11,
+      "after_filter_count": 10,
       "dropped_counts": {
         "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
@@ -317,6 +344,11 @@
         {
           "name": "Trafiksol",
           "order_type": "sebi-ban",
+          "snippet": "Sebi bars Trafiksol ITS, its promoters from securities market for 1 year; slaps Rs 1.05 cr fine"
+        },
+        {
+          "name": "Trafiksol",
+          "order_type": "sebi-ban",
           "snippet": "Sebi bars Trafiksol ITS, promoters for 1 year for misleading IPO disclosures"
         },
         {
@@ -326,13 +358,13 @@
         },
         {
           "name": "Max Financial",
-          "order_type": "other",
+          "order_type": "show-cause",
           "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses"
         },
         {
-          "name": "Corporate Capital Ventures",
-          "order_type": "sebi-ban",
-          "snippet": "Sebi bars merchant banker Corporate Capital Ventures from new assignments for one month"
+          "name": "Adani",
+          "order_type": "show-cause",
+          "snippet": "Sebi turns down Adani-linked FPIs' settlement applications"
         },
         {
           "name": "Capri Global",
@@ -340,29 +372,24 @@
           "snippet": "Capri Global faces Rs 74,000 penalty from NSE, BSE over compliance lapses"
         },
         {
+          "name": "Jio Platforms",
+          "order_type": "settlement",
+          "snippet": "Sebi approves 7 IPOs including Jio Platforms, Paras Healthcare and Bharat PET"
+        },
+        {
+          "name": "Online Instruments",
+          "order_type": "settlement",
+          "snippet": "Online Instruments India gets Sebi approval to float IPO"
+        },
+        {
           "name": "Dhenu Buildcon",
-          "order_type": "other",
+          "order_type": "sebi-investigation",
           "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge"
         },
         {
-          "name": "Copthall Mauritius Investment",
+          "name": "Corporate Capital Ventures",
           "order_type": "sebi-ban",
-          "snippet": "Sebi bars two entities for 'manipulating' CAS"
-        },
-        {
-          "name": "Mansi Share and Stock Broking",
-          "order_type": "sebi-ban",
-          "snippet": "Sebi bars two entities for 'manipulating' CAS"
-        },
-        {
-          "name": "NTPC",
-          "order_type": "sebi-fine",
-          "snippet": "BSE, NSE impose over Rs 59 lakh penalty on NTPC, SJVN, REC for non-compliance"
-        },
-        {
-          "name": "SJVN",
-          "order_type": "sebi-fine",
-          "snippet": "BSE, NSE impose over Rs 59 lakh penalty on NTPC, SJVN, REC for non-compliance"
+          "snippet": "Sebi bars merchant banker Corporate Capital Ventures from new assignments for one month"
         }
       ]
     },
@@ -370,7 +397,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-08-30T05:23:48.729Z",
+      "at": "2026-08-31T05:31:29.288Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
