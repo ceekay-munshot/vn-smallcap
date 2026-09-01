@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-09-01T05:07:12.467Z",
+  "generated_at": "2026-09-01T15:13:24.179Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 19,
+  "total_entities_seen": 22,
   "flagged_companies": {
-    "RELINFRA": {
-      "primary_name": "Reliance Industries",
-      "order_type": "other",
-      "snippet": "Reliance Jio’s proposed Rs 37,700-crore IPO has received Sebi approval",
+    "501945": {
+      "primary_name": "Dhenu Buildcon",
+      "order_type": "sebi-investigation",
+      "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge",
       "source_url": "https://economictimes.indiatimes.com/topic/sebi",
       "source_label": "Economic Times — SEBI topic (news)",
       "origins": [
@@ -17,11 +17,30 @@
         {
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
-          "order_type": "other",
-          "snippet": "Reliance Jio’s proposed Rs 37,700-crore IPO has received Sebi approval"
+          "order_type": "sebi-investigation",
+          "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge"
         }
       ],
-      "first_seen_at": "2026-09-01T05:07:12.467Z"
+      "first_seen_at": "2026-09-01T15:13:24.179Z"
+    },
+    "511144": {
+      "primary_name": "AXIS Bank",
+      "order_type": "sebi-investigation",
+      "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses",
+      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
+      "source_label": "Economic Times — SEBI topic (news)",
+      "origins": [
+        "scraper"
+      ],
+      "mentions": [
+        {
+          "source": "Economic Times — SEBI topic (news)",
+          "origin": "scraper",
+          "order_type": "sebi-investigation",
+          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses"
+        }
+      ],
+      "first_seen_at": "2026-09-01T15:13:24.179Z"
     }
   },
   "unmatched_sample": [
@@ -50,7 +69,7 @@
       "origin": "scraper"
     },
     {
-      "name": "Pushp Brand",
+      "name": "Pushp Brand (India)",
       "type": "other",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
@@ -68,14 +87,26 @@
       "origin": "scraper"
     },
     {
-      "name": "Trafiksol",
+      "name": "Tarapur Transformers",
+      "type": "sebi-ban",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Citrus Check Inns",
+      "type": "sebi-fine",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Trafiksol ITS",
       "type": "sebi-ban",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
       "name": "Trafiksol",
-      "type": "sebi-fine",
+      "type": "sebi-ban",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -92,25 +123,31 @@
       "origin": "scraper"
     },
     {
-      "name": "Max Financial",
-      "type": "other",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
       "name": "Adani",
-      "type": "other",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Jio Platforms",
       "type": "sebi-investigation",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Online Instruments",
+      "name": "NTPC",
+      "type": "sebi-fine",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "SJVN",
+      "type": "sebi-fine",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "REC",
+      "type": "sebi-fine",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Max Financial",
       "type": "sebi-investigation",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
@@ -126,12 +163,6 @@
       "type": "other",
       "source": "SEBI — orders listing (backup)",
       "origin": "scraper"
-    },
-    {
-      "name": "Vedic Ayurveda Ltd - formerly known as KD Leisures Limited",
-      "type": "other",
-      "source": "SEBI — orders listing (backup)",
-      "origin": "scraper"
     }
   ],
   "sources": [
@@ -139,30 +170,24 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-01T05:06:50.959Z",
+      "at": "2026-09-01T15:12:44.721Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 2,
-      "total_extracted": 2,
+      "total_extracted_raw": 1,
+      "total_extracted": 1,
       "prefilter_sample": [
         {
           "name": "Varanium Cloud",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years, orders ₹128.8 crore disgorgement."
-        },
-        {
-          "name": "Sembcorp Green Infra",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "Temasek-backed Sembcorp Green Infra files for ₹3,750 cr IPO."
+          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years, orders ₹128.8 crore disgorgement"
         }
       ],
       "after_filter_count": 1,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 1,
+        "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -170,7 +195,7 @@
         {
           "name": "Varanium Cloud",
           "order_type": "sebi-ban",
-          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years, orders ₹128.8 crore disgorgement."
+          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years, orders ₹128.8 crore disgorgement"
         }
       ]
     },
@@ -178,7 +203,7 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-01T05:06:53.804Z",
+      "at": "2026-09-01T15:12:57.200Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -204,7 +229,7 @@
           "snippet": "Sebi gives green light to Jio Platforms IPO, six other public offers"
         },
         {
-          "name": "Pushp Brand",
+          "name": "Pushp Brand (India)",
           "order_type": "other",
           "is_listed_entity": true,
           "snippet": "Pushp Brand gets Sebi nod for IPO, investors to partially divest stake"
@@ -246,7 +271,7 @@
           "snippet": "Sebi gives green light to Jio Platforms IPO, six other public offers"
         },
         {
-          "name": "Pushp Brand",
+          "name": "Pushp Brand (India)",
           "order_type": "other",
           "snippet": "Pushp Brand gets Sebi nod for IPO, investors to partially divest stake"
         },
@@ -266,24 +291,36 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-01T05:06:57.633Z",
+      "at": "2026-09-01T15:13:02.934Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 10,
-      "total_extracted": 10,
+      "total_extracted_raw": 13,
+      "total_extracted": 13,
       "prefilter_sample": [
         {
-          "name": "Trafiksol",
+          "name": "Tarapur Transformers",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars Tarapur Transformers, promoters from markets for 5 years in fund diversion case"
+        },
+        {
+          "name": "Citrus Check Inns",
+          "order_type": "sebi-fine",
+          "is_listed_entity": true,
+          "snippet": "Sebi slaps Rs 25 lakh fine on Citrus Check Inns directors"
+        },
+        {
+          "name": "Trafiksol ITS",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
           "snippet": "Sebi bars Trafiksol ITS, its promoters from securities market for 1 year; slaps Rs 1.05 cr fine"
         },
         {
           "name": "Trafiksol",
-          "order_type": "sebi-fine",
+          "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Sebi bars Trafiksol and its promoters from the securities market for one year."
+          "snippet": "Sebi bars Trafiksol ITS, promoters for 1 year for misleading IPO disclosures"
         },
         {
           "name": "Varanium Cloud",
@@ -298,59 +335,75 @@
           "snippet": "Capri Global faces Rs 74,000 penalty from NSE, BSE over compliance lapses"
         },
         {
-          "name": "Max Financial",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses"
-        },
-        {
           "name": "Adani",
-          "order_type": "other",
+          "order_type": "sebi-investigation",
           "is_listed_entity": true,
           "snippet": "Sebi turns down Adani-linked FPIs' settlement applications"
         },
         {
-          "name": "Jio Platforms",
+          "name": "Dhenu Buildcon",
           "order_type": "sebi-investigation",
           "is_listed_entity": true,
-          "snippet": "Jio Platforms has gained Sebi's green light for its anticipated initial public offering"
+          "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge"
         },
         {
-          "name": "Reliance Industries",
-          "order_type": "other",
+          "name": "NTPC",
+          "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Reliance Jio’s proposed Rs 37,700-crore IPO has received Sebi approval"
+          "snippet": "BSE, NSE impose over Rs 59 lakh penalty on NTPC, SJVN, REC for non-compliance"
         },
         {
-          "name": "Online Instruments",
+          "name": "SJVN",
+          "order_type": "sebi-fine",
+          "is_listed_entity": true,
+          "snippet": "BSE, NSE impose over Rs 59 lakh penalty on NTPC, SJVN, REC for non-compliance"
+        },
+        {
+          "name": "REC",
+          "order_type": "sebi-fine",
+          "is_listed_entity": true,
+          "snippet": "BSE, NSE impose over Rs 59 lakh penalty on NTPC, SJVN, REC for non-compliance"
+        },
+        {
+          "name": "Max Financial",
           "order_type": "sebi-investigation",
           "is_listed_entity": true,
-          "snippet": "Online Instruments has successfully secured Sebi approval for its initial public offering."
+          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses"
         },
         {
-          "name": "Oriental Hotels",
-          "order_type": "other",
+          "name": "AXIS Bank",
+          "order_type": "sebi-investigation",
           "is_listed_entity": true,
-          "snippet": "Oriental Hotels board approves merger with Indian Hotels Company Limited (IHCL)"
+          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses"
         }
       ],
-      "after_filter_count": 9,
+      "after_filter_count": 13,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 1,
+        "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
-          "name": "Trafiksol",
+          "name": "Tarapur Transformers",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars Tarapur Transformers, promoters from markets for 5 years in fund diversion case"
+        },
+        {
+          "name": "Citrus Check Inns",
+          "order_type": "sebi-fine",
+          "snippet": "Sebi slaps Rs 25 lakh fine on Citrus Check Inns directors"
+        },
+        {
+          "name": "Trafiksol ITS",
           "order_type": "sebi-ban",
           "snippet": "Sebi bars Trafiksol ITS, its promoters from securities market for 1 year; slaps Rs 1.05 cr fine"
         },
         {
           "name": "Trafiksol",
-          "order_type": "sebi-fine",
-          "snippet": "Sebi bars Trafiksol and its promoters from the securities market for one year."
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars Trafiksol ITS, promoters for 1 year for misleading IPO disclosures"
         },
         {
           "name": "Varanium Cloud",
@@ -363,29 +416,24 @@
           "snippet": "Capri Global faces Rs 74,000 penalty from NSE, BSE over compliance lapses"
         },
         {
-          "name": "Max Financial",
-          "order_type": "other",
-          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses"
-        },
-        {
           "name": "Adani",
-          "order_type": "other",
+          "order_type": "sebi-investigation",
           "snippet": "Sebi turns down Adani-linked FPIs' settlement applications"
         },
         {
-          "name": "Jio Platforms",
+          "name": "Dhenu Buildcon",
           "order_type": "sebi-investigation",
-          "snippet": "Jio Platforms has gained Sebi's green light for its anticipated initial public offering"
+          "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge"
         },
         {
-          "name": "Reliance Industries",
-          "order_type": "other",
-          "snippet": "Reliance Jio’s proposed Rs 37,700-crore IPO has received Sebi approval"
+          "name": "NTPC",
+          "order_type": "sebi-fine",
+          "snippet": "BSE, NSE impose over Rs 59 lakh penalty on NTPC, SJVN, REC for non-compliance"
         },
         {
-          "name": "Online Instruments",
-          "order_type": "sebi-investigation",
-          "snippet": "Online Instruments has successfully secured Sebi approval for its initial public offering."
+          "name": "SJVN",
+          "order_type": "sebi-fine",
+          "snippet": "BSE, NSE impose over Rs 59 lakh penalty on NTPC, SJVN, REC for non-compliance"
         }
       ]
     },
@@ -393,12 +441,12 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-09-01T05:07:05.010Z",
+      "at": "2026-09-01T15:13:14.971Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 15,
-      "total_extracted": 15,
+      "total_extracted_raw": 11,
+      "total_extracted": 11,
       "prefilter_sample": [
         {
           "name": "Tarapur Transformers Limited",
@@ -440,7 +488,13 @@
           "name": "LCI India Limited",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Completion of Recovery Certificate No. RC9281 of 2026 in respect of LCI India Limited"
+          "snippet": "Completion of Recovery Certificate No. RC9281 of 2026 in respect of LCI India Limited."
+        },
+        {
+          "name": "Seema Khandelwal",
+          "order_type": "other",
+          "is_listed_entity": false,
+          "snippet": "Completion of Recovery Certificate No. 4219 of 2021 dated October 21, 2021 issued to Seema Khandelwal [Defaulter]"
         },
         {
           "name": "Delta Leasing & Finance Limited",
@@ -455,46 +509,16 @@
           "snippet": "Completion of Recovery Certificate No. 3901 of 2021 dated July 01, 2021 issued to Sai Refinery [Defaulter] in the matter of Trading in Illiquid Stock "
         },
         {
-          "name": "Debock Industries Limited",
+          "name": "Shubhlaxmi Jewel Art Limited",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Final Order in the matter of Debock Industries Limited"
-        },
-        {
-          "name": "Trafiksol ITS Technologies Limited",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Final Order in the matter of IPO of Trafiksol ITS Technologies Limited."
-        },
-        {
-          "name": "Skyways Air Services Limited",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Skyways Air Services Limited - Prospectus"
-        },
-        {
-          "name": "Hy Tech Engineers Limited",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Hy Tech Engineers Limited - Prospectus"
-        },
-        {
-          "name": "Vedic Ayurveda Ltd - formerly known as KD Leisures Limited",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Adjudication Order in the matter of Vedic Ayurveda Ltd - formerly known as KD Leisures Limited."
-        },
-        {
-          "name": "Bharat Global Developers Limited",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Revocation Order in the matter of Bharat Global Developers Limited."
+          "snippet": "Release Order in RC 9246 of 2026 – 8 entities in the matter of Shubhlaxmi Jewel Art Limited."
         }
       ],
-      "after_filter_count": 3,
+      "after_filter_count": 2,
       "dropped_counts": {
-        "not_listed": 2,
-        "no_sebi_signal_in_snippet": 10,
+        "not_listed": 3,
+        "no_sebi_signal_in_snippet": 6,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -508,11 +532,6 @@
           "name": "Citrus Check Inns Ltd.",
           "order_type": "other",
           "snippet": "Adjudication order in the matter of Citrus Check Inns Ltd."
-        },
-        {
-          "name": "Vedic Ayurveda Ltd - formerly known as KD Leisures Limited",
-          "order_type": "other",
-          "snippet": "Adjudication Order in the matter of Vedic Ayurveda Ltd - formerly known as KD Leisures Limited."
         }
       ]
     }
