@@ -22,8 +22,31 @@
         "DEEPINDS": 626.13
       },
       "complete": true
+    },
+    "2026-09": {
+      "selectionDate": "2026-08-31",
+      "anchorDate": "2026-09-01",
+      "tickers": [
+        "ENGINERSIN",
+        "UNIPARTS",
+        "ADOR",
+        "QPOWER",
+        "ALKYLAMINE",
+        "VENKEYS",
+        "EPL"
+      ],
+      "entries": {
+        "ENGINERSIN": 266.1,
+        "UNIPARTS": 900.38,
+        "ADOR": 1706.2,
+        "QPOWER": 1459.45,
+        "ALKYLAMINE": 2004,
+        "VENKEYS": 1687.25,
+        "EPL": 245.1
+      },
+      "complete": true
     }
   },
-  "generated_at": "2026-08-09T16:03:54.266Z",
+  "generated_at": "2026-09-01T09:25:08.140Z",
   "cohort_size": 7
 }
