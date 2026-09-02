@@ -1,52 +1,13 @@
 {
-  "generated_at": "2026-09-01T15:13:24.179Z",
+  "generated_at": "2026-09-02T04:28:44.322Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 22,
-  "flagged_companies": {
-    "501945": {
-      "primary_name": "Dhenu Buildcon",
-      "order_type": "sebi-investigation",
-      "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge",
-      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
-      "source_label": "Economic Times — SEBI topic (news)",
-      "origins": [
-        "scraper"
-      ],
-      "mentions": [
-        {
-          "source": "Economic Times — SEBI topic (news)",
-          "origin": "scraper",
-          "order_type": "sebi-investigation",
-          "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge"
-        }
-      ],
-      "first_seen_at": "2026-09-01T15:13:24.179Z"
-    },
-    "511144": {
-      "primary_name": "AXIS Bank",
-      "order_type": "sebi-investigation",
-      "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses",
-      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
-      "source_label": "Economic Times — SEBI topic (news)",
-      "origins": [
-        "scraper"
-      ],
-      "mentions": [
-        {
-          "source": "Economic Times — SEBI topic (news)",
-          "origin": "scraper",
-          "order_type": "sebi-investigation",
-          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses"
-        }
-      ],
-      "first_seen_at": "2026-09-01T15:13:24.179Z"
-    }
-  },
+  "total_entities_seen": 13,
+  "flagged_companies": {},
   "unmatched_sample": [
     {
-      "name": "Varanium Cloud",
-      "type": "sebi-ban",
+      "name": "NSE",
+      "type": "other",
       "source": "Mint — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -64,13 +25,13 @@
     },
     {
       "name": "Jio Platforms",
-      "type": "other",
+      "type": "sebi-approval",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Pushp Brand (India)",
-      "type": "other",
+      "name": "Pushp Brand",
+      "type": "sebi-approval",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -82,7 +43,7 @@
     },
     {
       "name": "Max Financial Services",
-      "type": "other",
+      "type": "sebi-adjudication",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -99,7 +60,7 @@
       "origin": "scraper"
     },
     {
-      "name": "Trafiksol ITS",
+      "name": "Trafiksol",
       "type": "sebi-ban",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
@@ -121,48 +82,6 @@
       "type": "sebi-fine",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
-    },
-    {
-      "name": "Adani",
-      "type": "sebi-investigation",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "NTPC",
-      "type": "sebi-fine",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "SJVN",
-      "type": "sebi-fine",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "REC",
-      "type": "sebi-fine",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Max Financial",
-      "type": "sebi-investigation",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Veerkrupa Jewellers Limited",
-      "type": "other",
-      "source": "SEBI — orders listing (backup)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Citrus Check Inns Ltd.",
-      "type": "other",
-      "source": "SEBI — orders listing (backup)",
-      "origin": "scraper"
     }
   ],
   "sources": [
@@ -170,32 +89,50 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-01T15:12:44.721Z",
+      "at": "2026-09-02T04:28:24.690Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 1,
-      "total_extracted": 1,
+      "total_extracted_raw": 4,
+      "total_extracted": 4,
       "prefilter_sample": [
         {
           "name": "Varanium Cloud",
           "order_type": "sebi-ban",
+          "is_listed_entity": false,
+          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years, orders ₹128.8 crore disgorgement."
+        },
+        {
+          "name": "Sembcorp Green Infra",
+          "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years, orders ₹128.8 crore disgorgement"
+          "snippet": "Temasek-backed Sembcorp Green Infra files for ₹3,750 cr IPO."
+        },
+        {
+          "name": "NSE",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Sebi ‘close’ to approving NSE IPO: Tuhin Kanta Pandey."
+        },
+        {
+          "name": "Avaada Electro",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Avaada Electro cuts IPO size to ₹7,600 crore amid valuation, concentration concerns."
         }
       ],
       "after_filter_count": 1,
       "dropped_counts": {
-        "not_listed": 0,
-        "no_sebi_signal_in_snippet": 0,
+        "not_listed": 1,
+        "no_sebi_signal_in_snippet": 2,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
-          "name": "Varanium Cloud",
-          "order_type": "sebi-ban",
-          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years, orders ₹128.8 crore disgorgement"
+          "name": "NSE",
+          "order_type": "other",
+          "snippet": "Sebi ‘close’ to approving NSE IPO: Tuhin Kanta Pandey."
         }
       ]
     },
@@ -203,7 +140,7 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-01T15:12:57.200Z",
+      "at": "2026-09-02T04:28:28.230Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -214,37 +151,37 @@
           "name": "Debock Industries",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Sebi bars Debock Industries, promoter for seven years in fraud case"
+          "snippet": "Sebi bars Debock Industries, promoter for seven years in fraud case."
         },
         {
           "name": "Trafiksol ITS",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Sebi bars Trafiksol ITS, promoters from securities market for one year"
+          "snippet": "Sebi bars Trafiksol ITS, promoters from securities market for one year."
         },
         {
           "name": "Jio Platforms",
-          "order_type": "other",
+          "order_type": "sebi-approval",
           "is_listed_entity": true,
-          "snippet": "Sebi gives green light to Jio Platforms IPO, six other public offers"
+          "snippet": "Sebi gives green light to Jio Platforms IPO, six other public offers."
         },
         {
-          "name": "Pushp Brand (India)",
-          "order_type": "other",
+          "name": "Pushp Brand",
+          "order_type": "sebi-approval",
           "is_listed_entity": true,
-          "snippet": "Pushp Brand gets Sebi nod for IPO, investors to partially divest stake"
+          "snippet": "Pushp Brand gets Sebi nod for IPO, investors to partially divest stake."
         },
         {
           "name": "Varanium Cloud",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Sebi bars Varanium Cloud, promoter from securities market for seven years"
+          "snippet": "Sebi bars Varanium Cloud, promoter from securities market for seven years."
         },
         {
           "name": "Max Financial Services",
-          "order_type": "other",
+          "order_type": "sebi-adjudication",
           "is_listed_entity": true,
-          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
+          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss."
         }
       ],
       "after_filter_count": 6,
@@ -258,32 +195,32 @@
         {
           "name": "Debock Industries",
           "order_type": "sebi-ban",
-          "snippet": "Sebi bars Debock Industries, promoter for seven years in fraud case"
+          "snippet": "Sebi bars Debock Industries, promoter for seven years in fraud case."
         },
         {
           "name": "Trafiksol ITS",
           "order_type": "sebi-ban",
-          "snippet": "Sebi bars Trafiksol ITS, promoters from securities market for one year"
+          "snippet": "Sebi bars Trafiksol ITS, promoters from securities market for one year."
         },
         {
           "name": "Jio Platforms",
-          "order_type": "other",
-          "snippet": "Sebi gives green light to Jio Platforms IPO, six other public offers"
+          "order_type": "sebi-approval",
+          "snippet": "Sebi gives green light to Jio Platforms IPO, six other public offers."
         },
         {
-          "name": "Pushp Brand (India)",
-          "order_type": "other",
-          "snippet": "Pushp Brand gets Sebi nod for IPO, investors to partially divest stake"
+          "name": "Pushp Brand",
+          "order_type": "sebi-approval",
+          "snippet": "Pushp Brand gets Sebi nod for IPO, investors to partially divest stake."
         },
         {
           "name": "Varanium Cloud",
           "order_type": "sebi-ban",
-          "snippet": "Sebi bars Varanium Cloud, promoter from securities market for seven years"
+          "snippet": "Sebi bars Varanium Cloud, promoter from securities market for seven years."
         },
         {
           "name": "Max Financial Services",
-          "order_type": "other",
-          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss"
+          "order_type": "sebi-adjudication",
+          "snippet": "Sebi drops Max, Axis entities case over alleged ₹3,911 cr shareholder loss."
         }
       ]
     },
@@ -291,12 +228,12 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-01T15:13:02.934Z",
+      "at": "2026-09-02T04:28:31.637Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 13,
-      "total_extracted": 13,
+      "total_extracted_raw": 6,
+      "total_extracted": 6,
       "prefilter_sample": [
         {
           "name": "Tarapur Transformers",
@@ -311,7 +248,7 @@
           "snippet": "Sebi slaps Rs 25 lakh fine on Citrus Check Inns directors"
         },
         {
-          "name": "Trafiksol ITS",
+          "name": "Trafiksol",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
           "snippet": "Sebi bars Trafiksol ITS, its promoters from securities market for 1 year; slaps Rs 1.05 cr fine"
@@ -333,51 +270,9 @@
           "order_type": "sebi-fine",
           "is_listed_entity": true,
           "snippet": "Capri Global faces Rs 74,000 penalty from NSE, BSE over compliance lapses"
-        },
-        {
-          "name": "Adani",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "Sebi turns down Adani-linked FPIs' settlement applications"
-        },
-        {
-          "name": "Dhenu Buildcon",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge"
-        },
-        {
-          "name": "NTPC",
-          "order_type": "sebi-fine",
-          "is_listed_entity": true,
-          "snippet": "BSE, NSE impose over Rs 59 lakh penalty on NTPC, SJVN, REC for non-compliance"
-        },
-        {
-          "name": "SJVN",
-          "order_type": "sebi-fine",
-          "is_listed_entity": true,
-          "snippet": "BSE, NSE impose over Rs 59 lakh penalty on NTPC, SJVN, REC for non-compliance"
-        },
-        {
-          "name": "REC",
-          "order_type": "sebi-fine",
-          "is_listed_entity": true,
-          "snippet": "BSE, NSE impose over Rs 59 lakh penalty on NTPC, SJVN, REC for non-compliance"
-        },
-        {
-          "name": "Max Financial",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses"
-        },
-        {
-          "name": "AXIS Bank",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses"
         }
       ],
-      "after_filter_count": 13,
+      "after_filter_count": 6,
       "dropped_counts": {
         "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
@@ -396,7 +291,7 @@
           "snippet": "Sebi slaps Rs 25 lakh fine on Citrus Check Inns directors"
         },
         {
-          "name": "Trafiksol ITS",
+          "name": "Trafiksol",
           "order_type": "sebi-ban",
           "snippet": "Sebi bars Trafiksol ITS, its promoters from securities market for 1 year; slaps Rs 1.05 cr fine"
         },
@@ -414,26 +309,6 @@
           "name": "Capri Global",
           "order_type": "sebi-fine",
           "snippet": "Capri Global faces Rs 74,000 penalty from NSE, BSE over compliance lapses"
-        },
-        {
-          "name": "Adani",
-          "order_type": "sebi-investigation",
-          "snippet": "Sebi turns down Adani-linked FPIs' settlement applications"
-        },
-        {
-          "name": "Dhenu Buildcon",
-          "order_type": "sebi-investigation",
-          "snippet": "Rs 3 crore to Rs 4,925 crore: Sebi order gives details on Dhenu Buildcon market cap surge"
-        },
-        {
-          "name": "NTPC",
-          "order_type": "sebi-fine",
-          "snippet": "BSE, NSE impose over Rs 59 lakh penalty on NTPC, SJVN, REC for non-compliance"
-        },
-        {
-          "name": "SJVN",
-          "order_type": "sebi-fine",
-          "snippet": "BSE, NSE impose over Rs 59 lakh penalty on NTPC, SJVN, REC for non-compliance"
         }
       ]
     },
@@ -441,99 +316,21 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-09-01T15:13:14.971Z",
+      "at": "2026-09-02T04:28:36.337Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 11,
-      "total_extracted": 11,
-      "prefilter_sample": [
-        {
-          "name": "Tarapur Transformers Limited",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Order in the matter of Tarapur Transformers Limited."
-        },
-        {
-          "name": "Veerkrupa Jewellers Limited",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Adjudication Order in the matter of Veerkrupa Jewellers Limited"
-        },
-        {
-          "name": "Citrus Check Inns Ltd.",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Adjudication order in the matter of Citrus Check Inns Ltd."
-        },
-        {
-          "name": "Kedar Mal Poddar HUF",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Adjudication Order in respect of Kedar Mal Poddar HUF in the matter of trading in Illiquid Stock Options at BSE"
-        },
-        {
-          "name": "HERO MOTORS LIMITED",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "HERO MOTORS LIMITED - Addendum to DRHP"
-        },
-        {
-          "name": "ANNU PROJECTS LIMITED",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "ANNU PROJECTS LIMITED - PROSPECTUS"
-        },
-        {
-          "name": "LCI India Limited",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Completion of Recovery Certificate No. RC9281 of 2026 in respect of LCI India Limited."
-        },
-        {
-          "name": "Seema Khandelwal",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Completion of Recovery Certificate No. 4219 of 2021 dated October 21, 2021 issued to Seema Khandelwal [Defaulter]"
-        },
-        {
-          "name": "Delta Leasing & Finance Limited",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Completion of Recovery Certificate No. 4219 of 2021 dated October 21, 2021 issued to Seema Khandelwal [Defaulter] in the matter of Delta Leasing & Fin"
-        },
-        {
-          "name": "Sai Refinery",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Completion of Recovery Certificate No. 3901 of 2021 dated July 01, 2021 issued to Sai Refinery [Defaulter] in the matter of Trading in Illiquid Stock "
-        },
-        {
-          "name": "Shubhlaxmi Jewel Art Limited",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Release Order in RC 9246 of 2026 – 8 entities in the matter of Shubhlaxmi Jewel Art Limited."
-        }
-      ],
-      "after_filter_count": 2,
+      "total_extracted_raw": 0,
+      "total_extracted": 0,
+      "prefilter_sample": [],
+      "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 3,
-        "no_sebi_signal_in_snippet": 6,
+        "not_listed": 0,
+        "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
-      "sample": [
-        {
-          "name": "Veerkrupa Jewellers Limited",
-          "order_type": "other",
-          "snippet": "Adjudication Order in the matter of Veerkrupa Jewellers Limited"
-        },
-        {
-          "name": "Citrus Check Inns Ltd.",
-          "order_type": "other",
-          "snippet": "Adjudication order in the matter of Citrus Check Inns Ltd."
-        }
-      ]
+      "sample": []
     }
   ]
 }
