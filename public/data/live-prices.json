@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-09-02T08:43:32.852Z",
+  "generated_at": "2026-09-02T13:32:56.963Z",
   "source": "Munshot quote API (0 tickers) + Yahoo fallback (10)",
   "note": "Live intraday snapshot per basket ticker. dayHigh/dayLow drive intraday target/SL touch detection; current is the latest traded price.",
   "ticker_count": 10,
   "prices": {
     "ENGINERSIN": {
-      "current": 276.3,
+      "current": 276.6,
       "open": null,
       "prevClose": 280.05,
       "dayHigh": 282.85,
       "dayLow": 273.65,
-      "week52High": 282.85,
+      "week52High": 289.65,
       "week52Low": 163.55,
       "ma50": null,
       "ma200": null,
@@ -19,13 +19,13 @@
       "yearlyChangePct": null
     },
     "UNIPARTS": {
-      "current": 879.95,
+      "current": 886.35,
       "open": null,
       "prevClose": 901.15,
       "dayHigh": 915,
-      "dayLow": 879,
-      "week52High": 915,
-      "week52Low": 398,
+      "dayLow": 878,
+      "week52High": 915.95,
+      "week52Low": 399.8,
       "ma50": null,
       "ma200": null,
       "vol10d": null,
@@ -33,7 +33,7 @@
       "yearlyChangePct": null
     },
     "ADOR": {
-      "current": 1721.6,
+      "current": 1730.3,
       "open": null,
       "prevClose": 1700.8,
       "dayHigh": 1744.8,
@@ -47,11 +47,11 @@
       "yearlyChangePct": null
     },
     "QPOWER": {
-      "current": 1461.7,
+      "current": 1455.6,
       "open": null,
       "prevClose": 1488,
       "dayHigh": 1500,
-      "dayLow": 1452.1,
+      "dayLow": 1450,
       "week52High": 1502.7,
       "week52Low": 581,
       "ma50": null,
@@ -61,7 +61,7 @@
       "yearlyChangePct": null
     },
     "ALKYLAMINE": {
-      "current": 1978.3,
+      "current": 1975.5,
       "open": null,
       "prevClose": 2011,
       "dayHigh": 2044.5,
@@ -75,7 +75,7 @@
       "yearlyChangePct": null
     },
     "VENKEYS": {
-      "current": 1665,
+      "current": 1659,
       "open": null,
       "prevClose": 1649,
       "dayHigh": 1682,
@@ -89,7 +89,7 @@
       "yearlyChangePct": null
     },
     "EPL": {
-      "current": 240.75,
+      "current": 236.3,
       "open": null,
       "prevClose": 240.35,
       "dayHigh": 243,
@@ -103,7 +103,7 @@
       "yearlyChangePct": null
     },
     "HARSHA": {
-      "current": 450.25,
+      "current": 450.75,
       "open": null,
       "prevClose": 453.7,
       "dayHigh": 462,
@@ -117,13 +117,13 @@
       "yearlyChangePct": null
     },
     "PRECWIRE": {
-      "current": 485.05,
+      "current": 483.1,
       "open": null,
       "prevClose": 497.3,
       "dayHigh": 502.2,
       "dayLow": 478.9,
       "week52High": 524.9,
-      "week52Low": 172.5,
+      "week52Low": 174.02,
       "ma50": null,
       "ma200": null,
       "vol10d": null,
@@ -131,7 +131,7 @@
       "yearlyChangePct": null
     },
     "KSL": {
-      "current": 901.1,
+      "current": 904.3,
       "open": null,
       "prevClose": 900,
       "dayHigh": 919,
