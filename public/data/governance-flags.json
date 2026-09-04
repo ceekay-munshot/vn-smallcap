@@ -1,267 +1,46 @@
 {
-  "generated_at": "2026-09-04T04:29:26.793Z",
+  "generated_at": "2026-09-04T14:36:37.821Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 9,
+  "total_entities_seen": 0,
   "flagged_companies": {},
-  "unmatched_sample": [
-    {
-      "name": "Debock Industries",
-      "type": "sebi-ban",
-      "source": "Business Standard — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Trafiksol ITS",
-      "type": "sebi-ban",
-      "source": "Business Standard — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Varanium Cloud",
-      "type": "sebi-ban",
-      "source": "Business Standard — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Nalco",
-      "type": "sebi-fine",
-      "source": "Business Standard — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Tarapur Transformers",
-      "type": "sebi-ban",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Citrus Check Inns",
-      "type": "sebi-fine",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Trafiksol",
-      "type": "sebi-ban",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Varanium Cloud",
-      "type": "sebi-ban",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Max Financial",
-      "type": "other",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    }
-  ],
+  "unmatched_sample": [],
   "sources": [
     {
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-04T04:29:05.130Z",
-      "fc_status": 200,
-      "outcome": "ok",
-      "upstream_status": 200,
-      "total_extracted_raw": 2,
-      "total_extracted": 2,
-      "prefilter_sample": [
-        {
-          "name": "Edelweiss Custodial Services",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Why Supreme Court refused to make Edelweiss pay ₹900 crore to Anugrah investors"
-        },
-        {
-          "name": "Sembcorp Green Infra",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Temasek-backed Sembcorp Green Infra files for ₹3,750 cr IPO"
-        }
-      ],
-      "after_filter_count": 0,
-      "dropped_counts": {
-        "not_listed": 0,
-        "no_sebi_signal_in_snippet": 2,
-        "resolved_in_favour": 0,
-        "no_name": 0
-      },
-      "sample": []
+      "at": "2026-09-04T14:36:35.306Z",
+      "fc_status": 402,
+      "outcome": "fc_http_error",
+      "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
     },
     {
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-04T04:29:11.844Z",
-      "fc_status": 200,
-      "outcome": "ok",
-      "upstream_status": 200,
-      "total_extracted_raw": 4,
-      "total_extracted": 4,
-      "prefilter_sample": [
-        {
-          "name": "Debock Industries",
-          "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Sebi bars Debock Industries, promoter for seven years in fraud case"
-        },
-        {
-          "name": "Trafiksol ITS",
-          "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Sebi bars Trafiksol ITS, promoters from securities market for one year"
-        },
-        {
-          "name": "Varanium Cloud",
-          "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Sebi bars Varanium Cloud, promoter from securities market for seven years"
-        },
-        {
-          "name": "Nalco",
-          "order_type": "sebi-fine",
-          "is_listed_entity": true,
-          "snippet": "Nalco faces ₹28.6 lakh fine from NSE, BSE over Sebi non-compliance"
-        }
-      ],
-      "after_filter_count": 4,
-      "dropped_counts": {
-        "not_listed": 0,
-        "no_sebi_signal_in_snippet": 0,
-        "resolved_in_favour": 0,
-        "no_name": 0
-      },
-      "sample": [
-        {
-          "name": "Debock Industries",
-          "order_type": "sebi-ban",
-          "snippet": "Sebi bars Debock Industries, promoter for seven years in fraud case"
-        },
-        {
-          "name": "Trafiksol ITS",
-          "order_type": "sebi-ban",
-          "snippet": "Sebi bars Trafiksol ITS, promoters from securities market for one year"
-        },
-        {
-          "name": "Varanium Cloud",
-          "order_type": "sebi-ban",
-          "snippet": "Sebi bars Varanium Cloud, promoter from securities market for seven years"
-        },
-        {
-          "name": "Nalco",
-          "order_type": "sebi-fine",
-          "snippet": "Nalco faces ₹28.6 lakh fine from NSE, BSE over Sebi non-compliance"
-        }
-      ]
+      "at": "2026-09-04T14:36:36.097Z",
+      "fc_status": 402,
+      "outcome": "fc_http_error",
+      "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
     },
     {
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-04T04:29:17.955Z",
-      "fc_status": 200,
-      "outcome": "ok",
-      "upstream_status": 200,
-      "total_extracted_raw": 6,
-      "total_extracted": 6,
-      "prefilter_sample": [
-        {
-          "name": "Tarapur Transformers",
-          "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Sebi bars Tarapur Transformers, promoters from markets for 5 years in fund diversion case"
-        },
-        {
-          "name": "Citrus Check Inns",
-          "order_type": "sebi-fine",
-          "is_listed_entity": true,
-          "snippet": "Sebi slaps Rs 25 lakh fine on Citrus Check Inns directors"
-        },
-        {
-          "name": "Trafiksol",
-          "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Sebi bars Trafiksol ITS, its promoters from securities market for 1 year; slaps Rs 1.05 cr fine"
-        },
-        {
-          "name": "Varanium Cloud",
-          "order_type": "sebi-ban",
-          "is_listed_entity": true,
-          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years from markets"
-        },
-        {
-          "name": "Max Financial",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses"
-        },
-        {
-          "name": "ADANI",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi turns down Adani-linked FPIs' settlement applications"
-        }
-      ],
-      "after_filter_count": 5,
-      "dropped_counts": {
-        "not_listed": 1,
-        "no_sebi_signal_in_snippet": 0,
-        "resolved_in_favour": 0,
-        "no_name": 0
-      },
-      "sample": [
-        {
-          "name": "Tarapur Transformers",
-          "order_type": "sebi-ban",
-          "snippet": "Sebi bars Tarapur Transformers, promoters from markets for 5 years in fund diversion case"
-        },
-        {
-          "name": "Citrus Check Inns",
-          "order_type": "sebi-fine",
-          "snippet": "Sebi slaps Rs 25 lakh fine on Citrus Check Inns directors"
-        },
-        {
-          "name": "Trafiksol",
-          "order_type": "sebi-ban",
-          "snippet": "Sebi bars Trafiksol ITS, its promoters from securities market for 1 year; slaps Rs 1.05 cr fine"
-        },
-        {
-          "name": "Varanium Cloud",
-          "order_type": "sebi-ban",
-          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years from markets"
-        },
-        {
-          "name": "Max Financial",
-          "order_type": "other",
-          "snippet": "Sebi drops Rs 3,912 crore probe against Max Financial, Axis Bank over disclosure lapses"
-        }
-      ]
+      "at": "2026-09-04T14:36:36.714Z",
+      "fc_status": 402,
+      "outcome": "fc_http_error",
+      "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
     },
     {
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-09-04T04:29:25.091Z",
-      "fc_status": 200,
-      "outcome": "ok",
-      "upstream_status": 200,
-      "total_extracted_raw": 0,
-      "total_extracted": 0,
-      "prefilter_sample": [],
-      "after_filter_count": 0,
-      "dropped_counts": {
-        "not_listed": 0,
-        "no_sebi_signal_in_snippet": 0,
-        "resolved_in_favour": 0,
-        "no_name": 0
-      },
-      "sample": []
+      "at": "2026-09-04T14:36:37.217Z",
+      "fc_status": 402,
+      "outcome": "fc_http_error",
+      "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
     }
   ]
 }
