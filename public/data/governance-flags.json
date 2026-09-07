@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-07T04:36:06.064Z",
+  "generated_at": "2026-09-07T16:06:57.105Z",
   "source_count": 4,
   "curated_baseline_count": 0,
   "total_entities_seen": 15,
@@ -7,19 +7,19 @@
   "unmatched_sample": [
     {
       "name": "Groww",
-      "type": "other",
+      "type": "sebi-enforcement-order",
       "source": "Mint — SEBI topic (news)",
       "origin": "scraper"
     },
     {
       "name": "Angel One",
-      "type": "other",
+      "type": "sebi-enforcement-order",
       "source": "Mint — SEBI topic (news)",
       "origin": "scraper"
     },
     {
       "name": "BSE",
-      "type": "other",
+      "type": "sebi-enforcement-order",
       "source": "Mint — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -72,7 +72,7 @@
       "origin": "scraper"
     },
     {
-      "name": "Trafiksol ITS",
+      "name": "Trafiksol",
       "type": "sebi-ban",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
@@ -85,13 +85,13 @@
     },
     {
       "name": "Jio Platforms",
-      "type": "sebi-approval",
+      "type": "other",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Adani Group",
-      "type": "sebi-investigation",
+      "name": "NSE",
+      "type": "other",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -101,7 +101,7 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-07T04:35:34.358Z",
+      "at": "2026-09-07T16:06:38.939Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -109,58 +109,58 @@
       "total_extracted": 5,
       "prefilter_sample": [
         {
+          "name": "Jane Street",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": false,
+          "snippet": "Jane Street seeks Sebi-NSE correspondence in market manipulation case; alleges role of UAE-based hedge fund"
+        },
+        {
           "name": "Groww",
-          "order_type": "other",
+          "order_type": "sebi-enforcement-order",
           "is_listed_entity": true,
-          "snippet": "SEBI's recent circular on the Closing Auction Session (CAS) triggered notable stock price increases among brokerages and the BSE."
+          "snippet": "SEBI circular on CAS impact: Groww, Angel One, BSE shares jump up to 8% - What regulator said and investors should know"
         },
         {
           "name": "Angel One",
-          "order_type": "other",
+          "order_type": "sebi-enforcement-order",
           "is_listed_entity": true,
-          "snippet": "SEBI's recent circular on the Closing Auction Session (CAS) triggered notable stock price increases among brokerages and the BSE."
+          "snippet": "SEBI circular on CAS impact: Groww, Angel One, BSE shares jump up to 8% - What regulator said and investors should know"
         },
         {
           "name": "BSE",
-          "order_type": "other",
+          "order_type": "sebi-enforcement-order",
           "is_listed_entity": true,
-          "snippet": "SEBI's recent circular on the Closing Auction Session (CAS) triggered notable stock price increases among brokerages and the BSE."
+          "snippet": "SEBI circular on CAS impact: Groww, Angel One, BSE shares jump up to 8% - What regulator said and investors should know"
         },
         {
           "name": "Edelweiss",
-          "order_type": "sebi-fine",
-          "is_listed_entity": true,
-          "snippet": "Why Supreme Court refused to make Edelweiss pay ₹900 crore to Anugrah investors."
-        },
-        {
-          "name": "Edelweiss Custodial Services",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "The Supreme Court has ruled that Edelweiss Custodial Services cannot be made liable for ₹900 crore in client securities lost after stockbroker Anugrah"
+          "snippet": "Why Supreme Court refused to make Edelweiss pay ₹900 crore to Anugrah investors"
         }
       ],
       "after_filter_count": 3,
       "dropped_counts": {
-        "not_listed": 0,
-        "no_sebi_signal_in_snippet": 2,
+        "not_listed": 1,
+        "no_sebi_signal_in_snippet": 1,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
           "name": "Groww",
-          "order_type": "other",
-          "snippet": "SEBI's recent circular on the Closing Auction Session (CAS) triggered notable stock price increases among brokerages and"
+          "order_type": "sebi-enforcement-order",
+          "snippet": "SEBI circular on CAS impact: Groww, Angel One, BSE shares jump up to 8% - What regulator said and investors should know"
         },
         {
           "name": "Angel One",
-          "order_type": "other",
-          "snippet": "SEBI's recent circular on the Closing Auction Session (CAS) triggered notable stock price increases among brokerages and"
+          "order_type": "sebi-enforcement-order",
+          "snippet": "SEBI circular on CAS impact: Groww, Angel One, BSE shares jump up to 8% - What regulator said and investors should know"
         },
         {
           "name": "BSE",
-          "order_type": "other",
-          "snippet": "SEBI's recent circular on the Closing Auction Session (CAS) triggered notable stock price increases among brokerages and"
+          "order_type": "sebi-enforcement-order",
+          "snippet": "SEBI circular on CAS impact: Groww, Angel One, BSE shares jump up to 8% - What regulator said and investors should know"
         }
       ]
     },
@@ -168,7 +168,7 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-07T04:35:42.327Z",
+      "at": "2026-09-07T16:06:43.990Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -180,6 +180,12 @@
           "order_type": "sebi-investigation",
           "is_listed_entity": true,
           "snippet": "BVG India receives Sebi approval to raise ₹300 cr via IPO: CEO Rupal Sinha"
+        },
+        {
+          "name": "Hindenburg",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": false,
+          "snippet": "Mkts regulator presses ahead against Hindenburg, others in Adani case"
         },
         {
           "name": "Adani",
@@ -216,18 +222,12 @@
           "order_type": "sebi-investigation",
           "is_listed_entity": true,
           "snippet": "Sebi gives green light to Jio Platforms IPO, six other public offers"
-        },
-        {
-          "name": "IFCI",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "IFCI share price spurts 11%, nears ₹100-mark after an 18-year gap"
         }
       ],
       "after_filter_count": 6,
       "dropped_counts": {
-        "not_listed": 0,
-        "no_sebi_signal_in_snippet": 2,
+        "not_listed": 1,
+        "no_sebi_signal_in_snippet": 1,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -268,12 +268,12 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-07T04:35:49.747Z",
+      "at": "2026-09-07T16:06:48.120Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 6,
-      "total_extracted": 6,
+      "total_extracted_raw": 7,
+      "total_extracted": 7,
       "prefilter_sample": [
         {
           "name": "Tarapur Transformers",
@@ -288,7 +288,7 @@
           "snippet": "Sebi slaps Rs 25 lakh fine on Citrus Check Inns directors"
         },
         {
-          "name": "Trafiksol ITS",
+          "name": "Trafiksol",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
           "snippet": "Sebi bars Trafiksol ITS, its promoters from securities market for 1 year; slaps Rs 1.05 cr fine"
@@ -301,21 +301,27 @@
         },
         {
           "name": "Jio Platforms",
-          "order_type": "sebi-approval",
+          "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Jio Platform gets Sebi's nod for Rs 37,000 crore IPO"
+          "snippet": "Jio Platforms has received Sebi approval for its upcoming initial public offering"
         },
         {
-          "name": "Adani Group",
-          "order_type": "sebi-investigation",
+          "name": "NSE",
+          "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Sebi moves ahead with action against Hindenburg, others in Adani case: Report"
+          "snippet": "NSE’s IPO moved closer to launch after Sebi approved its draft offer document"
+        },
+        {
+          "name": "IFCI",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "IFCI shares rallied over 6% as NSE IPO buzz lifted sentiment; stock gains 35% in a month"
         }
       ],
       "after_filter_count": 6,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 0,
+        "no_sebi_signal_in_snippet": 1,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -331,7 +337,7 @@
           "snippet": "Sebi slaps Rs 25 lakh fine on Citrus Check Inns directors"
         },
         {
-          "name": "Trafiksol ITS",
+          "name": "Trafiksol",
           "order_type": "sebi-ban",
           "snippet": "Sebi bars Trafiksol ITS, its promoters from securities market for 1 year; slaps Rs 1.05 cr fine"
         },
@@ -342,13 +348,13 @@
         },
         {
           "name": "Jio Platforms",
-          "order_type": "sebi-approval",
-          "snippet": "Jio Platform gets Sebi's nod for Rs 37,000 crore IPO"
+          "order_type": "other",
+          "snippet": "Jio Platforms has received Sebi approval for its upcoming initial public offering"
         },
         {
-          "name": "Adani Group",
-          "order_type": "sebi-investigation",
-          "snippet": "Sebi moves ahead with action against Hindenburg, others in Adani case: Report"
+          "name": "NSE",
+          "order_type": "other",
+          "snippet": "NSE’s IPO moved closer to launch after Sebi approved its draft offer document"
         }
       ]
     },
@@ -356,7 +362,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-09-07T04:35:57.922Z",
+      "at": "2026-09-07T16:06:55.051Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
