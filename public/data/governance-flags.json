@@ -1,46 +1,376 @@
 {
-  "generated_at": "2026-09-06T04:35:29.597Z",
+  "generated_at": "2026-09-07T04:36:06.064Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 0,
+  "total_entities_seen": 15,
   "flagged_companies": {},
-  "unmatched_sample": [],
+  "unmatched_sample": [
+    {
+      "name": "Groww",
+      "type": "other",
+      "source": "Mint — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Angel One",
+      "type": "other",
+      "source": "Mint — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "BSE",
+      "type": "other",
+      "source": "Mint — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "BVG India",
+      "type": "sebi-investigation",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "NSE",
+      "type": "sebi-investigation",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Nalco",
+      "type": "sebi-fine",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Debock Industries",
+      "type": "sebi-ban",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Trafiksol ITS",
+      "type": "sebi-ban",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Jio Platforms",
+      "type": "sebi-investigation",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Tarapur Transformers",
+      "type": "sebi-ban",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Citrus Check Inns",
+      "type": "sebi-fine",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Trafiksol ITS",
+      "type": "sebi-ban",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Varanium Cloud",
+      "type": "sebi-ban",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Jio Platforms",
+      "type": "sebi-approval",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Adani Group",
+      "type": "sebi-investigation",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    }
+  ],
   "sources": [
     {
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-06T04:35:27.062Z",
-      "fc_status": 402,
-      "outcome": "fc_http_error",
-      "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
+      "at": "2026-09-07T04:35:34.358Z",
+      "fc_status": 200,
+      "outcome": "ok",
+      "upstream_status": 200,
+      "total_extracted_raw": 5,
+      "total_extracted": 5,
+      "prefilter_sample": [
+        {
+          "name": "Groww",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "SEBI's recent circular on the Closing Auction Session (CAS) triggered notable stock price increases among brokerages and the BSE."
+        },
+        {
+          "name": "Angel One",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "SEBI's recent circular on the Closing Auction Session (CAS) triggered notable stock price increases among brokerages and the BSE."
+        },
+        {
+          "name": "BSE",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "SEBI's recent circular on the Closing Auction Session (CAS) triggered notable stock price increases among brokerages and the BSE."
+        },
+        {
+          "name": "Edelweiss",
+          "order_type": "sebi-fine",
+          "is_listed_entity": true,
+          "snippet": "Why Supreme Court refused to make Edelweiss pay ₹900 crore to Anugrah investors."
+        },
+        {
+          "name": "Edelweiss Custodial Services",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "The Supreme Court has ruled that Edelweiss Custodial Services cannot be made liable for ₹900 crore in client securities lost after stockbroker Anugrah"
+        }
+      ],
+      "after_filter_count": 3,
+      "dropped_counts": {
+        "not_listed": 0,
+        "no_sebi_signal_in_snippet": 2,
+        "resolved_in_favour": 0,
+        "no_name": 0
+      },
+      "sample": [
+        {
+          "name": "Groww",
+          "order_type": "other",
+          "snippet": "SEBI's recent circular on the Closing Auction Session (CAS) triggered notable stock price increases among brokerages and"
+        },
+        {
+          "name": "Angel One",
+          "order_type": "other",
+          "snippet": "SEBI's recent circular on the Closing Auction Session (CAS) triggered notable stock price increases among brokerages and"
+        },
+        {
+          "name": "BSE",
+          "order_type": "other",
+          "snippet": "SEBI's recent circular on the Closing Auction Session (CAS) triggered notable stock price increases among brokerages and"
+        }
+      ]
     },
     {
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-06T04:35:27.864Z",
-      "fc_status": 402,
-      "outcome": "fc_http_error",
-      "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
+      "at": "2026-09-07T04:35:42.327Z",
+      "fc_status": 200,
+      "outcome": "ok",
+      "upstream_status": 200,
+      "total_extracted_raw": 8,
+      "total_extracted": 8,
+      "prefilter_sample": [
+        {
+          "name": "BVG India",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": true,
+          "snippet": "BVG India receives Sebi approval to raise ₹300 cr via IPO: CEO Rupal Sinha"
+        },
+        {
+          "name": "Adani",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": true,
+          "snippet": "Mkts regulator presses ahead against Hindenburg, others in Adani case"
+        },
+        {
+          "name": "NSE",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": true,
+          "snippet": "Sebi clears long-awaited NSE IPO; listing likely around September 25"
+        },
+        {
+          "name": "Nalco",
+          "order_type": "sebi-fine",
+          "is_listed_entity": true,
+          "snippet": "Nalco faces ₹28.6 lakh fine from NSE, BSE over Sebi non-compliance"
+        },
+        {
+          "name": "Debock Industries",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars Debock Industries, promoter for seven years in fraud case"
+        },
+        {
+          "name": "Trafiksol ITS",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars Trafiksol ITS, promoters from securities market for one year"
+        },
+        {
+          "name": "Jio Platforms",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": true,
+          "snippet": "Sebi gives green light to Jio Platforms IPO, six other public offers"
+        },
+        {
+          "name": "IFCI",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": true,
+          "snippet": "IFCI share price spurts 11%, nears ₹100-mark after an 18-year gap"
+        }
+      ],
+      "after_filter_count": 6,
+      "dropped_counts": {
+        "not_listed": 0,
+        "no_sebi_signal_in_snippet": 2,
+        "resolved_in_favour": 0,
+        "no_name": 0
+      },
+      "sample": [
+        {
+          "name": "BVG India",
+          "order_type": "sebi-investigation",
+          "snippet": "BVG India receives Sebi approval to raise ₹300 cr via IPO: CEO Rupal Sinha"
+        },
+        {
+          "name": "NSE",
+          "order_type": "sebi-investigation",
+          "snippet": "Sebi clears long-awaited NSE IPO; listing likely around September 25"
+        },
+        {
+          "name": "Nalco",
+          "order_type": "sebi-fine",
+          "snippet": "Nalco faces ₹28.6 lakh fine from NSE, BSE over Sebi non-compliance"
+        },
+        {
+          "name": "Debock Industries",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars Debock Industries, promoter for seven years in fraud case"
+        },
+        {
+          "name": "Trafiksol ITS",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars Trafiksol ITS, promoters from securities market for one year"
+        },
+        {
+          "name": "Jio Platforms",
+          "order_type": "sebi-investigation",
+          "snippet": "Sebi gives green light to Jio Platforms IPO, six other public offers"
+        }
+      ]
     },
     {
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-06T04:35:28.416Z",
-      "fc_status": 402,
-      "outcome": "fc_http_error",
-      "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
+      "at": "2026-09-07T04:35:49.747Z",
+      "fc_status": 200,
+      "outcome": "ok",
+      "upstream_status": 200,
+      "total_extracted_raw": 6,
+      "total_extracted": 6,
+      "prefilter_sample": [
+        {
+          "name": "Tarapur Transformers",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars Tarapur Transformers, promoters from markets for 5 years in fund diversion case"
+        },
+        {
+          "name": "Citrus Check Inns",
+          "order_type": "sebi-fine",
+          "is_listed_entity": true,
+          "snippet": "Sebi slaps Rs 25 lakh fine on Citrus Check Inns directors"
+        },
+        {
+          "name": "Trafiksol ITS",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars Trafiksol ITS, its promoters from securities market for 1 year; slaps Rs 1.05 cr fine"
+        },
+        {
+          "name": "Varanium Cloud",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years from markets"
+        },
+        {
+          "name": "Jio Platforms",
+          "order_type": "sebi-approval",
+          "is_listed_entity": true,
+          "snippet": "Jio Platform gets Sebi's nod for Rs 37,000 crore IPO"
+        },
+        {
+          "name": "Adani Group",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": true,
+          "snippet": "Sebi moves ahead with action against Hindenburg, others in Adani case: Report"
+        }
+      ],
+      "after_filter_count": 6,
+      "dropped_counts": {
+        "not_listed": 0,
+        "no_sebi_signal_in_snippet": 0,
+        "resolved_in_favour": 0,
+        "no_name": 0
+      },
+      "sample": [
+        {
+          "name": "Tarapur Transformers",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars Tarapur Transformers, promoters from markets for 5 years in fund diversion case"
+        },
+        {
+          "name": "Citrus Check Inns",
+          "order_type": "sebi-fine",
+          "snippet": "Sebi slaps Rs 25 lakh fine on Citrus Check Inns directors"
+        },
+        {
+          "name": "Trafiksol ITS",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars Trafiksol ITS, its promoters from securities market for 1 year; slaps Rs 1.05 cr fine"
+        },
+        {
+          "name": "Varanium Cloud",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years from markets"
+        },
+        {
+          "name": "Jio Platforms",
+          "order_type": "sebi-approval",
+          "snippet": "Jio Platform gets Sebi's nod for Rs 37,000 crore IPO"
+        },
+        {
+          "name": "Adani Group",
+          "order_type": "sebi-investigation",
+          "snippet": "Sebi moves ahead with action against Hindenburg, others in Adani case: Report"
+        }
+      ]
     },
     {
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-09-06T04:35:28.946Z",
-      "fc_status": 402,
-      "outcome": "fc_http_error",
-      "error_body": "{\"success\":false,\"error\":\"Insufficient credits to perform this request. For more credits, you can upgrade your plan at https://firecrawl.dev/pricing or try changing the request limit to a lower value.\"}"
+      "at": "2026-09-07T04:35:57.922Z",
+      "fc_status": 200,
+      "outcome": "ok",
+      "upstream_status": 200,
+      "total_extracted_raw": 0,
+      "total_extracted": 0,
+      "prefilter_sample": [],
+      "after_filter_count": 0,
+      "dropped_counts": {
+        "not_listed": 0,
+        "no_sebi_signal_in_snippet": 0,
+        "resolved_in_favour": 0,
+        "no_name": 0
+      },
+      "sample": []
     }
   ]
 }
