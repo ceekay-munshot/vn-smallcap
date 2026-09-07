@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-07T12:57:34.935Z",
+  "generated_at": "2026-09-07T16:07:19.018Z",
   "source": "Yahoo Finance chart endpoint",
   "note": "Pre-open context. GIFT Nifty has no free stable feed; S&P futures plus the Asian session carry the same overnight information.",
   "giftNifty": null,
@@ -12,7 +12,7 @@
       "last": 7722,
       "prevClose": 7642.75,
       "changePct": 1.0369304242582755,
-      "asOf": "2026-09-07T12:47:30.000Z"
+      "asOf": "2026-09-07T15:57:14.000Z"
     },
     "nikkei": {
       "key": "nikkei",
