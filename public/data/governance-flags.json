@@ -1,61 +1,13 @@
 {
-  "generated_at": "2026-09-08T14:49:36.466Z",
+  "generated_at": "2026-09-09T04:39:59.131Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 18,
+  "total_entities_seen": 14,
   "flagged_companies": {},
   "unmatched_sample": [
     {
-      "name": "Angel Funds",
-      "type": "other",
-      "source": "Mint — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "FPIs",
-      "type": "other",
-      "source": "Mint — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "FPIs",
-      "type": "other",
-      "source": "Mint — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Jane Street",
-      "type": "other",
-      "source": "Mint — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Groww",
-      "type": "other",
-      "source": "Mint — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Angel One",
-      "type": "other",
-      "source": "Mint — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "SEBI",
-      "type": "other",
-      "source": "Mint — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "SEBI",
-      "type": "other",
-      "source": "Mint — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
       "name": "BVG India",
-      "type": "sebi-investigation",
+      "type": "sebi-ipo",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -96,13 +48,7 @@
       "origin": "scraper"
     },
     {
-      "name": "IFCI",
-      "type": "sebi-investigation",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Trafiksol ITS",
+      "name": "Trafiksol",
       "type": "sebi-ban",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
@@ -112,6 +58,36 @@
       "type": "sebi-ban",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
+    },
+    {
+      "name": "Jio Platforms",
+      "type": "sebi-approval",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Cosmic PV",
+      "type": "sebi-approval",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Monomark",
+      "type": "sebi-approval",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "RKB Global",
+      "type": "sebi-approval",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "IFCI",
+      "type": "sebi-approval",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
     }
   ],
   "sources": [
@@ -119,129 +95,70 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-08T14:49:15.695Z",
+      "at": "2026-09-09T04:39:41.063Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 10,
-      "total_extracted": 10,
+      "total_extracted_raw": 7,
+      "total_extracted": 7,
       "prefilter_sample": [
         {
-          "name": "Angel Funds",
+          "name": "SEBI",
           "order_type": "other",
-          "is_listed_entity": true,
+          "is_listed_entity": false,
           "snippet": "SEBI gives angel funds 7-month extension to comply with the accredited investor mandate"
         },
         {
-          "name": "FPIs",
+          "name": "SEBI",
           "order_type": "other",
-          "is_listed_entity": true,
+          "is_listed_entity": false,
           "snippet": "SEBI eases regulatory compliance for FPIs investing only in government securities"
         },
         {
-          "name": "FPIs",
+          "name": "SEBI",
           "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Sebi eases compliance for foreign investors investing in government bonds"
-        },
-        {
-          "name": "Jane Street",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Jane Street seeks Sebi-NSE correspondence in market manipulation case; alleges role of UAE-based hedge fund"
-        },
-        {
-          "name": "Groww",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "SEBI circular on CAS impact: Groww, Angel One, BSE shares jump up to 8%"
-        },
-        {
-          "name": "Angel One",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "SEBI circular on CAS impact: Groww, Angel One, BSE shares jump up to 8%"
-        },
-        {
-          "name": "CAS",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "CAS fights teething troubles; will VWAP return on expiry days?"
+          "is_listed_entity": false,
+          "snippet": "SEBI eases compliance for foreign investors investing in government bonds"
         },
         {
           "name": "SEBI",
           "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "SEBI's new ETF pricing rules from 7 September: What's changing and why investors should care — experts explain"
-        },
-        {
-          "name": "SEBI",
-          "order_type": "other",
-          "is_listed_entity": true,
+          "is_listed_entity": false,
           "snippet": "Sebi to propose changes in derivatives settlement prices after closing auction runs into hurdles"
         },
         {
+          "name": "Jane Street",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": false,
+          "snippet": "Jane Street seeks Sebi-NSE correspondence in market manipulation case; alleges role of UAE-based hedge fund"
+        },
+        {
           "name": "SEBI",
           "order_type": "other",
-          "is_listed_entity": true,
+          "is_listed_entity": false,
+          "snippet": "SEBI's new ETF pricing rules from 7 September: What's changing and why investors should care"
+        },
+        {
+          "name": "SEBI",
+          "order_type": "other",
+          "is_listed_entity": false,
           "snippet": "Closing auction yet to find its feet, a month after rollout"
         }
       ],
-      "after_filter_count": 8,
+      "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 0,
-        "no_sebi_signal_in_snippet": 2,
+        "not_listed": 7,
+        "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
-      "sample": [
-        {
-          "name": "Angel Funds",
-          "order_type": "other",
-          "snippet": "SEBI gives angel funds 7-month extension to comply with the accredited investor mandate"
-        },
-        {
-          "name": "FPIs",
-          "order_type": "other",
-          "snippet": "SEBI eases regulatory compliance for FPIs investing only in government securities"
-        },
-        {
-          "name": "FPIs",
-          "order_type": "other",
-          "snippet": "Sebi eases compliance for foreign investors investing in government bonds"
-        },
-        {
-          "name": "Jane Street",
-          "order_type": "other",
-          "snippet": "Jane Street seeks Sebi-NSE correspondence in market manipulation case; alleges role of UAE-based hedge fund"
-        },
-        {
-          "name": "Groww",
-          "order_type": "other",
-          "snippet": "SEBI circular on CAS impact: Groww, Angel One, BSE shares jump up to 8%"
-        },
-        {
-          "name": "Angel One",
-          "order_type": "other",
-          "snippet": "SEBI circular on CAS impact: Groww, Angel One, BSE shares jump up to 8%"
-        },
-        {
-          "name": "SEBI",
-          "order_type": "other",
-          "snippet": "SEBI's new ETF pricing rules from 7 September: What's changing and why investors should care — experts explain"
-        },
-        {
-          "name": "SEBI",
-          "order_type": "other",
-          "snippet": "Sebi to propose changes in derivatives settlement prices after closing auction runs into hurdles"
-        }
-      ]
+      "sample": []
     },
     {
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-08T14:49:20.810Z",
+      "at": "2026-09-09T04:39:48.355Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -250,7 +167,7 @@
       "prefilter_sample": [
         {
           "name": "BVG India",
-          "order_type": "sebi-investigation",
+          "order_type": "sebi-ipo",
           "is_listed_entity": true,
           "snippet": "BVG India receives Sebi approval to raise ₹300 cr via IPO: CEO Rupal Sinha"
         },
@@ -289,7 +206,7 @@
       "sample": [
         {
           "name": "BVG India",
-          "order_type": "sebi-investigation",
+          "order_type": "sebi-ipo",
           "snippet": "BVG India receives Sebi approval to raise ₹300 cr via IPO: CEO Rupal Sinha"
         },
         {
@@ -318,51 +235,75 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-08T14:49:24.412Z",
+      "at": "2026-09-09T04:39:51.469Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 6,
-      "total_extracted": 6,
+      "total_extracted_raw": 10,
+      "total_extracted": 10,
       "prefilter_sample": [
         {
           "name": "Tarapur Transformers",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Sebi bars Tarapur Transformers, promoters from markets for 5 years in fund diversion case."
+          "snippet": "Sebi bars Tarapur Transformers, promoters from markets for 5 years in fund diversion case"
         },
         {
           "name": "Citrus Check Inns",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Sebi slaps Rs 25 lakh fine on Citrus Check Inns directors."
+          "snippet": "Sebi slaps Rs 25 lakh fine on Citrus Check Inns directors"
         },
         {
-          "name": "Hindenburg",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": false,
-          "snippet": "Sebi moves ahead with action against Hindenburg, others in Adani case: Report."
-        },
-        {
-          "name": "IFCI",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "IFCI shares rally 6%, turn multibagger as NSE IPO gets SEBI nod."
-        },
-        {
-          "name": "Trafiksol ITS",
+          "name": "Trafiksol",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Sebi bars Trafiksol ITS, its promoters from securities market for 1 year; slaps Rs 1.05 cr fine."
+          "snippet": "Sebi bars Trafiksol ITS, its promoters from securities market for 1 year; slaps Rs 1.05 cr fine"
         },
         {
           "name": "Varanium Cloud",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years from markets."
+          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years from markets"
+        },
+        {
+          "name": "Jio Platforms",
+          "order_type": "sebi-approval",
+          "is_listed_entity": true,
+          "snippet": "Jio Platform gets Sebi's nod for Rs 37,000 crore IPO"
+        },
+        {
+          "name": "Cosmic PV",
+          "order_type": "sebi-approval",
+          "is_listed_entity": true,
+          "snippet": "Sebi approves 3 IPOs of Cosmic PV, Monomark, RKB Global along with NSE"
+        },
+        {
+          "name": "Monomark",
+          "order_type": "sebi-approval",
+          "is_listed_entity": true,
+          "snippet": "Sebi approves 3 IPOs of Cosmic PV, Monomark, RKB Global along with NSE"
+        },
+        {
+          "name": "RKB Global",
+          "order_type": "sebi-approval",
+          "is_listed_entity": true,
+          "snippet": "Sebi approves 3 IPOs of Cosmic PV, Monomark, RKB Global along with NSE"
+        },
+        {
+          "name": "IFCI",
+          "order_type": "sebi-approval",
+          "is_listed_entity": true,
+          "snippet": "IFCI shares rally 6%, turn multibagger as NSE IPO gets SEBI nod. More upside ahead?"
+        },
+        {
+          "name": "SEBI",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": false,
+          "snippet": "SEBI has extended the accredited investor compliance deadline for existing Angel Funds to March 31, 2027."
         }
       ],
-      "after_filter_count": 5,
+      "after_filter_count": 9,
       "dropped_counts": {
         "not_listed": 1,
         "no_sebi_signal_in_snippet": 0,
@@ -373,27 +314,47 @@
         {
           "name": "Tarapur Transformers",
           "order_type": "sebi-ban",
-          "snippet": "Sebi bars Tarapur Transformers, promoters from markets for 5 years in fund diversion case."
+          "snippet": "Sebi bars Tarapur Transformers, promoters from markets for 5 years in fund diversion case"
         },
         {
           "name": "Citrus Check Inns",
           "order_type": "sebi-fine",
-          "snippet": "Sebi slaps Rs 25 lakh fine on Citrus Check Inns directors."
+          "snippet": "Sebi slaps Rs 25 lakh fine on Citrus Check Inns directors"
         },
         {
-          "name": "IFCI",
-          "order_type": "sebi-investigation",
-          "snippet": "IFCI shares rally 6%, turn multibagger as NSE IPO gets SEBI nod."
-        },
-        {
-          "name": "Trafiksol ITS",
+          "name": "Trafiksol",
           "order_type": "sebi-ban",
-          "snippet": "Sebi bars Trafiksol ITS, its promoters from securities market for 1 year; slaps Rs 1.05 cr fine."
+          "snippet": "Sebi bars Trafiksol ITS, its promoters from securities market for 1 year; slaps Rs 1.05 cr fine"
         },
         {
           "name": "Varanium Cloud",
           "order_type": "sebi-ban",
-          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years from markets."
+          "snippet": "Sebi bars Varanium Cloud, promoter for 7 years from markets"
+        },
+        {
+          "name": "Jio Platforms",
+          "order_type": "sebi-approval",
+          "snippet": "Jio Platform gets Sebi's nod for Rs 37,000 crore IPO"
+        },
+        {
+          "name": "Cosmic PV",
+          "order_type": "sebi-approval",
+          "snippet": "Sebi approves 3 IPOs of Cosmic PV, Monomark, RKB Global along with NSE"
+        },
+        {
+          "name": "Monomark",
+          "order_type": "sebi-approval",
+          "snippet": "Sebi approves 3 IPOs of Cosmic PV, Monomark, RKB Global along with NSE"
+        },
+        {
+          "name": "RKB Global",
+          "order_type": "sebi-approval",
+          "snippet": "Sebi approves 3 IPOs of Cosmic PV, Monomark, RKB Global along with NSE"
+        },
+        {
+          "name": "IFCI",
+          "order_type": "sebi-approval",
+          "snippet": "IFCI shares rally 6%, turn multibagger as NSE IPO gets SEBI nod. More upside ahead?"
         }
       ]
     },
@@ -401,7 +362,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-09-08T14:49:28.481Z",
+      "at": "2026-09-09T04:39:56.808Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
