@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-09T11:45:52.734Z",
+  "generated_at": "2026-09-09T14:52:01.701Z",
   "source": "Yahoo Finance chart endpoint",
   "note": "Pre-open context. GIFT Nifty has no free stable feed; S&P futures plus the Asian session carry the same overnight information.",
   "giftNifty": null,
@@ -9,10 +9,10 @@
       "symbol": "ES=F",
       "label": "S&P 500 futures",
       "role": "overnight",
-      "last": 7651.25,
+      "last": 7657.25,
       "prevClose": 7754.75,
-      "changePct": -1.3346658499629238,
-      "asOf": "2026-09-09T11:35:46.000Z"
+      "changePct": -1.257293916631741,
+      "asOf": "2026-09-09T14:41:59.000Z"
     },
     "nikkei": {
       "key": "nikkei",
@@ -66,12 +66,12 @@
     }
   },
   "signal": {
-    "lean": -0.3417311932533168,
+    "lean": -0.30304522658772537,
     "dir": "flat",
     "vix": 11.92,
     "vixChange": 5.1146384479717755,
     "vixBand": "calm",
-    "tolerancePct": 0.29,
+    "tolerancePct": 0.32,
     "headline": "Overnight quiet — a normal open"
   }
 }
