@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-10T14:17:48.372Z",
+  "generated_at": "2026-09-10T14:41:59.523Z",
   "source": "Munshot quote API (fastapi.muns.io/stock-data)",
   "note": "Live intraday snapshot per basket ticker. dayHigh/dayLow drive intraday target/SL touch detection; current is the latest traded price.",
   "ticker_count": 10,
