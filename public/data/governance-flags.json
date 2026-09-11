@@ -1,10 +1,16 @@
 {
-  "generated_at": "2026-09-10T14:41:22.443Z",
+  "generated_at": "2026-09-11T04:36:44.811Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 8,
+  "total_entities_seen": 10,
   "flagged_companies": {},
   "unmatched_sample": [
+    {
+      "name": "Jane Street",
+      "type": "sebi-investigation",
+      "source": "Mint — SEBI topic (news)",
+      "origin": "scraper"
+    },
     {
       "name": "Vedanta",
       "type": "other",
@@ -25,7 +31,7 @@
     },
     {
       "name": "Vedanta",
-      "type": "sebi-fine",
+      "type": "sebi-penalty",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -48,6 +54,12 @@
       "origin": "scraper"
     },
     {
+      "name": "JPMorgan",
+      "type": "sebi-ban",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
       "name": "Citrus Check Inns",
       "type": "sebi-fine",
       "source": "Economic Times — SEBI topic (news)",
@@ -59,64 +71,58 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-10T14:41:03.388Z",
+      "at": "2026-09-11T04:36:08.634Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 6,
-      "total_extracted": 6,
+      "total_extracted_raw": 4,
+      "total_extracted": 4,
       "prefilter_sample": [
         {
-          "name": "Sebi",
+          "name": "SEBI",
           "order_type": "other",
           "is_listed_entity": false,
-          "snippet": "Sebi eases commodity position limits, caps penalties for breaches"
+          "snippet": "SEBI eases regulatory compliance for FPIs investing only in government securities."
         },
         {
-          "name": "Sebi",
+          "name": "SEBI",
           "order_type": "other",
           "is_listed_entity": false,
-          "snippet": "Sebi seeks to widen talent pool for stock exchanges and depositories"
+          "snippet": "SEBI eases compliance for foreign investors investing in government bonds."
         },
         {
-          "name": "Sebi",
+          "name": "SEBI",
           "order_type": "other",
           "is_listed_entity": false,
-          "snippet": "SEBI gives angel funds 7-month extension to comply with accredited investor mandate"
+          "snippet": "SEBI gives angel funds 7-month extension to comply with accredited investor mandate."
         },
         {
-          "name": "Sebi",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi eases regulatory compliance for FPIs investing only in government securities"
-        },
-        {
-          "name": "Sebi",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi eases compliance for foreign investors investing in government bonds"
-        },
-        {
-          "name": "Sebi",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Jane Street seeks Sebi-NSE correspondence in market manipulation case; alleges role of UAE-based hedge fund"
+          "name": "Jane Street",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": true,
+          "snippet": "Jane Street seeks Sebi-NSE correspondence in market manipulation case; alleges role of UAE-based hedge fund."
         }
       ],
-      "after_filter_count": 0,
+      "after_filter_count": 1,
       "dropped_counts": {
-        "not_listed": 6,
+        "not_listed": 3,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
-      "sample": []
+      "sample": [
+        {
+          "name": "Jane Street",
+          "order_type": "sebi-investigation",
+          "snippet": "Jane Street seeks Sebi-NSE correspondence in market manipulation case; alleges role of UAE-based hedge fund."
+        }
+      ]
     },
     {
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-10T14:41:07.630Z",
+      "at": "2026-09-11T04:36:12.713Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -127,19 +133,19 @@
           "name": "Vedanta",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "SC sends Vedanta buyback fraud case back to SAT for fresh examination."
+          "snippet": "SC sends Vedanta buyback fraud case back to SAT for fresh examination"
         },
         {
           "name": "BVG India",
           "order_type": "sebi-investigation",
           "is_listed_entity": true,
-          "snippet": "BVG India receives Sebi approval to raise ₹300 cr via IPO: CEO Rupal Sinha."
+          "snippet": "BVG India receives Sebi approval to raise ₹300 cr via IPO: CEO Rupal Sinha"
         },
         {
           "name": "Nalco",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Nalco faces ₹28.6 lakh fine from NSE, BSE over Sebi non-compliance."
+          "snippet": "Nalco faces ₹28.6 lakh fine from NSE, BSE over Sebi non-compliance"
         }
       ],
       "after_filter_count": 3,
@@ -153,17 +159,17 @@
         {
           "name": "Vedanta",
           "order_type": "other",
-          "snippet": "SC sends Vedanta buyback fraud case back to SAT for fresh examination."
+          "snippet": "SC sends Vedanta buyback fraud case back to SAT for fresh examination"
         },
         {
           "name": "BVG India",
           "order_type": "sebi-investigation",
-          "snippet": "BVG India receives Sebi approval to raise ₹300 cr via IPO: CEO Rupal Sinha."
+          "snippet": "BVG India receives Sebi approval to raise ₹300 cr via IPO: CEO Rupal Sinha"
         },
         {
           "name": "Nalco",
           "order_type": "sebi-fine",
-          "snippet": "Nalco faces ₹28.6 lakh fine from NSE, BSE over Sebi non-compliance."
+          "snippet": "Nalco faces ₹28.6 lakh fine from NSE, BSE over Sebi non-compliance"
         }
       ]
     },
@@ -171,16 +177,16 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-10T14:41:11.646Z",
+      "at": "2026-09-11T04:36:17.999Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 5,
-      "total_extracted": 5,
+      "total_extracted_raw": 7,
+      "total_extracted": 7,
       "prefilter_sample": [
         {
           "name": "Vedanta",
-          "order_type": "sebi-fine",
+          "order_type": "sebi-penalty",
           "is_listed_entity": true,
           "snippet": "Supreme Court sends Vedanta’s Rs 5.25 crore SEBI penalty case back to SAT"
         },
@@ -201,6 +207,18 @@
           "order_type": "sebi-ban",
           "is_listed_entity": true,
           "snippet": "Sebi bars Tarapur Transformers, promoters from markets for 5 years in fund diversion case"
+        },
+        {
+          "name": "Cairn India",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": true,
+          "snippet": "Supreme Court directs SAT to revisit Cairn India buyback case"
+        },
+        {
+          "name": "JPMorgan",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "India lifts ban on JPMorgan unit in index manipulation charge"
         },
         {
           "name": "Citrus Check Inns",
@@ -209,17 +227,17 @@
           "snippet": "Sebi slaps Rs 25 lakh fine on Citrus Check Inns directors"
         }
       ],
-      "after_filter_count": 5,
+      "after_filter_count": 6,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 0,
+        "no_sebi_signal_in_snippet": 1,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
           "name": "Vedanta",
-          "order_type": "sebi-fine",
+          "order_type": "sebi-penalty",
           "snippet": "Supreme Court sends Vedanta’s Rs 5.25 crore SEBI penalty case back to SAT"
         },
         {
@@ -236,6 +254,11 @@
           "name": "Tarapur Transformers",
           "order_type": "sebi-ban",
           "snippet": "Sebi bars Tarapur Transformers, promoters from markets for 5 years in fund diversion case"
+        },
+        {
+          "name": "JPMorgan",
+          "order_type": "sebi-ban",
+          "snippet": "India lifts ban on JPMorgan unit in index manipulation charge"
         },
         {
           "name": "Citrus Check Inns",
@@ -248,29 +271,16 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-09-10T14:41:18.819Z",
+      "at": "2026-09-11T04:36:23.414Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 2,
-      "total_extracted": 2,
-      "prefilter_sample": [
-        {
-          "name": "CITRUS CHECK INNS LIMITED",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
-        },
-        {
-          "name": "ROYAL TWINKLE STAR CLUB PVT. LTD",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
-        }
-      ],
+      "total_extracted_raw": 0,
+      "total_extracted": 0,
+      "prefilter_sample": [],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 2,
+        "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
