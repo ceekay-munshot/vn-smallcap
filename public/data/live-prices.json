@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-11T14:40:36.367Z",
+  "generated_at": "2026-09-12T04:33:32.264Z",
   "source": "Munshot quote API (fastapi.muns.io/stock-data)",
   "note": "Live intraday snapshot per basket ticker. dayHigh/dayLow drive intraday target/SL touch detection; current is the latest traded price.",
   "ticker_count": 10,
@@ -12,11 +12,11 @@
       "dayLow": 267.1,
       "week52High": 289.65,
       "week52Low": 163.55,
-      "ma50": 242.78,
-      "ma200": 220.8,
-      "vol10d": 9259302,
-      "marketCap": 151161303079.22,
-      "yearlyChangePct": 30.29
+      "ma50": 242.89,
+      "ma200": 220.91,
+      "vol10d": 8990330,
+      "marketCap": 151161296218.35,
+      "yearlyChangePct": 0
     },
     "UNIPARTS": {
       "current": 897.45,
@@ -26,11 +26,11 @@
       "dayLow": 859.95,
       "week52High": 915.95,
       "week52Low": 399.8,
-      "ma50": 769.73,
-      "ma200": 578.52,
-      "vol10d": 234119,
-      "marketCap": 40495839724.52,
-      "yearlyChangePct": 117.19
+      "ma50": 772.17,
+      "ma200": 578.99,
+      "vol10d": 204203,
+      "marketCap": 40495839173.7,
+      "yearlyChangePct": 0
     },
     "ADOR": {
       "current": 1603.7,
@@ -40,11 +40,11 @@
       "dayLow": 1579.4,
       "week52High": 1766.4,
       "week52Low": 848,
-      "ma50": 1504.54,
-      "ma200": 1164.93,
-      "vol10d": 64861,
-      "marketCap": 27908893565.75,
-      "yearlyChangePct": 65.11
+      "ma50": 1508.43,
+      "ma200": 1165.29,
+      "vol10d": 54798,
+      "marketCap": 27908894415.5,
+      "yearlyChangePct": 0
     },
     "QPOWER": {
       "current": 1426.5,
@@ -54,11 +54,11 @@
       "dayLow": 1401.8,
       "week52High": 1570,
       "week52Low": 581,
-      "ma50": 1249.03,
-      "ma200": 1016.23,
-      "vol10d": 359428,
+      "ma50": 1251.42,
+      "ma200": 1017.59,
+      "vol10d": 337668,
       "marketCap": 110474008650,
-      "yearlyChangePct": 54.4
+      "yearlyChangePct": 0
     },
     "ALKYLAMINE": {
       "current": 1867.5,
@@ -68,11 +68,11 @@
       "dayLow": 1859.1,
       "week52High": 2116.8,
       "week52Low": 1212,
-      "ma50": 1912.43,
-      "ma200": 1660.04,
-      "vol10d": 63351,
+      "ma50": 1913.26,
+      "ma200": 1660.85,
+      "vol10d": 65840,
       "marketCap": 95515485547.5,
-      "yearlyChangePct": -5.43
+      "yearlyChangePct": -9.41
     },
     "VENKEYS": {
       "current": 1787.2,
@@ -82,11 +82,11 @@
       "dayLow": 1676.2,
       "week52High": 1800,
       "week52Low": 1165,
-      "ma50": 1541.79,
-      "ma200": 1470.54,
-      "vol10d": 190315,
-      "marketCap": 25176886211.34,
-      "yearlyChangePct": 14.21
+      "ma50": 1544.2,
+      "ma200": 1471.22,
+      "vol10d": 214380,
+      "marketCap": 25176886899.2,
+      "yearlyChangePct": 0
     },
     "EPL": {
       "current": 239.3,
@@ -96,11 +96,11 @@
       "dayLow": 237.7,
       "week52High": 274.03,
       "week52Low": 176.4,
-      "ma50": 241.45,
-      "ma200": 220.95,
-      "vol10d": 18085653,
+      "ma50": 241.5,
+      "ma200": 221.13,
+      "vol10d": 18168151,
       "marketCap": 76647230776.17,
-      "yearlyChangePct": 9.07
+      "yearlyChangePct": 6.87
     },
     "HARSHA": {
       "current": 445,
@@ -110,11 +110,11 @@
       "dayLow": 436,
       "week52High": 470.95,
       "week52Low": 313.3,
-      "ma50": 425.93,
-      "ma200": 393.84,
-      "vol10d": 189640,
+      "ma50": 426.1,
+      "ma200": 393.85,
+      "vol10d": 185503,
       "marketCap": 40514626725,
-      "yearlyChangePct": 9.85
+      "yearlyChangePct": 0
     },
     "PRECWIRE": {
       "current": 462.55,
@@ -124,11 +124,11 @@
       "dayLow": 447.5,
       "week52High": 524.9,
       "week52Low": 179.05,
-      "ma50": 415.38,
-      "ma200": 344.38,
-      "vol10d": 1639557,
-      "marketCap": 84557826604.71,
-      "yearlyChangePct": 154.9
+      "ma50": 415.68,
+      "ma200": 344.84,
+      "vol10d": 836945,
+      "marketCap": 84557828836.25,
+      "yearlyChangePct": 0
     },
     "KSL": {
       "current": 968.75,
@@ -138,11 +138,11 @@
       "dayLow": 931,
       "week52High": 992.6,
       "week52Low": 574,
-      "ma50": 892.71,
-      "ma200": 789,
-      "vol10d": 170705,
+      "ma50": 894.45,
+      "ma200": 789.97,
+      "vol10d": 171268,
       "marketCap": 42391899375,
-      "yearlyChangePct": 19.54
+      "yearlyChangePct": 17.07
     }
   }
 }
