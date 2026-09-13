@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-12T04:33:20.171Z",
+  "generated_at": "2026-09-13T04:46:23.118Z",
   "source": "Yahoo Finance chart endpoint",
   "note": "Pre-open context. GIFT Nifty has no free stable feed; S&P futures plus the Asian session carry the same overnight information.",
   "giftNifty": null,
