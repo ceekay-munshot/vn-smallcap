@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-12T04:33:32.264Z",
+  "generated_at": "2026-09-13T04:46:36.660Z",
   "source": "Munshot quote API (fastapi.muns.io/stock-data)",
   "note": "Live intraday snapshot per basket ticker. dayHigh/dayLow drive intraday target/SL touch detection; current is the latest traded price.",
   "ticker_count": 10,
@@ -12,11 +12,11 @@
       "dayLow": 267.1,
       "week52High": 289.65,
       "week52Low": 163.55,
-      "ma50": 242.89,
-      "ma200": 220.91,
+      "ma50": 243.42,
+      "ma200": 221.15,
       "vol10d": 8990330,
-      "marketCap": 151161296218.35,
-      "yearlyChangePct": 0
+      "marketCap": 151161303079.22,
+      "yearlyChangePct": 27.54
     },
     "UNIPARTS": {
       "current": 897.45,
@@ -26,11 +26,11 @@
       "dayLow": 859.95,
       "week52High": 915.95,
       "week52Low": 399.8,
-      "ma50": 772.17,
-      "ma200": 578.99,
+      "ma50": 774.73,
+      "ma200": 580.6,
       "vol10d": 204203,
-      "marketCap": 40495839173.7,
-      "yearlyChangePct": 0
+      "marketCap": 40495839724.52,
+      "yearlyChangePct": 117.85
     },
     "ADOR": {
       "current": 1603.7,
@@ -40,11 +40,11 @@
       "dayLow": 1579.4,
       "week52High": 1766.4,
       "week52Low": 848,
-      "ma50": 1508.43,
-      "ma200": 1165.29,
+      "ma50": 1510.38,
+      "ma200": 1167.49,
       "vol10d": 54798,
-      "marketCap": 27908894415.5,
-      "yearlyChangePct": 0
+      "marketCap": 27908893565.75,
+      "yearlyChangePct": 62.55
     },
     "QPOWER": {
       "current": 1426.5,
@@ -54,11 +54,11 @@
       "dayLow": 1401.8,
       "week52High": 1570,
       "week52Low": 581,
-      "ma50": 1251.42,
-      "ma200": 1017.59,
-      "vol10d": 337668,
+      "ma50": 1254.92,
+      "ma200": 1019.63,
+      "vol10d": 337671,
       "marketCap": 110474008650,
-      "yearlyChangePct": 0
+      "yearlyChangePct": 55.02
     },
     "ALKYLAMINE": {
       "current": 1867.5,
@@ -82,11 +82,11 @@
       "dayLow": 1676.2,
       "week52High": 1800,
       "week52Low": 1165,
-      "ma50": 1544.2,
-      "ma200": 1471.22,
-      "vol10d": 214380,
-      "marketCap": 25176886899.2,
-      "yearlyChangePct": 0
+      "ma50": 1549.16,
+      "ma200": 1472.81,
+      "vol10d": 214384,
+      "marketCap": 25176886211.34,
+      "yearlyChangePct": 19.5
     },
     "EPL": {
       "current": 239.3,
@@ -110,11 +110,11 @@
       "dayLow": 436,
       "week52High": 470.95,
       "week52Low": 313.3,
-      "ma50": 426.1,
-      "ma200": 393.85,
+      "ma50": 426.49,
+      "ma200": 394.11,
       "vol10d": 185503,
       "marketCap": 40514626725,
-      "yearlyChangePct": 0
+      "yearlyChangePct": 7.84
     },
     "PRECWIRE": {
       "current": 462.55,
@@ -124,11 +124,11 @@
       "dayLow": 447.5,
       "week52High": 524.9,
       "week52Low": 179.05,
-      "ma50": 415.68,
-      "ma200": 344.84,
+      "ma50": 416.64,
+      "ma200": 345.43,
       "vol10d": 836945,
-      "marketCap": 84557828836.25,
-      "yearlyChangePct": 0
+      "marketCap": 84557826604.71,
+      "yearlyChangePct": 154.92
     },
     "KSL": {
       "current": 968.75,
