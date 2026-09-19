@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-18T14:43:58.382Z",
+  "generated_at": "2026-09-19T04:37:53.373Z",
   "source": "Munshot quote API (fastapi.muns.io/stock-data)",
   "note": "Live intraday snapshot per basket ticker. dayHigh/dayLow drive intraday target/SL touch detection; current is the latest traded price.",
   "ticker_count": 10,
@@ -12,11 +12,11 @@
       "dayLow": 263.5,
       "week52High": 289.65,
       "week52Low": 163.55,
-      "ma50": 246.04,
-      "ma200": 222.75,
-      "vol10d": 2138991,
+      "ma50": 246.57,
+      "ma200": 223.09,
+      "vol10d": 1963177,
       "marketCap": 149699989478.98,
-      "yearlyChangePct": 27.66
+      "yearlyChangePct": 28.23
     },
     "UNIPARTS": {
       "current": 831.5,
@@ -26,11 +26,11 @@
       "dayLow": 824.95,
       "week52High": 915.95,
       "week52Low": 399.8,
-      "ma50": 792.96,
-      "ma200": 588.35,
-      "vol10d": 148277,
+      "ma50": 795.55,
+      "ma200": 590.07,
+      "vol10d": 139154,
       "marketCap": 37519962419,
-      "yearlyChangePct": 0
+      "yearlyChangePct": 97.65
     },
     "ADOR": {
       "current": 1592.1,
@@ -40,10 +40,10 @@
       "dayLow": 1568.9,
       "week52High": 1766.4,
       "week52Low": 848,
-      "ma50": 1531.31,
-      "ma200": 1175.43,
-      "vol10d": 27767,
-      "marketCap": 27707021336.63,
+      "ma50": 1535.7,
+      "ma200": 1175.98,
+      "vol10d": 26986,
+      "marketCap": 27707021761.5,
       "yearlyChangePct": 0
     },
     "QPOWER": {
@@ -54,11 +54,11 @@
       "dayLow": 1489.9,
       "week52High": 1570,
       "week52Low": 581,
-      "ma50": 1278.58,
-      "ma200": 1033.43,
-      "vol10d": 357342,
+      "ma50": 1285.06,
+      "ma200": 1037.43,
+      "vol10d": 364361,
       "marketCap": 118961880119.27,
-      "yearlyChangePct": 48.8
+      "yearlyChangePct": 53.88
     },
     "ALKYLAMINE": {
       "current": 1863,
@@ -68,9 +68,9 @@
       "dayLow": 1838.9,
       "week52High": 2115,
       "week52Low": 1212,
-      "ma50": 1915.26,
-      "ma200": 1663.53,
-      "vol10d": 60346,
+      "ma50": 1914.39,
+      "ma200": 1663.56,
+      "vol10d": 56097,
       "marketCap": 95289141312,
       "yearlyChangePct": 0
     },
@@ -82,11 +82,11 @@
       "dayLow": 1616.4,
       "week52High": 1814.9,
       "week52Low": 1165,
-      "ma50": 1574.65,
-      "ma200": 1480.92,
-      "vol10d": 88661,
-      "marketCap": 23199025612.66,
-      "yearlyChangePct": 8.86
+      "ma50": 1576.46,
+      "ma200": 1481.57,
+      "vol10d": 91171,
+      "marketCap": 23199024924.8,
+      "yearlyChangePct": 0
     },
     "EPL": {
       "current": 239.35,
@@ -96,11 +96,11 @@
       "dayLow": 233.75,
       "week52High": 274.03,
       "week52Low": 176.4,
-      "ma50": 241.3,
-      "ma200": 221.69,
-      "vol10d": 2301691,
+      "ma50": 241.34,
+      "ma200": 221.88,
+      "vol10d": 2162454,
       "marketCap": 76667195911.69,
-      "yearlyChangePct": 0
+      "yearlyChangePct": 11.01
     },
     "HARSHA": {
       "current": 440.45,
@@ -110,10 +110,10 @@
       "dayLow": 435.25,
       "week52High": 470.95,
       "week52Low": 313.3,
-      "ma50": 427.11,
-      "ma200": 394.89,
-      "vol10d": 114213,
-      "marketCap": 40100377158.63,
+      "ma50": 427.1,
+      "ma200": 394.95,
+      "vol10d": 110287,
+      "marketCap": 40100376047.25,
       "yearlyChangePct": 0
     },
     "PRECWIRE": {
@@ -124,11 +124,11 @@
       "dayLow": 448.55,
       "week52High": 524.9,
       "week52Low": 179.52,
-      "ma50": 422.9,
-      "ma200": 349.93,
-      "vol10d": 505547,
+      "ma50": 424.75,
+      "ma200": 351.11,
+      "vol10d": 606594,
       "marketCap": 87455334124.23,
-      "yearlyChangePct": 146.35
+      "yearlyChangePct": 164.59
     },
     "KSL": {
       "current": 955.05,
@@ -138,11 +138,11 @@
       "dayLow": 951.55,
       "week52High": 992.6,
       "week52Low": 574,
-      "ma50": 896.57,
-      "ma200": 791.91,
-      "vol10d": 145713,
+      "ma50": 897.96,
+      "ma200": 793.78,
+      "vol10d": 145734,
       "marketCap": 41792395334.83,
-      "yearlyChangePct": 0
+      "yearlyChangePct": 17.49
     }
   }
 }
