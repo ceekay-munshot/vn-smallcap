@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-19T04:37:24.446Z",
+  "generated_at": "2026-09-20T04:54:40.030Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 14,
+  "total_entities_seen": 12,
   "flagged_companies": {
     "JINDWORLD": {
       "primary_name": "Jindal Steel",
@@ -21,7 +21,7 @@
           "snippet": "Sebi fines two Jindal Steel designated persons for trading-window violations"
         }
       ],
-      "first_seen_at": "2026-09-19T04:37:24.446Z"
+      "first_seen_at": "2026-09-20T04:54:40.029Z"
     }
   },
   "unmatched_sample": [
@@ -45,7 +45,7 @@
     },
     {
       "name": "Kore Digital",
-      "type": "sebi-investigation",
+      "type": "sebi-fine",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -56,50 +56,38 @@
       "origin": "scraper"
     },
     {
-      "name": "Mirae Asset Venture Investments",
-      "type": "settlement",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
       "name": "Adani Ports",
-      "type": "settlement",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Mirae Asset AIF",
-      "type": "settlement",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Karan Adani",
       "type": "sebi-settlement",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Kore Digital",
-      "type": "sebi-investigation",
+      "name": "Kuku Technologies",
+      "type": "sebi-approval",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "JPMorgan",
-      "type": "sebi-investigation",
+      "name": "Mirae Asset Venture Investments",
+      "type": "sebi-settlement",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Adani Ports",
-      "type": "sebi-investigation",
+      "name": "Mirae Asset AIF",
+      "type": "sebi-settlement",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "IFCI",
-      "type": "sebi-investigation",
+      "name": "BSE",
+      "type": "sebi-propose",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "NSE",
+      "type": "sebi-approval",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -109,7 +97,7 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-19T04:37:09.607Z",
+      "at": "2026-09-20T04:54:09.491Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -120,7 +108,7 @@
           "name": "Kore Digital",
           "order_type": "sebi-ban",
           "is_listed_entity": false,
-          "snippet": "Sebi bars Kore Digital, three top execs from capital markets over alleged fraud."
+          "snippet": "Sebi bars Kore Digital, three top execs from capital markets over alleged fraud"
         }
       ],
       "after_filter_count": 0,
@@ -136,24 +124,18 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-19T04:37:12.059Z",
+      "at": "2026-09-20T04:54:13.605Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 5,
-      "total_extracted": 5,
+      "total_extracted_raw": 3,
+      "total_extracted": 3,
       "prefilter_sample": [
         {
           "name": "NSE",
           "order_type": "settlement",
           "is_listed_entity": true,
-          "snippet": "SC allows NSE-Sebi settlement in co-location case, disposes appeals"
-        },
-        {
-          "name": "Hi-Tech Flow Solutions",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Hi-Tech Flow Solutions files IPO papers, seeks ₹300 cr via fresh issue"
+          "snippet": "SC allows NSE-Sebi settlement in colo case, disposes of regulator's pleas"
         },
         {
           "name": "Vedanta",
@@ -162,22 +144,16 @@
           "snippet": "SC sends Vedanta buyback fraud case back to SAT for fresh examination"
         },
         {
-          "name": "Sebi",
-          "order_type": "enforcement-order",
+          "name": "broker",
+          "order_type": "sebi-ban",
           "is_listed_entity": false,
           "snippet": "Sebi bars broker and related entity for cross-segment price manipulation"
-        },
-        {
-          "name": "Sebi",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi proposes changes to derivatives settlement, closing auction timings"
         }
       ],
       "after_filter_count": 2,
       "dropped_counts": {
-        "not_listed": 2,
-        "no_sebi_signal_in_snippet": 1,
+        "not_listed": 1,
+        "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -185,7 +161,7 @@
         {
           "name": "NSE",
           "order_type": "settlement",
-          "snippet": "SC allows NSE-Sebi settlement in co-location case, disposes appeals"
+          "snippet": "SC allows NSE-Sebi settlement in colo case, disposes of regulator's pleas"
         },
         {
           "name": "Vedanta",
@@ -198,7 +174,7 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-09-19T04:37:15.106Z",
+      "at": "2026-09-20T04:54:20.254Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -213,7 +189,7 @@
         },
         {
           "name": "Kore Digital",
-          "order_type": "sebi-investigation",
+          "order_type": "sebi-fine",
           "is_listed_entity": true,
           "snippet": "Kore Digital shares crash 10% as Sebi alleges Rs 541 cr revenue misstatement, bars CEO, CFO and MD from capital market"
         },
@@ -224,64 +200,64 @@
           "snippet": "Sebi imposes Rs 2 lakh penalty on Emami Realty for regulatory lapses"
         },
         {
-          "name": "Mirae Asset Venture Investments",
-          "order_type": "settlement",
-          "is_listed_entity": true,
-          "snippet": "Mirae Asset Venture Investments, others pay Rs 12.75 lakh to settle Sebi proceedings over violations"
-        },
-        {
-          "name": "Adani Ports",
-          "order_type": "settlement",
-          "is_listed_entity": true,
-          "snippet": "Karan Adani settles PMC Projects case with Sebi by paying Rs 13.65 lakh"
-        },
-        {
-          "name": "Mirae Asset AIF",
-          "order_type": "settlement",
-          "is_listed_entity": true,
-          "snippet": "Mirae Asset AIF settles Sebi case after breaching investment cap"
-        },
-        {
           "name": "Jindal Steel",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
           "snippet": "Sebi fines two Jindal Steel designated persons for trading-window violations"
         },
         {
-          "name": "Karan Adani",
+          "name": "Adani Ports",
           "order_type": "sebi-settlement",
           "is_listed_entity": true,
-          "snippet": "Sebi settles disclosure violation charges against Adani Ports CEO, CFO"
+          "snippet": "Karan Adani settles PMC Projects case with Sebi by paying Rs 13.65 lakh"
         },
         {
-          "name": "Kore Digital",
-          "order_type": "sebi-investigation",
+          "name": "Kuku Technologies",
+          "order_type": "sebi-approval",
           "is_listed_entity": true,
-          "snippet": "Sebi bars Kore Digital promoters over alleged Rs 541 crore revenue misstatement"
+          "snippet": "Kuku Technologies gets Sebi approval for proposed IPO"
         },
         {
-          "name": "JPMorgan",
-          "order_type": "sebi-investigation",
+          "name": "Mirae Asset Venture Investments",
+          "order_type": "sebi-settlement",
           "is_listed_entity": true,
-          "snippet": "India lifts ban on JPMorgan unit in index manipulation charge"
+          "snippet": "Mirae Asset Venture Investments, others pay Rs 12.75 lakh to settle Sebi proceedings over violations"
         },
         {
-          "name": "Adani Ports",
-          "order_type": "sebi-investigation",
+          "name": "Mirae Asset AIF",
+          "order_type": "sebi-settlement",
           "is_listed_entity": true,
-          "snippet": "Sebi settles disclosure violation charges against Adani Ports CEO, CFO"
+          "snippet": "Mirae Asset AIF settles Sebi case after breaching investment cap"
         },
         {
-          "name": "IFCI",
-          "order_type": "sebi-investigation",
+          "name": "BSE",
+          "order_type": "sebi-propose",
           "is_listed_entity": true,
-          "snippet": "IFCI shares rally 6%, turn multibagger as NSE IPO gets SebI nod. More upside ahead?"
+          "snippet": "BSE, Groww, other broking stocks in focus as SEBI proposes changes to CAS. What does it mean for investors?"
+        },
+        {
+          "name": "NSE",
+          "order_type": "sebi-approval",
+          "is_listed_entity": true,
+          "snippet": "NSE slashes IPO size to Rs 23,500 crore in revised Sebi filing"
+        },
+        {
+          "name": "NSE",
+          "order_type": "sebi-approval",
+          "is_listed_entity": true,
+          "snippet": "NSE enters India’s mega-IPO club: 2nd-largest issue, 2nd-highest anchor count with 189 investors"
+        },
+        {
+          "name": "Crypterium",
+          "order_type": "sebi-settlement",
+          "is_listed_entity": false,
+          "snippet": "JPMorgan unit, Mansi Share gets nod to trade, but can’t participate in CAS"
         }
       ],
-      "after_filter_count": 12,
+      "after_filter_count": 10,
       "dropped_counts": {
-        "not_listed": 0,
-        "no_sebi_signal_in_snippet": 0,
+        "not_listed": 1,
+        "no_sebi_signal_in_snippet": 1,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -293,7 +269,7 @@
         },
         {
           "name": "Kore Digital",
-          "order_type": "sebi-investigation",
+          "order_type": "sebi-fine",
           "snippet": "Kore Digital shares crash 10% as Sebi alleges Rs 541 cr revenue misstatement, bars CEO, CFO and MD from capital market"
         },
         {
@@ -302,39 +278,39 @@
           "snippet": "Sebi imposes Rs 2 lakh penalty on Emami Realty for regulatory lapses"
         },
         {
-          "name": "Mirae Asset Venture Investments",
-          "order_type": "settlement",
-          "snippet": "Mirae Asset Venture Investments, others pay Rs 12.75 lakh to settle Sebi proceedings over violations"
-        },
-        {
-          "name": "Adani Ports",
-          "order_type": "settlement",
-          "snippet": "Karan Adani settles PMC Projects case with Sebi by paying Rs 13.65 lakh"
-        },
-        {
-          "name": "Mirae Asset AIF",
-          "order_type": "settlement",
-          "snippet": "Mirae Asset AIF settles Sebi case after breaching investment cap"
-        },
-        {
           "name": "Jindal Steel",
           "order_type": "sebi-fine",
           "snippet": "Sebi fines two Jindal Steel designated persons for trading-window violations"
         },
         {
-          "name": "Karan Adani",
+          "name": "Adani Ports",
           "order_type": "sebi-settlement",
-          "snippet": "Sebi settles disclosure violation charges against Adani Ports CEO, CFO"
+          "snippet": "Karan Adani settles PMC Projects case with Sebi by paying Rs 13.65 lakh"
         },
         {
-          "name": "Kore Digital",
-          "order_type": "sebi-investigation",
-          "snippet": "Sebi bars Kore Digital promoters over alleged Rs 541 crore revenue misstatement"
+          "name": "Kuku Technologies",
+          "order_type": "sebi-approval",
+          "snippet": "Kuku Technologies gets Sebi approval for proposed IPO"
         },
         {
-          "name": "JPMorgan",
-          "order_type": "sebi-investigation",
-          "snippet": "India lifts ban on JPMorgan unit in index manipulation charge"
+          "name": "Mirae Asset Venture Investments",
+          "order_type": "sebi-settlement",
+          "snippet": "Mirae Asset Venture Investments, others pay Rs 12.75 lakh to settle Sebi proceedings over violations"
+        },
+        {
+          "name": "Mirae Asset AIF",
+          "order_type": "sebi-settlement",
+          "snippet": "Mirae Asset AIF settles Sebi case after breaching investment cap"
+        },
+        {
+          "name": "BSE",
+          "order_type": "sebi-propose",
+          "snippet": "BSE, Groww, other broking stocks in focus as SEBI proposes changes to CAS. What does it mean for investors?"
+        },
+        {
+          "name": "NSE",
+          "order_type": "sebi-approval",
+          "snippet": "NSE slashes IPO size to Rs 23,500 crore in revised Sebi filing"
         }
       ]
     },
@@ -342,7 +318,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-09-19T04:37:21.658Z",
+      "at": "2026-09-20T04:54:28.272Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
