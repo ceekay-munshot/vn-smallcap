@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-23T08:48:47.484Z",
+  "generated_at": "2026-09-23T09:15:04.653Z",
   "source": "Munshot quote API (fastapi.muns.io/stock-data)",
   "note": "Live intraday snapshot per basket ticker. dayHigh/dayLow drive intraday target/SL touch detection; current is the latest traded price.",
   "ticker_count": 10,
   "prices": {
     "ENGINERSIN": {
-      "current": 304.85,
+      "current": 307,
       "open": 301.4,
       "prevClose": 300.6,
       "dayHigh": 309.5,
@@ -15,11 +15,11 @@
       "ma50": 249.02,
       "ma200": 224.01,
       "vol10d": 4761193,
-      "marketCap": 171338620839.48,
+      "marketCap": 172547008511,
       "yearlyChangePct": 49.3
     },
     "UNIPARTS": {
-      "current": 864.7,
+      "current": 863.95,
       "open": 860.1,
       "prevClose": 851.7,
       "dayHigh": 872.65,
@@ -29,11 +29,11 @@
       "ma50": 802.88,
       "ma200": 593.95,
       "vol10d": 132221,
-      "marketCap": 39018054073.02,
+      "marketCap": 38984211653.52,
       "yearlyChangePct": 0
     },
     "ADOR": {
-      "current": 1601.3,
+      "current": 1598.5,
       "open": 1602,
       "prevClose": 1590.1,
       "dayHigh": 1622,
@@ -43,11 +43,11 @@
       "ma50": 1547.12,
       "ma200": 1183.15,
       "vol10d": 22821,
-      "marketCap": 27867128509.25,
+      "marketCap": 27818399777.5,
       "yearlyChangePct": 0
     },
     "QPOWER": {
-      "current": 1559.6,
+      "current": 1552,
       "open": 1509,
       "prevClose": 1490,
       "dayHigh": 1566,
@@ -57,11 +57,11 @@
       "ma50": 1292.39,
       "ma200": 1042.86,
       "vol10d": 320383,
-      "marketCap": 120781816469.27,
+      "marketCap": 120193243200,
       "yearlyChangePct": 0
     },
     "ALKYLAMINE": {
-      "current": 1888.1,
+      "current": 1885.9,
       "open": 1872.6,
       "prevClose": 1863.8,
       "dayHigh": 1900,
@@ -71,11 +71,11 @@
       "ma50": 1910.21,
       "ma200": 1668.65,
       "vol10d": 47057,
-      "marketCap": 96572960485.66,
+      "marketCap": 96460436890.34,
       "yearlyChangePct": -7.9
     },
     "VENKEYS": {
-      "current": 1694.7,
+      "current": 1696.5,
       "open": 1675.1,
       "prevClose": 1675.9,
       "dayHigh": 1741.9,
@@ -85,11 +85,11 @@
       "ma50": 1583.94,
       "ma200": 1485.61,
       "vol10d": 78798,
-      "marketCap": 23873807631.34,
+      "marketCap": 23899165524,
       "yearlyChangePct": 12.93
     },
     "EPL": {
-      "current": 237.3,
+      "current": 238.9,
       "open": 238.5,
       "prevClose": 236.75,
       "dayHigh": 240.85,
@@ -99,11 +99,11 @@
       "ma50": 241.24,
       "ma200": 222.29,
       "vol10d": 1988191,
-      "marketCap": 76010550908.22,
+      "marketCap": 76523050630.06,
       "yearlyChangePct": 11.52
     },
     "HARSHA": {
-      "current": 463.05,
+      "current": 462.9,
       "open": 469.55,
       "prevClose": 464.85,
       "dayHigh": 474,
@@ -113,25 +113,25 @@
       "ma50": 429.02,
       "ma200": 396.2,
       "vol10d": 157774,
-      "marketCap": 42157971708.87,
+      "marketCap": 42144315648.81,
       "yearlyChangePct": 0
     },
     "PRECWIRE": {
-      "current": 499.5,
+      "current": 503.2,
       "open": 495,
       "prevClose": 492.6,
-      "dayHigh": 504.2,
+      "dayHigh": 505,
       "dayLow": 488.25,
       "week52High": 524.9,
       "week52Low": 180,
       "ma50": 427.45,
       "ma200": 352.87,
       "vol10d": 490875,
-      "marketCap": 91312583512.5,
+      "marketCap": 91988975251.54,
       "yearlyChangePct": 0
     },
     "KSL": {
-      "current": 1009.4,
+      "current": 999.4,
       "open": 968.1,
       "prevClose": 959.15,
       "dayHigh": 1032.9,
@@ -141,7 +141,7 @@
       "ma50": 898.29,
       "ma200": 795.72,
       "vol10d": 163676,
-      "marketCap": 44170719240.34,
+      "marketCap": 43733125440.34,
       "yearlyChangePct": 0
     }
   }
