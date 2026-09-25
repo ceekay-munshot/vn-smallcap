@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-25T09:04:07.892Z",
+  "generated_at": "2026-09-25T09:33:13.658Z",
   "source": "Munshot quote API (9 tickers) + Yahoo fallback (1)",
   "note": "Live intraday snapshot per basket ticker. dayHigh/dayLow drive intraday target/SL touch detection; current is the latest traded price.",
   "ticker_count": 10,
   "prices": {
     "ENGINERSIN": {
-      "current": 317.05,
+      "current": 315.5,
       "open": 297,
       "prevClose": 296.65,
       "dayHigh": 318.9,
@@ -15,25 +15,25 @@
       "ma50": 251.84,
       "ma200": 225.09,
       "vol10d": 5959761,
-      "marketCap": 178195527498.78,
+      "marketCap": 177324368681.5,
       "yearlyChangePct": 51.46
     },
     "UNIPARTS": {
-      "current": 847.8,
-      "open": 850.35,
+      "current": 844.7,
+      "open": null,
       "prevClose": 850.35,
       "dayHigh": 859,
       "dayLow": 832.75,
       "week52High": 915.95,
       "week52Low": 399.8,
-      "ma50": 810.22,
-      "ma200": 599.08,
-      "vol10d": 121502,
-      "marketCap": 38255470451.98,
-      "yearlyChangePct": 109.86
+      "ma50": null,
+      "ma200": null,
+      "vol10d": null,
+      "marketCap": null,
+      "yearlyChangePct": null
     },
     "ADOR": {
-      "current": 1615.2,
+      "current": 1614.5,
       "open": 1612.9,
       "prevClose": 1612.9,
       "dayHigh": 1625.1,
@@ -43,11 +43,11 @@
       "ma50": 1558.21,
       "ma200": 1190.73,
       "vol10d": 23097,
-      "marketCap": 28109025938.25,
+      "marketCap": 28096844817.5,
       "yearlyChangePct": 64.57
     },
     "QPOWER": {
-      "current": 1522.4,
+      "current": 1517.9,
       "open": 1502,
       "prevClose": 1504,
       "dayHigh": 1535,
@@ -57,11 +57,11 @@
       "ma50": 1309.46,
       "ma200": 1053.41,
       "vol10d": 366121,
-      "marketCap": 117900899730.73,
+      "marketCap": 117552401280.73,
       "yearlyChangePct": 48.02
     },
     "ALKYLAMINE": {
-      "current": 1854.2,
+      "current": 1848.2,
       "open": 1862.6,
       "prevClose": 1862.5,
       "dayHigh": 1877.8,
@@ -71,11 +71,11 @@
       "ma50": 1909.33,
       "ma200": 1671.27,
       "vol10d": 42786,
-      "marketCap": 94839034443.33,
+      "marketCap": 94532145099.33,
       "yearlyChangePct": -5.47
     },
     "VENKEYS": {
-      "current": 1652.9,
+      "current": 1651.1,
       "open": 1667,
       "prevClose": 1664.1,
       "dayHigh": 1680,
@@ -85,11 +85,11 @@
       "ma50": 1591.49,
       "ma200": 1488.63,
       "vol10d": 74087,
-      "marketCap": 23284958018.33,
+      "marketCap": 23259600125.67,
       "yearlyChangePct": 13.91
     },
     "EPL": {
-      "current": 236.5,
+      "current": 236.9,
       "open": 238,
       "prevClose": 238.05,
       "dayHigh": 238.05,
@@ -99,25 +99,25 @@
       "ma50": 241.32,
       "ma200": 222.68,
       "vol10d": 1836628,
-      "marketCap": 75874207414.5,
+      "marketCap": 76002533925.56,
       "yearlyChangePct": 14.97
     },
     "HARSHA": {
-      "current": 463.05,
-      "open": null,
+      "current": 460.65,
+      "open": 461,
       "prevClose": 457.55,
       "dayHigh": 467.8,
       "dayLow": 449.45,
       "week52High": 476.8,
       "week52Low": 313.3,
-      "ma50": null,
-      "ma200": null,
-      "vol10d": null,
-      "marketCap": null,
-      "yearlyChangePct": null
+      "ma50": 431.14,
+      "ma200": 397.45,
+      "vol10d": 191074,
+      "marketCap": 41939466412.56,
+      "yearlyChangePct": 13.17
     },
     "PRECWIRE": {
-      "current": 503,
+      "current": 501.4,
       "open": 488.85,
       "prevClose": 488.9,
       "dayHigh": 508.2,
@@ -127,11 +127,11 @@
       "ma50": 433.2,
       "ma200": 356.15,
       "vol10d": 609458,
-      "marketCap": 91952411425,
+      "marketCap": 91659917549.23,
       "yearlyChangePct": 169.83
     },
     "KSL": {
-      "current": 967.25,
+      "current": 963.2,
       "open": 974.2,
       "prevClose": 974.5,
       "dayHigh": 984.5,
@@ -141,7 +141,7 @@
       "ma50": 902.53,
       "ma200": 799.26,
       "vol10d": 171843,
-      "marketCap": 42326260305,
+      "marketCap": 42149035350.17,
       "yearlyChangePct": 24.77
     }
   }
