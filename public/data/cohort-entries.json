@@ -45,8 +45,31 @@
         "EPL": 245.1
       },
       "complete": true
+    },
+    "2026-10": {
+      "selectionDate": "2026-09-30",
+      "anchorDate": "2026-10-01",
+      "tickers": [
+        "RPGLIFE",
+        "KMCSHIL",
+        "BLSE",
+        "RPTECH",
+        "GALAXYSURF",
+        "THEJO",
+        "POWERMECH"
+      ],
+      "entries": {
+        "RPGLIFE": 3021.55,
+        "KMCSHIL": 172.87,
+        "BLSE": 331.9,
+        "RPTECH": 955.23,
+        "GALAXYSURF": 2382.65,
+        "THEJO": 2170.95,
+        "POWERMECH": 2459.8
+      },
+      "complete": true
     }
   },
-  "generated_at": "2026-09-01T09:25:08.140Z",
+  "generated_at": "2026-10-01T10:57:40.225Z",
   "cohort_size": 7
 }
