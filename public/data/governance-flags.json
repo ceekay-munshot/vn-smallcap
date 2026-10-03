@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-02T16:27:18.978Z",
+  "generated_at": "2026-10-03T05:17:35.479Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 9,
+  "total_entities_seen": 12,
   "flagged_companies": {
     "LLOYDSENT": {
       "primary_name": "Lloyds Enterprises",
@@ -21,7 +21,7 @@
           "snippet": "Lloyds Enterprises settles Sebi case over ₹144.82 crore advances"
         }
       ],
-      "first_seen_at": "2026-10-02T16:27:18.978Z"
+      "first_seen_at": "2026-10-03T05:17:35.478Z"
     },
     "INOXGREEN": {
       "primary_name": "Inox Clean Energy Ltd",
@@ -40,12 +40,12 @@
           "snippet": "Sebi keeps Inox Clean Energy's IPO papers to raise ₹10K cr in abeyance"
         }
       ],
-      "first_seen_at": "2026-10-02T16:27:18.978Z"
+      "first_seen_at": "2026-10-03T05:17:35.478Z"
     },
     "OMAXE": {
       "primary_name": "Omaxe",
       "order_type": "sebi-ban",
-      "snippet": "Sebi bans Omaxe, 5 others for violating minimum public shareholding norms",
+      "snippet": "Sebi bans Omaxe, 5 others for violating minimum public shareholding norms.",
       "source_url": "https://economictimes.indiatimes.com/topic/sebi",
       "source_label": "Economic Times — SEBI topic (news)",
       "origins": [
@@ -56,29 +56,10 @@
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
           "order_type": "sebi-ban",
-          "snippet": "Sebi bans Omaxe, 5 others for violating minimum public shareholding norms"
+          "snippet": "Sebi bans Omaxe, 5 others for violating minimum public shareholding norms."
         }
       ],
-      "first_seen_at": "2026-10-02T16:27:18.978Z"
-    },
-    "RELIGARE": {
-      "primary_name": "Religare Capital Markets",
-      "order_type": "sebi-cancellation",
-      "snippet": "Sebi cancels registration of Religare Capital Mkts, 11 others for non-payment of renewal fee",
-      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
-      "source_label": "Economic Times — SEBI topic (news)",
-      "origins": [
-        "scraper"
-      ],
-      "mentions": [
-        {
-          "source": "Economic Times — SEBI topic (news)",
-          "origin": "scraper",
-          "order_type": "sebi-cancellation",
-          "snippet": "Sebi cancels registration of Religare Capital Mkts, 11 others for non-payment of renewal fee"
-        }
-      ],
-      "first_seen_at": "2026-10-02T16:27:18.978Z"
+      "first_seen_at": "2026-10-03T05:17:35.478Z"
     }
   },
   "unmatched_sample": [
@@ -95,20 +76,44 @@
       "origin": "scraper"
     },
     {
-      "name": "Gautam Adani",
-      "type": "settlement",
+      "name": "Vinod Adani",
+      "type": "other",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Adani",
+      "name": "Carlsberg India",
       "type": "other",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
     {
       "name": "Kore Digital",
+      "type": "sebi-investigation",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Kore Digital",
       "type": "sebi-ban",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Adani Enterprises",
+      "type": "other",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Adani Group",
+      "type": "other",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Adani Group",
+      "type": "other",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -118,7 +123,7 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-02T16:26:27.939Z",
+      "at": "2026-10-03T05:17:16.976Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -141,7 +146,7 @@
           "name": "BSE",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "BSE stock falls 2.3% as SEBI mulls self-listing rules revamp, days after NSE IPO listing - Check details"
+          "snippet": "BSE stock falls 2.3% as SEBI mulls self-listing rules revamp"
         }
       ],
       "after_filter_count": 3,
@@ -165,7 +170,7 @@
         {
           "name": "BSE",
           "order_type": "other",
-          "snippet": "BSE stock falls 2.3% as SEBI mulls self-listing rules revamp, days after NSE IPO listing - Check details"
+          "snippet": "BSE stock falls 2.3% as SEBI mulls self-listing rules revamp"
         }
       ]
     },
@@ -173,12 +178,12 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-02T16:26:50.916Z",
+      "at": "2026-10-03T05:17:19.797Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 3,
-      "total_extracted": 3,
+      "total_extracted_raw": 6,
+      "total_extracted": 6,
       "prefilter_sample": [
         {
           "name": "Inox Clean Energy Ltd",
@@ -190,19 +195,37 @@
           "name": "Gautam Adani",
           "order_type": "settlement",
           "is_listed_entity": true,
-          "snippet": "Gautam Adani, four Adani group firms settle matter with Sebi on MPS norms"
+          "snippet": "Gautam Adani, four Adani group firms and 13 others pay a cumulative ₹1.48 crore to settle proceedings over alleged non-compliance with minimum public "
         },
         {
-          "name": "Adani",
+          "name": "Vinod Adani",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Sebi finds no evidence Vinod Adani controlled FPIs, drops Adani MPS case"
+          "snippet": "Sebi finds no evidence Vinod Adani controlled FPIs, drops Adani MPS case."
+        },
+        {
+          "name": "PM Cona Industries Ltd",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "PM Cona Ind files draft IPO papers to raise ₹120 cr via fresh equity."
+        },
+        {
+          "name": "Sindhuja Microcredit",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Sindhuja Microcredit raised ₹100 crore through NCDs."
+        },
+        {
+          "name": "Carlsberg India",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Carlsberg gets Sebi approval for IPO."
         }
       ],
       "after_filter_count": 3,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 0,
+        "no_sebi_signal_in_snippet": 3,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -213,14 +236,14 @@
           "snippet": "Sebi keeps Inox Clean Energy's IPO papers to raise ₹10K cr in abeyance"
         },
         {
-          "name": "Gautam Adani",
-          "order_type": "settlement",
-          "snippet": "Gautam Adani, four Adani group firms settle matter with Sebi on MPS norms"
+          "name": "Vinod Adani",
+          "order_type": "other",
+          "snippet": "Sebi finds no evidence Vinod Adani controlled FPIs, drops Adani MPS case."
         },
         {
-          "name": "Adani",
+          "name": "Carlsberg India",
           "order_type": "other",
-          "snippet": "Sebi finds no evidence Vinod Adani controlled FPIs, drops Adani MPS case"
+          "snippet": "Carlsberg gets Sebi approval for IPO."
         }
       ]
     },
@@ -228,33 +251,51 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-02T16:27:02.078Z",
+      "at": "2026-10-03T05:17:24.461Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 3,
-      "total_extracted": 3,
+      "total_extracted_raw": 6,
+      "total_extracted": 6,
       "prefilter_sample": [
         {
           "name": "Omaxe",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Sebi bans Omaxe, 5 others for violating minimum public shareholding norms"
+          "snippet": "Sebi bans Omaxe, 5 others for violating minimum public shareholding norms."
         },
         {
-          "name": "Religare Capital Markets",
-          "order_type": "sebi-cancellation",
+          "name": "Kore Digital",
+          "order_type": "sebi-investigation",
           "is_listed_entity": true,
-          "snippet": "Sebi cancels registration of Religare Capital Mkts, 11 others for non-payment of renewal fee"
+          "snippet": "Kore Digital shares crash 10% as Sebi alleges Rs 541 cr revenue misstatement, bars CEO, CFO and MD from capital market."
         },
         {
           "name": "Kore Digital",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Kore Digital shares crash 10% as Sebi alleges Rs 541 cr revenue misstatement, bars CEO, CFO and MD from capital market"
+          "snippet": "Sebi bars Kore Digital promoters over alleged Rs 541 crore revenue misstatement."
+        },
+        {
+          "name": "Adani Enterprises",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Adani Group firms settle Sebi case on governance issues."
+        },
+        {
+          "name": "Adani Group",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "5 Adani group stocks in focus as firms settle Sebi proceedings linked to Hindenburg report."
+        },
+        {
+          "name": "Adani Group",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "After Hindenburg: 5 Adani group companies settle disclosure violation case with Sebi."
         }
       ],
-      "after_filter_count": 3,
+      "after_filter_count": 6,
       "dropped_counts": {
         "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
@@ -265,17 +306,32 @@
         {
           "name": "Omaxe",
           "order_type": "sebi-ban",
-          "snippet": "Sebi bans Omaxe, 5 others for violating minimum public shareholding norms"
+          "snippet": "Sebi bans Omaxe, 5 others for violating minimum public shareholding norms."
         },
         {
-          "name": "Religare Capital Markets",
-          "order_type": "sebi-cancellation",
-          "snippet": "Sebi cancels registration of Religare Capital Mkts, 11 others for non-payment of renewal fee"
+          "name": "Kore Digital",
+          "order_type": "sebi-investigation",
+          "snippet": "Kore Digital shares crash 10% as Sebi alleges Rs 541 cr revenue misstatement, bars CEO, CFO and MD from capital market."
         },
         {
           "name": "Kore Digital",
           "order_type": "sebi-ban",
-          "snippet": "Kore Digital shares crash 10% as Sebi alleges Rs 541 cr revenue misstatement, bars CEO, CFO and MD from capital market"
+          "snippet": "Sebi bars Kore Digital promoters over alleged Rs 541 crore revenue misstatement."
+        },
+        {
+          "name": "Adani Enterprises",
+          "order_type": "other",
+          "snippet": "Adani Group firms settle Sebi case on governance issues."
+        },
+        {
+          "name": "Adani Group",
+          "order_type": "other",
+          "snippet": "5 Adani group stocks in focus as firms settle Sebi proceedings linked to Hindenburg report."
+        },
+        {
+          "name": "Adani Group",
+          "order_type": "other",
+          "snippet": "After Hindenburg: 5 Adani group companies settle disclosure violation case with Sebi."
         }
       ]
     },
@@ -283,7 +339,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-10-02T16:27:13.200Z",
+      "at": "2026-10-03T05:17:33.783Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
