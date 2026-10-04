@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-03T10:16:10.554Z",
+  "generated_at": "2026-10-04T10:38:09.603Z",
   "source": "TradingView technical-analysis pages (via Playwright)",
   "companies": {
     "63MOONS": {
@@ -38,7 +38,7 @@
         "hull_9": 796.86
       },
       "url": "https://in.tradingview.com/symbols/NSE-63MOONS/technicals/",
-      "scraped_at": "2026-10-03T08:07:22.228Z"
+      "scraped_at": "2026-10-04T08:28:04.271Z"
     },
     "AARTIDRUGS": {
       "summary": {
@@ -76,7 +76,7 @@
         "hull_9": 426.09
       },
       "url": "https://in.tradingview.com/symbols/NSE-AARTIDRUGS/technicals/",
-      "scraped_at": "2026-10-03T08:07:27.178Z"
+      "scraped_at": "2026-10-04T08:28:09.263Z"
     },
     "AARTIPHARM": {
       "summary": {
@@ -114,7 +114,7 @@
         "hull_9": 970.68
       },
       "url": "https://in.tradingview.com/symbols/NSE-AARTIPHARM/technicals/",
-      "scraped_at": "2026-10-03T08:07:32.230Z"
+      "scraped_at": "2026-10-04T08:28:14.304Z"
     },
     "AAVAS": {
       "summary": {
@@ -152,7 +152,7 @@
         "hull_9": 1211.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-AAVAS/technicals/",
-      "scraped_at": "2026-10-03T08:07:37.150Z"
+      "scraped_at": "2026-10-04T08:28:19.336Z"
     },
     "ABFRL": {
       "summary": {
@@ -190,7 +190,7 @@
         "hull_9": 45.29
       },
       "url": "https://in.tradingview.com/symbols/NSE-ABFRL/technicals/",
-      "scraped_at": "2026-10-03T08:07:42.004Z"
+      "scraped_at": "2026-10-04T08:28:24.260Z"
     },
     "ABLBL": {
       "summary": {
@@ -228,7 +228,7 @@
         "hull_9": 75.28
       },
       "url": "https://in.tradingview.com/symbols/NSE-ABLBL/technicals/",
-      "scraped_at": "2026-10-03T08:07:46.880Z"
+      "scraped_at": "2026-10-04T08:28:29.164Z"
     },
     "ACI": {
       "summary": {
@@ -266,7 +266,7 @@
         "hull_9": 486.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-ACI/technicals/",
-      "scraped_at": "2026-10-03T08:07:51.837Z"
+      "scraped_at": "2026-10-04T08:28:34.395Z"
     },
     "ADFFOODS": {
       "summary": {
@@ -304,7 +304,7 @@
         "hull_9": 274.11
       },
       "url": "https://in.tradingview.com/symbols/NSE-ADFFOODS/technicals/",
-      "scraped_at": "2026-10-03T08:07:56.706Z"
+      "scraped_at": "2026-10-04T08:28:39.309Z"
     },
     "ADOR": {
       "summary": {
@@ -342,7 +342,7 @@
         "hull_9": 1595.2
       },
       "url": "https://in.tradingview.com/symbols/NSE-ADOR/technicals/",
-      "scraped_at": "2026-10-03T08:08:01.628Z"
+      "scraped_at": "2026-10-04T08:28:44.224Z"
     },
     "ADVAIT": {
       "summary": {
@@ -378,7 +378,7 @@
         "hull_9": 1865.1
       },
       "url": "https://in.tradingview.com/symbols/NSE-ADVAIT/technicals/",
-      "scraped_at": "2026-10-03T08:08:06.586Z"
+      "scraped_at": "2026-10-04T08:28:49.148Z"
     },
     "ADVENZYMES": {
       "summary": {
@@ -416,7 +416,7 @@
         "hull_9": 276.45
       },
       "url": "https://in.tradingview.com/symbols/NSE-ADVENZYMES/technicals/",
-      "scraped_at": "2026-10-03T08:08:11.710Z"
+      "scraped_at": "2026-10-04T08:28:54.071Z"
     },
     "AEROFLEX": {
       "summary": {
@@ -454,7 +454,7 @@
         "hull_9": 533.17
       },
       "url": "https://in.tradingview.com/symbols/NSE-AEROFLEX/technicals/",
-      "scraped_at": "2026-10-03T08:08:16.556Z"
+      "scraped_at": "2026-10-04T08:28:58.978Z"
     },
     "AFCONS": {
       "summary": {
@@ -492,7 +492,7 @@
         "hull_9": 243.29
       },
       "url": "https://in.tradingview.com/symbols/NSE-AFCONS/technicals/",
-      "scraped_at": "2026-10-03T08:08:26.334Z"
+      "scraped_at": "2026-10-04T08:29:08.751Z"
     },
     "AGI": {
       "summary": {
@@ -530,7 +530,7 @@
         "hull_9": 790.49
       },
       "url": "https://in.tradingview.com/symbols/NSE-AGI/technicals/",
-      "scraped_at": "2026-10-03T08:08:31.180Z"
+      "scraped_at": "2026-10-04T08:29:14.219Z"
     },
     "AGIIL": {
       "summary": {
@@ -568,7 +568,7 @@
         "hull_9": 263.21
       },
       "url": "https://in.tradingview.com/symbols/NSE-AGIIL/technicals/",
-      "scraped_at": "2026-10-03T08:08:36.061Z"
+      "scraped_at": "2026-10-04T08:29:19.319Z"
     },
     "AHLUCONT": {
       "summary": {
@@ -606,7 +606,7 @@
         "hull_9": 548.35
       },
       "url": "https://in.tradingview.com/symbols/NSE-AHLUCONT/technicals/",
-      "scraped_at": "2026-10-03T08:08:41.146Z"
+      "scraped_at": "2026-10-04T08:29:24.212Z"
     },
     "AIMTRON": {
       "summary": {
@@ -644,7 +644,7 @@
         "hull_9": 1920.3
       },
       "url": "https://in.tradingview.com/symbols/NSE-AIMTRON/technicals/",
-      "scraped_at": "2026-10-03T08:08:45.979Z"
+      "scraped_at": "2026-10-04T08:29:29.093Z"
     },
     "AJAXENGG": {
       "summary": {
@@ -682,7 +682,7 @@
         "hull_9": 594.19
       },
       "url": "https://in.tradingview.com/symbols/NSE-AJAXENGG/technicals/",
-      "scraped_at": "2026-10-03T08:08:50.869Z"
+      "scraped_at": "2026-10-04T08:29:34.045Z"
     },
     "AJMERA": {
       "summary": {
@@ -720,7 +720,7 @@
         "hull_9": 119.43
       },
       "url": "https://in.tradingview.com/symbols/NSE-AJMERA/technicals/",
-      "scraped_at": "2026-10-03T08:08:55.714Z"
+      "scraped_at": "2026-10-04T08:29:39.318Z"
     },
     "AKUMS": {
       "summary": {
@@ -796,7 +796,7 @@
         "hull_9": 107.14
       },
       "url": "https://in.tradingview.com/symbols/NSE-ALEMBICLTD/technicals/",
-      "scraped_at": "2026-10-03T08:09:00.542Z"
+      "scraped_at": "2026-10-04T08:29:44.314Z"
     },
     "ALKYLAMINE": {
       "summary": {
@@ -834,7 +834,7 @@
         "hull_9": 1741.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-ALKYLAMINE/technicals/",
-      "scraped_at": "2026-10-03T08:09:10.213Z"
+      "scraped_at": "2026-10-04T08:29:54.431Z"
     },
     "ALOKINDS": {
       "summary": {
@@ -872,7 +872,7 @@
         "hull_9": 7.01
       },
       "url": "https://in.tradingview.com/symbols/NSE-ALOKINDS/technicals/",
-      "scraped_at": "2026-10-03T08:09:15.166Z"
+      "scraped_at": "2026-10-04T08:29:59.471Z"
     },
     "ALPEXSOLAR": {
       "summary": {
@@ -910,7 +910,7 @@
         "hull_9": 847.84
       },
       "url": "https://in.tradingview.com/symbols/NSE-ALPEXSOLAR/technicals/",
-      "scraped_at": "2026-10-03T08:09:19.985Z"
+      "scraped_at": "2026-10-04T08:30:04.460Z"
     },
     "ANANTAM": {
       "summary": {
@@ -948,7 +948,7 @@
         "hull_9": 103.76
       },
       "url": "https://in.tradingview.com/symbols/NSE-ANANTAM/technicals/",
-      "scraped_at": "2026-10-03T08:09:24.916Z"
+      "scraped_at": "2026-10-04T08:30:09.483Z"
     },
     "ANTELOPUS": {
       "summary": {
@@ -986,7 +986,7 @@
         "hull_9": 1139.5
       },
       "url": "https://in.tradingview.com/symbols/NSE-ANTELOPUS/technicals/",
-      "scraped_at": "2026-10-03T08:09:34.742Z"
+      "scraped_at": "2026-10-04T08:30:19.336Z"
     },
     "ANUP": {
       "summary": {
@@ -1024,7 +1024,7 @@
         "hull_9": 1573.2
       },
       "url": "https://in.tradingview.com/symbols/NSE-ANUP/technicals/",
-      "scraped_at": "2026-10-03T08:09:39.606Z"
+      "scraped_at": "2026-10-04T08:30:24.275Z"
     },
     "ANZEN": {
       "summary": {
@@ -1060,7 +1060,7 @@
         "hull_9": 127.66
       },
       "url": "https://in.tradingview.com/symbols/NSE-ANZEN/technicals/",
-      "scraped_at": "2026-10-03T08:09:44.456Z"
+      "scraped_at": "2026-10-04T08:30:29.188Z"
     },
     "APCOTEXIND": {
       "summary": {
@@ -1098,7 +1098,7 @@
         "hull_9": 589.97
       },
       "url": "https://in.tradingview.com/symbols/NSE-APCOTEXIND/technicals/",
-      "scraped_at": "2026-10-03T08:09:49.294Z"
+      "scraped_at": "2026-10-04T08:30:34.060Z"
     },
     "APOLLOPIPE": {
       "summary": {
@@ -1136,7 +1136,7 @@
         "hull_9": 509.67
       },
       "url": "https://in.tradingview.com/symbols/NSE-APOLLOPIPE/technicals/",
-      "scraped_at": "2026-10-03T08:09:54.140Z"
+      "scraped_at": "2026-10-04T08:30:38.968Z"
     },
     "ARKADE": {
       "summary": {
@@ -1174,7 +1174,7 @@
         "hull_9": 119.13
       },
       "url": "https://in.tradingview.com/symbols/NSE-ARKADE/technicals/",
-      "scraped_at": "2026-10-03T08:10:08.816Z"
+      "scraped_at": "2026-10-04T08:30:53.642Z"
     },
     "ARMANFIN": {
       "summary": {
@@ -1250,7 +1250,7 @@
         "hull_9": 512.41
       },
       "url": "https://in.tradingview.com/symbols/NSE-ARSSBL/technicals/",
-      "scraped_at": "2026-10-03T08:10:13.678Z"
+      "scraped_at": "2026-10-04T08:30:58.575Z"
     },
     "ARTEMISMED": {
       "summary": {
@@ -1288,7 +1288,7 @@
         "hull_9": 356.18
       },
       "url": "https://in.tradingview.com/symbols/NSE-ARTEMISMED/technicals/",
-      "scraped_at": "2026-10-03T08:10:18.556Z"
+      "scraped_at": "2026-10-04T08:31:03.673Z"
     },
     "ARVINDFASN": {
       "summary": {
@@ -1326,7 +1326,7 @@
         "hull_9": 389.35
       },
       "url": "https://in.tradingview.com/symbols/NSE-ARVINDFASN/technicals/",
-      "scraped_at": "2026-10-03T08:10:23.404Z"
+      "scraped_at": "2026-10-04T08:31:08.599Z"
     },
     "ARVSMART": {
       "summary": {
@@ -1364,7 +1364,7 @@
         "hull_9": 603.19
       },
       "url": "https://in.tradingview.com/symbols/NSE-ARVSMART/technicals/",
-      "scraped_at": "2026-10-03T08:10:28.315Z"
+      "scraped_at": "2026-10-04T08:31:13.495Z"
     },
     "ASHAPURMIN": {
       "summary": {
@@ -1402,7 +1402,7 @@
         "hull_9": 498.76
       },
       "url": "https://in.tradingview.com/symbols/NSE-ASHAPURMIN/technicals/",
-      "scraped_at": "2026-10-03T08:10:33.211Z"
+      "scraped_at": "2026-10-04T08:31:18.474Z"
     },
     "ASHIANA": {
       "summary": {
@@ -1440,7 +1440,7 @@
         "hull_9": 386.92
       },
       "url": "https://in.tradingview.com/symbols/NSE-ASHIANA/technicals/",
-      "scraped_at": "2026-10-03T08:10:38.305Z"
+      "scraped_at": "2026-10-04T08:31:23.383Z"
     },
     "ASHIKAG": {
       "summary": {
@@ -1476,7 +1476,7 @@
         "hull_9": 396.03
       },
       "url": "https://in.tradingview.com/symbols/NSE-ASHIKAG/technicals/",
-      "scraped_at": "2026-10-03T08:10:43.145Z"
+      "scraped_at": "2026-10-04T08:31:28.280Z"
     },
     "ASHOKA": {
       "summary": {
@@ -1514,7 +1514,7 @@
         "hull_9": 106.49
       },
       "url": "https://in.tradingview.com/symbols/NSE-ASHOKA/technicals/",
-      "scraped_at": "2026-10-03T08:10:48.112Z"
+      "scraped_at": "2026-10-04T08:31:33.175Z"
     },
     "ASKAUTOLTD": {
       "summary": {
@@ -1628,7 +1628,7 @@
         "hull_9": 609.4
       },
       "url": "https://in.tradingview.com/symbols/NSE-AURIONPRO/technicals/",
-      "scraped_at": "2026-10-03T08:11:02.670Z"
+      "scraped_at": "2026-10-04T08:31:47.921Z"
     },
     "AUTOAXLES": {
       "summary": {
@@ -1666,7 +1666,7 @@
         "hull_9": 1700.5
       },
       "url": "https://in.tradingview.com/symbols/NSE-AUTOAXLES/technicals/",
-      "scraped_at": "2026-10-03T08:11:07.625Z"
+      "scraped_at": "2026-10-04T08:31:52.848Z"
     },
     "AVALON": {
       "summary": {
@@ -1742,7 +1742,7 @@
         "hull_9": 152.14
       },
       "url": "https://in.tradingview.com/symbols/NSE-AVANTEL/technicals/",
-      "scraped_at": "2026-10-03T08:11:12.560Z"
+      "scraped_at": "2026-10-04T08:31:57.743Z"
     },
     "AVANTIFEED": {
       "summary": {
@@ -1780,7 +1780,7 @@
         "hull_9": 720.13
       },
       "url": "https://in.tradingview.com/symbols/NSE-AVANTIFEED/technicals/",
-      "scraped_at": "2026-10-03T08:11:17.430Z"
+      "scraped_at": "2026-10-04T08:32:02.640Z"
     },
     "AVL": {
       "summary": {
@@ -1818,7 +1818,7 @@
         "hull_9": 576.14
       },
       "url": "https://in.tradingview.com/symbols/NSE-AVL/technicals/",
-      "scraped_at": "2026-10-03T08:11:22.354Z"
+      "scraped_at": "2026-10-04T08:32:07.596Z"
     },
     "AXISCADES": {
       "summary": {
@@ -1856,7 +1856,7 @@
         "hull_9": 2214.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-AXISCADES/technicals/",
-      "scraped_at": "2026-10-03T08:11:27.207Z"
+      "scraped_at": "2026-10-04T08:32:12.518Z"
     },
     "AYE": {
       "summary": {
@@ -1892,7 +1892,7 @@
         "hull_9": 154.32
       },
       "url": "https://in.tradingview.com/symbols/NSE-AYE/technicals/",
-      "scraped_at": "2026-10-03T08:11:32.089Z"
+      "scraped_at": "2026-10-04T08:32:17.416Z"
     },
     "BAJAJCON": {
       "summary": {
@@ -1930,7 +1930,7 @@
         "hull_9": 488.88
       },
       "url": "https://in.tradingview.com/symbols/NSE-BAJAJCON/technicals/",
-      "scraped_at": "2026-10-02T08:37:30.787Z"
+      "scraped_at": "2026-10-04T08:32:22.327Z"
     },
     "BAJAJELEC": {
       "summary": {
@@ -1968,7 +1968,7 @@
         "hull_9": 301.07
       },
       "url": "https://in.tradingview.com/symbols/NSE-BAJAJELEC/technicals/",
-      "scraped_at": "2026-10-02T08:37:35.720Z"
+      "scraped_at": "2026-10-04T08:32:27.272Z"
     },
     "BAJAJHIND": {
       "summary": {
@@ -2006,7 +2006,7 @@
         "hull_9": 19.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-BAJAJHIND/technicals/",
-      "scraped_at": "2026-10-02T08:37:40.633Z"
+      "scraped_at": "2026-10-04T08:32:32.246Z"
     },
     "BAJEL": {
       "summary": {
@@ -2196,7 +2196,7 @@
         "hull_9": 237.1
       },
       "url": "https://in.tradingview.com/symbols/NSE-BHAGCHEM/technicals/",
-      "scraped_at": "2026-10-03T08:19:06.723Z"
+      "scraped_at": "2026-10-04T08:39:52.424Z"
     },
     "BHARATRAS": {
       "summary": {
@@ -2272,7 +2272,7 @@
         "hull_9": 842.38
       },
       "url": "https://in.tradingview.com/symbols/NSE-BIRLACORPN/technicals/",
-      "scraped_at": "2026-10-03T08:19:11.769Z"
+      "scraped_at": "2026-10-04T08:39:57.396Z"
     },
     "BLACKBUCK": {
       "summary": {
@@ -2310,7 +2310,7 @@
         "hull_9": 609.79
       },
       "url": "https://in.tradingview.com/symbols/NSE-BLACKBUCK/technicals/",
-      "scraped_at": "2026-10-03T08:19:16.621Z"
+      "scraped_at": "2026-10-04T08:40:02.358Z"
     },
     "BLISSGVS": {
       "summary": {
@@ -2348,7 +2348,7 @@
         "hull_9": 706.79
       },
       "url": "https://in.tradingview.com/symbols/NSE-BLISSGVS/technicals/",
-      "scraped_at": "2026-10-03T08:19:21.469Z"
+      "scraped_at": "2026-10-04T08:40:07.315Z"
     },
     "BLS": {
       "summary": {
@@ -2386,7 +2386,7 @@
         "hull_9": 216.13
       },
       "url": "https://in.tradingview.com/symbols/NSE-BLS/technicals/",
-      "scraped_at": "2026-10-03T08:19:26.336Z"
+      "scraped_at": "2026-10-04T08:40:12.191Z"
     },
     "BLSE": {
       "summary": {
@@ -2424,7 +2424,7 @@
         "hull_9": 323.73
       },
       "url": "https://in.tradingview.com/symbols/NSE-BLSE/technicals/",
-      "scraped_at": "2026-10-03T08:19:31.337Z"
+      "scraped_at": "2026-10-04T08:40:17.091Z"
     },
     "BLUEDART": {
       "summary": {
@@ -2462,7 +2462,7 @@
         "hull_9": 4548.5
       },
       "url": "https://in.tradingview.com/symbols/NSE-BLUEDART/technicals/",
-      "scraped_at": "2026-10-03T08:19:41.078Z"
+      "scraped_at": "2026-10-04T08:40:27.075Z"
     },
     "BLUEJET": {
       "summary": {
@@ -2500,7 +2500,7 @@
         "hull_9": 535.67
       },
       "url": "https://in.tradingview.com/symbols/NSE-BLUEJET/technicals/",
-      "scraped_at": "2026-10-03T08:19:45.930Z"
+      "scraped_at": "2026-10-04T08:40:31.958Z"
     },
     "BLUESTONE": {
       "summary": {
@@ -2538,7 +2538,7 @@
         "hull_9": 779.02
       },
       "url": "https://in.tradingview.com/symbols/NSE-BLUESTONE/technicals/",
-      "scraped_at": "2026-10-03T08:19:51.020Z"
+      "scraped_at": "2026-10-04T08:40:37.334Z"
     },
     "BNAGROCHEM": {
       "summary": {
@@ -2574,7 +2574,7 @@
         "hull_9": 218.21
       },
       "url": "https://in.tradingview.com/symbols/NSE-BNAGROCHEM/technicals/",
-      "scraped_at": "2026-10-03T08:20:00.952Z"
+      "scraped_at": "2026-10-04T08:40:47.214Z"
     },
     "BOMDYEING": {
       "summary": {
@@ -2612,7 +2612,7 @@
         "hull_9": 104.22
       },
       "url": "https://in.tradingview.com/symbols/NSE-BOMDYEING/technicals/",
-      "scraped_at": "2026-10-03T08:20:10.708Z"
+      "scraped_at": "2026-10-04T08:40:57.092Z"
     },
     "BOROLTD": {
       "summary": {
@@ -2650,7 +2650,7 @@
         "hull_9": 288.77
       },
       "url": "https://in.tradingview.com/symbols/NSE-BOROLTD/technicals/",
-      "scraped_at": "2026-10-03T08:20:15.652Z"
+      "scraped_at": "2026-10-04T08:41:02.014Z"
     },
     "BORORENEW": {
       "summary": {
@@ -2688,7 +2688,7 @@
         "hull_9": 449.39
       },
       "url": "https://in.tradingview.com/symbols/NSE-BORORENEW/technicals/",
-      "scraped_at": "2026-10-03T08:20:20.552Z"
+      "scraped_at": "2026-10-04T08:41:06.894Z"
     },
     "BRIGHOTEL": {
       "summary": {
@@ -2726,7 +2726,7 @@
         "hull_9": 56.5
       },
       "url": "https://in.tradingview.com/symbols/NSE-BRIGHOTEL/technicals/",
-      "scraped_at": "2026-10-03T08:20:58.638Z"
+      "scraped_at": "2026-10-04T08:41:45.116Z"
     },
     "BSOFT": {
       "summary": {
@@ -2764,7 +2764,7 @@
         "hull_9": 267.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-BSOFT/technicals/",
-      "scraped_at": "2026-10-03T08:21:03.505Z"
+      "scraped_at": "2026-10-04T08:41:50.012Z"
     },
     "BUILDPRO": {
       "summary": {
@@ -2800,7 +2800,7 @@
         "hull_9": 1231.5
       },
       "url": "https://in.tradingview.com/symbols/NSE-BUILDPRO/technicals/",
-      "scraped_at": "2026-10-03T08:21:08.334Z"
+      "scraped_at": "2026-10-04T08:41:54.952Z"
     },
     "CAMLINFINE": {
       "summary": {
@@ -2876,7 +2876,7 @@
         "hull_9": 208.06
       },
       "url": "https://in.tradingview.com/symbols/NSE-CAMPUS/technicals/",
-      "scraped_at": "2026-10-03T08:21:13.170Z"
+      "scraped_at": "2026-10-04T08:41:59.846Z"
     },
     "CANFINHOME": {
       "summary": {
@@ -2914,7 +2914,7 @@
         "hull_9": 714.74
       },
       "url": "https://in.tradingview.com/symbols/NSE-CANFINHOME/technicals/",
-      "scraped_at": "2026-10-03T08:21:18.022Z"
+      "scraped_at": "2026-10-04T08:42:04.744Z"
     },
     "CANTABIL": {
       "summary": {
@@ -2990,7 +2990,7 @@
         "hull_9": 569.63
       },
       "url": "https://in.tradingview.com/symbols/NSE-CAPILLARY/technicals/",
-      "scraped_at": "2026-10-03T08:21:22.873Z"
+      "scraped_at": "2026-10-04T08:42:09.621Z"
     },
     "CAPINVIT": {
       "summary": {
@@ -3028,7 +3028,7 @@
         "hull_9": 76.81
       },
       "url": "https://in.tradingview.com/symbols/NSE-CAPINVIT/technicals/",
-      "scraped_at": "2026-10-03T08:21:27.739Z"
+      "scraped_at": "2026-10-04T08:42:14.514Z"
     },
     "CARERATING": {
       "summary": {
@@ -3066,7 +3066,7 @@
         "hull_9": 1618.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-CARERATING/technicals/",
-      "scraped_at": "2026-10-03T08:21:32.732Z"
+      "scraped_at": "2026-10-04T08:42:19.489Z"
     },
     "CARRARO": {
       "summary": {
@@ -3104,7 +3104,7 @@
         "hull_9": 516.98
       },
       "url": "https://in.tradingview.com/symbols/NSE-CARRARO/technicals/",
-      "scraped_at": "2026-10-03T08:21:37.702Z"
+      "scraped_at": "2026-10-04T08:42:24.376Z"
     },
     "CARYSIL": {
       "summary": {
@@ -3142,7 +3142,7 @@
         "hull_9": 1037.4
       },
       "url": "https://in.tradingview.com/symbols/NSE-CARYSIL/technicals/",
-      "scraped_at": "2026-10-03T08:21:42.635Z"
+      "scraped_at": "2026-10-04T08:42:29.343Z"
     },
     "CCAVENUE": {
       "summary": {
@@ -3180,7 +3180,7 @@
         "hull_9": 15.06
       },
       "url": "https://in.tradingview.com/symbols/NSE-CCAVENUE/technicals/",
-      "scraped_at": "2026-10-03T08:21:47.509Z"
+      "scraped_at": "2026-10-04T08:42:34.214Z"
     },
     "CEIGALL": {
       "summary": {
@@ -3218,7 +3218,7 @@
         "hull_9": 379.36
       },
       "url": "https://in.tradingview.com/symbols/NSE-CEIGALL/technicals/",
-      "scraped_at": "2026-10-03T08:21:52.428Z"
+      "scraped_at": "2026-10-04T08:42:39.104Z"
     },
     "CELLO": {
       "summary": {
@@ -3256,7 +3256,7 @@
         "hull_9": 328.65
       },
       "url": "https://in.tradingview.com/symbols/NSE-CELLO/technicals/",
-      "scraped_at": "2026-10-03T08:21:57.334Z"
+      "scraped_at": "2026-10-04T08:42:44.030Z"
     },
     "CENTUM": {
       "summary": {
@@ -3294,7 +3294,7 @@
         "hull_9": 4773.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-CENTUM/technicals/",
-      "scraped_at": "2026-10-03T08:22:02.194Z"
+      "scraped_at": "2026-10-04T08:42:49.022Z"
     },
     "CERA": {
       "summary": {
@@ -3332,7 +3332,7 @@
         "hull_9": 5011.5
       },
       "url": "https://in.tradingview.com/symbols/NSE-CERA/technicals/",
-      "scraped_at": "2026-10-03T08:22:07.228Z"
+      "scraped_at": "2026-10-04T08:42:53.979Z"
     },
     "CHEMPLASTS": {
       "summary": {
@@ -3370,7 +3370,7 @@
         "hull_9": 190.01
       },
       "url": "https://in.tradingview.com/symbols/NSE-CHEMPLASTS/technicals/",
-      "scraped_at": "2026-10-03T08:22:12.272Z"
+      "scraped_at": "2026-10-04T08:42:58.886Z"
     },
     "CLEAN": {
       "summary": {
@@ -3408,7 +3408,7 @@
         "hull_9": 778.25
       },
       "url": "https://in.tradingview.com/symbols/NSE-CLEAN/technicals/",
-      "scraped_at": "2026-10-03T08:22:17.131Z"
+      "scraped_at": "2026-10-04T08:43:03.813Z"
     },
     "CMRGREEN": {
       "summary": {
@@ -3442,7 +3442,7 @@
         "hull_9": 224.47
       },
       "url": "https://in.tradingview.com/symbols/NSE-CMRGREEN/technicals/",
-      "scraped_at": "2026-10-03T08:22:26.860Z"
+      "scraped_at": "2026-10-04T08:43:13.574Z"
     },
     "CMSINFO": {
       "summary": {
@@ -3480,7 +3480,7 @@
         "hull_9": 222.18
       },
       "url": "https://in.tradingview.com/symbols/NSE-CMSINFO/technicals/",
-      "scraped_at": "2026-10-03T08:22:31.783Z"
+      "scraped_at": "2026-10-04T08:43:18.461Z"
     },
     "COCKERILL": {
       "summary": {
@@ -3516,7 +3516,7 @@
         "hull_9": 7883.9
       },
       "url": "https://in.tradingview.com/symbols/NSE-COCKERILL/technicals/",
-      "scraped_at": "2026-10-03T08:22:36.746Z"
+      "scraped_at": "2026-10-04T08:43:23.359Z"
     },
     "CONFIPET": {
       "summary": {
@@ -3554,7 +3554,7 @@
         "hull_9": 86.75
       },
       "url": "https://in.tradingview.com/symbols/NSE-CONFIPET/technicals/",
-      "scraped_at": "2026-10-03T08:22:41.632Z"
+      "scraped_at": "2026-10-04T08:43:28.246Z"
     },
     "CORDELIA": {
       "summary": {
@@ -3588,7 +3588,7 @@
         "hull_9": 99.69
       },
       "url": "https://in.tradingview.com/symbols/NSE-CORDELIA/technicals/",
-      "scraped_at": "2026-10-03T08:22:46.684Z"
+      "scraped_at": "2026-10-04T08:43:33.136Z"
     },
     "COSMOFIRST": {
       "summary": {
@@ -3664,7 +3664,7 @@
         "hull_9": 220.65
       },
       "url": "https://in.tradingview.com/symbols/NSE-CRAMC/technicals/",
-      "scraped_at": "2026-10-03T08:22:56.418Z"
+      "scraped_at": "2026-10-04T08:44:11.143Z"
     },
     "DCAL": {
       "summary": {
@@ -3896,39 +3896,39 @@
       "summary": {
         "verdict": "Buy",
         "buy_count": 0,
-        "sell_count": 2,
-        "neutral_count": 9
+        "sell_count": 3,
+        "neutral_count": 8
       },
       "oscillators": {
-        "rsi_14": 58.3,
-        "stoch_k": 60.67,
-        "cci_20": 41.86,
-        "adx_14": 28.86,
-        "momentum_10": 8.15,
-        "macd_level": 27.11,
-        "stoch_rsi_fast": 29.78,
-        "williams_r": 42.88,
-        "ultimate_osc": 50.77
+        "rsi_14": 53.17,
+        "stoch_k": 61.28,
+        "cci_20": 66.35,
+        "adx_14": 25.5,
+        "momentum_10": 14.3,
+        "macd_level": 22,
+        "stoch_rsi_fast": 19.77,
+        "williams_r": 43.26,
+        "ultimate_osc": 50.65
       },
       "moving_averages": {
-        "ema_10": 760.06,
-        "sma_10": 751.78,
-        "ema_20": 743.2,
-        "sma_20": 752.57,
-        "ema_30": 721.22,
-        "sma_30": 726.6,
-        "ema_50": 678.58,
-        "sma_50": 668.54,
-        "ema_100": 606.36,
-        "sma_100": 572.82,
-        "ema_200": 543.02,
-        "sma_200": 492.41,
+        "ema_10": 760.34,
+        "sma_10": 760.67,
+        "ema_20": 748.04,
+        "sma_20": 764.6,
+        "ema_30": 728.66,
+        "sma_30": 734.04,
+        "ema_50": 688.08,
+        "sma_50": 686,
+        "ema_100": 615.47,
+        "sma_100": 581.95,
+        "ema_200": 549.52,
+        "sma_200": 497.51,
         "ichimoku_base": 725.53,
-        "vwma_20": 759.94,
-        "hull_9": 781.66
+        "vwma_20": 768.15,
+        "hull_9": 764.86
       },
       "url": "https://in.tradingview.com/symbols/NSE-DEEPINDS/technicals/",
-      "scraped_at": "2026-09-28T09:05:10.227Z"
+      "scraped_at": "2026-10-04T08:50:39.757Z"
     },
     "DIAMONDYD": {
       "summary": {
@@ -3966,7 +3966,7 @@
         "hull_9": 1075.4
       },
       "url": "https://in.tradingview.com/symbols/NSE-DIAMONDYD/technicals/",
-      "scraped_at": "2026-10-03T08:30:07.401Z"
+      "scraped_at": "2026-10-04T08:50:54.500Z"
     },
     "DIVGIITTS": {
       "summary": {
@@ -4004,7 +4004,7 @@
         "hull_9": 1195.1
       },
       "url": "https://in.tradingview.com/symbols/NSE-DIVGIITTS/technicals/",
-      "scraped_at": "2026-10-03T08:30:12.253Z"
+      "scraped_at": "2026-10-04T08:50:59.402Z"
     },
     "DODLA": {
       "summary": {
@@ -4042,7 +4042,7 @@
         "hull_9": 1002
       },
       "url": "https://in.tradingview.com/symbols/NSE-DODLA/technicals/",
-      "scraped_at": "2026-10-03T08:30:17.082Z"
+      "scraped_at": "2026-10-04T08:51:04.308Z"
     },
     "DPABHUSHAN": {
       "summary": {
@@ -4080,7 +4080,7 @@
         "hull_9": 1786.1
       },
       "url": "https://in.tradingview.com/symbols/NSE-DPABHUSHAN/technicals/",
-      "scraped_at": "2026-10-03T08:30:26.758Z"
+      "scraped_at": "2026-10-04T08:51:14.196Z"
     },
     "DRAGARWQ": {
       "summary": {
@@ -4116,7 +4116,7 @@
         "hull_9": 5127.9
       },
       "url": "https://in.tradingview.com/symbols/NSE-DRAGARWQ/technicals/",
-      "scraped_at": "2026-10-03T08:30:31.674Z"
+      "scraped_at": "2026-10-04T08:51:19.118Z"
     },
     "DREDGECORP": {
       "summary": {
@@ -4154,7 +4154,7 @@
         "hull_9": 899.98
       },
       "url": "https://in.tradingview.com/symbols/NSE-DREDGECORP/technicals/",
-      "scraped_at": "2026-10-03T08:30:36.572Z"
+      "scraped_at": "2026-10-04T08:51:24.128Z"
     },
     "DYNAMATECH": {
       "summary": {
@@ -4192,7 +4192,7 @@
         "hull_9": 13674
       },
       "url": "https://in.tradingview.com/symbols/NSE-DYNAMATECH/technicals/",
-      "scraped_at": "2026-10-03T08:30:46.282Z"
+      "scraped_at": "2026-10-04T08:51:33.947Z"
     },
     "E2E": {
       "summary": {
@@ -4268,7 +4268,7 @@
         "hull_9": 5.86
       },
       "url": "https://in.tradingview.com/symbols/NSE-EASEMYTRIP/technicals/",
-      "scraped_at": "2026-10-03T08:30:51.422Z"
+      "scraped_at": "2026-10-04T08:51:38.912Z"
     },
     "EBGNG": {
       "summary": {
@@ -4306,7 +4306,7 @@
         "hull_9": 682.74
       },
       "url": "https://in.tradingview.com/symbols/NSE-EBGNG/technicals/",
-      "scraped_at": "2026-10-03T08:30:56.267Z"
+      "scraped_at": "2026-10-04T08:51:43.803Z"
     },
     "EDELWEISS": {
       "summary": {
@@ -4382,7 +4382,7 @@
         "hull_9": 171.07
       },
       "url": "https://in.tradingview.com/symbols/NSE-EFCIL/technicals/",
-      "scraped_at": "2026-10-03T08:31:01.117Z"
+      "scraped_at": "2026-10-04T08:51:48.695Z"
     },
     "EIEL": {
       "summary": {
@@ -4420,7 +4420,7 @@
         "hull_9": 185.94
       },
       "url": "https://in.tradingview.com/symbols/NSE-EIEL/technicals/",
-      "scraped_at": "2026-10-03T08:31:05.970Z"
+      "scraped_at": "2026-10-04T08:51:53.845Z"
     },
     "ELANTAS": {
       "summary": {
@@ -4456,7 +4456,7 @@
         "hull_9": 13544
       },
       "url": "https://in.tradingview.com/symbols/NSE-ELANTAS/technicals/",
-      "scraped_at": "2026-10-03T08:31:10.918Z"
+      "scraped_at": "2026-10-04T08:51:58.761Z"
     },
     "ELCIDIN": {
       "summary": {
@@ -4492,7 +4492,7 @@
         "hull_9": 101960
       },
       "url": "https://in.tradingview.com/symbols/NSE-ELCIDIN/technicals/",
-      "scraped_at": "2026-10-03T08:31:15.753Z"
+      "scraped_at": "2026-10-04T08:52:03.674Z"
     },
     "ELECTCAST": {
       "summary": {
@@ -4530,7 +4530,7 @@
         "hull_9": 75.09
       },
       "url": "https://in.tradingview.com/symbols/NSE-ELECTCAST/technicals/",
-      "scraped_at": "2026-10-03T08:31:25.632Z"
+      "scraped_at": "2026-10-04T08:52:13.574Z"
     },
     "ELITECON": {
       "summary": {
@@ -4602,7 +4602,7 @@
         "hull_9": 355.2
       },
       "url": "https://in.tradingview.com/symbols/NSE-ELLEN/technicals/",
-      "scraped_at": "2026-10-03T08:31:30.484Z"
+      "scraped_at": "2026-10-04T08:52:18.482Z"
     },
     "ELPROINTL": {
       "summary": {
@@ -4638,7 +4638,7 @@
         "hull_9": 173.09
       },
       "url": "https://in.tradingview.com/symbols/NSE-ELPROINTL/technicals/",
-      "scraped_at": "2026-10-03T08:31:35.544Z"
+      "scraped_at": "2026-10-04T08:52:23.395Z"
     },
     "EMBDL": {
       "summary": {
@@ -4676,7 +4676,7 @@
         "hull_9": 56.37
       },
       "url": "https://in.tradingview.com/symbols/NSE-EMBDL/technicals/",
-      "scraped_at": "2026-10-02T08:57:38.897Z"
+      "scraped_at": "2026-10-04T08:52:28.475Z"
     },
     "EMIL": {
       "summary": {
@@ -4714,7 +4714,7 @@
         "hull_9": 201.44
       },
       "url": "https://in.tradingview.com/symbols/NSE-EMIL/technicals/",
-      "scraped_at": "2026-10-03T08:32:13.763Z"
+      "scraped_at": "2026-10-04T08:52:33.375Z"
     },
     "EMSLIMITED": {
       "summary": {
@@ -4790,7 +4790,7 @@
         "hull_9": 599.13
       },
       "url": "https://in.tradingview.com/symbols/NSE-EMUDHRA/technicals/",
-      "scraped_at": "2026-10-03T08:32:18.626Z"
+      "scraped_at": "2026-10-04T08:52:38.275Z"
     },
     "EPACK": {
       "summary": {
@@ -4866,7 +4866,7 @@
         "hull_9": 241.52
       },
       "url": "https://in.tradingview.com/symbols/NSE-EPACKPEB/technicals/",
-      "scraped_at": "2026-10-03T08:32:28.490Z"
+      "scraped_at": "2026-10-04T08:52:48.101Z"
     },
     "EPIGRAL": {
       "summary": {
@@ -4904,7 +4904,7 @@
         "hull_9": 989.21
       },
       "url": "https://in.tradingview.com/symbols/NSE-EPIGRAL/technicals/",
-      "scraped_at": "2026-10-03T08:32:33.446Z"
+      "scraped_at": "2026-10-04T08:52:53.076Z"
     },
     "EPL": {
       "summary": {
@@ -4942,7 +4942,7 @@
         "hull_9": 233.48
       },
       "url": "https://in.tradingview.com/symbols/NSE-EPL/technicals/",
-      "scraped_at": "2026-10-03T08:32:38.298Z"
+      "scraped_at": "2026-10-04T08:52:57.989Z"
     },
     "EQUITASBNK": {
       "summary": {
@@ -4980,7 +4980,7 @@
         "hull_9": 66.73
       },
       "url": "https://in.tradingview.com/symbols/NSE-EQUITASBNK/technicals/",
-      "scraped_at": "2026-10-03T08:32:43.142Z"
+      "scraped_at": "2026-10-04T08:53:02.919Z"
     },
     "ESABINDIA": {
       "summary": {
@@ -5018,7 +5018,7 @@
         "hull_9": 5495.5
       },
       "url": "https://in.tradingview.com/symbols/NSE-ESABINDIA/technicals/",
-      "scraped_at": "2026-10-03T08:32:48.156Z"
+      "scraped_at": "2026-10-04T08:53:07.878Z"
     },
     "ESAFSFB": {
       "summary": {
@@ -5056,7 +5056,7 @@
         "hull_9": 45.06
       },
       "url": "https://in.tradingview.com/symbols/NSE-ESAFSFB/technicals/",
-      "scraped_at": "2026-10-03T08:32:53.023Z"
+      "scraped_at": "2026-10-04T08:53:12.778Z"
     },
     "ETHOSLTD": {
       "summary": {
@@ -5094,7 +5094,7 @@
         "hull_9": 2491.3
       },
       "url": "https://in.tradingview.com/symbols/NSE-ETHOSLTD/technicals/",
-      "scraped_at": "2026-10-03T08:32:57.874Z"
+      "scraped_at": "2026-10-04T08:53:17.696Z"
     },
     "EUREKAFORB": {
       "summary": {
@@ -5132,7 +5132,7 @@
         "hull_9": 354.79
       },
       "url": "https://in.tradingview.com/symbols/NSE-EUREKAFORB/technicals/",
-      "scraped_at": "2026-10-03T08:33:02.734Z"
+      "scraped_at": "2026-10-04T08:53:22.606Z"
     },
     "EUROPRATIK": {
       "summary": {
@@ -5208,7 +5208,7 @@
         "hull_9": 318.07
       },
       "url": "https://in.tradingview.com/symbols/NSE-EVEREADY/technicals/",
-      "scraped_at": "2026-10-03T08:33:12.620Z"
+      "scraped_at": "2026-10-04T08:54:00.769Z"
     },
     "FDC": {
       "summary": {
@@ -5218,35 +5218,35 @@
         "neutral_count": 8
       },
       "oscillators": {
-        "rsi_14": 39.03,
-        "stoch_k": 20.92,
-        "cci_20": 155.47,
+        "rsi_14": 39.12,
+        "stoch_k": 21.07,
+        "cci_20": 154.86,
         "adx_14": 19.5,
-        "momentum_10": 16.4,
-        "macd_level": 4.24,
-        "stoch_rsi_fast": 22.97,
-        "williams_r": 89.37,
-        "ultimate_osc": 40.69
+        "momentum_10": 16.25,
+        "macd_level": 4.23,
+        "stoch_rsi_fast": 23.13,
+        "williams_r": 88.92,
+        "ultimate_osc": 40.84
       },
       "moving_averages": {
-        "ema_10": 344.67,
-        "sma_10": 347.69,
-        "ema_20": 347.37,
+        "ema_10": 344.69,
+        "sma_10": 347.71,
+        "ema_20": 347.39,
         "sma_20": 347.13,
-        "ema_30": 351.12,
+        "ema_30": 351.13,
         "sma_30": 345.81,
-        "ema_50": 358.9,
-        "sma_50": 360.35,
-        "ema_100": 369.89,
+        "ema_50": 358.91,
+        "sma_50": 360.36,
+        "ema_100": 369.9,
         "sma_100": 380.22,
         "ema_200": 383.95,
         "sma_200": 377.7,
         "ichimoku_base": 347.2,
-        "vwma_20": 348.34,
-        "hull_9": 339.57
+        "vwma_20": 348.23,
+        "hull_9": 339.61
       },
       "url": "https://in.tradingview.com/symbols/NSE-FDC/technicals/",
-      "scraped_at": "2026-10-01T09:23:20.554Z"
+      "scraped_at": "2026-10-04T08:54:15.651Z"
     },
     "FEDFINA": {
       "summary": {
@@ -5284,7 +5284,7 @@
         "hull_9": 149.31
       },
       "url": "https://in.tradingview.com/symbols/NSE-FEDFINA/technicals/",
-      "scraped_at": "2026-10-03T08:34:00.598Z"
+      "scraped_at": "2026-10-04T08:54:20.748Z"
     },
     "FIEMIND": {
       "summary": {
@@ -5322,7 +5322,7 @@
         "hull_9": 1868
       },
       "url": "https://in.tradingview.com/symbols/NSE-FIEMIND/technicals/",
-      "scraped_at": "2026-10-03T08:34:05.483Z"
+      "scraped_at": "2026-10-04T08:54:25.675Z"
     },
     "FILATEX": {
       "summary": {
@@ -5360,7 +5360,7 @@
         "hull_9": 110.32
       },
       "url": "https://in.tradingview.com/symbols/NSE-FILATEX/technicals/",
-      "scraped_at": "2026-10-03T08:34:10.502Z"
+      "scraped_at": "2026-10-04T08:54:30.934Z"
     },
     "FINPIPE": {
       "summary": {
@@ -5398,7 +5398,7 @@
         "hull_9": 150.54
       },
       "url": "https://in.tradingview.com/symbols/NSE-FINPIPE/technicals/",
-      "scraped_at": "2026-10-03T08:34:15.415Z"
+      "scraped_at": "2026-10-04T08:54:35.933Z"
     },
     "FIRSTCRY": {
       "summary": {
@@ -5816,7 +5816,7 @@
         "hull_9": 116.93
       },
       "url": "https://in.tradingview.com/symbols/NSE-GKENERGY/technicals/",
-      "scraped_at": "2026-10-03T08:40:35.236Z"
+      "scraped_at": "2026-10-04T09:01:52.585Z"
     },
     "GLOBUSSPR": {
       "summary": {
@@ -5854,7 +5854,7 @@
         "hull_9": 788.28
       },
       "url": "https://in.tradingview.com/symbols/NSE-GLOBUSSPR/technicals/",
-      "scraped_at": "2026-10-03T08:40:45.104Z"
+      "scraped_at": "2026-10-04T09:02:02.489Z"
     },
     "GMBREW": {
       "summary": {
@@ -5892,7 +5892,7 @@
         "hull_9": 963.07
       },
       "url": "https://in.tradingview.com/symbols/NSE-GMBREW/technicals/",
-      "scraped_at": "2026-10-03T08:40:49.991Z"
+      "scraped_at": "2026-10-04T09:02:07.455Z"
     },
     "GMMPFAUDLR": {
       "summary": {
@@ -5930,7 +5930,7 @@
         "hull_9": 1467.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-GMMPFAUDLR/technicals/",
-      "scraped_at": "2026-10-03T08:40:54.961Z"
+      "scraped_at": "2026-10-04T09:02:12.448Z"
     },
     "GMRP&UI": {
       "summary": {
@@ -5968,7 +5968,7 @@
         "hull_9": 104.16
       },
       "url": "https://in.tradingview.com/symbols/NSE-GMRP&UI/technicals/",
-      "scraped_at": "2026-10-03T08:40:59.831Z"
+      "scraped_at": "2026-10-04T09:02:17.373Z"
     },
     "GNA": {
       "summary": {
@@ -6006,7 +6006,7 @@
         "hull_9": 593.67
       },
       "url": "https://in.tradingview.com/symbols/NSE-GNA/technicals/",
-      "scraped_at": "2026-10-03T08:41:05.146Z"
+      "scraped_at": "2026-10-04T09:02:22.266Z"
     },
     "GNFC": {
       "summary": {
@@ -6044,7 +6044,7 @@
         "hull_9": 603.8
       },
       "url": "https://in.tradingview.com/symbols/NSE-GNFC/technicals/",
-      "scraped_at": "2026-10-03T08:41:10.004Z"
+      "scraped_at": "2026-10-04T09:02:27.352Z"
     },
     "GODREJAGRO": {
       "summary": {
@@ -6120,7 +6120,7 @@
         "hull_9": 678.18
       },
       "url": "https://in.tradingview.com/symbols/NSE-GOKEX/technicals/",
-      "scraped_at": "2026-10-03T08:41:14.936Z"
+      "scraped_at": "2026-10-04T09:02:32.320Z"
     },
     "GOKULAGRO": {
       "summary": {
@@ -6158,7 +6158,7 @@
         "hull_9": 210.72
       },
       "url": "https://in.tradingview.com/symbols/NSE-GOKULAGRO/technicals/",
-      "scraped_at": "2026-10-03T08:41:20.132Z"
+      "scraped_at": "2026-10-04T09:02:37.218Z"
     },
     "GOLDIAM": {
       "summary": {
@@ -6196,7 +6196,7 @@
         "hull_9": 312.87
       },
       "url": "https://in.tradingview.com/symbols/NSE-GOLDIAM/technicals/",
-      "scraped_at": "2026-10-03T08:41:25.020Z"
+      "scraped_at": "2026-10-04T09:02:42.191Z"
     },
     "GPPL": {
       "summary": {
@@ -6234,7 +6234,7 @@
         "hull_9": 163.71
       },
       "url": "https://in.tradingview.com/symbols/NSE-GPPL/technicals/",
-      "scraped_at": "2026-10-03T08:41:39.897Z"
+      "scraped_at": "2026-10-04T09:02:56.964Z"
     },
     "GRAUWEIL": {
       "summary": {
@@ -6272,7 +6272,7 @@
         "hull_9": 82.02
       },
       "url": "https://in.tradingview.com/symbols/NSE-GRAUWEIL/technicals/",
-      "scraped_at": "2026-10-03T08:41:44.937Z"
+      "scraped_at": "2026-10-04T09:03:01.891Z"
     },
     "GRAVITA": {
       "summary": {
@@ -6310,7 +6310,7 @@
         "hull_9": 1413.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-GRAVITA/technicals/",
-      "scraped_at": "2026-10-03T08:41:49.868Z"
+      "scraped_at": "2026-10-04T09:03:06.792Z"
     },
     "GREAVESCOT": {
       "summary": {
@@ -6348,7 +6348,7 @@
         "hull_9": 236.95
       },
       "url": "https://in.tradingview.com/symbols/NSE-GREAVESCOT/technicals/",
-      "scraped_at": "2026-10-03T08:41:54.765Z"
+      "scraped_at": "2026-10-04T09:03:11.708Z"
     },
     "GREENLAM": {
       "summary": {
@@ -6386,7 +6386,7 @@
         "hull_9": 210.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-GREENLAM/technicals/",
-      "scraped_at": "2026-10-03T08:41:59.719Z"
+      "scraped_at": "2026-10-04T09:03:16.618Z"
     },
     "GREENPANEL": {
       "summary": {
@@ -6462,7 +6462,7 @@
         "hull_9": 291.31
       },
       "url": "https://in.tradingview.com/symbols/NSE-GREENPLY/technicals/",
-      "scraped_at": "2026-10-03T08:42:04.585Z"
+      "scraped_at": "2026-10-04T09:03:21.509Z"
     },
     "GSPCROP": {
       "summary": {
@@ -6498,7 +6498,7 @@
         "hull_9": 461.71
       },
       "url": "https://in.tradingview.com/symbols/NSE-GSPCROP/technicals/",
-      "scraped_at": "2026-10-03T08:42:19.268Z"
+      "scraped_at": "2026-10-04T09:03:36.554Z"
     },
     "GUFICBIO": {
       "summary": {
@@ -6536,7 +6536,7 @@
         "hull_9": 426.83
       },
       "url": "https://in.tradingview.com/symbols/NSE-GUFICBIO/technicals/",
-      "scraped_at": "2026-10-03T08:42:24.166Z"
+      "scraped_at": "2026-10-04T09:03:41.456Z"
     },
     "GUJALKALI": {
       "summary": {
@@ -6574,7 +6574,7 @@
         "hull_9": 612.4
       },
       "url": "https://in.tradingview.com/symbols/NSE-GUJALKALI/technicals/",
-      "scraped_at": "2026-10-02T09:08:56.781Z"
+      "scraped_at": "2026-10-04T09:03:46.419Z"
     },
     "GUJTHEM": {
       "summary": {
@@ -6612,7 +6612,7 @@
         "hull_9": 388.18
       },
       "url": "https://in.tradingview.com/symbols/NSE-GUJTHEM/technicals/",
-      "scraped_at": "2026-10-02T09:09:01.776Z"
+      "scraped_at": "2026-10-04T09:03:51.413Z"
     },
     "GULFOILLUB": {
       "summary": {
@@ -6650,7 +6650,7 @@
         "hull_9": 1118.2
       },
       "url": "https://in.tradingview.com/symbols/NSE-GULFOILLUB/technicals/",
-      "scraped_at": "2026-10-03T08:43:35.169Z"
+      "scraped_at": "2026-10-04T09:03:56.347Z"
     },
     "GVPIL": {
       "summary": {
@@ -6688,7 +6688,7 @@
         "hull_9": 676.83
       },
       "url": "https://in.tradingview.com/symbols/NSE-GVPIL/technicals/",
-      "scraped_at": "2026-10-03T08:43:40.010Z"
+      "scraped_at": "2026-10-04T09:04:01.235Z"
     },
     "HAPPSTMNDS": {
       "summary": {
@@ -6726,7 +6726,7 @@
         "hull_9": 306.19
       },
       "url": "https://in.tradingview.com/symbols/NSE-HAPPSTMNDS/technicals/",
-      "scraped_at": "2026-10-03T08:43:44.911Z"
+      "scraped_at": "2026-10-04T09:04:06.202Z"
     },
     "HARSHA": {
       "summary": {
@@ -6764,7 +6764,7 @@
         "hull_9": 471.06
       },
       "url": "https://in.tradingview.com/symbols/NSE-HARSHA/technicals/",
-      "scraped_at": "2026-10-03T08:43:49.993Z"
+      "scraped_at": "2026-10-04T09:04:11.081Z"
     },
     "HAWKINCOOK": {
       "summary": {
@@ -6800,7 +6800,7 @@
         "hull_9": 7976
       },
       "url": "https://in.tradingview.com/symbols/NSE-HAWKINCOOK/technicals/",
-      "scraped_at": "2026-10-03T08:43:54.938Z"
+      "scraped_at": "2026-10-04T09:04:15.993Z"
     },
     "HEIDELBERG": {
       "summary": {
@@ -6876,7 +6876,7 @@
         "hull_9": 112.47
       },
       "url": "https://in.tradingview.com/symbols/NSE-HEMIPROP/technicals/",
-      "scraped_at": "2026-10-02T09:10:47.577Z"
+      "scraped_at": "2026-10-04T09:05:37.015Z"
     },
     "HERITGFOOD": {
       "summary": {
@@ -6914,7 +6914,7 @@
         "hull_9": 397.65
       },
       "url": "https://in.tradingview.com/symbols/NSE-HERITGFOOD/technicals/",
-      "scraped_at": "2026-10-03T08:44:52.663Z"
+      "scraped_at": "2026-10-04T09:05:41.921Z"
     },
     "HESTERBIO": {
       "summary": {
@@ -6990,7 +6990,7 @@
         "hull_9": 427.97
       },
       "url": "https://in.tradingview.com/symbols/NSE-HGINFRA/technicals/",
-      "scraped_at": "2026-10-03T08:45:31.055Z"
+      "scraped_at": "2026-10-04T09:06:20.140Z"
     },
     "HIKAL": {
       "summary": {
@@ -7028,7 +7028,7 @@
         "hull_9": 214.31
       },
       "url": "https://in.tradingview.com/symbols/NSE-HIKAL/technicals/",
-      "scraped_at": "2026-10-03T08:45:35.979Z"
+      "scraped_at": "2026-10-04T09:06:25.094Z"
     },
     "HINDOILEXP": {
       "summary": {
@@ -7066,7 +7066,7 @@
         "hull_9": 170.61
       },
       "url": "https://in.tradingview.com/symbols/NSE-HINDOILEXP/technicals/",
-      "scraped_at": "2026-10-03T08:45:40.907Z"
+      "scraped_at": "2026-10-04T09:06:29.998Z"
     },
     "HIRECT": {
       "summary": {
@@ -7104,7 +7104,7 @@
         "hull_9": 1132
       },
       "url": "https://in.tradingview.com/symbols/NSE-HIRECT/technicals/",
-      "scraped_at": "2026-10-03T08:45:45.802Z"
+      "scraped_at": "2026-10-04T09:06:34.905Z"
     },
     "HUBTOWN": {
       "summary": {
@@ -7218,7 +7218,7 @@
         "hull_9": 29.68
       },
       "url": "https://in.tradingview.com/symbols/NSE-IBULLSLTD/technicals/",
-      "scraped_at": "2026-10-03T08:48:36.077Z"
+      "scraped_at": "2026-10-04T09:08:29.025Z"
     },
     "ICIL": {
       "summary": {
@@ -7256,7 +7256,7 @@
         "hull_9": 443.5
       },
       "url": "https://in.tradingview.com/symbols/NSE-ICIL/technicals/",
-      "scraped_at": "2026-10-03T08:48:41.007Z"
+      "scraped_at": "2026-10-04T09:08:33.987Z"
     },
     "ICRA": {
       "summary": {
@@ -7294,7 +7294,7 @@
         "hull_9": 4219.9
       },
       "url": "https://in.tradingview.com/symbols/NSE-ICRA/technicals/",
-      "scraped_at": "2026-10-03T08:48:45.913Z"
+      "scraped_at": "2026-10-04T09:08:38.976Z"
     },
     "IDEAFORGE": {
       "summary": {
@@ -7634,7 +7634,7 @@
         "hull_9": 292.8
       },
       "url": "https://in.tradingview.com/symbols/NSE-INDIACEM/technicals/",
-      "scraped_at": "2026-10-03T08:50:49.632Z"
+      "scraped_at": "2026-10-04T09:12:35.739Z"
     },
     "INDIAGLYCO": {
       "summary": {
@@ -7672,7 +7672,7 @@
         "hull_9": 312.06
       },
       "url": "https://in.tradingview.com/symbols/NSE-INDIAGLYCO/technicals/",
-      "scraped_at": "2026-10-03T08:50:54.455Z"
+      "scraped_at": "2026-10-04T09:12:40.640Z"
     },
     "INDIASHLTR": {
       "summary": {
@@ -7710,7 +7710,7 @@
         "hull_9": 634.78
       },
       "url": "https://in.tradingview.com/symbols/NSE-INDIASHLTR/technicals/",
-      "scraped_at": "2026-10-03T08:51:04.294Z"
+      "scraped_at": "2026-10-04T09:12:50.633Z"
     },
     "INDIGOPNTS": {
       "summary": {
@@ -7748,7 +7748,7 @@
         "hull_9": 1068.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-INDIGOPNTS/technicals/",
-      "scraped_at": "2026-10-03T08:51:09.176Z"
+      "scraped_at": "2026-10-04T09:12:55.609Z"
     },
     "INDIQUBE": {
       "summary": {
@@ -7786,7 +7786,7 @@
         "hull_9": 198.52
       },
       "url": "https://in.tradingview.com/symbols/NSE-INDIQUBE/technicals/",
-      "scraped_at": "2026-10-03T08:51:14.007Z"
+      "scraped_at": "2026-10-04T09:13:00.487Z"
     },
     "INDNIPPON": {
       "summary": {
@@ -7824,7 +7824,7 @@
         "hull_9": 1241.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-INDNIPPON/technicals/",
-      "scraped_at": "2026-10-03T08:51:18.828Z"
+      "scraped_at": "2026-10-04T09:13:05.421Z"
     },
     "INDOCO": {
       "summary": {
@@ -7862,7 +7862,7 @@
         "hull_9": 261.47
       },
       "url": "https://in.tradingview.com/symbols/NSE-INDOCO/technicals/",
-      "scraped_at": "2026-10-03T08:51:23.659Z"
+      "scraped_at": "2026-10-04T09:13:10.359Z"
     },
     "INDOSTAR": {
       "summary": {
@@ -7900,7 +7900,7 @@
         "hull_9": 205.51
       },
       "url": "https://in.tradingview.com/symbols/NSE-INDOSTAR/technicals/",
-      "scraped_at": "2026-10-03T08:51:33.453Z"
+      "scraped_at": "2026-10-04T09:13:20.245Z"
     },
     "INDOTECH": {
       "summary": {
@@ -7938,7 +7938,7 @@
         "hull_9": 3203
       },
       "url": "https://in.tradingview.com/symbols/NSE-INDOTECH/technicals/",
-      "scraped_at": "2026-10-03T08:51:38.407Z"
+      "scraped_at": "2026-10-04T09:13:25.139Z"
     },
     "INDOTHAI": {
       "summary": {
@@ -8014,7 +8014,7 @@
         "hull_9": 344.93
       },
       "url": "https://in.tradingview.com/symbols/NSE-INDRAMEDCO/technicals/",
-      "scraped_at": "2026-10-03T08:51:43.288Z"
+      "scraped_at": "2026-10-04T09:13:30.062Z"
     },
     "INDUSINVIT": {
       "summary": {
@@ -8052,7 +8052,7 @@
         "hull_9": 129.06
       },
       "url": "https://in.tradingview.com/symbols/NSE-INDUSINVIT/technicals/",
-      "scraped_at": "2026-10-03T08:51:53.051Z"
+      "scraped_at": "2026-10-04T09:13:39.876Z"
     },
     "INNOVACAP": {
       "summary": {
@@ -8090,7 +8090,7 @@
         "hull_9": 1197.8
       },
       "url": "https://in.tradingview.com/symbols/NSE-INNOVACAP/technicals/",
-      "scraped_at": "2026-10-02T09:18:27.367Z"
+      "scraped_at": "2026-10-04T09:13:44.756Z"
     },
     "INOXGREEN": {
       "summary": {
@@ -8128,7 +8128,7 @@
         "hull_9": 159.93
       },
       "url": "https://in.tradingview.com/symbols/NSE-INOXGREEN/technicals/",
-      "scraped_at": "2026-10-03T08:52:31.080Z"
+      "scraped_at": "2026-10-04T09:13:49.682Z"
     },
     "IOLCP": {
       "summary": {
@@ -8166,7 +8166,7 @@
         "hull_9": 204.68
       },
       "url": "https://in.tradingview.com/symbols/NSE-IOLCP/technicals/",
-      "scraped_at": "2026-10-03T08:53:18.947Z"
+      "scraped_at": "2026-10-04T09:14:37.765Z"
     },
     "IONEXCHANG": {
       "summary": {
@@ -8204,7 +8204,7 @@
         "hull_9": 407.02
       },
       "url": "https://in.tradingview.com/symbols/NSE-IONEXCHANG/technicals/",
-      "scraped_at": "2026-10-03T08:53:23.874Z"
+      "scraped_at": "2026-10-04T09:14:42.640Z"
     },
     "IRBINVIT": {
       "summary": {
@@ -8242,7 +8242,7 @@
         "hull_9": 63.96
       },
       "url": "https://in.tradingview.com/symbols/NSE-IRBINVIT/technicals/",
-      "scraped_at": "2026-10-03T08:53:28.769Z"
+      "scraped_at": "2026-10-04T09:14:47.572Z"
     },
     "IRCON": {
       "summary": {
@@ -8280,7 +8280,7 @@
         "hull_9": 109.31
       },
       "url": "https://in.tradingview.com/symbols/NSE-IRCON/technicals/",
-      "scraped_at": "2026-10-03T08:53:33.658Z"
+      "scraped_at": "2026-10-04T09:14:52.448Z"
     },
     "ISGEC": {
       "summary": {
@@ -8318,7 +8318,7 @@
         "hull_9": 902.72
       },
       "url": "https://in.tradingview.com/symbols/NSE-ISGEC/technicals/",
-      "scraped_at": "2026-10-03T08:53:38.543Z"
+      "scraped_at": "2026-10-04T09:14:57.330Z"
     },
     "ITDC": {
       "summary": {
@@ -8356,7 +8356,7 @@
         "hull_9": 664.94
       },
       "url": "https://in.tradingview.com/symbols/NSE-ITDC/technicals/",
-      "scraped_at": "2026-10-03T08:53:43.372Z"
+      "scraped_at": "2026-10-04T09:15:02.241Z"
     },
     "IXIGO": {
       "summary": {
@@ -8394,7 +8394,7 @@
         "hull_9": 160.33
       },
       "url": "https://in.tradingview.com/symbols/NSE-IXIGO/technicals/",
-      "scraped_at": "2026-10-03T08:53:48.259Z"
+      "scraped_at": "2026-10-04T09:15:07.140Z"
     },
     "JAINREC": {
       "summary": {
@@ -8432,7 +8432,7 @@
         "hull_9": 285.99
       },
       "url": "https://in.tradingview.com/symbols/NSE-JAINREC/technicals/",
-      "scraped_at": "2026-10-03T08:53:58.010Z"
+      "scraped_at": "2026-10-04T09:15:17.014Z"
     },
     "JAMNAAUTO": {
       "summary": {
@@ -8470,7 +8470,7 @@
         "hull_9": 136.92
       },
       "url": "https://in.tradingview.com/symbols/NSE-JAMNAAUTO/technicals/",
-      "scraped_at": "2026-10-03T08:54:02.869Z"
+      "scraped_at": "2026-10-04T09:15:21.943Z"
     },
     "JASH": {
       "summary": {
@@ -8508,7 +8508,7 @@
         "hull_9": 592.54
       },
       "url": "https://in.tradingview.com/symbols/NSE-JASH/technicals/",
-      "scraped_at": "2026-10-03T08:54:07.775Z"
+      "scraped_at": "2026-10-04T09:15:26.864Z"
     },
     "JAYNECOIND": {
       "summary": {
@@ -8546,7 +8546,7 @@
         "hull_9": 91.97
       },
       "url": "https://in.tradingview.com/symbols/NSE-JAYNECOIND/technicals/",
-      "scraped_at": "2026-10-02T09:20:48.668Z"
+      "scraped_at": "2026-10-04T09:15:36.649Z"
     },
     "JINDALPOLY": {
       "summary": {
@@ -8584,7 +8584,7 @@
         "hull_9": 657.62
       },
       "url": "https://in.tradingview.com/symbols/NSE-JINDALPOLY/technicals/",
-      "scraped_at": "2026-10-03T08:55:23.898Z"
+      "scraped_at": "2026-10-04T09:15:46.631Z"
     },
     "JINDWORLD": {
       "summary": {
@@ -8622,7 +8622,7 @@
         "hull_9": 45.76
       },
       "url": "https://in.tradingview.com/symbols/NSE-JINDWORLD/technicals/",
-      "scraped_at": "2026-10-03T08:55:28.761Z"
+      "scraped_at": "2026-10-04T09:15:51.509Z"
     },
     "JISLJALEQS": {
       "summary": {
@@ -8660,7 +8660,7 @@
         "hull_9": 27.96
       },
       "url": "https://in.tradingview.com/symbols/NSE-JISLJALEQS/technicals/",
-      "scraped_at": "2026-10-03T08:55:33.595Z"
+      "scraped_at": "2026-10-04T09:15:56.423Z"
     },
     "JNKINDIA": {
       "summary": {
@@ -8698,7 +8698,7 @@
         "hull_9": 443.66
       },
       "url": "https://in.tradingview.com/symbols/NSE-JNKINDIA/technicals/",
-      "scraped_at": "2026-10-03T08:57:04.343Z"
+      "scraped_at": "2026-10-04T09:17:27.257Z"
     },
     "JSFB": {
       "summary": {
@@ -8888,7 +8888,7 @@
         "hull_9": 87.39
       },
       "url": "https://in.tradingview.com/symbols/NSE-JTLIND/technicals/",
-      "scraped_at": "2026-10-02T09:24:05.770Z"
+      "scraped_at": "2026-10-04T09:19:49.369Z"
     },
     "JUBLCPL": {
       "summary": {
@@ -8926,7 +8926,7 @@
         "hull_9": 2060.8
       },
       "url": "https://in.tradingview.com/symbols/NSE-JUBLCPL/technicals/",
-      "scraped_at": "2026-10-03T09:00:27.648Z"
+      "scraped_at": "2026-10-04T09:19:54.460Z"
     },
     "JUBLINGREA": {
       "summary": {
@@ -8964,7 +8964,7 @@
         "hull_9": 649.66
       },
       "url": "https://in.tradingview.com/symbols/NSE-JUBLINGREA/technicals/",
-      "scraped_at": "2026-10-03T09:00:32.610Z"
+      "scraped_at": "2026-10-04T09:19:59.606Z"
     },
     "JUNIPER": {
       "summary": {
@@ -9002,7 +9002,7 @@
         "hull_9": 212.24
       },
       "url": "https://in.tradingview.com/symbols/NSE-JUNIPER/technicals/",
-      "scraped_at": "2026-10-03T09:00:37.696Z"
+      "scraped_at": "2026-10-04T09:20:04.539Z"
     },
     "JUSTDIAL": {
       "summary": {
@@ -9040,7 +9040,7 @@
         "hull_9": 653.13
       },
       "url": "https://in.tradingview.com/symbols/NSE-JUSTDIAL/technicals/",
-      "scraped_at": "2026-10-03T09:00:42.706Z"
+      "scraped_at": "2026-10-04T09:20:09.525Z"
     },
     "JWL": {
       "summary": {
@@ -9078,7 +9078,7 @@
         "hull_9": 224.33
       },
       "url": "https://in.tradingview.com/symbols/NSE-JWL/technicals/",
-      "scraped_at": "2026-10-03T09:00:47.535Z"
+      "scraped_at": "2026-10-04T09:20:14.446Z"
     },
     "JYOTHYLAB": {
       "summary": {
@@ -9228,7 +9228,7 @@
         "hull_9": 154.44
       },
       "url": "https://in.tradingview.com/symbols/NSE-KCP/technicals/",
-      "scraped_at": "2026-10-03T09:01:21.579Z"
+      "scraped_at": "2026-10-04T09:23:09.614Z"
     },
     "KDDL": {
       "summary": {
@@ -9266,7 +9266,7 @@
         "hull_9": 3880
       },
       "url": "https://in.tradingview.com/symbols/NSE-KDDL/technicals/",
-      "scraped_at": "2026-10-03T09:01:26.397Z"
+      "scraped_at": "2026-10-04T09:23:14.592Z"
     },
     "KERNEX": {
       "summary": {
@@ -9304,7 +9304,7 @@
         "hull_9": 1687.1
       },
       "url": "https://in.tradingview.com/symbols/NSE-KERNEX/technicals/",
-      "scraped_at": "2026-10-02T09:28:14.573Z"
+      "scraped_at": "2026-10-04T09:23:29.459Z"
     },
     "KICL": {
       "summary": {
@@ -9342,7 +9342,7 @@
         "hull_9": 4724.9
       },
       "url": "https://in.tradingview.com/symbols/NSE-KICL/technicals/",
-      "scraped_at": "2026-10-03T09:02:14.029Z"
+      "scraped_at": "2026-10-04T09:23:34.448Z"
     },
     "KINGFA": {
       "summary": {
@@ -9380,7 +9380,7 @@
         "hull_9": 6592.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-KINGFA/technicals/",
-      "scraped_at": "2026-10-03T09:02:18.953Z"
+      "scraped_at": "2026-10-04T09:23:39.372Z"
     },
     "KIRIINDUS": {
       "summary": {
@@ -9418,7 +9418,7 @@
         "hull_9": 539.79
       },
       "url": "https://in.tradingview.com/symbols/NSE-KIRIINDUS/technicals/",
-      "scraped_at": "2026-10-03T09:02:23.839Z"
+      "scraped_at": "2026-10-04T09:23:44.452Z"
     },
     "KIRLFER": {
       "summary": {
@@ -9456,7 +9456,7 @@
         "hull_9": 467.87
       },
       "url": "https://in.tradingview.com/symbols/NSE-KIRLFER/technicals/",
-      "scraped_at": "2026-10-03T09:02:28.930Z"
+      "scraped_at": "2026-10-04T09:23:49.384Z"
     },
     "KIRLOSIND": {
       "summary": {
@@ -9494,7 +9494,7 @@
         "hull_9": 3507.1
       },
       "url": "https://in.tradingview.com/symbols/NSE-KIRLOSIND/technicals/",
-      "scraped_at": "2026-10-03T09:02:33.764Z"
+      "scraped_at": "2026-10-04T09:23:54.325Z"
     },
     "KIRLPNU": {
       "summary": {
@@ -9532,7 +9532,7 @@
         "hull_9": 673.62
       },
       "url": "https://in.tradingview.com/symbols/NSE-KIRLPNU/technicals/",
-      "scraped_at": "2026-10-03T09:02:38.579Z"
+      "scraped_at": "2026-10-04T09:23:59.320Z"
     },
     "KISSHT": {
       "summary": {
@@ -9568,7 +9568,7 @@
         "hull_9": 366.3
       },
       "url": "https://in.tradingview.com/symbols/NSE-KISSHT/technicals/",
-      "scraped_at": "2026-10-03T09:02:43.407Z"
+      "scraped_at": "2026-10-04T09:24:04.189Z"
     },
     "KITEX": {
       "summary": {
@@ -9606,7 +9606,7 @@
         "hull_9": 116.64
       },
       "url": "https://in.tradingview.com/symbols/NSE-KITEX/technicals/",
-      "scraped_at": "2026-10-03T09:02:48.386Z"
+      "scraped_at": "2026-10-04T09:24:09.083Z"
     },
     "KMEW": {
       "summary": {
@@ -9644,7 +9644,7 @@
         "hull_9": 3018
       },
       "url": "https://in.tradingview.com/symbols/NSE-KMEW/technicals/",
-      "scraped_at": "2026-10-03T09:04:04.239Z"
+      "scraped_at": "2026-10-04T09:24:57.261Z"
     },
     "KNACK": {
       "summary": {
@@ -9678,7 +9678,7 @@
         "hull_9": 177.37
       },
       "url": "https://in.tradingview.com/symbols/NSE-KNACK/technicals/",
-      "scraped_at": "2026-10-03T09:04:09.042Z"
+      "scraped_at": "2026-10-04T09:25:02.131Z"
     },
     "KNRCON": {
       "summary": {
@@ -9716,7 +9716,7 @@
         "hull_9": 116.38
       },
       "url": "https://in.tradingview.com/symbols/NSE-KNRCON/technicals/",
-      "scraped_at": "2026-10-03T09:04:13.872Z"
+      "scraped_at": "2026-10-04T09:25:07.138Z"
     },
     "KODYTECH": {
       "summary": {
@@ -9754,7 +9754,7 @@
         "hull_9": 1505.5
       },
       "url": "https://in.tradingview.com/symbols/NSE-KODYTECH/technicals/",
-      "scraped_at": "2026-10-03T09:04:18.723Z"
+      "scraped_at": "2026-10-04T09:25:12.005Z"
     },
     "KOLTEPATIL": {
       "summary": {
@@ -9792,7 +9792,7 @@
         "hull_9": 421.46
       },
       "url": "https://in.tradingview.com/symbols/NSE-KOLTEPATIL/technicals/",
-      "scraped_at": "2026-10-03T09:04:23.689Z"
+      "scraped_at": "2026-10-04T09:25:17.010Z"
     },
     "KOVAI": {
       "summary": {
@@ -9830,7 +9830,7 @@
         "hull_9": 5971.5
       },
       "url": "https://in.tradingview.com/symbols/NSE-KOVAI/technicals/",
-      "scraped_at": "2026-10-03T09:04:28.517Z"
+      "scraped_at": "2026-10-04T09:25:21.983Z"
     },
     "KPEL": {
       "summary": {
@@ -9906,7 +9906,7 @@
         "hull_9": 365.04
       },
       "url": "https://in.tradingview.com/symbols/NSE-KPIGREEN/technicals/",
-      "scraped_at": "2026-10-03T09:04:33.342Z"
+      "scraped_at": "2026-10-04T09:25:26.854Z"
     },
     "KPL": {
       "summary": {
@@ -9980,7 +9980,7 @@
         "hull_9": 377.74
       },
       "url": "https://in.tradingview.com/symbols/NSE-KRBL/technicals/",
-      "scraped_at": "2026-10-03T09:04:43.086Z"
+      "scraped_at": "2026-10-04T09:26:04.915Z"
     },
     "KRISHANA": {
       "summary": {
@@ -10018,7 +10018,7 @@
         "hull_9": 186.24
       },
       "url": "https://in.tradingview.com/symbols/NSE-KRISHANA/technicals/",
-      "scraped_at": "2026-10-02T09:31:22.667Z"
+      "scraped_at": "2026-10-04T09:26:09.848Z"
     },
     "KRN": {
       "summary": {
@@ -10056,7 +10056,7 @@
         "hull_9": 1429
       },
       "url": "https://in.tradingview.com/symbols/NSE-KRN/technicals/",
-      "scraped_at": "2026-10-02T09:31:27.617Z"
+      "scraped_at": "2026-10-04T09:26:14.758Z"
     },
     "KSCL": {
       "summary": {
@@ -10094,7 +10094,7 @@
         "hull_9": 736.89
       },
       "url": "https://in.tradingview.com/symbols/NSE-KSCL/technicals/",
-      "scraped_at": "2026-10-03T09:05:54.241Z"
+      "scraped_at": "2026-10-04T09:26:19.624Z"
     },
     "KTKBANK": {
       "summary": {
@@ -10166,7 +10166,7 @@
         "hull_9": 598.53
       },
       "url": "https://in.tradingview.com/symbols/NSE-KUSUMGAR/technicals/",
-      "scraped_at": "2026-10-03T09:06:08.826Z"
+      "scraped_at": "2026-10-04T09:26:34.373Z"
     },
     "KWIL": {
       "summary": {
@@ -10202,7 +10202,7 @@
         "hull_9": 39.1
       },
       "url": "https://in.tradingview.com/symbols/NSE-KWIL/technicals/",
-      "scraped_at": "2026-10-03T09:06:13.655Z"
+      "scraped_at": "2026-10-04T09:26:39.234Z"
     },
     "LANDMARK": {
       "summary": {
@@ -10212,35 +10212,35 @@
         "neutral_count": 9
       },
       "oscillators": {
-        "rsi_14": 38.61,
-        "stoch_k": 26.05,
-        "cci_20": 171.9,
+        "rsi_14": 38.13,
+        "stoch_k": 25.38,
+        "cci_20": 174.81,
         "adx_14": 14.2,
-        "momentum_10": 27.15,
-        "macd_level": 7.86,
-        "stoch_rsi_fast": 28.91,
-        "williams_r": 86.99,
-        "ultimate_osc": 32.06
+        "momentum_10": 28.85,
+        "macd_level": 8,
+        "stoch_rsi_fast": 27.92,
+        "williams_r": 89.02,
+        "ultimate_osc": 31.33
       },
       "moving_averages": {
-        "ema_10": 484.03,
-        "sma_10": 490.47,
-        "ema_20": 490.96,
-        "sma_20": 490.37,
-        "ema_30": 494.63,
-        "sma_30": 497.86,
-        "ema_50": 493.53,
-        "sma_50": 512.28,
-        "ema_100": 479.85,
-        "sma_100": 467.92,
-        "ema_200": 474.48,
-        "sma_200": 443.76,
+        "ema_10": 483.73,
+        "sma_10": 490.3,
+        "ema_20": 490.8,
+        "sma_20": 490.29,
+        "ema_30": 494.52,
+        "sma_30": 497.8,
+        "ema_50": 493.46,
+        "sma_50": 512.25,
+        "ema_100": 479.82,
+        "sma_100": 467.9,
+        "ema_200": 474.47,
+        "sma_200": 443.75,
         "ichimoku_base": 495.95,
-        "vwma_20": 486.59,
-        "hull_9": 469.74
+        "vwma_20": 486.54,
+        "hull_9": 469.23
       },
       "url": "https://in.tradingview.com/symbols/NSE-LANDMARK/technicals/",
-      "scraped_at": "2026-10-01T09:54:50.176Z"
+      "scraped_at": "2026-10-04T09:26:44.135Z"
     },
     "LAOPALA": {
       "summary": {
@@ -10540,7 +10540,7 @@
         "hull_9": 358.94
       },
       "url": "https://in.tradingview.com/symbols/NSE-MAHLIFE/technicals/",
-      "scraped_at": "2026-10-03T09:11:22.449Z"
+      "scraped_at": "2026-10-04T09:32:16.386Z"
     },
     "MAHLOG": {
       "summary": {
@@ -10578,7 +10578,7 @@
         "hull_9": 430.57
       },
       "url": "https://in.tradingview.com/symbols/NSE-MAHLOG/technicals/",
-      "scraped_at": "2026-10-03T09:11:27.327Z"
+      "scraped_at": "2026-10-04T09:32:21.280Z"
     },
     "MAITHANALL": {
       "summary": {
@@ -10616,7 +10616,7 @@
         "hull_9": 910.61
       },
       "url": "https://in.tradingview.com/symbols/NSE-MAITHANALL/technicals/",
-      "scraped_at": "2026-10-03T09:11:37.245Z"
+      "scraped_at": "2026-10-04T09:32:31.116Z"
     },
     "MANGLMCEM": {
       "summary": {
@@ -10654,7 +10654,7 @@
         "hull_9": 981.49
       },
       "url": "https://in.tradingview.com/symbols/NSE-MANGLMCEM/technicals/",
-      "scraped_at": "2026-10-03T09:11:42.219Z"
+      "scraped_at": "2026-10-04T09:32:36.069Z"
     },
     "MANINDS": {
       "summary": {
@@ -10768,7 +10768,7 @@
         "hull_9": 1851
       },
       "url": "https://in.tradingview.com/symbols/NSE-MANORAMA/technicals/",
-      "scraped_at": "2026-10-03T09:11:57.143Z"
+      "scraped_at": "2026-10-04T09:33:47.129Z"
     },
     "MANYAVAR": {
       "summary": {
@@ -10844,7 +10844,7 @@
         "hull_9": 439.26
       },
       "url": "https://in.tradingview.com/symbols/NSE-MARINE/technicals/",
-      "scraped_at": "2026-10-03T09:12:40.067Z"
+      "scraped_at": "2026-10-04T09:34:02.000Z"
     },
     "MARKSANS": {
       "summary": {
@@ -10920,7 +10920,7 @@
         "hull_9": 277.77
       },
       "url": "https://in.tradingview.com/symbols/NSE-MASFIN/technicals/",
-      "scraped_at": "2026-10-03T09:12:49.941Z"
+      "scraped_at": "2026-10-04T09:34:11.891Z"
     },
     "MASTEK": {
       "summary": {
@@ -10958,7 +10958,7 @@
         "hull_9": 1543.8
       },
       "url": "https://in.tradingview.com/symbols/NSE-MASTEK/technicals/",
-      "scraped_at": "2026-10-03T09:12:54.823Z"
+      "scraped_at": "2026-10-04T09:34:16.802Z"
     },
     "MAXESTATES": {
       "summary": {
@@ -10996,7 +10996,7 @@
         "hull_9": 567.26
       },
       "url": "https://in.tradingview.com/symbols/NSE-MAXESTATES/technicals/",
-      "scraped_at": "2026-10-02T09:39:35.055Z"
+      "scraped_at": "2026-10-04T09:34:21.683Z"
     },
     "MAYURUNIQ": {
       "summary": {
@@ -11034,7 +11034,7 @@
         "hull_9": 722.38
       },
       "url": "https://in.tradingview.com/symbols/NSE-MAYURUNIQ/technicals/",
-      "scraped_at": "2026-10-02T09:39:39.991Z"
+      "scraped_at": "2026-10-04T09:34:26.602Z"
     },
     "MBAPL": {
       "summary": {
@@ -11110,7 +11110,7 @@
         "hull_9": 653.19
       },
       "url": "https://in.tradingview.com/symbols/NSE-MEDPLUS/technicals/",
-      "scraped_at": "2026-10-03T09:14:16.012Z"
+      "scraped_at": "2026-10-04T09:35:09.558Z"
     },
     "METROPOLIS": {
       "summary": {
@@ -11148,7 +11148,7 @@
         "hull_9": 541.62
       },
       "url": "https://in.tradingview.com/symbols/NSE-METROPOLIS/technicals/",
-      "scraped_at": "2026-10-03T09:14:20.841Z"
+      "scraped_at": "2026-10-04T09:35:14.585Z"
     },
     "MGL": {
       "summary": {
@@ -11186,7 +11186,7 @@
         "hull_9": 1043.9
       },
       "url": "https://in.tradingview.com/symbols/NSE-MGL/technicals/",
-      "scraped_at": "2026-10-03T09:14:25.687Z"
+      "scraped_at": "2026-10-04T09:35:19.648Z"
     },
     "MHRIL": {
       "summary": {
@@ -11224,7 +11224,7 @@
         "hull_9": 193.28
       },
       "url": "https://in.tradingview.com/symbols/NSE-MHRIL/technicals/",
-      "scraped_at": "2026-10-03T09:14:30.547Z"
+      "scraped_at": "2026-10-04T09:35:24.563Z"
     },
     "MIDHANI": {
       "summary": {
@@ -11262,7 +11262,7 @@
         "hull_9": 431.81
       },
       "url": "https://in.tradingview.com/symbols/NSE-MIDHANI/technicals/",
-      "scraped_at": "2026-10-03T09:14:35.422Z"
+      "scraped_at": "2026-10-04T09:35:29.630Z"
     },
     "MIDWESTLTD": {
       "summary": {
@@ -11300,7 +11300,7 @@
         "hull_9": 868.67
       },
       "url": "https://in.tradingview.com/symbols/NSE-MIDWESTLTD/technicals/",
-      "scraped_at": "2026-10-03T09:14:40.321Z"
+      "scraped_at": "2026-10-04T09:35:34.526Z"
     },
     "MMFL": {
       "summary": {
@@ -11338,7 +11338,7 @@
         "hull_9": 593.24
       },
       "url": "https://in.tradingview.com/symbols/NSE-MMFL/technicals/",
-      "scraped_at": "2026-10-03T09:14:45.225Z"
+      "scraped_at": "2026-10-04T09:35:39.622Z"
     },
     "MOLDTKPAC": {
       "summary": {
@@ -11376,7 +11376,7 @@
         "hull_9": 651.05
       },
       "url": "https://in.tradingview.com/symbols/NSE-MOLDTKPAC/technicals/",
-      "scraped_at": "2026-10-03T09:15:56.222Z"
+      "scraped_at": "2026-10-04T09:36:22.730Z"
     },
     "MONARCH": {
       "summary": {
@@ -11414,7 +11414,7 @@
         "hull_9": 336.47
       },
       "url": "https://in.tradingview.com/symbols/NSE-MONARCH/technicals/",
-      "scraped_at": "2026-10-03T09:16:01.171Z"
+      "scraped_at": "2026-10-04T09:36:27.805Z"
     },
     "MOREPENLAB": {
       "summary": {
@@ -11452,7 +11452,7 @@
         "hull_9": 126.28
       },
       "url": "https://in.tradingview.com/symbols/NSE-MOREPENLAB/technicals/",
-      "scraped_at": "2026-10-03T09:16:10.904Z"
+      "scraped_at": "2026-10-04T09:36:37.777Z"
     },
     "MOSCHIP": {
       "summary": {
@@ -11490,7 +11490,7 @@
         "hull_9": 197.79
       },
       "url": "https://in.tradingview.com/symbols/NSE-MOSCHIP/technicals/",
-      "scraped_at": "2026-10-03T09:16:15.815Z"
+      "scraped_at": "2026-10-04T09:36:42.675Z"
     },
     "MPSLTD": {
       "summary": {
@@ -11528,7 +11528,7 @@
         "hull_9": 2657.8
       },
       "url": "https://in.tradingview.com/symbols/NSE-MPSLTD/technicals/",
-      "scraped_at": "2026-10-02T09:41:42.999Z"
+      "scraped_at": "2026-10-04T09:37:25.702Z"
     },
     "MSTCLTD": {
       "summary": {
@@ -11566,7 +11566,7 @@
         "hull_9": 703.53
       },
       "url": "https://in.tradingview.com/symbols/NSE-MSTCLTD/technicals/",
-      "scraped_at": "2026-10-03T09:18:00.561Z"
+      "scraped_at": "2026-10-04T09:37:30.585Z"
     },
     "MUFIN": {
       "summary": {
@@ -11604,7 +11604,7 @@
         "hull_9": 130.95
       },
       "url": "https://in.tradingview.com/symbols/NSE-MUFIN/technicals/",
-      "scraped_at": "2026-10-03T09:18:05.431Z"
+      "scraped_at": "2026-10-04T09:37:35.481Z"
     },
     "MUKANDLTD": {
       "summary": {
@@ -11642,7 +11642,7 @@
         "hull_9": 181.73
       },
       "url": "https://in.tradingview.com/symbols/NSE-MUKANDLTD/technicals/",
-      "scraped_at": "2026-10-03T09:18:10.269Z"
+      "scraped_at": "2026-10-04T09:37:40.400Z"
     },
     "MUTHOOTMF": {
       "summary": {
@@ -11680,7 +11680,7 @@
         "hull_9": 174.54
       },
       "url": "https://in.tradingview.com/symbols/NSE-MUTHOOTMF/technicals/",
-      "scraped_at": "2026-10-03T09:18:15.094Z"
+      "scraped_at": "2026-10-04T09:37:45.312Z"
     },
     "NACLIND": {
       "summary": {
@@ -11756,7 +11756,7 @@
         "hull_9": 121.95
       },
       "url": "https://in.tradingview.com/symbols/NSE-NAVNETEDUL/technicals/",
-      "scraped_at": "2026-10-03T09:18:29.805Z"
+      "scraped_at": "2026-10-04T09:38:56.354Z"
     },
     "NELCO": {
       "summary": {
@@ -11906,7 +11906,7 @@
         "hull_9": 1038.3
       },
       "url": "https://in.tradingview.com/symbols/NSE-NESCO/technicals/",
-      "scraped_at": "2026-10-03T09:20:23.534Z"
+      "scraped_at": "2026-10-04T09:40:50.270Z"
     },
     "NETWORK18": {
       "summary": {
@@ -11944,7 +11944,7 @@
         "hull_9": 25.47
       },
       "url": "https://in.tradingview.com/symbols/NSE-NETWORK18/technicals/",
-      "scraped_at": "2026-10-03T09:20:28.404Z"
+      "scraped_at": "2026-10-04T09:40:55.159Z"
     },
     "NEWGEN": {
       "summary": {
@@ -11982,7 +11982,7 @@
         "hull_9": 459.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-NEWGEN/technicals/",
-      "scraped_at": "2026-10-03T09:20:33.271Z"
+      "scraped_at": "2026-10-04T09:41:00.116Z"
     },
     "NFL": {
       "summary": {
@@ -12020,7 +12020,7 @@
         "hull_9": 64.26
       },
       "url": "https://in.tradingview.com/symbols/NSE-NFL/technicals/",
-      "scraped_at": "2026-10-03T09:20:38.155Z"
+      "scraped_at": "2026-10-04T09:41:05.074Z"
     },
     "NIRLON": {
       "summary": {
@@ -12132,7 +12132,7 @@
         "hull_9": 596.26
       },
       "url": "https://in.tradingview.com/symbols/NSE-NITINSPIN/technicals/",
-      "scraped_at": "2026-10-03T09:21:30.697Z"
+      "scraped_at": "2026-10-04T09:43:22.331Z"
     },
     "NOCIL": {
       "summary": {
@@ -12170,7 +12170,7 @@
         "hull_9": 163.74
       },
       "url": "https://in.tradingview.com/symbols/NSE-NOCIL/technicals/",
-      "scraped_at": "2026-10-03T09:21:35.651Z"
+      "scraped_at": "2026-10-04T09:43:27.277Z"
     },
     "NORTHARC": {
       "summary": {
@@ -12208,7 +12208,7 @@
         "hull_9": 283.18
       },
       "url": "https://in.tradingview.com/symbols/NSE-NORTHARC/technicals/",
-      "scraped_at": "2026-10-03T09:21:40.534Z"
+      "scraped_at": "2026-10-04T09:43:32.173Z"
     },
     "NOVARTIND": {
       "summary": {
@@ -12246,7 +12246,7 @@
         "hull_9": 1916.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-NOVARTIND/technicals/",
-      "scraped_at": "2026-10-03T09:21:45.466Z"
+      "scraped_at": "2026-10-04T09:43:37.064Z"
     },
     "NPST": {
       "summary": {
@@ -12284,7 +12284,7 @@
         "hull_9": 1683.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-NPST/technicals/",
-      "scraped_at": "2026-10-03T09:21:50.285Z"
+      "scraped_at": "2026-10-04T09:43:41.973Z"
     },
     "NUVOCO": {
       "summary": {
@@ -12322,7 +12322,7 @@
         "hull_9": 328.14
       },
       "url": "https://in.tradingview.com/symbols/NSE-NUVOCO/technicals/",
-      "scraped_at": "2026-10-03T09:23:06.178Z"
+      "scraped_at": "2026-10-04T09:44:30.384Z"
     },
     "OLECTRA": {
       "summary": {
@@ -12360,7 +12360,7 @@
         "hull_9": 1103.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-OLECTRA/technicals/",
-      "scraped_at": "2026-10-03T09:23:49.490Z"
+      "scraped_at": "2026-10-04T09:45:13.798Z"
     },
     "OMNI": {
       "summary": {
@@ -12396,7 +12396,7 @@
         "hull_9": 571.45
       },
       "url": "https://in.tradingview.com/symbols/NSE-OMNI/technicals/",
-      "scraped_at": "2026-10-03T09:23:59.443Z"
+      "scraped_at": "2026-10-04T09:45:23.759Z"
     },
     "OPTIEMUS": {
       "summary": {
@@ -12434,7 +12434,7 @@
         "hull_9": 803.96
       },
       "url": "https://in.tradingview.com/symbols/NSE-OPTIEMUS/technicals/",
-      "scraped_at": "2026-10-03T09:24:04.310Z"
+      "scraped_at": "2026-10-04T09:45:28.819Z"
     },
     "ORCHPHARMA": {
       "summary": {
@@ -12472,7 +12472,7 @@
         "hull_9": 981.83
       },
       "url": "https://in.tradingview.com/symbols/NSE-ORCHPHARMA/technicals/",
-      "scraped_at": "2026-10-03T09:24:09.204Z"
+      "scraped_at": "2026-10-04T09:45:33.771Z"
     },
     "ORIANA": {
       "summary": {
@@ -12510,7 +12510,7 @@
         "hull_9": 317.48
       },
       "url": "https://in.tradingview.com/symbols/NSE-ORIANA/technicals/",
-      "scraped_at": "2026-10-03T09:24:14.178Z"
+      "scraped_at": "2026-10-04T09:45:38.657Z"
     },
     "ORIENTCEM": {
       "summary": {
@@ -12548,7 +12548,7 @@
         "hull_9": 116.59
       },
       "url": "https://in.tradingview.com/symbols/NSE-ORIENTCEM/technicals/",
-      "scraped_at": "2026-10-02T09:50:00.983Z"
+      "scraped_at": "2026-10-04T09:45:43.669Z"
     },
     "ORIENTELEC": {
       "summary": {
@@ -12586,7 +12586,7 @@
         "hull_9": 154.59
       },
       "url": "https://in.tradingview.com/symbols/NSE-ORIENTELEC/technicals/",
-      "scraped_at": "2026-10-02T09:50:05.939Z"
+      "scraped_at": "2026-10-04T09:45:48.760Z"
     },
     "ORIENTHOT": {
       "summary": {
@@ -12624,7 +12624,7 @@
         "hull_9": 139.68
       },
       "url": "https://in.tradingview.com/symbols/NSE-ORIENTHOT/technicals/",
-      "scraped_at": "2026-10-03T09:25:25.193Z"
+      "scraped_at": "2026-10-04T09:45:53.702Z"
     },
     "ORISSAMINE": {
       "summary": {
@@ -12662,7 +12662,7 @@
         "hull_9": 3585.9
       },
       "url": "https://in.tradingview.com/symbols/NSE-ORISSAMINE/technicals/",
-      "scraped_at": "2026-10-03T09:25:30.436Z"
+      "scraped_at": "2026-10-04T09:45:58.805Z"
     },
     "ORKLAINDIA": {
       "summary": {
@@ -12700,7 +12700,7 @@
         "hull_9": 537.19
       },
       "url": "https://in.tradingview.com/symbols/NSE-ORKLAINDIA/technicals/",
-      "scraped_at": "2026-10-03T09:25:35.489Z"
+      "scraped_at": "2026-10-04T09:46:03.769Z"
     },
     "OSWALPUMPS": {
       "summary": {
@@ -12738,7 +12738,7 @@
         "hull_9": 262.89
       },
       "url": "https://in.tradingview.com/symbols/NSE-OSWALPUMPS/technicals/",
-      "scraped_at": "2026-10-03T09:25:40.361Z"
+      "scraped_at": "2026-10-04T09:46:08.765Z"
     },
     "PACEDIGITK": {
       "summary": {
@@ -12776,7 +12776,7 @@
         "hull_9": 161.94
       },
       "url": "https://in.tradingview.com/symbols/NSE-PACEDIGITK/technicals/",
-      "scraped_at": "2026-10-03T09:25:45.204Z"
+      "scraped_at": "2026-10-04T09:46:13.669Z"
     },
     "PAISALO": {
       "summary": {
@@ -12814,7 +12814,7 @@
         "hull_9": 75.02
       },
       "url": "https://in.tradingview.com/symbols/NSE-PAISALO/technicals/",
-      "scraped_at": "2026-10-03T09:25:50.135Z"
+      "scraped_at": "2026-10-04T09:46:18.577Z"
     },
     "PANACEABIO": {
       "summary": {
@@ -12852,7 +12852,7 @@
         "hull_9": 364.09
       },
       "url": "https://in.tradingview.com/symbols/NSE-PANACEABIO/technicals/",
-      "scraped_at": "2026-10-03T09:25:55.004Z"
+      "scraped_at": "2026-10-04T09:46:23.510Z"
     },
     "PANAMAPET": {
       "summary": {
@@ -12890,7 +12890,7 @@
         "hull_9": 481.89
       },
       "url": "https://in.tradingview.com/symbols/NSE-PANAMAPET/technicals/",
-      "scraped_at": "2026-10-02T09:51:13.609Z"
+      "scraped_at": "2026-10-04T09:46:28.387Z"
     },
     "PARACABLES": {
       "summary": {
@@ -12966,7 +12966,7 @@
         "hull_9": 269.56
       },
       "url": "https://in.tradingview.com/symbols/NSE-PARAGMILK/technicals/",
-      "scraped_at": "2026-10-02T09:51:18.542Z"
+      "scraped_at": "2026-10-04T09:46:33.283Z"
     },
     "PATELENG": {
       "summary": {
@@ -13004,7 +13004,7 @@
         "hull_9": 26.25
       },
       "url": "https://in.tradingview.com/symbols/NSE-PATELENG/technicals/",
-      "scraped_at": "2026-10-03T09:27:48.766Z"
+      "scraped_at": "2026-10-04T09:46:52.905Z"
     },
     "PCJEWELLER": {
       "summary": {
@@ -13156,7 +13156,7 @@
         "hull_9": 5548
       },
       "url": "https://in.tradingview.com/symbols/NSE-PGHL/technicals/",
-      "scraped_at": "2026-10-03T09:28:08.203Z"
+      "scraped_at": "2026-10-04T09:48:09.020Z"
     },
     "PGIL": {
       "summary": {
@@ -13194,7 +13194,7 @@
         "hull_9": 1294.4
       },
       "url": "https://in.tradingview.com/symbols/NSE-PGIL/technicals/",
-      "scraped_at": "2026-10-03T09:28:13.168Z"
+      "scraped_at": "2026-10-04T09:48:13.902Z"
     },
     "PGINVIT": {
       "summary": {
@@ -13232,7 +13232,7 @@
         "hull_9": 102.29
       },
       "url": "https://in.tradingview.com/symbols/NSE-PGINVIT/technicals/",
-      "scraped_at": "2026-10-02T09:52:08.070Z"
+      "scraped_at": "2026-10-04T09:48:18.812Z"
     },
     "PITTIENG": {
       "summary": {
@@ -13346,7 +13346,7 @@
         "hull_9": 131.61
       },
       "url": "https://in.tradingview.com/symbols/NSE-PNCINFRA/technicals/",
-      "scraped_at": "2026-10-03T09:30:07.216Z"
+      "scraped_at": "2026-10-04T09:50:08.043Z"
     },
     "PNGJL": {
       "summary": {
@@ -13384,7 +13384,7 @@
         "hull_9": 582.61
       },
       "url": "https://in.tradingview.com/symbols/NSE-PNGJL/technicals/",
-      "scraped_at": "2026-10-03T09:30:12.054Z"
+      "scraped_at": "2026-10-04T09:50:12.949Z"
     },
     "POCL": {
       "summary": {
@@ -13422,7 +13422,7 @@
         "hull_9": 445.06
       },
       "url": "https://in.tradingview.com/symbols/NSE-POCL/technicals/",
-      "scraped_at": "2026-10-03T09:30:16.922Z"
+      "scraped_at": "2026-10-04T09:50:17.952Z"
     },
     "POKARNA": {
       "summary": {
@@ -13460,7 +13460,7 @@
         "hull_9": 702.83
       },
       "url": "https://in.tradingview.com/symbols/NSE-POKARNA/technicals/",
-      "scraped_at": "2026-10-03T09:30:22.010Z"
+      "scraped_at": "2026-10-04T09:50:22.840Z"
     },
     "POLYPLEX": {
       "summary": {
@@ -13610,7 +13610,7 @@
         "hull_9": 121.18
       },
       "url": "https://in.tradingview.com/symbols/NSE-PRAKASH/technicals/",
-      "scraped_at": "2026-10-03T09:31:19.708Z"
+      "scraped_at": "2026-10-04T09:52:16.865Z"
     },
     "PRECWIRE": {
       "summary": {
@@ -13648,7 +13648,7 @@
         "hull_9": 496.69
       },
       "url": "https://in.tradingview.com/symbols/NSE-PRECWIRE/technicals/",
-      "scraped_at": "2026-10-03T09:31:29.345Z"
+      "scraped_at": "2026-10-04T09:52:26.778Z"
     },
     "PREMEXPLN": {
       "summary": {
@@ -13762,7 +13762,7 @@
         "hull_9": 106.69
       },
       "url": "https://in.tradingview.com/symbols/NSE-PRSMJOHNSN/technicals/",
-      "scraped_at": "2026-10-03T09:31:53.996Z"
+      "scraped_at": "2026-10-04T09:53:47.923Z"
     },
     "PSPPROJECT": {
       "summary": {
@@ -13800,7 +13800,7 @@
         "hull_9": 754.97
       },
       "url": "https://in.tradingview.com/symbols/NSE-PSPPROJECT/technicals/",
-      "scraped_at": "2026-10-03T09:31:59.030Z"
+      "scraped_at": "2026-10-04T09:53:52.905Z"
     },
     "PTC": {
       "summary": {
@@ -13876,7 +13876,7 @@
         "hull_9": 332.94
       },
       "url": "https://in.tradingview.com/symbols/NSE-QUESS/technicals/",
-      "scraped_at": "2026-10-03T09:33:53.259Z"
+      "scraped_at": "2026-10-04T09:55:18.718Z"
     },
     "RAILTEL": {
       "summary": {
@@ -13914,7 +13914,7 @@
         "hull_9": 259.36
       },
       "url": "https://in.tradingview.com/symbols/NSE-RAILTEL/technicals/",
-      "scraped_at": "2026-10-02T09:59:41.085Z"
+      "scraped_at": "2026-10-04T09:55:23.622Z"
     },
     "RAIN": {
       "summary": {
@@ -13952,7 +13952,7 @@
         "hull_9": 212.1
       },
       "url": "https://in.tradingview.com/symbols/NSE-RAIN/technicals/",
-      "scraped_at": "2026-10-03T09:34:31.231Z"
+      "scraped_at": "2026-10-04T09:55:28.500Z"
     },
     "RAJESHEXPO": {
       "summary": {
@@ -14028,7 +14028,7 @@
         "hull_9": 459.53
       },
       "url": "https://in.tradingview.com/symbols/NSE-RAJRATAN/technicals/",
-      "scraped_at": "2026-10-03T09:34:36.106Z"
+      "scraped_at": "2026-10-04T09:55:33.457Z"
     },
     "RALLIS": {
       "summary": {
@@ -14066,7 +14066,7 @@
         "hull_9": 199.17
       },
       "url": "https://in.tradingview.com/symbols/NSE-RALLIS/technicals/",
-      "scraped_at": "2026-10-03T09:34:40.967Z"
+      "scraped_at": "2026-10-04T09:55:38.372Z"
     },
     "RAMRAT": {
       "summary": {
@@ -14104,7 +14104,7 @@
         "hull_9": 597.62
       },
       "url": "https://in.tradingview.com/symbols/NSE-RAMRAT/technicals/",
-      "scraped_at": "2026-10-03T09:35:00.416Z"
+      "scraped_at": "2026-10-04T09:56:26.518Z"
     },
     "RANEHOLDIN": {
       "summary": {
@@ -14142,7 +14142,7 @@
         "hull_9": 1525.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-RANEHOLDIN/technicals/",
-      "scraped_at": "2026-10-03T09:35:05.291Z"
+      "scraped_at": "2026-10-04T09:56:31.409Z"
     },
     "RATEGAIN": {
       "summary": {
@@ -14180,7 +14180,7 @@
         "hull_9": 838.99
       },
       "url": "https://in.tradingview.com/symbols/NSE-RATEGAIN/technicals/",
-      "scraped_at": "2026-10-02T10:00:53.685Z"
+      "scraped_at": "2026-10-04T09:56:36.372Z"
     },
     "RAYMOND": {
       "summary": {
@@ -14218,7 +14218,7 @@
         "hull_9": 1215.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-RAYMOND/technicals/",
-      "scraped_at": "2026-10-03T09:36:16.312Z"
+      "scraped_at": "2026-10-04T09:56:46.375Z"
     },
     "RAYMONDLSL": {
       "summary": {
@@ -14256,7 +14256,7 @@
         "hull_9": 643.23
       },
       "url": "https://in.tradingview.com/symbols/NSE-RAYMONDLSL/technicals/",
-      "scraped_at": "2026-10-03T09:36:21.140Z"
+      "scraped_at": "2026-10-04T09:56:51.251Z"
     },
     "RAYMONDREL": {
       "summary": {
@@ -14294,7 +14294,7 @@
         "hull_9": 671.91
       },
       "url": "https://in.tradingview.com/symbols/NSE-RAYMONDREL/technicals/",
-      "scraped_at": "2026-10-03T09:36:26.104Z"
+      "scraped_at": "2026-10-04T09:56:56.140Z"
     },
     "RBA": {
       "summary": {
@@ -14408,7 +14408,7 @@
         "hull_9": 265.94
       },
       "url": "https://in.tradingview.com/symbols/NSE-REFEX/technicals/",
-      "scraped_at": "2026-10-03T09:36:45.676Z"
+      "scraped_at": "2026-10-04T09:58:12.234Z"
     },
     "RELAXO": {
       "summary": {
@@ -14446,7 +14446,7 @@
         "hull_9": 288.64
       },
       "url": "https://in.tradingview.com/symbols/NSE-RELAXO/technicals/",
-      "scraped_at": "2026-10-02T10:01:37.984Z"
+      "scraped_at": "2026-10-04T09:58:17.146Z"
     },
     "RELIGARE": {
       "summary": {
@@ -14484,7 +14484,7 @@
         "hull_9": 224.65
       },
       "url": "https://in.tradingview.com/symbols/NSE-RELIGARE/technicals/",
-      "scraped_at": "2026-10-02T10:01:42.893Z"
+      "scraped_at": "2026-10-04T09:58:22.089Z"
     },
     "RELINFRA": {
       "summary": {
@@ -14560,7 +14560,7 @@
         "hull_9": 21.88
       },
       "url": "https://in.tradingview.com/symbols/NSE-RENUKA/technicals/",
-      "scraped_at": "2026-10-03T09:38:34.733Z"
+      "scraped_at": "2026-10-04T09:58:36.995Z"
     },
     "REPCOHOME": {
       "summary": {
@@ -14598,7 +14598,7 @@
         "hull_9": 338.41
       },
       "url": "https://in.tradingview.com/symbols/NSE-REPCOHOME/technicals/",
-      "scraped_at": "2026-10-03T09:38:39.585Z"
+      "scraped_at": "2026-10-04T09:58:41.875Z"
     },
     "RESPONIND": {
       "summary": {
@@ -14636,7 +14636,7 @@
         "hull_9": 166.33
       },
       "url": "https://in.tradingview.com/symbols/NSE-RESPONIND/technicals/",
-      "scraped_at": "2026-10-03T09:38:44.416Z"
+      "scraped_at": "2026-10-04T09:58:46.767Z"
     },
     "RHETAN": {
       "summary": {
@@ -14786,7 +14786,7 @@
         "hull_9": 703.43
       },
       "url": "https://in.tradingview.com/symbols/NSE-RISHABH/technicals/",
-      "scraped_at": "2026-10-01T10:25:41.595Z"
+      "scraped_at": "2026-10-04T09:59:57.907Z"
     },
     "RITES": {
       "summary": {
@@ -14824,7 +14824,7 @@
         "hull_9": 202.13
       },
       "url": "https://in.tradingview.com/symbols/NSE-RITES/technicals/",
-      "scraped_at": "2026-10-03T09:40:28.602Z"
+      "scraped_at": "2026-10-04T10:00:02.822Z"
     },
     "RKFORGE": {
       "summary": {
@@ -14900,7 +14900,7 @@
         "hull_9": 1354.8
       },
       "url": "https://in.tradingview.com/symbols/NSE-RML/technicals/",
-      "scraped_at": "2026-10-03T09:40:33.471Z"
+      "scraped_at": "2026-10-04T10:00:07.697Z"
     },
     "ROLEXRINGS": {
       "summary": {
@@ -15014,7 +15014,7 @@
         "hull_9": 1499.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-ROSSTECH/technicals/",
-      "scraped_at": "2026-10-03T09:41:21.512Z"
+      "scraped_at": "2026-10-04T10:01:51.999Z"
     },
     "ROUTE": {
       "summary": {
@@ -15052,7 +15052,7 @@
         "hull_9": 438.77
       },
       "url": "https://in.tradingview.com/symbols/NSE-ROUTE/technicals/",
-      "scraped_at": "2026-10-03T09:41:26.357Z"
+      "scraped_at": "2026-10-04T10:01:56.924Z"
     },
     "RPEL": {
       "summary": {
@@ -15090,7 +15090,7 @@
         "hull_9": 1785.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-RPEL/technicals/",
-      "scraped_at": "2026-10-03T09:41:31.276Z"
+      "scraped_at": "2026-10-04T10:02:01.876Z"
     },
     "RPGLIFE": {
       "summary": {
@@ -15128,7 +15128,7 @@
         "hull_9": 3051.3
       },
       "url": "https://in.tradingview.com/symbols/NSE-RPGLIFE/technicals/",
-      "scraped_at": "2026-10-03T09:41:36.127Z"
+      "scraped_at": "2026-10-04T10:02:06.763Z"
     },
     "RPOWER": {
       "summary": {
@@ -15166,7 +15166,7 @@
         "hull_9": 19.37
       },
       "url": "https://in.tradingview.com/symbols/NSE-RPOWER/technicals/",
-      "scraped_at": "2026-10-03T09:41:41.042Z"
+      "scraped_at": "2026-10-04T10:02:11.672Z"
     },
     "RSYSTEMS": {
       "summary": {
@@ -15242,7 +15242,7 @@
         "hull_9": 25.46
       },
       "url": "https://in.tradingview.com/symbols/NSE-RTNINDIA/technicals/",
-      "scraped_at": "2026-10-03T09:42:00.439Z"
+      "scraped_at": "2026-10-04T10:03:27.790Z"
     },
     "RTNPOWER": {
       "summary": {
@@ -15280,7 +15280,7 @@
         "hull_9": 6.78
       },
       "url": "https://in.tradingview.com/symbols/NSE-RTNPOWER/technicals/",
-      "scraped_at": "2026-10-03T09:42:05.282Z"
+      "scraped_at": "2026-10-04T10:03:32.699Z"
     },
     "RUSTOMJEE": {
       "summary": {
@@ -15318,7 +15318,7 @@
         "hull_9": 361.38
       },
       "url": "https://in.tradingview.com/symbols/NSE-RUSTOMJEE/technicals/",
-      "scraped_at": "2026-10-03T09:42:10.119Z"
+      "scraped_at": "2026-10-04T10:03:37.580Z"
     },
     "SAATVIKGL": {
       "summary": {
@@ -15356,7 +15356,7 @@
         "hull_9": 406.17
       },
       "url": "https://in.tradingview.com/symbols/NSE-SAATVIKGL/technicals/",
-      "scraped_at": "2026-10-03T09:42:15.169Z"
+      "scraped_at": "2026-10-04T10:03:42.475Z"
     },
     "SAFARI": {
       "summary": {
@@ -15394,7 +15394,7 @@
         "hull_9": 1403.3
       },
       "url": "https://in.tradingview.com/symbols/NSE-SAFARI/technicals/",
-      "scraped_at": "2026-10-03T09:42:20.016Z"
+      "scraped_at": "2026-10-04T10:03:47.390Z"
     },
     "SAMBHV": {
       "summary": {
@@ -15432,7 +15432,7 @@
         "hull_9": 163.78
       },
       "url": "https://in.tradingview.com/symbols/NSE-SAMBHV/technicals/",
-      "scraped_at": "2026-10-03T09:42:34.672Z"
+      "scraped_at": "2026-10-04T10:04:02.149Z"
     },
     "SAMHI": {
       "summary": {
@@ -15508,7 +15508,7 @@
         "hull_9": 513.82
       },
       "url": "https://in.tradingview.com/symbols/NSE-SANATHAN/technicals/",
-      "scraped_at": "2026-10-03T09:42:44.330Z"
+      "scraped_at": "2026-10-04T10:04:40.213Z"
     },
     "SANDHAR": {
       "summary": {
@@ -15546,7 +15546,7 @@
         "hull_9": 576.08
       },
       "url": "https://in.tradingview.com/symbols/NSE-SANDHAR/technicals/",
-      "scraped_at": "2026-10-03T09:42:49.273Z"
+      "scraped_at": "2026-10-04T10:04:45.101Z"
     },
     "SANDUMA": {
       "summary": {
@@ -15584,7 +15584,7 @@
         "hull_9": 180.22
       },
       "url": "https://in.tradingview.com/symbols/NSE-SANDUMA/technicals/",
-      "scraped_at": "2026-10-03T09:42:54.230Z"
+      "scraped_at": "2026-10-04T10:04:49.983Z"
     },
     "SANGAMIND": {
       "summary": {
@@ -15622,7 +15622,7 @@
         "hull_9": 650.3
       },
       "url": "https://in.tradingview.com/symbols/NSE-SANGAMIND/technicals/",
-      "scraped_at": "2026-10-02T10:08:44.241Z"
+      "scraped_at": "2026-10-04T10:04:54.905Z"
     },
     "SANOFICONR": {
       "summary": {
@@ -15736,7 +15736,7 @@
         "hull_9": 206.62
       },
       "url": "https://in.tradingview.com/symbols/NSE-SAPPHIRE/technicals/",
-      "scraped_at": "2026-10-03T09:44:48.038Z"
+      "scraped_at": "2026-10-04T10:06:15.775Z"
     },
     "SAREGAMA": {
       "summary": {
@@ -15774,7 +15774,7 @@
         "hull_9": 496.61
       },
       "url": "https://in.tradingview.com/symbols/NSE-SAREGAMA/technicals/",
-      "scraped_at": "2026-10-03T09:44:52.993Z"
+      "scraped_at": "2026-10-04T10:06:20.868Z"
     },
     "SASKEN": {
       "summary": {
@@ -15812,7 +15812,7 @@
         "hull_9": 1659
       },
       "url": "https://in.tradingview.com/symbols/NSE-SASKEN/technicals/",
-      "scraped_at": "2026-10-03T09:44:57.911Z"
+      "scraped_at": "2026-10-04T10:06:25.903Z"
     },
     "SATIN": {
       "summary": {
@@ -15850,7 +15850,7 @@
         "hull_9": 235.38
       },
       "url": "https://in.tradingview.com/symbols/NSE-SATIN/technicals/",
-      "scraped_at": "2026-10-03T09:45:02.791Z"
+      "scraped_at": "2026-10-04T10:06:30.794Z"
     },
     "SBC": {
       "summary": {
@@ -15888,7 +15888,7 @@
         "hull_9": 58.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-SBC/technicals/",
-      "scraped_at": "2026-10-02T10:10:53.178Z"
+      "scraped_at": "2026-10-04T10:06:35.719Z"
     },
     "SEDEMAC": {
       "summary": {
@@ -16031,7 +16031,7 @@
         "hull_9": 317.11
       },
       "url": "https://in.tradingview.com/symbols/NSE-SENCO/technicals/",
-      "scraped_at": "2026-10-03T09:46:33.445Z"
+      "scraped_at": "2026-10-04T10:08:29.630Z"
     },
     "SENORES": {
       "summary": {
@@ -16069,7 +16069,7 @@
         "hull_9": 1377.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-SENORES/technicals/",
-      "scraped_at": "2026-10-03T09:46:38.311Z"
+      "scraped_at": "2026-10-04T10:08:34.577Z"
     },
     "SETL": {
       "summary": {
@@ -16107,7 +16107,7 @@
         "hull_9": 427.9
       },
       "url": "https://in.tradingview.com/symbols/NSE-SETL/technicals/",
-      "scraped_at": "2026-10-03T09:46:43.150Z"
+      "scraped_at": "2026-10-04T10:08:39.496Z"
     },
     "SFL": {
       "summary": {
@@ -16145,7 +16145,7 @@
         "hull_9": 624.04
       },
       "url": "https://in.tradingview.com/symbols/NSE-SFL/technicals/",
-      "scraped_at": "2026-10-02T10:11:37.829Z"
+      "scraped_at": "2026-10-04T10:08:44.373Z"
     },
     "SGFIN": {
       "summary": {
@@ -16183,7 +16183,7 @@
         "hull_9": 603.05
       },
       "url": "https://in.tradingview.com/symbols/NSE-SGFIN/technicals/",
-      "scraped_at": "2026-10-02T10:11:42.726Z"
+      "scraped_at": "2026-10-04T10:08:49.457Z"
     },
     "SGMART": {
       "summary": {
@@ -16221,7 +16221,7 @@
         "hull_9": 752.79
       },
       "url": "https://in.tradingview.com/symbols/NSE-SGMART/technicals/",
-      "scraped_at": "2026-10-03T09:47:54.115Z"
+      "scraped_at": "2026-10-04T10:08:54.512Z"
     },
     "SHAKTIPUMP": {
       "summary": {
@@ -16297,7 +16297,7 @@
         "hull_9": 571.36
       },
       "url": "https://in.tradingview.com/symbols/NSE-SHANTIGEAR/technicals/",
-      "scraped_at": "2026-10-03T09:48:03.903Z"
+      "scraped_at": "2026-10-04T10:09:32.534Z"
     },
     "SHARDACROP": {
       "summary": {
@@ -16335,7 +16335,7 @@
         "hull_9": 713.06
       },
       "url": "https://in.tradingview.com/symbols/NSE-SHARDACROP/technicals/",
-      "scraped_at": "2026-10-03T09:48:13.669Z"
+      "scraped_at": "2026-10-04T10:09:42.389Z"
     },
     "SHAREINDIA": {
       "summary": {
@@ -16373,7 +16373,7 @@
         "hull_9": 201.52
       },
       "url": "https://in.tradingview.com/symbols/NSE-SHAREINDIA/technicals/",
-      "scraped_at": "2026-10-02T10:12:17.099Z"
+      "scraped_at": "2026-10-04T10:09:52.256Z"
     },
     "SHILCTECH": {
       "summary": {
@@ -16411,7 +16411,7 @@
         "hull_9": 4051
       },
       "url": "https://in.tradingview.com/symbols/NSE-SHILCTECH/technicals/",
-      "scraped_at": "2026-10-02T10:12:22.157Z"
+      "scraped_at": "2026-10-04T10:09:57.137Z"
     },
     "SHILPAMED": {
       "summary": {
@@ -16525,7 +16525,7 @@
         "hull_9": 421.03
       },
       "url": "https://in.tradingview.com/symbols/NSE-SHOPERSTOP/technicals/",
-      "scraped_at": "2026-10-03T09:50:02.591Z"
+      "scraped_at": "2026-10-04T10:10:07.107Z"
     },
     "SHREEJISPG": {
       "summary": {
@@ -16563,7 +16563,7 @@
         "hull_9": 779.42
       },
       "url": "https://in.tradingview.com/symbols/NSE-SHREEJISPG/technicals/",
-      "scraped_at": "2026-10-03T09:50:07.437Z"
+      "scraped_at": "2026-10-04T10:10:12.042Z"
     },
     "SHREMINVIT": {
       "summary": {
@@ -16601,7 +16601,7 @@
         "hull_9": 102.55
       },
       "url": "https://in.tradingview.com/symbols/NSE-SHREMINVIT/technicals/",
-      "scraped_at": "2026-10-03T09:50:12.313Z"
+      "scraped_at": "2026-10-04T10:10:16.941Z"
     },
     "SIKA": {
       "summary": {
@@ -16713,7 +16713,7 @@
         "hull_9": 22.47
       },
       "url": "https://in.tradingview.com/symbols/NSE-SINDHUTRAD/technicals/",
-      "scraped_at": "2026-10-03T09:51:05.028Z"
+      "scraped_at": "2026-10-04T10:12:34.188Z"
     },
     "SIRCA": {
       "summary": {
@@ -16751,7 +16751,7 @@
         "hull_9": 406.35
       },
       "url": "https://in.tradingview.com/symbols/NSE-SIRCA/technicals/",
-      "scraped_at": "2026-10-03T09:51:09.955Z"
+      "scraped_at": "2026-10-04T10:12:39.065Z"
     },
     "SIS": {
       "summary": {
@@ -16789,7 +16789,7 @@
         "hull_9": 411.81
       },
       "url": "https://in.tradingview.com/symbols/NSE-SIS/technicals/",
-      "scraped_at": "2026-10-03T09:51:14.829Z"
+      "scraped_at": "2026-10-04T10:12:43.939Z"
     },
     "SIYSIL": {
       "summary": {
@@ -16827,7 +16827,7 @@
         "hull_9": 537.59
       },
       "url": "https://in.tradingview.com/symbols/NSE-SIYSIL/technicals/",
-      "scraped_at": "2026-10-03T09:51:19.707Z"
+      "scraped_at": "2026-10-04T10:12:48.825Z"
     },
     "SJS": {
       "summary": {
@@ -16865,7 +16865,7 @@
         "hull_9": 2233.8
       },
       "url": "https://in.tradingview.com/symbols/NSE-SJS/technicals/",
-      "scraped_at": "2026-10-03T09:51:24.641Z"
+      "scraped_at": "2026-10-04T10:12:53.752Z"
     },
     "SKYGOLD": {
       "summary": {
@@ -16903,7 +16903,7 @@
         "hull_9": 816.56
       },
       "url": "https://in.tradingview.com/symbols/NSE-SKYGOLD/technicals/",
-      "scraped_at": "2026-10-03T09:51:39.414Z"
+      "scraped_at": "2026-10-04T10:13:36.775Z"
     },
     "SMARTWORKS": {
       "summary": {
@@ -16941,7 +16941,7 @@
         "hull_9": 507.95
       },
       "url": "https://in.tradingview.com/symbols/NSE-SMARTWORKS/technicals/",
-      "scraped_at": "2026-10-03T09:51:44.480Z"
+      "scraped_at": "2026-10-04T10:13:41.861Z"
     },
     "SMLMAH": {
       "summary": {
@@ -16979,7 +16979,7 @@
         "hull_9": 6466.2
       },
       "url": "https://in.tradingview.com/symbols/NSE-SMLMAH/technicals/",
-      "scraped_at": "2026-10-03T09:51:49.389Z"
+      "scraped_at": "2026-10-04T10:13:46.738Z"
     },
     "SMSPHARMA": {
       "summary": {
@@ -17017,7 +17017,7 @@
         "hull_9": 473.71
       },
       "url": "https://in.tradingview.com/symbols/NSE-SMSPHARMA/technicals/",
-      "scraped_at": "2026-10-03T09:51:54.291Z"
+      "scraped_at": "2026-10-04T10:13:51.680Z"
     },
     "SOLARA": {
       "summary": {
@@ -17055,7 +17055,7 @@
         "hull_9": 730.82
       },
       "url": "https://in.tradingview.com/symbols/NSE-SOLARA/technicals/",
-      "scraped_at": "2026-10-02T10:16:21.954Z"
+      "scraped_at": "2026-10-04T10:13:56.663Z"
     },
     "SOMANYCERA": {
       "summary": {
@@ -17169,7 +17169,7 @@
         "hull_9": 937.64
       },
       "url": "https://in.tradingview.com/symbols/NSE-SPAL/technicals/",
-      "scraped_at": "2026-10-03T09:53:15.155Z"
+      "scraped_at": "2026-10-04T10:15:12.839Z"
     },
     "SPANDANA": {
       "summary": {
@@ -17245,7 +17245,7 @@
         "hull_9": 200.53
       },
       "url": "https://in.tradingview.com/symbols/NSE-SPARC/technicals/",
-      "scraped_at": "2026-10-03T09:53:20.010Z"
+      "scraped_at": "2026-10-04T10:15:17.934Z"
     },
     "SPECTRUM": {
       "summary": {
@@ -17283,7 +17283,7 @@
         "hull_9": 3903.5
       },
       "url": "https://in.tradingview.com/symbols/NSE-SPECTRUM/technicals/",
-      "scraped_at": "2026-10-03T09:53:24.872Z"
+      "scraped_at": "2026-10-04T10:15:22.821Z"
     },
     "SPORTKING": {
       "summary": {
@@ -17321,7 +17321,7 @@
         "hull_9": 209.91
       },
       "url": "https://in.tradingview.com/symbols/NSE-SPORTKING/technicals/",
-      "scraped_at": "2026-10-03T09:53:29.776Z"
+      "scraped_at": "2026-10-04T10:15:27.691Z"
     },
     "SSWL": {
       "summary": {
@@ -17397,7 +17397,7 @@
         "hull_9": 226.95
       },
       "url": "https://in.tradingview.com/symbols/NSE-STALLION/technicals/",
-      "scraped_at": "2026-10-03T09:54:12.760Z"
+      "scraped_at": "2026-10-04T10:16:38.970Z"
     },
     "STAR": {
       "summary": {
@@ -17435,7 +17435,7 @@
         "hull_9": 1108.8
       },
       "url": "https://in.tradingview.com/symbols/NSE-STAR/technicals/",
-      "scraped_at": "2026-10-03T09:54:17.846Z"
+      "scraped_at": "2026-10-04T10:16:43.866Z"
     },
     "STYLAMIND": {
       "summary": {
@@ -17473,7 +17473,7 @@
         "hull_9": 3287.5
       },
       "url": "https://in.tradingview.com/symbols/NSE-STYLAMIND/technicals/",
-      "scraped_at": "2026-10-03T09:56:17.334Z"
+      "scraped_at": "2026-10-04T10:18:14.734Z"
     },
     "STYLEBAAZA": {
       "summary": {
@@ -17511,7 +17511,7 @@
         "hull_9": 390.64
       },
       "url": "https://in.tradingview.com/symbols/NSE-STYLEBAAZA/technicals/",
-      "scraped_at": "2026-10-03T09:56:22.174Z"
+      "scraped_at": "2026-10-04T10:18:19.655Z"
     },
     "STYRENIX": {
       "summary": {
@@ -17549,7 +17549,7 @@
         "hull_9": 2004.1
       },
       "url": "https://in.tradingview.com/symbols/NSE-STYRENIX/technicals/",
-      "scraped_at": "2026-10-03T09:56:27.030Z"
+      "scraped_at": "2026-10-04T10:18:24.605Z"
     },
     "SUBROS": {
       "summary": {
@@ -17625,7 +17625,7 @@
         "hull_9": 1204
       },
       "url": "https://in.tradingview.com/symbols/NSE-SUDARSCHEM/technicals/",
-      "scraped_at": "2026-10-03T09:56:36.703Z"
+      "scraped_at": "2026-10-04T10:19:02.601Z"
     },
     "SUDEEPPHRM": {
       "summary": {
@@ -17699,7 +17699,7 @@
         "hull_9": 1210.1
       },
       "url": "https://in.tradingview.com/symbols/NSE-SUNCLAY/technicals/",
-      "scraped_at": "2026-10-02T10:21:04.674Z"
+      "scraped_at": "2026-10-04T10:19:07.542Z"
     },
     "SUNDROP": {
       "summary": {
@@ -17737,7 +17737,7 @@
         "hull_9": 751.06
       },
       "url": "https://in.tradingview.com/symbols/NSE-SUNDROP/technicals/",
-      "scraped_at": "2026-10-02T10:21:09.828Z"
+      "scraped_at": "2026-10-04T10:19:12.451Z"
     },
     "SUNFLAG": {
       "summary": {
@@ -17775,7 +17775,7 @@
         "hull_9": 472.05
       },
       "url": "https://in.tradingview.com/symbols/NSE-SUNFLAG/technicals/",
-      "scraped_at": "2026-10-02T10:21:14.758Z"
+      "scraped_at": "2026-10-04T10:19:17.406Z"
     },
     "SUNTECK": {
       "summary": {
@@ -17813,7 +17813,7 @@
         "hull_9": 276.14
       },
       "url": "https://in.tradingview.com/symbols/NSE-SUNTECK/technicals/",
-      "scraped_at": "2026-10-03T09:58:20.754Z"
+      "scraped_at": "2026-10-04T10:19:22.308Z"
     },
     "SUPRIYA": {
       "summary": {
@@ -17889,7 +17889,7 @@
         "hull_9": 222.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-SURYAROSNI/technicals/",
-      "scraped_at": "2026-10-03T09:58:35.403Z"
+      "scraped_at": "2026-10-04T10:20:33.441Z"
     },
     "SUVEN": {
       "summary": {
@@ -17927,7 +17927,7 @@
         "hull_9": 313.87
       },
       "url": "https://in.tradingview.com/symbols/NSE-SUVEN/technicals/",
-      "scraped_at": "2026-10-03T09:58:40.318Z"
+      "scraped_at": "2026-10-04T10:20:38.338Z"
     },
     "SWANCORP": {
       "summary": {
@@ -17965,7 +17965,7 @@
         "hull_9": 276.2
       },
       "url": "https://in.tradingview.com/symbols/NSE-SWANCORP/technicals/",
-      "scraped_at": "2026-10-03T09:58:45.153Z"
+      "scraped_at": "2026-10-04T10:20:43.311Z"
     },
     "SWARAJENG": {
       "summary": {
@@ -18003,7 +18003,7 @@
         "hull_9": 3543.1
       },
       "url": "https://in.tradingview.com/symbols/NSE-SWARAJENG/technicals/",
-      "scraped_at": "2026-10-02T10:22:17.505Z"
+      "scraped_at": "2026-10-04T10:20:48.232Z"
     },
     "SWSOLAR": {
       "summary": {
@@ -18041,7 +18041,7 @@
         "hull_9": 167.37
       },
       "url": "https://in.tradingview.com/symbols/NSE-SWSOLAR/technicals/",
-      "scraped_at": "2026-10-02T10:22:22.415Z"
+      "scraped_at": "2026-10-04T10:20:53.152Z"
     },
     "SYMPHONY": {
       "summary": {
@@ -18079,7 +18079,7 @@
         "hull_9": 577.46
       },
       "url": "https://in.tradingview.com/symbols/NSE-SYMPHONY/technicals/",
-      "scraped_at": "2026-10-03T10:00:29.401Z"
+      "scraped_at": "2026-10-04T10:21:03.116Z"
     },
     "TAJGVK": {
       "summary": {
@@ -18193,7 +18193,7 @@
         "hull_9": 9426.4
       },
       "url": "https://in.tradingview.com/symbols/NSE-TASTYBITE/technicals/",
-      "scraped_at": "2026-10-03T10:00:58.694Z"
+      "scraped_at": "2026-10-04T10:22:29.052Z"
     },
     "TATVA": {
       "summary": {
@@ -18231,7 +18231,7 @@
         "hull_9": 1783.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-TATVA/technicals/",
-      "scraped_at": "2026-10-03T10:01:03.568Z"
+      "scraped_at": "2026-10-04T10:22:33.933Z"
     },
     "TCI": {
       "summary": {
@@ -18269,7 +18269,7 @@
         "hull_9": 884.12
       },
       "url": "https://in.tradingview.com/symbols/NSE-TCI/technicals/",
-      "scraped_at": "2026-10-03T10:01:13.314Z"
+      "scraped_at": "2026-10-04T10:22:43.738Z"
     },
     "TCIEXP": {
       "summary": {
@@ -18345,7 +18345,7 @@
         "hull_9": 1002
       },
       "url": "https://in.tradingview.com/symbols/NSE-TECHNOE/technicals/",
-      "scraped_at": "2026-10-03T10:01:51.342Z"
+      "scraped_at": "2026-10-04T10:22:53.541Z"
     },
     "TECHNVISN": {
       "summary": {
@@ -18381,7 +18381,7 @@
         "hull_9": 3835.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-TECHNVISN/technicals/",
-      "scraped_at": "2026-10-03T10:01:56.189Z"
+      "scraped_at": "2026-10-04T10:22:58.510Z"
     },
     "TEGA": {
       "summary": {
@@ -18457,7 +18457,7 @@
         "hull_9": 474.16
       },
       "url": "https://in.tradingview.com/symbols/NSE-TEJASNET/technicals/",
-      "scraped_at": "2026-10-03T10:02:01.024Z"
+      "scraped_at": "2026-10-04T10:23:03.559Z"
     },
     "TEXRAIL": {
       "summary": {
@@ -18533,7 +18533,7 @@
         "hull_9": 2117.2
       },
       "url": "https://in.tradingview.com/symbols/NSE-THEJO/technicals/",
-      "scraped_at": "2026-10-03T10:02:20.807Z"
+      "scraped_at": "2026-10-04T10:24:19.631Z"
     },
     "THOMASCOOK": {
       "summary": {
@@ -18571,7 +18571,7 @@
         "hull_9": 101.77
       },
       "url": "https://in.tradingview.com/symbols/NSE-THOMASCOOK/technicals/",
-      "scraped_at": "2026-10-03T10:02:25.814Z"
+      "scraped_at": "2026-10-04T10:24:24.530Z"
     },
     "THYROCARE": {
       "summary": {
@@ -18609,7 +18609,7 @@
         "hull_9": 531.66
       },
       "url": "https://in.tradingview.com/symbols/NSE-THYROCARE/technicals/",
-      "scraped_at": "2026-10-02T10:26:27.079Z"
+      "scraped_at": "2026-10-04T10:24:29.435Z"
     },
     "TI": {
       "summary": {
@@ -18685,7 +18685,7 @@
         "hull_9": 2882.1
       },
       "url": "https://in.tradingview.com/symbols/NSE-TIIL/technicals/",
-      "scraped_at": "2026-10-02T10:26:32.015Z"
+      "scraped_at": "2026-10-04T10:24:34.339Z"
     },
     "TIL": {
       "summary": {
@@ -18723,7 +18723,7 @@
         "hull_9": 249.79
       },
       "url": "https://in.tradingview.com/symbols/NSE-TIL/technicals/",
-      "scraped_at": "2026-10-03T10:03:36.864Z"
+      "scraped_at": "2026-10-04T10:24:39.266Z"
     },
     "TIMETECHNO": {
       "summary": {
@@ -18761,7 +18761,7 @@
         "hull_9": 182.82
       },
       "url": "https://in.tradingview.com/symbols/NSE-TIMETECHNO/technicals/",
-      "scraped_at": "2026-10-03T10:03:41.709Z"
+      "scraped_at": "2026-10-04T10:24:44.175Z"
     },
     "TIPSMUSIC": {
       "summary": {
@@ -18799,7 +18799,7 @@
         "hull_9": 648.25
       },
       "url": "https://in.tradingview.com/symbols/NSE-TIPSMUSIC/technicals/",
-      "scraped_at": "2026-10-03T10:03:51.542Z"
+      "scraped_at": "2026-10-04T10:24:53.965Z"
     },
     "TIRUMALCHM": {
       "summary": {
@@ -18951,7 +18951,7 @@
         "hull_9": 235.61
       },
       "url": "https://in.tradingview.com/symbols/NSE-TRIVENI/technicals/",
-      "scraped_at": "2026-10-02T10:28:07.673Z"
+      "scraped_at": "2026-10-04T10:26:38.331Z"
     },
     "TURTLEMINT": {
       "summary": {
@@ -18985,7 +18985,7 @@
         "hull_9": 62.87
       },
       "url": "https://in.tradingview.com/symbols/NSE-TURTLEMINT/technicals/",
-      "scraped_at": "2026-10-03T10:05:32.169Z"
+      "scraped_at": "2026-10-04T10:27:31.056Z"
     },
     "TVSINVIT": {
       "summary": {
@@ -19057,7 +19057,7 @@
         "hull_9": 129.42
       },
       "url": "https://in.tradingview.com/symbols/NSE-TVSSCS/technicals/",
-      "scraped_at": "2026-10-03T10:05:37.228Z"
+      "scraped_at": "2026-10-04T10:27:35.944Z"
     },
     "TVSSRICHAK": {
       "summary": {
@@ -19095,7 +19095,7 @@
         "hull_9": 4379.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-TVSSRICHAK/technicals/",
-      "scraped_at": "2026-10-03T10:05:42.088Z"
+      "scraped_at": "2026-10-04T10:27:40.885Z"
     },
     "UEL": {
       "summary": {
@@ -19133,7 +19133,7 @@
         "hull_9": 183.46
       },
       "url": "https://in.tradingview.com/symbols/NSE-UEL/technicals/",
-      "scraped_at": "2026-10-03T10:05:46.968Z"
+      "scraped_at": "2026-10-04T10:27:45.855Z"
     },
     "UFBL": {
       "summary": {
@@ -19171,7 +19171,7 @@
         "hull_9": 670.54
       },
       "url": "https://in.tradingview.com/symbols/NSE-UFBL/technicals/",
-      "scraped_at": "2026-10-02T10:29:48.333Z"
+      "scraped_at": "2026-10-04T10:27:50.738Z"
     },
     "UFLEX": {
       "summary": {
@@ -19209,7 +19209,7 @@
         "hull_9": 648.21
       },
       "url": "https://in.tradingview.com/symbols/NSE-UFLEX/technicals/",
-      "scraped_at": "2026-10-02T10:29:53.239Z"
+      "scraped_at": "2026-10-04T10:27:55.776Z"
     },
     "UNICHEMLAB": {
       "summary": {
@@ -19323,7 +19323,7 @@
         "hull_9": 829.24
       },
       "url": "https://in.tradingview.com/symbols/NSE-UNIPARTS/technicals/",
-      "scraped_at": "2026-10-02T10:30:08.354Z"
+      "scraped_at": "2026-10-04T10:29:06.872Z"
     },
     "UNIVCABLES": {
       "summary": {
@@ -19361,7 +19361,7 @@
         "hull_9": 1437.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-UNIVCABLES/technicals/",
-      "scraped_at": "2026-10-02T10:30:13.278Z"
+      "scraped_at": "2026-10-04T10:29:11.755Z"
     },
     "UTIAMC": {
       "summary": {
@@ -19399,7 +19399,7 @@
         "hull_9": 875.24
       },
       "url": "https://in.tradingview.com/symbols/NSE-UTIAMC/technicals/",
-      "scraped_at": "2026-10-03T10:08:13.842Z"
+      "scraped_at": "2026-10-04T10:29:16.653Z"
     },
     "UTKARSHBNK": {
       "summary": {
@@ -19437,7 +19437,7 @@
         "hull_9": 13.63
       },
       "url": "https://in.tradingview.com/symbols/NSE-UTKARSHBNK/technicals/",
-      "scraped_at": "2026-10-03T10:08:18.698Z"
+      "scraped_at": "2026-10-04T10:29:21.716Z"
     },
     "UTLSOLAR": {
       "summary": {
@@ -19511,7 +19511,7 @@
         "hull_9": 205.9
       },
       "url": "https://in.tradingview.com/symbols/NSE-V2RETAIL/technicals/",
-      "scraped_at": "2026-10-03T10:08:23.563Z"
+      "scraped_at": "2026-10-04T10:29:26.614Z"
     },
     "VADILALIND": {
       "summary": {
@@ -19663,7 +19663,7 @@
         "hull_9": 1362.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-VEEDOL/technicals/",
-      "scraped_at": "2026-10-02T10:32:07.379Z"
+      "scraped_at": "2026-10-04T10:30:37.636Z"
     },
     "VENKEYS": {
       "summary": {
@@ -19701,7 +19701,7 @@
         "hull_9": 1598.5
       },
       "url": "https://in.tradingview.com/symbols/NSE-VENKEYS/technicals/",
-      "scraped_at": "2026-10-02T10:32:12.315Z"
+      "scraped_at": "2026-10-04T10:30:42.532Z"
     },
     "VENUSPIPES": {
       "summary": {
@@ -19739,7 +19739,7 @@
         "hull_9": 2158.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-VENUSPIPES/technicals/",
-      "scraped_at": "2026-10-03T10:09:44.353Z"
+      "scraped_at": "2026-10-04T10:30:47.417Z"
     },
     "VIMTALABS": {
       "summary": {
@@ -19777,7 +19777,7 @@
         "hull_9": 587.65
       },
       "url": "https://in.tradingview.com/symbols/NSE-VIMTALABS/technicals/",
-      "scraped_at": "2026-10-02T10:33:10.177Z"
+      "scraped_at": "2026-10-04T10:31:40.187Z"
     },
     "VINCOFE": {
       "summary": {
@@ -19815,7 +19815,7 @@
         "hull_9": 180.63
       },
       "url": "https://in.tradingview.com/symbols/NSE-VINCOFE/technicals/",
-      "scraped_at": "2026-10-03T10:10:42.182Z"
+      "scraped_at": "2026-10-04T10:31:45.092Z"
     },
     "VINDHYATEL": {
       "summary": {
@@ -19929,7 +19929,7 @@
         "hull_9": 657.51
       },
       "url": "https://in.tradingview.com/symbols/NSE-VISHNU/technicals/",
-      "scraped_at": "2026-10-03T10:10:56.974Z"
+      "scraped_at": "2026-10-04T10:32:56.132Z"
     },
     "VIYASH": {
       "summary": {
@@ -19967,7 +19967,7 @@
         "hull_9": 232.49
       },
       "url": "https://in.tradingview.com/symbols/NSE-VIYASH/technicals/",
-      "scraped_at": "2026-10-03T10:11:01.869Z"
+      "scraped_at": "2026-10-04T10:33:01.030Z"
     },
     "VOLTAMP": {
       "summary": {
@@ -20005,7 +20005,7 @@
         "hull_9": 10464
       },
       "url": "https://in.tradingview.com/symbols/NSE-VOLTAMP/technicals/",
-      "scraped_at": "2026-10-02T10:33:49.606Z"
+      "scraped_at": "2026-10-04T10:33:15.724Z"
     },
     "VRLLOG": {
       "summary": {
@@ -20043,7 +20043,7 @@
         "hull_9": 283.54
       },
       "url": "https://in.tradingview.com/symbols/NSE-VRLLOG/technicals/",
-      "scraped_at": "2026-10-03T10:12:17.895Z"
+      "scraped_at": "2026-10-04T10:33:20.626Z"
     },
     "VSSL": {
       "summary": {
@@ -20081,7 +20081,7 @@
         "hull_9": 396.65
       },
       "url": "https://in.tradingview.com/symbols/NSE-VSSL/technicals/",
-      "scraped_at": "2026-10-03T10:12:22.771Z"
+      "scraped_at": "2026-10-04T10:33:25.552Z"
     },
     "VSTIND": {
       "summary": {
@@ -20119,7 +20119,7 @@
         "hull_9": 201.57
       },
       "url": "https://in.tradingview.com/symbols/NSE-VSTIND/technicals/",
-      "scraped_at": "2026-10-03T10:12:27.598Z"
+      "scraped_at": "2026-10-04T10:33:30.442Z"
     },
     "VSTTILLERS": {
       "summary": {
@@ -20157,7 +20157,7 @@
         "hull_9": 4373.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-VSTTILLERS/technicals/",
-      "scraped_at": "2026-10-03T10:12:32.596Z"
+      "scraped_at": "2026-10-04T10:33:35.378Z"
     },
     "WAAREERTL": {
       "summary": {
@@ -20195,7 +20195,7 @@
         "hull_9": 815.64
       },
       "url": "https://in.tradingview.com/symbols/NSE-WAAREERTL/technicals/",
-      "scraped_at": "2026-10-03T10:12:37.470Z"
+      "scraped_at": "2026-10-04T10:33:40.277Z"
     },
     "WABAG": {
       "summary": {
@@ -20271,7 +20271,7 @@
         "hull_9": 730.83
       },
       "url": "https://in.tradingview.com/symbols/NSE-WELENT/technicals/",
-      "scraped_at": "2026-10-03T10:12:52.319Z"
+      "scraped_at": "2026-10-04T10:33:54.992Z"
     },
     "WELSPLSOL": {
       "summary": {
@@ -20421,7 +20421,7 @@
         "hull_9": 2247.3
       },
       "url": "https://in.tradingview.com/symbols/NSE-WHEELS/technicals/",
-      "scraped_at": "2026-10-02T10:36:13.577Z"
+      "scraped_at": "2026-10-04T10:35:39.248Z"
     },
     "WHIRLPOOL": {
       "summary": {
@@ -20459,7 +20459,7 @@
         "hull_9": 910.09
       },
       "url": "https://in.tradingview.com/symbols/NSE-WHIRLPOOL/technicals/",
-      "scraped_at": "2026-10-03T10:14:13.298Z"
+      "scraped_at": "2026-10-04T10:35:44.149Z"
     },
     "WINDMACHIN": {
       "summary": {
@@ -20497,7 +20497,7 @@
         "hull_9": 298.53
       },
       "url": "https://in.tradingview.com/symbols/NSE-WINDMACHIN/technicals/",
-      "scraped_at": "2026-10-03T10:14:23.018Z"
+      "scraped_at": "2026-10-04T10:35:54.037Z"
     },
     "WONDERLA": {
       "summary": {
@@ -20535,7 +20535,7 @@
         "hull_9": 497.13
       },
       "url": "https://in.tradingview.com/symbols/NSE-WONDERLA/technicals/",
-      "scraped_at": "2026-10-03T10:14:27.896Z"
+      "scraped_at": "2026-10-04T10:35:58.954Z"
     },
     "YATHARTH": {
       "summary": {
@@ -20573,7 +20573,7 @@
         "hull_9": 1043.3
       },
       "url": "https://in.tradingview.com/symbols/NSE-YATHARTH/technicals/",
-      "scraped_at": "2026-10-03T10:14:52.714Z"
+      "scraped_at": "2026-10-04T10:36:23.716Z"
     },
     "ZAGGLE": {
       "summary": {
@@ -20725,7 +20725,7 @@
         "hull_9": 1282.1
       },
       "url": "https://in.tradingview.com/symbols/NSE-ZOTA/technicals/",
-      "scraped_at": "2026-10-03T10:16:08.984Z"
+      "scraped_at": "2026-10-04T10:38:08.037Z"
     },
     "AEROPLANE": {
       "summary": {
@@ -20761,7 +20761,7 @@
         "hull_9": 205.24
       },
       "url": "https://in.tradingview.com/symbols/NSE-AEROPLANE/technicals/",
-      "scraped_at": "2026-10-03T08:08:21.400Z"
+      "scraped_at": "2026-10-04T08:29:03.869Z"
     },
     "BALMLAWRIE": {
       "summary": {
@@ -20809,35 +20809,35 @@
         "neutral_count": 9
       },
       "oscillators": {
-        "rsi_14": 40.66,
-        "stoch_k": 6.32,
-        "cci_20": 87.27,
-        "adx_14": 16.86,
-        "momentum_10": 9.86,
-        "macd_level": 1.3,
+        "rsi_14": 40.81,
+        "stoch_k": 6.99,
+        "cci_20": 88.08,
+        "adx_14": 16.92,
+        "momentum_10": 9.67,
+        "macd_level": 1.29,
         "stoch_rsi_fast": 1.98,
-        "williams_r": 93.9,
-        "ultimate_osc": 37.46
+        "williams_r": 91.87,
+        "ultimate_osc": 38.04
       },
       "moving_averages": {
-        "ema_10": 173.88,
-        "sma_10": 175.57,
-        "ema_20": 174.88,
-        "sma_20": 174.36,
-        "ema_30": 176.06,
-        "sma_30": 173.49,
+        "ema_10": 173.92,
+        "sma_10": 175.59,
+        "ema_20": 174.9,
+        "sma_20": 174.37,
+        "ema_30": 176.07,
+        "sma_30": 173.5,
         "ema_50": 179.77,
         "sma_50": 178.42,
         "ema_100": 191.17,
         "sma_100": 192.14,
-        "ema_200": 219.71,
+        "ema_200": 219.72,
         "sma_200": 213.86,
         "ichimoku_base": 176.42,
-        "vwma_20": 176.03,
-        "hull_9": 167.74
+        "vwma_20": 175.93,
+        "hull_9": 167.8
       },
       "url": "https://in.tradingview.com/symbols/NSE-CRIZAC/technicals/",
-      "scraped_at": "2026-10-01T09:13:21.608Z"
+      "scraped_at": "2026-10-04T08:44:16.028Z"
     },
     "DHANUKA": {
       "summary": {
@@ -20875,7 +20875,7 @@
         "hull_9": 924.19
       },
       "url": "https://in.tradingview.com/symbols/NSE-DHANUKA/technicals/",
-      "scraped_at": "2026-10-03T08:30:02.559Z"
+      "scraped_at": "2026-10-04T08:50:49.583Z"
     },
     "ELECON": {
       "summary": {
@@ -20913,7 +20913,7 @@
         "hull_9": 470.3
       },
       "url": "https://in.tradingview.com/symbols/NSE-ELECON/technicals/",
-      "scraped_at": "2026-10-03T08:31:20.595Z"
+      "scraped_at": "2026-10-04T08:52:08.656Z"
     },
     "ENGINERSIN": {
       "summary": {
@@ -20989,7 +20989,7 @@
         "hull_9": 1704.4
       },
       "url": "https://in.tradingview.com/symbols/NSE-ENTERO/technicals/",
-      "scraped_at": "2026-10-03T08:32:23.471Z"
+      "scraped_at": "2026-10-04T08:52:43.216Z"
     },
     "EXICOM": {
       "summary": {
@@ -21027,7 +21027,7 @@
         "hull_9": 149.63
       },
       "url": "https://in.tradingview.com/symbols/NSE-EXICOM/technicals/",
-      "scraped_at": "2026-10-03T08:33:17.476Z"
+      "scraped_at": "2026-10-04T08:54:05.778Z"
     },
     "FCL": {
       "summary": {
@@ -21065,45 +21065,45 @@
         "hull_9": 57.36
       },
       "url": "https://in.tradingview.com/symbols/NSE-FCL/technicals/",
-      "scraped_at": "2026-10-03T08:33:22.497Z"
+      "scraped_at": "2026-10-04T08:54:10.683Z"
     },
     "FOSECOIND": {
       "summary": {
         "verdict": "Buy",
-        "buy_count": 0,
-        "sell_count": 2,
+        "buy_count": 1,
+        "sell_count": 1,
         "neutral_count": 9
       },
       "oscillators": {
-        "rsi_14": 54.5,
-        "stoch_k": 24.7,
-        "cci_20": 3.8,
+        "rsi_14": 54.7,
+        "stoch_k": 24.9,
+        "cci_20": 4.4,
         "adx_14": 45.2,
-        "momentum_10": 388.5,
-        "macd_level": 146.8,
-        "stoch_rsi_fast": 12.4,
-        "williams_r": 78.5,
-        "ultimate_osc": 34.3
+        "momentum_10": 383,
+        "macd_level": 147.2,
+        "stoch_rsi_fast": 12.8,
+        "williams_r": 78.1,
+        "ultimate_osc": 34.5
       },
       "moving_averages": {
-        "ema_10": 6426.2,
-        "sma_10": 6485.5,
-        "ema_20": 6346.4,
-        "sma_20": 6400.9,
-        "ema_30": 6221.9,
-        "sma_30": 6243.9,
-        "ema_50": 5995.5,
-        "sma_50": 5872.7,
-        "ema_100": 5648.8,
-        "sma_100": 5478.5,
-        "ema_200": 5353.6,
+        "ema_10": 6427.2,
+        "sma_10": 6486,
+        "ema_20": 6346.9,
+        "sma_20": 6401.2,
+        "ema_30": 6222.2,
+        "sma_30": 6244.1,
+        "ema_50": 5995.7,
+        "sma_50": 5872.8,
+        "ema_100": 5648.9,
+        "sma_100": 5478.6,
+        "ema_200": 5353.7,
         "sma_200": 5144.3,
         "ichimoku_base": 6519.8,
-        "vwma_20": 6668.2,
-        "hull_9": 6334.7
+        "vwma_20": 6667.6,
+        "hull_9": 6336.4
       },
       "url": "https://in.tradingview.com/symbols/NSE-FOSECOIND/technicals/",
-      "scraped_at": "2026-10-01T09:24:04.696Z"
+      "scraped_at": "2026-10-04T08:55:57.001Z"
     },
     "FUSION": {
       "summary": {
@@ -21113,73 +21113,73 @@
         "neutral_count": 9
       },
       "oscillators": {
-        "rsi_14": 30.42,
-        "stoch_k": 15.79,
-        "cci_20": 123.54,
+        "rsi_14": 31.03,
+        "stoch_k": 16.93,
+        "cci_20": 121.43,
         "adx_14": 27.94,
-        "momentum_10": 13.96,
-        "macd_level": 7.2,
-        "stoch_rsi_fast": 23.08,
-        "williams_r": 91.55,
-        "ultimate_osc": 34.86
+        "momentum_10": 13.09,
+        "macd_level": 7.13,
+        "stoch_rsi_fast": 24.83,
+        "williams_r": 88.12,
+        "ultimate_osc": 36.22
       },
       "moving_averages": {
-        "ema_10": 177.67,
-        "sma_10": 178.23,
-        "ema_20": 183.55,
-        "sma_20": 185.93,
-        "ema_30": 187.67,
-        "sma_30": 190.44,
-        "ema_50": 191.95,
-        "sma_50": 196.92,
-        "ema_100": 192.57,
-        "sma_100": 195.82,
-        "ema_200": 189.69,
-        "sma_200": 184.29,
+        "ema_10": 177.83,
+        "sma_10": 178.32,
+        "ema_20": 183.63,
+        "sma_20": 185.97,
+        "ema_30": 187.73,
+        "sma_30": 190.47,
+        "ema_50": 191.98,
+        "sma_50": 196.94,
+        "ema_100": 192.58,
+        "sma_100": 195.83,
+        "ema_200": 189.7,
+        "sma_200": 184.3,
         "ichimoku_base": 187.68,
-        "vwma_20": 187.81,
-        "hull_9": 170.58
+        "vwma_20": 187.72,
+        "hull_9": 170.84
       },
       "url": "https://in.tradingview.com/symbols/NSE-FUSION/technicals/",
-      "scraped_at": "2026-10-01T09:24:14.493Z"
+      "scraped_at": "2026-10-04T08:56:06.812Z"
     },
     "GAEL": {
       "summary": {
         "verdict": "Buy",
-        "buy_count": 1,
-        "sell_count": 2,
-        "neutral_count": 8
+        "buy_count": 0,
+        "sell_count": 4,
+        "neutral_count": 7
       },
       "oscillators": {
-        "rsi_14": 45.91,
-        "stoch_k": 51.73,
-        "cci_20": 45.4,
-        "adx_14": 13.12,
-        "momentum_10": 3.54,
-        "macd_level": 2.37,
-        "stoch_rsi_fast": 85.24,
-        "williams_r": 52.92,
-        "ultimate_osc": 49.07
+        "rsi_14": 42.14,
+        "stoch_k": 43.99,
+        "cci_20": 96.09,
+        "adx_14": 12.53,
+        "momentum_10": 1.72,
+        "macd_level": 2.22,
+        "stoch_rsi_fast": 62.15,
+        "williams_r": 59.14,
+        "ultimate_osc": 52.35
       },
       "moving_averages": {
-        "ema_10": 161.64,
-        "sma_10": 160.07,
-        "ema_20": 163.72,
-        "sma_20": 164.5,
-        "ema_30": 164.71,
-        "sma_30": 168.26,
-        "ema_50": 164.56,
-        "sma_50": 165.89,
-        "ema_100": 160.48,
-        "sma_100": 162.67,
-        "ema_200": 150.91,
-        "sma_200": 149.77,
-        "ichimoku_base": 168.82,
-        "vwma_20": 165.89,
-        "hull_9": 162.48
+        "ema_10": 160.82,
+        "sma_10": 160.5,
+        "ema_20": 162.63,
+        "sma_20": 162.3,
+        "ema_30": 163.73,
+        "sma_30": 166.45,
+        "ema_50": 163.97,
+        "sma_50": 167.2,
+        "ema_100": 160.49,
+        "sma_100": 162.57,
+        "ema_200": 151.3,
+        "sma_200": 150.64,
+        "ichimoku_base": 165.71,
+        "vwma_20": 162.32,
+        "hull_9": 159.88
       },
       "url": "https://in.tradingview.com/symbols/NSE-GAEL/technicals/",
-      "scraped_at": "2026-09-25T08:20:52.828Z"
+      "scraped_at": "2026-10-04T08:56:11.826Z"
     },
     "GALAXYSURF": {
       "summary": {
@@ -21255,7 +21255,7 @@
         "hull_9": 509.16
       },
       "url": "https://in.tradingview.com/symbols/NSE-GOODLUCK/technicals/",
-      "scraped_at": "2026-10-03T08:41:30.004Z"
+      "scraped_at": "2026-10-04T09:02:47.096Z"
     },
     "GOPAL": {
       "summary": {
@@ -21293,7 +21293,7 @@
         "hull_9": 251.11
       },
       "url": "https://in.tradingview.com/symbols/NSE-GOPAL/technicals/",
-      "scraped_at": "2026-10-03T08:41:35.041Z"
+      "scraped_at": "2026-10-04T09:02:51.999Z"
     },
     "GSFC": {
       "summary": {
@@ -21331,7 +21331,7 @@
         "hull_9": 149.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-GSFC/technicals/",
-      "scraped_at": "2026-10-03T08:42:14.438Z"
+      "scraped_at": "2026-10-04T09:03:31.571Z"
     },
     "HCG": {
       "summary": {
@@ -21369,7 +21369,7 @@
         "hull_9": 674.33
       },
       "url": "https://in.tradingview.com/symbols/NSE-HCG/technicals/",
-      "scraped_at": "2026-10-03T08:44:04.906Z"
+      "scraped_at": "2026-10-04T09:04:25.866Z"
     },
     "HLEGLAS": {
       "summary": {
@@ -21407,7 +21407,7 @@
         "hull_9": 433.41
       },
       "url": "https://in.tradingview.com/symbols/NSE-HLEGLAS/technicals/",
-      "scraped_at": "2026-10-02T09:12:18.369Z"
+      "scraped_at": "2026-10-04T09:06:39.864Z"
     },
     "HMT": {
       "summary": {
@@ -21445,7 +21445,7 @@
         "hull_9": 58.48
       },
       "url": "https://in.tradingview.com/symbols/NSE-HMT/technicals/",
-      "scraped_at": "2026-10-02T09:12:23.486Z"
+      "scraped_at": "2026-10-04T09:06:44.767Z"
     },
     "HNDFDS": {
       "summary": {
@@ -21635,7 +21635,7 @@
         "hull_9": 1618.9
       },
       "url": "https://in.tradingview.com/symbols/NSE-INDIAMART/technicals/",
-      "scraped_at": "2026-10-03T08:50:59.385Z"
+      "scraped_at": "2026-10-04T09:12:45.544Z"
     },
     "INDIANHUME": {
       "summary": {
@@ -21711,7 +21711,7 @@
         "hull_9": 605.61
       },
       "url": "https://in.tradingview.com/symbols/NSE-INTELLECT/technicals/",
-      "scraped_at": "2026-10-03T08:52:35.998Z"
+      "scraped_at": "2026-10-04T09:13:54.608Z"
     },
     "INTERARCH": {
       "summary": {
@@ -21749,7 +21749,7 @@
         "hull_9": 1678.4
       },
       "url": "https://in.tradingview.com/symbols/NSE-INTERARCH/technicals/",
-      "scraped_at": "2026-10-03T08:52:40.844Z"
+      "scraped_at": "2026-10-04T09:13:59.520Z"
     },
     "JAIBALAJI": {
       "summary": {
@@ -21787,7 +21787,7 @@
         "hull_9": 61.93
       },
       "url": "https://in.tradingview.com/symbols/NSE-JAIBALAJI/technicals/",
-      "scraped_at": "2026-10-03T08:53:53.166Z"
+      "scraped_at": "2026-10-04T09:15:12.101Z"
     },
     "JAYKAY": {
       "summary": {
@@ -21825,7 +21825,7 @@
         "hull_9": 205.53
       },
       "url": "https://in.tradingview.com/symbols/NSE-JAYKAY/technicals/",
-      "scraped_at": "2026-10-03T08:54:12.818Z"
+      "scraped_at": "2026-10-04T09:15:31.777Z"
     },
     "JKIL": {
       "summary": {
@@ -21939,7 +21939,7 @@
         "hull_9": 384.4
       },
       "url": "https://in.tradingview.com/symbols/NSE-JKPAPER/technicals/",
-      "scraped_at": "2026-10-02T09:22:19.535Z"
+      "scraped_at": "2026-10-04T09:17:07.530Z"
     },
     "JKTYRE": {
       "summary": {
@@ -21977,7 +21977,7 @@
         "hull_9": 338.16
       },
       "url": "https://in.tradingview.com/symbols/NSE-JKTYRE/technicals/",
-      "scraped_at": "2026-10-02T09:22:24.471Z"
+      "scraped_at": "2026-10-04T09:17:12.443Z"
     },
     "JLHL": {
       "summary": {
@@ -22015,7 +22015,7 @@
         "hull_9": 255.31
       },
       "url": "https://in.tradingview.com/symbols/NSE-JLHL/technicals/",
-      "scraped_at": "2026-10-03T08:56:54.582Z"
+      "scraped_at": "2026-10-04T09:17:17.325Z"
     },
     "JMFINANCIL": {
       "summary": {
@@ -22053,7 +22053,7 @@
         "hull_9": 126.04
       },
       "url": "https://in.tradingview.com/symbols/NSE-JMFINANCIL/technicals/",
-      "scraped_at": "2026-10-03T08:56:59.477Z"
+      "scraped_at": "2026-10-04T09:17:22.354Z"
     },
     "KEC": {
       "summary": {
@@ -22091,7 +22091,7 @@
         "hull_9": 373.16
       },
       "url": "https://in.tradingview.com/symbols/NSE-KEC/technicals/",
-      "scraped_at": "2026-10-03T09:01:31.228Z"
+      "scraped_at": "2026-10-04T09:23:19.527Z"
     },
     "KENNAMET": {
       "summary": {
@@ -22129,7 +22129,7 @@
         "hull_9": 4092.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-KENNAMET/technicals/",
-      "scraped_at": "2026-10-03T09:01:36.072Z"
+      "scraped_at": "2026-10-04T09:23:24.434Z"
     },
     "KSHINTL": {
       "summary": {
@@ -22165,7 +22165,7 @@
         "hull_9": 1005.8
       },
       "url": "https://in.tradingview.com/symbols/NSE-KSHINTL/technicals/",
-      "scraped_at": "2026-10-03T09:05:59.141Z"
+      "scraped_at": "2026-10-04T09:26:24.500Z"
     },
     "LEMONTREE": {
       "summary": {
@@ -22203,7 +22203,7 @@
         "hull_9": 104.42
       },
       "url": "https://in.tradingview.com/symbols/NSE-LEMONTREE/technicals/",
-      "scraped_at": "2026-10-03T09:08:12.659Z"
+      "scraped_at": "2026-10-04T09:28:38.064Z"
     },
     "LGBBROSLTD": {
       "summary": {
@@ -22241,7 +22241,7 @@
         "hull_9": 1723.1
       },
       "url": "https://in.tradingview.com/symbols/NSE-LGBBROSLTD/technicals/",
-      "scraped_at": "2026-10-02T09:33:56.123Z"
+      "scraped_at": "2026-10-04T09:28:42.997Z"
     },
     "LLOYDSENT": {
       "summary": {
@@ -22355,7 +22355,7 @@
         "hull_9": 839.58
       },
       "url": "https://in.tradingview.com/symbols/NSE-MAPMYINDIA/technicals/",
-      "scraped_at": "2026-10-03T09:12:02.076Z"
+      "scraped_at": "2026-10-04T09:33:52.024Z"
     },
     "MARATHON": {
       "summary": {
@@ -22393,7 +22393,7 @@
         "hull_9": 381.01
       },
       "url": "https://in.tradingview.com/symbols/NSE-MARATHON/technicals/",
-      "scraped_at": "2026-10-02T09:38:14.028Z"
+      "scraped_at": "2026-10-04T09:33:56.921Z"
     },
     "MEDIASSIST": {
       "summary": {
@@ -22431,7 +22431,7 @@
         "hull_9": 296.74
       },
       "url": "https://in.tradingview.com/symbols/NSE-MEDIASSIST/technicals/",
-      "scraped_at": "2026-10-03T09:14:10.998Z"
+      "scraped_at": "2026-10-04T09:35:04.655Z"
     },
     "MMTC": {
       "summary": {
@@ -22469,7 +22469,7 @@
         "hull_9": 55.89
       },
       "url": "https://in.tradingview.com/symbols/NSE-MMTC/technicals/",
-      "scraped_at": "2026-10-02T09:40:58.765Z"
+      "scraped_at": "2026-10-04T09:35:44.711Z"
     },
     "MOIL": {
       "summary": {
@@ -22545,7 +22545,7 @@
         "hull_9": 127.66
       },
       "url": "https://in.tradingview.com/symbols/NSE-NCC/technicals/",
-      "scraped_at": "2026-10-03T09:18:34.719Z"
+      "scraped_at": "2026-10-04T09:39:01.246Z"
     },
     "NGLFINE": {
       "summary": {
@@ -22697,7 +22697,7 @@
         "hull_9": 541.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-NRBBEARING/technicals/",
-      "scraped_at": "2026-10-03T09:21:55.129Z"
+      "scraped_at": "2026-10-04T09:43:47.418Z"
     },
     "PARAS": {
       "summary": {
@@ -22735,7 +22735,7 @@
         "hull_9": 1289.9
       },
       "url": "https://in.tradingview.com/symbols/NSE-PARAS/technicals/",
-      "scraped_at": "2026-10-02T09:51:23.579Z"
+      "scraped_at": "2026-10-04T09:46:38.167Z"
     },
     "PARKHOTELS": {
       "summary": {
@@ -22773,7 +22773,7 @@
         "hull_9": 103.22
       },
       "url": "https://in.tradingview.com/symbols/NSE-PARKHOTELS/technicals/",
-      "scraped_at": "2026-10-03T09:27:43.910Z"
+      "scraped_at": "2026-10-04T09:46:47.986Z"
     },
     "PICCADIL": {
       "summary": {
@@ -22811,7 +22811,7 @@
         "hull_9": 590.13
       },
       "url": "https://in.tradingview.com/symbols/NSE-PICCADIL/technicals/",
-      "scraped_at": "2026-10-02T09:52:12.997Z"
+      "scraped_at": "2026-10-04T09:48:23.705Z"
     },
     "PILANIINVS": {
       "summary": {
@@ -22925,45 +22925,45 @@
         "hull_9": 1194.4
       },
       "url": "https://in.tradingview.com/symbols/NSE-PVRINOX/technicals/",
-      "scraped_at": "2026-10-01T10:18:26.926Z"
+      "scraped_at": "2026-10-04T09:55:04.020Z"
     },
     "QPOWER": {
       "summary": {
         "verdict": "Buy",
-        "buy_count": 3,
+        "buy_count": 1,
         "sell_count": 1,
-        "neutral_count": 7
+        "neutral_count": 9
       },
       "oscillators": {
-        "rsi_14": 65,
-        "stoch_k": 92.7,
-        "cci_20": 172.3,
-        "adx_14": 23.1,
-        "momentum_10": 255.4,
-        "macd_level": 62.4,
-        "stoch_rsi_fast": 65.8,
-        "williams_r": 2.8,
-        "ultimate_osc": 55.8
+        "rsi_14": 59.5,
+        "stoch_k": 80.3,
+        "cci_20": 90.3,
+        "adx_14": 23.6,
+        "momentum_10": 74.8,
+        "macd_level": 61.3,
+        "stoch_rsi_fast": 75.3,
+        "williams_r": 28.8,
+        "ultimate_osc": 55.4
       },
       "moving_averages": {
-        "ema_10": 1529.2,
-        "sma_10": 1520.4,
-        "ema_20": 1482.3,
-        "sma_20": 1491.1,
-        "ema_30": 1441,
-        "sma_30": 1441.1,
-        "ema_50": 1376.7,
-        "sma_50": 1329.3,
-        "ema_100": 1267.7,
-        "sma_100": 1246.9,
-        "ema_200": 1112.5,
-        "sma_200": 1055,
-        "ichimoku_base": 1443.6,
-        "vwma_20": 1486.8,
-        "hull_9": 1579.8
+        "ema_10": 1544.4,
+        "sma_10": 1544.4,
+        "ema_20": 1499.3,
+        "sma_20": 1501.6,
+        "ema_30": 1457.9,
+        "sma_30": 1458.9,
+        "ema_50": 1392,
+        "sma_50": 1347.2,
+        "ema_100": 1279.8,
+        "sma_100": 1253.1,
+        "ema_200": 1121.7,
+        "sma_200": 1063.7,
+        "ichimoku_base": 1471.2,
+        "vwma_20": 1495.9,
+        "hull_9": 1609
       },
       "url": "https://in.tradingview.com/symbols/NSE-QPOWER/technicals/",
-      "scraped_at": "2026-09-29T09:56:49.970Z"
+      "scraped_at": "2026-10-04T09:55:08.939Z"
     },
     "RAMCOIND": {
       "summary": {
@@ -23001,7 +23001,7 @@
         "hull_9": 303.24
       },
       "url": "https://in.tradingview.com/symbols/NSE-RAMCOIND/technicals/",
-      "scraped_at": "2026-10-03T09:34:45.901Z"
+      "scraped_at": "2026-10-04T09:55:43.257Z"
     },
     "RAMCOSYS": {
       "summary": {
@@ -23077,7 +23077,7 @@
         "hull_9": 278.14
       },
       "url": "https://in.tradingview.com/symbols/NSE-RAMKY/technicals/",
-      "scraped_at": "2026-10-03T09:34:55.572Z"
+      "scraped_at": "2026-10-04T09:56:21.634Z"
     },
     "REDTAPE": {
       "summary": {
@@ -23115,45 +23115,45 @@
         "hull_9": 116.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-REDTAPE/technicals/",
-      "scraped_at": "2026-10-03T09:36:40.677Z"
+      "scraped_at": "2026-10-04T09:58:07.333Z"
     },
     "RELTD": {
       "summary": {
         "verdict": "Buy",
-        "buy_count": 2,
-        "sell_count": 0,
-        "neutral_count": 9
+        "buy_count": 1,
+        "sell_count": 3,
+        "neutral_count": 7
       },
       "oscillators": {
-        "rsi_14": 44.84,
-        "stoch_k": 39.81,
-        "cci_20": 40.65,
-        "adx_14": 12.32,
-        "momentum_10": 1.64,
-        "macd_level": 3.23,
-        "stoch_rsi_fast": 90.98,
-        "williams_r": 56.87,
-        "ultimate_osc": 46.35
+        "rsi_14": 41.56,
+        "stoch_k": 39.36,
+        "cci_20": 87.84,
+        "adx_14": 12.04,
+        "momentum_10": 0.82,
+        "macd_level": 3.19,
+        "stoch_rsi_fast": 87.93,
+        "williams_r": 66.15,
+        "ultimate_osc": 46.05
       },
       "moving_averages": {
-        "ema_10": 149.2,
-        "sma_10": 148.02,
-        "ema_20": 151.42,
-        "sma_20": 151.35,
-        "ema_30": 153.57,
-        "sma_30": 154.16,
-        "ema_50": 155.54,
-        "sma_50": 160.09,
-        "ema_100": 154.28,
-        "sma_100": 153.66,
-        "ema_200": 150,
-        "sma_200": 148.18,
+        "ema_10": 148.81,
+        "sma_10": 148.11,
+        "ema_20": 151,
+        "sma_20": 151.09,
+        "ema_30": 153.15,
+        "sma_30": 153.72,
+        "ema_50": 155.21,
+        "sma_50": 159.54,
+        "ema_100": 154.14,
+        "sma_100": 153.82,
+        "ema_200": 149.97,
+        "sma_200": 148.17,
         "ichimoku_base": 152.44,
-        "vwma_20": 151.8,
-        "hull_9": 149.02
+        "vwma_20": 151.56,
+        "hull_9": 148.78
       },
       "url": "https://in.tradingview.com/symbols/NSE-RELTD/technicals/",
-      "scraped_at": "2026-09-30T10:03:00.577Z"
+      "scraped_at": "2026-10-04T09:58:26.970Z"
     },
     "SAGCEM": {
       "summary": {
@@ -23227,7 +23227,7 @@
         "hull_9": 519.72
       },
       "url": "https://in.tradingview.com/symbols/NSE-SAIPARENT/technicals/",
-      "scraped_at": "2026-10-03T09:42:24.854Z"
+      "scraped_at": "2026-10-04T10:03:52.363Z"
     },
     "SANGHVIMOV": {
       "summary": {
@@ -23265,7 +23265,7 @@
         "hull_9": 448.91
       },
       "url": "https://in.tradingview.com/symbols/NSE-SANGHVIMOV/technicals/",
-      "scraped_at": "2026-10-02T10:08:49.158Z"
+      "scraped_at": "2026-10-04T10:04:59.768Z"
     },
     "SANOFI": {
       "summary": {
@@ -23303,7 +23303,7 @@
         "hull_9": 3059.5
       },
       "url": "https://in.tradingview.com/symbols/NSE-SANOFI/technicals/",
-      "scraped_at": "2026-10-02T10:08:54.126Z"
+      "scraped_at": "2026-10-04T10:05:04.705Z"
     },
     "SBCL": {
       "summary": {
@@ -23341,7 +23341,7 @@
         "hull_9": 1073.9
       },
       "url": "https://in.tradingview.com/symbols/NSE-SBCL/technicals/",
-      "scraped_at": "2026-10-02T10:10:58.184Z"
+      "scraped_at": "2026-10-04T10:06:40.624Z"
     },
     "SBFC": {
       "summary": {
@@ -23379,7 +23379,7 @@
         "hull_9": 83.63
       },
       "url": "https://in.tradingview.com/symbols/NSE-SBFC/technicals/",
-      "scraped_at": "2026-10-03T09:46:13.952Z"
+      "scraped_at": "2026-10-04T10:06:45.527Z"
     },
     "SEAMECLTD": {
       "summary": {
@@ -23455,7 +23455,7 @@
         "hull_9": 948.08
       },
       "url": "https://in.tradingview.com/symbols/NSE-SHARDAMOTR/technicals/",
-      "scraped_at": "2026-10-02T10:12:12.202Z"
+      "scraped_at": "2026-10-04T10:09:47.342Z"
     },
     "SHRINGARMS": {
       "summary": {
@@ -23645,7 +23645,7 @@
         "hull_9": 531.06
       },
       "url": "https://in.tradingview.com/symbols/NSE-SKIPPER/technicals/",
-      "scraped_at": "2026-10-03T09:51:34.557Z"
+      "scraped_at": "2026-10-04T10:13:31.874Z"
     },
     "SOTL": {
       "summary": {
@@ -23683,7 +23683,7 @@
         "hull_9": 717.14
       },
       "url": "https://in.tradingview.com/symbols/NSE-SOTL/technicals/",
-      "scraped_at": "2026-10-03T09:53:10.195Z"
+      "scraped_at": "2026-10-04T10:15:07.922Z"
     },
     "STARCEMENT": {
       "summary": {
@@ -23721,7 +23721,7 @@
         "hull_9": 177.56
       },
       "url": "https://in.tradingview.com/symbols/NSE-STARCEMENT/technicals/",
-      "scraped_at": "2026-10-03T09:54:23.346Z"
+      "scraped_at": "2026-10-04T10:16:48.929Z"
     },
     "STEELCAS": {
       "summary": {
@@ -23759,7 +23759,7 @@
         "hull_9": 375.54
       },
       "url": "https://in.tradingview.com/symbols/NSE-STEELCAS/technicals/",
-      "scraped_at": "2026-10-03T09:54:33.097Z"
+      "scraped_at": "2026-10-04T10:16:58.701Z"
     },
     "STOVEKRAFT": {
       "summary": {
@@ -23911,7 +23911,7 @@
         "hull_9": 491.15
       },
       "url": "https://in.tradingview.com/symbols/NSE-TANLA/technicals/",
-      "scraped_at": "2026-10-03T10:00:44.182Z"
+      "scraped_at": "2026-10-04T10:22:14.180Z"
     },
     "TARC": {
       "summary": {
@@ -23949,7 +23949,7 @@
         "hull_9": 125.27
       },
       "url": "https://in.tradingview.com/symbols/NSE-TARC/technicals/",
-      "scraped_at": "2026-10-03T10:00:49.004Z"
+      "scraped_at": "2026-10-04T10:22:19.233Z"
     },
     "TARIL": {
       "summary": {
@@ -23987,7 +23987,7 @@
         "hull_9": 271.06
       },
       "url": "https://in.tradingview.com/symbols/NSE-TARIL/technicals/",
-      "scraped_at": "2026-10-03T10:00:53.850Z"
+      "scraped_at": "2026-10-04T10:22:24.158Z"
     },
     "TCPLPACK": {
       "summary": {
@@ -24025,7 +24025,7 @@
         "hull_9": 4074.1
       },
       "url": "https://in.tradingview.com/symbols/NSE-TCPLPACK/technicals/",
-      "scraped_at": "2026-10-01T10:47:37.544Z"
+      "scraped_at": "2026-10-04T10:22:48.635Z"
     },
     "TEAMLEASE": {
       "summary": {
@@ -24101,7 +24101,7 @@
         "hull_9": 139.55
       },
       "url": "https://in.tradingview.com/symbols/NSE-TFCILTD/technicals/",
-      "scraped_at": "2026-10-03T10:02:15.669Z"
+      "scraped_at": "2026-10-04T10:24:14.739Z"
     },
     "TIMEX": {
       "summary": {
@@ -24137,7 +24137,7 @@
         "hull_9": 725.04
       },
       "url": "https://in.tradingview.com/symbols/NSE-TIMEX/technicals/",
-      "scraped_at": "2026-10-03T10:03:46.559Z"
+      "scraped_at": "2026-10-04T10:24:49.060Z"
     },
     "TINNARUBR": {
       "summary": {
@@ -24213,7 +24213,7 @@
         "hull_9": 466.75
       },
       "url": "https://in.tradingview.com/symbols/NSE-TRUALT/technicals/",
-      "scraped_at": "2026-10-02T10:28:12.637Z"
+      "scraped_at": "2026-10-04T10:26:43.224Z"
     },
     "TSFINV": {
       "summary": {
@@ -24251,7 +24251,7 @@
         "hull_9": 408.5
       },
       "url": "https://in.tradingview.com/symbols/NSE-TSFINV/technicals/",
-      "scraped_at": "2026-10-03T10:05:17.633Z"
+      "scraped_at": "2026-10-04T10:26:48.112Z"
     },
     "TTKPRESTIG": {
       "summary": {
@@ -24289,7 +24289,7 @@
         "hull_9": 517.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-TTKPRESTIG/technicals/",
-      "scraped_at": "2026-10-03T10:05:22.453Z"
+      "scraped_at": "2026-10-04T10:26:53.065Z"
     },
     "TTML": {
       "summary": {
@@ -24365,7 +24365,7 @@
         "hull_9": 1780.4
       },
       "url": "https://in.tradingview.com/symbols/NSE-VENUSREM/technicals/",
-      "scraped_at": "2026-10-03T10:09:49.395Z"
+      "scraped_at": "2026-10-04T10:30:52.335Z"
     },
     "VERANDA": {
       "summary": {
@@ -24441,7 +24441,7 @@
         "hull_9": 409.78
       },
       "url": "https://in.tradingview.com/symbols/NSE-VESUVIUS/technicals/",
-      "scraped_at": "2026-10-03T10:09:59.306Z"
+      "scraped_at": "2026-10-04T10:31:30.340Z"
     },
     "VMARCIND": {
       "summary": {
@@ -24479,7 +24479,7 @@
         "hull_9": 321.27
       },
       "url": "https://in.tradingview.com/symbols/NSE-VMARCIND/technicals/",
-      "scraped_at": "2026-10-03T10:11:06.746Z"
+      "scraped_at": "2026-10-04T10:33:05.936Z"
     },
     "VMART": {
       "summary": {
@@ -24517,7 +24517,7 @@
         "hull_9": 746.59
       },
       "url": "https://in.tradingview.com/symbols/NSE-VMART/technicals/",
-      "scraped_at": "2026-10-02T10:33:44.699Z"
+      "scraped_at": "2026-10-04T10:33:10.835Z"
     },
     "WAKEFIT": {
       "summary": {
@@ -24553,7 +24553,7 @@
         "hull_9": 141.23
       },
       "url": "https://in.tradingview.com/symbols/NSE-WAKEFIT/technicals/",
-      "scraped_at": "2026-10-03T10:12:42.349Z"
+      "scraped_at": "2026-10-04T10:33:45.178Z"
     },
     "WEBELSOLAR": {
       "summary": {
@@ -24591,7 +24591,7 @@
         "hull_9": 69.57
       },
       "url": "https://in.tradingview.com/symbols/NSE-WEBELSOLAR/technicals/",
-      "scraped_at": "2026-10-03T10:12:47.262Z"
+      "scraped_at": "2026-10-04T10:33:50.105Z"
     },
     "WPIL": {
       "summary": {
@@ -24627,7 +24627,7 @@
         "hull_9": 430.46
       },
       "url": "https://in.tradingview.com/symbols/NSE-WPIL/technicals/",
-      "scraped_at": "2026-10-03T10:14:32.743Z"
+      "scraped_at": "2026-10-04T10:36:03.842Z"
     },
     "WSTCSTPAPR": {
       "summary": {
@@ -24665,7 +24665,7 @@
         "hull_9": 716.2
       },
       "url": "https://in.tradingview.com/symbols/NSE-WSTCSTPAPR/technicals/",
-      "scraped_at": "2026-10-03T10:14:37.852Z"
+      "scraped_at": "2026-10-04T10:36:08.746Z"
     },
     "XPROINDIA": {
       "summary": {
@@ -24703,7 +24703,7 @@
         "hull_9": 1137.3
       },
       "url": "https://in.tradingview.com/symbols/NSE-XPROINDIA/technicals/",
-      "scraped_at": "2026-10-03T10:14:42.777Z"
+      "scraped_at": "2026-10-04T10:36:13.827Z"
     },
     "YASHO": {
       "summary": {
@@ -24741,7 +24741,7 @@
         "hull_9": 4048.3
       },
       "url": "https://in.tradingview.com/symbols/NSE-YASHO/technicals/",
-      "scraped_at": "2026-10-03T10:14:47.798Z"
+      "scraped_at": "2026-10-04T10:36:18.724Z"
     },
     "BETA": {
       "summary": {
@@ -24779,7 +24779,7 @@
         "hull_9": 2043.5
       },
       "url": "https://in.tradingview.com/symbols/NSE-BETA/technicals/",
-      "scraped_at": "2026-10-03T08:19:01.854Z"
+      "scraped_at": "2026-10-04T08:39:47.471Z"
     },
     "DBREALTY": {
       "summary": {
@@ -24855,7 +24855,7 @@
         "hull_9": 451.07
       },
       "url": "https://in.tradingview.com/symbols/NSE-FMGOETZE/technicals/",
-      "scraped_at": "2026-10-02T09:00:34.505Z"
+      "scraped_at": "2026-10-04T08:55:52.056Z"
     },
     "GRINFRA": {
       "summary": {
@@ -24893,7 +24893,7 @@
         "hull_9": 798.64
       },
       "url": "https://in.tradingview.com/symbols/NSE-GRINFRA/technicals/",
-      "scraped_at": "2026-10-03T08:42:09.529Z"
+      "scraped_at": "2026-10-04T09:03:26.432Z"
     },
     "HCC": {
       "summary": {
@@ -24931,7 +24931,7 @@
         "hull_9": 20.12
       },
       "url": "https://in.tradingview.com/symbols/NSE-HCC/technicals/",
-      "scraped_at": "2026-10-03T08:43:59.804Z"
+      "scraped_at": "2026-10-04T09:04:20.900Z"
     },
     "KKCL": {
       "summary": {
@@ -24969,7 +24969,7 @@
         "hull_9": 462.87
       },
       "url": "https://in.tradingview.com/symbols/NSE-KKCL/technicals/",
-      "scraped_at": "2026-10-03T09:02:53.298Z"
+      "scraped_at": "2026-10-04T09:24:13.989Z"
     },
     "KSL": {
       "summary": {
@@ -25007,7 +25007,7 @@
         "hull_9": 944.86
       },
       "url": "https://in.tradingview.com/symbols/NSE-KSL/technicals/",
-      "scraped_at": "2026-10-03T09:06:03.981Z"
+      "scraped_at": "2026-10-04T09:26:29.406Z"
     },
     "MAHSEAMLES": {
       "summary": {
@@ -25045,7 +25045,7 @@
         "hull_9": 724.55
       },
       "url": "https://in.tradingview.com/symbols/NSE-MAHSEAMLES/technicals/",
-      "scraped_at": "2026-10-03T09:11:32.226Z"
+      "scraped_at": "2026-10-04T09:32:26.180Z"
     },
     "NILKAMAL": {
       "summary": {
@@ -25121,7 +25121,7 @@
         "hull_9": 303.96
       },
       "url": "https://in.tradingview.com/symbols/NSE-PRAJIND/technicals/",
-      "scraped_at": "2026-10-03T09:31:14.826Z"
+      "scraped_at": "2026-10-04T09:52:11.936Z"
     },
     "PRINCEPIPE": {
       "summary": {
@@ -25159,7 +25159,7 @@
         "hull_9": 251.28
       },
       "url": "https://in.tradingview.com/symbols/NSE-PRINCEPIPE/technicals/",
-      "scraped_at": "2026-10-03T09:31:44.149Z"
+      "scraped_at": "2026-10-04T09:53:37.816Z"
     },
     "PROTEAN": {
       "summary": {
@@ -25197,7 +25197,7 @@
         "hull_9": 673.45
       },
       "url": "https://in.tradingview.com/symbols/NSE-PROTEAN/technicals/",
-      "scraped_at": "2026-10-03T09:31:49.028Z"
+      "scraped_at": "2026-10-04T09:53:42.971Z"
     },
     "RPSGVENT": {
       "summary": {
@@ -25235,7 +25235,7 @@
         "hull_9": 837.88
       },
       "url": "https://in.tradingview.com/symbols/NSE-RPSGVENT/technicals/",
-      "scraped_at": "2026-10-03T09:41:45.869Z"
+      "scraped_at": "2026-10-04T10:02:16.655Z"
     },
     "RPTECH": {
       "summary": {
@@ -25349,7 +25349,7 @@
         "hull_9": 157.67
       },
       "url": "https://in.tradingview.com/symbols/NSE-VIKRAMSOLR/technicals/",
-      "scraped_at": "2026-10-03T10:10:04.215Z"
+      "scraped_at": "2026-10-04T10:31:35.255Z"
     },
     "CSBBANK": {
       "summary": {
@@ -25359,35 +25359,35 @@
         "neutral_count": 9
       },
       "oscillators": {
-        "rsi_14": 33.59,
-        "stoch_k": 29.16,
-        "cci_20": 133.14,
+        "rsi_14": 36.48,
+        "stoch_k": 34.1,
+        "cci_20": 119.51,
         "adx_14": 18.32,
-        "momentum_10": 30.4,
-        "macd_level": 3.79,
-        "stoch_rsi_fast": 32.4,
-        "williams_r": 93.57,
-        "ultimate_osc": 44.14
+        "momentum_10": 23.6,
+        "macd_level": 3.25,
+        "stoch_rsi_fast": 36.17,
+        "williams_r": 78.76,
+        "ultimate_osc": 50.91
       },
       "moving_averages": {
-        "ema_10": 319.06,
-        "sma_10": 325.86,
-        "ema_20": 322.57,
-        "sma_20": 321.2,
-        "ema_30": 324.81,
-        "sma_30": 326.2,
-        "ema_50": 329.59,
-        "sma_50": 326.52,
-        "ema_100": 342.3,
-        "sma_100": 342,
-        "ema_200": 358.34,
-        "sma_200": 375.73,
+        "ema_10": 320.3,
+        "sma_10": 326.54,
+        "ema_20": 323.22,
+        "sma_20": 321.54,
+        "ema_30": 325.24,
+        "sma_30": 326.43,
+        "ema_50": 329.86,
+        "sma_50": 326.66,
+        "ema_100": 342.43,
+        "sma_100": 342.07,
+        "ema_200": 358.41,
+        "sma_200": 375.76,
         "ichimoku_base": 325.27,
-        "vwma_20": 324.94,
-        "hull_9": 305.09
+        "vwma_20": 324.86,
+        "hull_9": 307.13
       },
       "url": "https://in.tradingview.com/symbols/NSE-CSBBANK/technicals/",
-      "scraped_at": "2026-10-01T09:13:26.497Z"
+      "scraped_at": "2026-10-04T08:44:20.948Z"
     },
     "CYIENT": {
       "summary": {
@@ -25397,35 +25397,35 @@
         "neutral_count": 8
       },
       "oscillators": {
-        "rsi_14": 57,
-        "stoch_k": 50.5,
-        "cci_20": 48,
+        "rsi_14": 60.3,
+        "stoch_k": 55.6,
+        "cci_20": 76.3,
         "adx_14": 26.6,
-        "momentum_10": 24,
-        "macd_level": 23.4,
-        "stoch_rsi_fast": 38.6,
-        "williams_r": 46.4,
-        "ultimate_osc": 52.5
+        "momentum_10": 40.6,
+        "macd_level": 24.8,
+        "stoch_rsi_fast": 49.5,
+        "williams_r": 31,
+        "ultimate_osc": 55.9
       },
       "moving_averages": {
-        "ema_10": 1078.8,
-        "sma_10": 1076.4,
-        "ema_20": 1065.8,
-        "sma_20": 1078.9,
-        "ema_30": 1045.4,
-        "sma_30": 1064.3,
-        "ema_50": 1009.3,
-        "sma_50": 980.9,
-        "ema_100": 972.1,
-        "sma_100": 929.3,
-        "ema_200": 999.1,
-        "sma_200": 964.1,
+        "ema_10": 1081.8,
+        "sma_10": 1078.1,
+        "ema_20": 1067.3,
+        "sma_20": 1079.7,
+        "ema_30": 1046.5,
+        "sma_30": 1064.9,
+        "ema_50": 1010,
+        "sma_50": 981.3,
+        "ema_100": 972.4,
+        "sma_100": 929.4,
+        "ema_200": 999.3,
+        "sma_200": 964.2,
         "ichimoku_base": 1101.8,
-        "vwma_20": 1083.3,
-        "hull_9": 1085.6
+        "vwma_20": 1084.4,
+        "hull_9": 1090.6
       },
       "url": "https://in.tradingview.com/symbols/NSE-CYIENT/technicals/",
-      "scraped_at": "2026-10-01T09:13:31.399Z"
+      "scraped_at": "2026-10-04T08:44:25.844Z"
     },
     "CYIENTDLM": {
       "summary": {
@@ -25539,7 +25539,7 @@
         "hull_9": 226.93
       },
       "url": "https://in.tradingview.com/symbols/NSE-FLAIR/technicals/",
-      "scraped_at": "2026-10-02T09:00:29.564Z"
+      "scraped_at": "2026-10-04T08:55:47.105Z"
     },
     "NDRINVIT": {
       "summary": {
@@ -25575,7 +25575,7 @@
         "hull_9": 150.48
       },
       "url": "https://in.tradingview.com/symbols/NSE-NDRINVIT/technicals/",
-      "scraped_at": "2026-10-01T10:05:47.398Z"
+      "scraped_at": "2026-10-04T09:39:06.200Z"
     },
     "NSIL": {
       "summary": {
@@ -25613,7 +25613,7 @@
         "hull_9": 5240.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-NSIL/technicals/",
-      "scraped_at": "2026-10-02T09:48:10.066Z"
+      "scraped_at": "2026-10-04T09:43:52.306Z"
     },
     "PRABHA": {
       "summary": {
@@ -25651,7 +25651,7 @@
         "hull_9": 219.52
       },
       "url": "https://in.tradingview.com/symbols/NSE-PRABHA/technicals/",
-      "scraped_at": "2026-10-03T09:31:09.952Z"
+      "scraped_at": "2026-10-04T09:52:07.012Z"
     },
     "CMLL": {
       "summary": {
@@ -25682,7 +25682,7 @@
         "hull_9": 541.39
       },
       "url": "https://in.tradingview.com/symbols/NSE-CMLL/technicals/",
-      "scraped_at": "2026-10-03T08:22:21.985Z"
+      "scraped_at": "2026-10-04T08:43:08.696Z"
     },
     "DBL": {
       "summary": {
@@ -26020,7 +26020,7 @@
         "hull_9": 643.62
       },
       "url": "https://in.tradingview.com/symbols/NSE-JGCHEM/technicals/",
-      "scraped_at": "2026-10-02T09:20:53.619Z"
+      "scraped_at": "2026-10-04T09:15:41.640Z"
     },
     "MONOLITH": {
       "summary": {
@@ -26058,7 +26058,7 @@
         "hull_9": 1275.5
       },
       "url": "https://in.tradingview.com/symbols/NSE-MONOLITH/technicals/",
-      "scraped_at": "2026-10-03T09:16:06.045Z"
+      "scraped_at": "2026-10-04T09:36:32.737Z"
     },
     "MSPL": {
       "summary": {
@@ -26134,7 +26134,7 @@
         "hull_9": 1080.1
       },
       "url": "https://in.tradingview.com/symbols/NSE-SAKAR/technicals/",
-      "scraped_at": "2026-10-03T09:42:29.816Z"
+      "scraped_at": "2026-10-04T10:03:57.262Z"
     },
     "BANCOINDIA": {
       "summary": {
@@ -26253,26 +26253,26 @@
     "JPPOWER": {
       "summary": {
         "verdict": "Buy",
-        "buy_count": 0,
-        "sell_count": 3,
+        "buy_count": 1,
+        "sell_count": 2,
         "neutral_count": 8
       },
       "oscillators": {
-        "rsi_14": 29.97,
-        "stoch_k": 4.93,
-        "cci_20": 159.9,
+        "rsi_14": 30.41,
+        "stoch_k": 5.51,
+        "cci_20": 157.85,
         "adx_14": 15.37,
-        "momentum_10": 0.51,
+        "momentum_10": 0.46,
         "macd_level": 0.44,
-        "stoch_rsi_fast": 30.37,
-        "williams_r": 95.14,
-        "ultimate_osc": 29.74
+        "stoch_rsi_fast": 30.96,
+        "williams_r": 93.4,
+        "ultimate_osc": 30.91
       },
       "moving_averages": {
-        "ema_10": 15.49,
-        "sma_10": 15.64,
+        "ema_10": 15.5,
+        "sma_10": 15.65,
         "ema_20": 15.84,
-        "sma_20": 15.85,
+        "sma_20": 15.86,
         "ema_30": 16.11,
         "sma_30": 16.18,
         "ema_50": 16.5,
@@ -26283,10 +26283,10 @@
         "sma_200": 16.93,
         "ichimoku_base": 16.05,
         "vwma_20": 16.15,
-        "hull_9": 14.9
+        "hull_9": 14.92
       },
       "url": "https://in.tradingview.com/symbols/NSE-JPPOWER/technicals/",
-      "scraped_at": "2026-10-01T09:45:11.001Z"
+      "scraped_at": "2026-10-04T09:17:32.161Z"
     },
     "RICOAUTO": {
       "summary": {
@@ -26391,7 +26391,7 @@
         "hull_9": 563.62
       },
       "url": "https://in.tradingview.com/symbols/NSE-LCL/technicals/",
-      "scraped_at": "2026-10-03T09:08:02.793Z"
+      "scraped_at": "2026-10-04T09:28:28.278Z"
     },
     "BANSALWIRE": {
       "summary": {
@@ -26543,7 +26543,7 @@
         "hull_9": 1089.1
       },
       "url": "https://in.tradingview.com/symbols/NSE-ANONDITA/technicals/",
-      "scraped_at": "2026-10-03T08:09:29.842Z"
+      "scraped_at": "2026-10-04T08:30:14.413Z"
     },
     "DOLPHIN": {
       "summary": {
@@ -26581,7 +26581,7 @@
         "hull_9": 623.97
       },
       "url": "https://in.tradingview.com/symbols/NSE-DOLPHIN/technicals/",
-      "scraped_at": "2026-10-03T08:30:21.920Z"
+      "scraped_at": "2026-10-04T08:51:09.203Z"
     },
     "OBSCP": {
       "summary": {
@@ -26619,7 +26619,7 @@
         "hull_9": 905.03
       },
       "url": "https://in.tradingview.com/symbols/NSE-OBSCP/technicals/",
-      "scraped_at": "2026-10-03T09:23:44.350Z"
+      "scraped_at": "2026-10-04T09:45:08.887Z"
     },
     "PARKHOSPS": {
       "summary": {
@@ -26655,7 +26655,7 @@
         "hull_9": 271.53
       },
       "url": "https://in.tradingview.com/symbols/NSE-PARKHOSPS/technicals/",
-      "scraped_at": "2026-10-03T09:27:39.059Z"
+      "scraped_at": "2026-10-04T09:46:43.058Z"
     },
     "TRIDENT": {
       "summary": {
@@ -26769,7 +26769,7 @@
         "hull_9": 400.62
       },
       "url": "https://in.tradingview.com/symbols/NSE-INDSWFTLAB/technicals/",
-      "scraped_at": "2026-10-03T08:51:48.190Z"
+      "scraped_at": "2026-10-04T09:13:34.949Z"
     },
     "DYCL": {
       "summary": {
@@ -26807,7 +26807,7 @@
         "hull_9": 425.16
       },
       "url": "https://in.tradingview.com/symbols/NSE-DYCL/technicals/",
-      "scraped_at": "2026-10-03T08:30:41.428Z"
+      "scraped_at": "2026-10-04T08:51:29.020Z"
     },
     "ASIANENE": {
       "summary": {
@@ -26845,7 +26845,7 @@
         "hull_9": 469.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-ASIANENE/technicals/",
-      "scraped_at": "2026-10-03T08:10:52.964Z"
+      "scraped_at": "2026-10-04T08:31:38.091Z"
     },
     "MARSONS": {
       "summary": {
@@ -26881,7 +26881,7 @@
         "hull_9": 113.87
       },
       "url": "https://in.tradingview.com/symbols/NSE-MARSONS/technicals/",
-      "scraped_at": "2026-10-03T09:12:45.014Z"
+      "scraped_at": "2026-10-04T09:34:06.924Z"
     },
     "SHANTIGOLD": {
       "summary": {
@@ -26919,7 +26919,7 @@
         "hull_9": 315.98
       },
       "url": "https://in.tradingview.com/symbols/NSE-SHANTIGOLD/technicals/",
-      "scraped_at": "2026-10-03T09:48:08.829Z"
+      "scraped_at": "2026-10-04T10:09:37.442Z"
     },
     "SIMPLEXINF": {
       "summary": {
@@ -27071,7 +27071,7 @@
         "hull_9": 1091.1
       },
       "url": "https://in.tradingview.com/symbols/NSE-WINDLAS/technicals/",
-      "scraped_at": "2026-10-03T10:14:18.145Z"
+      "scraped_at": "2026-10-04T10:35:49.095Z"
     },
     "NSLNISP": {
       "summary": {
@@ -27140,7 +27140,7 @@
         "hull_9": 134.78
       },
       "url": "https://in.tradingview.com/symbols/NSE-LEAPIND/technicals/",
-      "scraped_at": "2026-10-03T09:08:07.625Z"
+      "scraped_at": "2026-10-04T09:28:33.167Z"
     },
     "INOXWIND": {
       "summary": {
@@ -27209,7 +27209,7 @@
         "hull_9": 169.97
       },
       "url": "https://in.tradingview.com/symbols/NSE-KMCSHIL/technicals/",
-      "scraped_at": "2026-10-02T09:30:33.611Z"
+      "scraped_at": "2026-10-04T09:24:52.153Z"
     },
     "MAHASTEEL": {
       "summary": {
@@ -27247,7 +27247,7 @@
         "hull_9": 1207.8
       },
       "url": "https://in.tradingview.com/symbols/NSE-MAHASTEEL/technicals/",
-      "scraped_at": "2026-10-03T09:11:17.484Z"
+      "scraped_at": "2026-10-04T09:32:11.438Z"
     },
     "OMAXE": {
       "summary": {
@@ -27285,7 +27285,7 @@
         "hull_9": 107.17
       },
       "url": "https://in.tradingview.com/symbols/NSE-OMAXE/technicals/",
-      "scraped_at": "2026-10-03T09:23:54.418Z"
+      "scraped_at": "2026-10-04T09:45:18.850Z"
     },
     "RATNAVEER": {
       "summary": {
@@ -27323,7 +27323,7 @@
         "hull_9": 336.13
       },
       "url": "https://in.tradingview.com/symbols/NSE-RATNAVEER/technicals/",
-      "scraped_at": "2026-10-02T10:00:58.651Z"
+      "scraped_at": "2026-10-04T09:56:41.320Z"
     },
     "TBZ": {
       "summary": {
@@ -27361,7 +27361,7 @@
         "hull_9": 619.03
       },
       "url": "https://in.tradingview.com/symbols/NSE-TBZ/technicals/",
-      "scraped_at": "2026-10-03T10:01:08.413Z"
+      "scraped_at": "2026-10-04T10:22:38.795Z"
     },
     "FREDUN": {
       "summary": {
@@ -27371,28 +27371,28 @@
         "neutral_count": 8
       },
       "oscillators": {
-        "rsi_14": 45.6,
-        "stoch_k": 66.6,
-        "cci_20": 20.9,
+        "rsi_14": 45.4,
+        "stoch_k": 66.4,
+        "cci_20": 21.4,
         "adx_14": 26.1,
-        "momentum_10": 78.1,
-        "macd_level": 28.7,
-        "stoch_rsi_fast": 90,
-        "williams_r": 36.8,
-        "ultimate_osc": 46.9
+        "momentum_10": 77,
+        "macd_level": 28.8,
+        "stoch_rsi_fast": 89.9,
+        "williams_r": 37.2,
+        "ultimate_osc": 46.7
       },
       "moving_averages": {
-        "ema_10": 1373.6,
-        "sma_10": 1368.5,
-        "ema_20": 1385.2,
-        "sma_20": 1377.4,
+        "ema_10": 1373.4,
+        "sma_10": 1368.4,
+        "ema_20": 1385.1,
+        "sma_20": 1377.3,
         "ema_30": 1408.8,
         "sma_30": 1408.2,
-        "vwma_20": 1335.8,
-        "hull_9": 1391.4
+        "vwma_20": 1335.9,
+        "hull_9": 1391
       },
       "url": "https://in.tradingview.com/symbols/NSE-FREDUN/technicals/",
-      "scraped_at": "2026-10-01T09:24:09.607Z"
+      "scraped_at": "2026-10-04T08:56:01.908Z"
     },
     "KABRAEXTRU": {
       "summary": {
@@ -27468,7 +27468,7 @@
         "hull_9": 2151.4
       },
       "url": "https://in.tradingview.com/symbols/NSE-MACPOWER/technicals/",
-      "scraped_at": "2026-10-03T09:11:12.615Z"
+      "scraped_at": "2026-10-04T09:32:06.354Z"
     },
     "SHIPROCKET": {
       "summary": {
@@ -27499,7 +27499,7 @@
         "hull_9": 119.12
       },
       "url": "https://in.tradingview.com/symbols/NSE-SHIPROCKET/technicals/",
-      "scraped_at": "2026-10-03T09:49:57.763Z"
+      "scraped_at": "2026-10-04T10:10:02.120Z"
     },
     "AMAGI": {
       "summary": {
@@ -27573,7 +27573,7 @@
         "hull_9": 148.38
       },
       "url": "https://in.tradingview.com/symbols/NSE-BLUSPRING/technicals/",
-      "scraped_at": "2026-10-03T08:19:56.085Z"
+      "scraped_at": "2026-10-04T08:40:42.269Z"
     },
     "SHUKRAPHAR": {
       "summary": {
@@ -27630,7 +27630,7 @@
         "hull_9": 1143.7
       },
       "url": "https://in.tradingview.com/symbols/NSE-AUGMONT/technicals/",
-      "scraped_at": "2026-10-03T08:10:57.821Z"
+      "scraped_at": "2026-10-04T08:31:43.005Z"
     },
     "BENGALASM": {
       "summary": {
@@ -27719,7 +27719,7 @@
         "hull_9": 135.66
       },
       "url": "https://in.tradingview.com/symbols/NSE-GAJA/technicals/",
-      "scraped_at": "2026-10-02T09:02:51.729Z"
+      "scraped_at": "2026-10-04T08:56:16.712Z"
     },
     "APTUS": {
       "summary": {
@@ -27757,7 +27757,7 @@
         "hull_9": 229.02
       },
       "url": "https://in.tradingview.com/symbols/NSE-APTUS/technicals/",
-      "scraped_at": "2026-10-03T08:09:58.983Z"
+      "scraped_at": "2026-10-04T08:30:43.866Z"
     },
     "AWFIS": {
       "summary": {
@@ -27833,7 +27833,7 @@
         "hull_9": 194.8
       },
       "url": "https://in.tradingview.com/symbols/NSE-BODALCHEM/technicals/",
-      "scraped_at": "2026-10-03T08:20:05.861Z"
+      "scraped_at": "2026-10-04T08:40:52.120Z"
     },
     "HEG": {
       "summary": {
@@ -27909,7 +27909,7 @@
         "hull_9": 99.88
       },
       "url": "https://in.tradingview.com/symbols/NSE-INDORAMA/technicals/",
-      "scraped_at": "2026-10-03T08:51:28.618Z"
+      "scraped_at": "2026-10-04T09:13:15.330Z"
     },
     "MVELECTRO": {
       "summary": {
@@ -28118,7 +28118,7 @@
         "hull_9": 1173.5
       },
       "url": "https://in.tradingview.com/symbols/NSE-SYMBIOTEC/technicals/",
-      "scraped_at": "2026-10-02T10:22:27.309Z"
+      "scraped_at": "2026-10-04T10:20:58.042Z"
     },
     "LUMINO": {
       "summary": {
@@ -28179,7 +28179,7 @@
         "hull_9": 65.29
       },
       "url": "https://in.tradingview.com/symbols/NSE-ALGOQUANT/technicals/",
-      "scraped_at": "2026-10-03T08:09:05.376Z"
+      "scraped_at": "2026-10-04T08:29:49.494Z"
     },
     "DANISH": {
       "summary": {
@@ -28314,7 +28314,7 @@
         "hull_9": 536.93
       },
       "url": "https://in.tradingview.com/symbols/NSE-PERNIASPOP/technicals/",
-      "scraped_at": "2026-10-03T09:28:03.343Z"
+      "scraped_at": "2026-10-04T09:48:04.098Z"
     },
     "QUADFUTURE": {
       "summary": {
@@ -28352,7 +28352,7 @@
         "hull_9": 545.06
       },
       "url": "https://in.tradingview.com/symbols/NSE-QUADFUTURE/technicals/",
-      "scraped_at": "2026-10-03T09:33:48.233Z"
+      "scraped_at": "2026-10-04T09:55:13.842Z"
     },
     "STLNETWORK": {
       "summary": {
@@ -28390,7 +28390,7 @@
         "hull_9": 49.31
       },
       "url": "https://in.tradingview.com/symbols/NSE-STLNETWORK/technicals/",
-      "scraped_at": "2026-10-02T10:19:00.855Z"
+      "scraped_at": "2026-10-04T10:17:03.653Z"
     },
     "VEDPOWER": {
       "summary": {
@@ -28489,25 +28489,28 @@
         "hull_9": 20.45
       },
       "url": "https://in.tradingview.com/symbols/NSE-BLUECLOUDS/technicals/",
-      "scraped_at": "2026-10-03T08:19:36.161Z"
+      "scraped_at": "2026-10-04T08:40:22.138Z"
     },
     "DEEPA": {
       "summary": {
         "verdict": "Buy",
         "buy_count": 0,
         "sell_count": 1,
-        "neutral_count": 1
+        "neutral_count": 4
       },
       "oscillators": {
-        "momentum_10": 13.5
+        "rsi_14": 49.16,
+        "stoch_k": 48.73,
+        "momentum_10": 18.83,
+        "williams_r": 51.29
       },
       "moving_averages": {
-        "ema_10": 194.12,
-        "sma_10": 187.72,
-        "hull_9": 207.61
+        "ema_10": 193.65,
+        "sma_10": 194.26,
+        "hull_9": 194.62
       },
       "url": "https://in.tradingview.com/symbols/NSE-DEEPA/technicals/",
-      "scraped_at": "2026-09-28T09:05:05.171Z"
+      "scraped_at": "2026-10-04T08:50:34.802Z"
     },
     "DELTACORP": {
       "summary": {
@@ -28545,7 +28548,7 @@
         "hull_9": 79.92
       },
       "url": "https://in.tradingview.com/symbols/NSE-DELTACORP/technicals/",
-      "scraped_at": "2026-10-03T08:29:57.731Z"
+      "scraped_at": "2026-10-04T08:50:44.667Z"
     },
     "HEGAM": {
       "summary": {
@@ -28601,7 +28604,7 @@
         "hull_9": 276.46
       },
       "url": "https://in.tradingview.com/symbols/NSE-GLASSWALL/technicals/",
-      "scraped_at": "2026-10-03T08:40:40.239Z"
+      "scraped_at": "2026-10-04T09:01:57.582Z"
     },
     "PRASOLCHEM": {
       "summary": {
@@ -28619,7 +28622,7 @@
         "hull_9": 850.15
       },
       "url": "https://in.tradingview.com/symbols/NSE-PRASOLCHEM/technicals/",
-      "scraped_at": "2026-10-03T09:31:24.529Z"
+      "scraped_at": "2026-10-04T09:52:21.799Z"
     },
     "ARCIL": {
       "summary": {
@@ -28637,7 +28640,7 @@
         "hull_9": 142.22
       },
       "url": "https://in.tradingview.com/symbols/NSE-ARCIL/technicals/",
-      "scraped_at": "2026-10-03T08:10:03.816Z"
+      "scraped_at": "2026-10-04T08:30:48.748Z"
     },
     "LCCPROJECT": {
       "summary": {
@@ -28673,7 +28676,7 @@
         "hull_9": 419.92
       },
       "url": "https://in.tradingview.com/symbols/NSE-MPIMANIPAL/technicals/",
-      "scraped_at": "2026-10-02T09:41:38.100Z"
+      "scraped_at": "2026-10-04T09:37:20.680Z"
     },
     "RENTOMOJO": {
       "summary": {
@@ -28691,7 +28694,7 @@
         "hull_9": 505.73
       },
       "url": "https://in.tradingview.com/symbols/NSE-RENTOMOJO/technicals/",
-      "scraped_at": "2026-10-03T09:38:29.836Z"
+      "scraped_at": "2026-10-04T09:58:31.923Z"
     },
     "STEAMHOUSE": {
       "summary": {
@@ -28709,7 +28712,7 @@
         "hull_9": 109.16
       },
       "url": "https://in.tradingview.com/symbols/NSE-STEAMHOUSE/technicals/",
-      "scraped_at": "2026-10-03T09:54:28.245Z"
+      "scraped_at": "2026-10-04T10:16:53.804Z"
     },
     "KARAMTARA": {
       "summary": {
@@ -28727,7 +28730,7 @@
         "hull_9": 388.31
       },
       "url": "https://in.tradingview.com/symbols/NSE-KARAMTARA/technicals/",
-      "scraped_at": "2026-10-03T09:01:16.682Z"
+      "scraped_at": "2026-10-04T09:23:04.725Z"
     },
     "KANOHAR": {
       "summary": {
@@ -28749,8 +28752,8 @@
     }
   },
   "total_companies_covered": 769,
-  "last_batch_ok": 544,
+  "last_batch_ok": 542,
   "last_batch_fail": 0,
-  "last_batch_skipped_empty": 153,
+  "last_batch_skipped_empty": 155,
   "last_batch_resumed": 0
 }
