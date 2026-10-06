@@ -1,38 +1,13 @@
 {
-  "generated_at": "2026-10-06T06:19:50.185Z",
+  "generated_at": "2026-10-06T17:00:14.911Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 14,
+  "total_entities_seen": 11,
   "flagged_companies": {
-    "LLOYDSENT": {
-      "primary_name": "Lloyds Enterprises",
-      "order_type": "settlement",
-      "snippet": "Lloyds Enterprises settles Sebi case over ₹144.82 crore advances.",
-      "source_url": "https://www.livemint.com/topic/sebi",
-      "source_label": "Mint — SEBI topic (news)",
-      "origins": [
-        "scraper"
-      ],
-      "mentions": [
-        {
-          "source": "Mint — SEBI topic (news)",
-          "origin": "scraper",
-          "order_type": "settlement",
-          "snippet": "Lloyds Enterprises settles Sebi case over ₹144.82 crore advances."
-        },
-        {
-          "source": "Economic Times — SEBI topic (news)",
-          "origin": "scraper",
-          "order_type": "settlement",
-          "snippet": "Sebi has settled a case involving Lloyds Enterprises and former executives Rajesh Rajnarayan Gupta and Viresh Shankar Sohoni after Rs 4.16 crore was paid."
-        }
-      ],
-      "first_seen_at": "2026-10-06T06:19:50.185Z"
-    },
     "EMBDL": {
       "primary_name": "Embassy Office Parks REIT",
       "order_type": "other",
-      "snippet": "SEBI relies on amended rules in Embassy REIT ‘Fit and Proper’ matter, tells Bombay HC no disqualification made out.",
+      "snippet": "SEBI told the Bombay High Court that its examination of complaints concerning the “fit and proper” status of persons associated with Embassy Office Parks REIT was completed after the regulatory framework was amended in April 2026.",
       "source_url": "https://www.livemint.com/topic/sebi",
       "source_label": "Mint — SEBI topic (news)",
       "origins": [
@@ -43,21 +18,21 @@
           "source": "Mint — SEBI topic (news)",
           "origin": "scraper",
           "order_type": "other",
-          "snippet": "SEBI relies on amended rules in Embassy REIT ‘Fit and Proper’ matter, tells Bombay HC no disqualification made out."
+          "snippet": "SEBI told the Bombay High Court that its examination of complaints concerning the “fit and proper” status of persons associated with Embassy Office Parks REIT was completed after the regulatory framew"
         },
         {
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
-          "order_type": "other",
-          "snippet": "SEBI relies on amended rules in Embassy REIT 'Fit and Proper' matter, tells Bombay HC no disqualification made out."
+          "order_type": "sebi-investigation",
+          "snippet": "SEBI relies on amended rules in Embassy REIT 'Fit and Proper' matter."
         }
       ],
-      "first_seen_at": "2026-10-06T06:19:50.185Z"
+      "first_seen_at": "2026-10-06T17:00:14.910Z"
     },
     "INOXWIND": {
-      "primary_name": "Inox Clean Energy Ltd",
+      "primary_name": "Inox Clean Energy",
       "order_type": "other",
-      "snippet": "Sebi keeps Inox Clean Energy's IPO papers to raise ₹10K cr in abeyance",
+      "snippet": "Sebi keeps Inox Clean Energy's IPO papers to raise ₹10K cr in abeyance.",
       "source_url": "https://www.business-standard.com/topic/sebi",
       "source_label": "Business Standard — SEBI topic (news)",
       "origins": [
@@ -68,15 +43,15 @@
           "source": "Business Standard — SEBI topic (news)",
           "origin": "scraper",
           "order_type": "other",
-          "snippet": "Sebi keeps Inox Clean Energy's IPO papers to raise ₹10K cr in abeyance"
+          "snippet": "Sebi keeps Inox Clean Energy's IPO papers to raise ₹10K cr in abeyance."
         }
       ],
-      "first_seen_at": "2026-10-06T06:19:50.185Z"
+      "first_seen_at": "2026-10-06T17:00:14.910Z"
     },
     "SMCGLOBAL": {
       "primary_name": "SMC Global Securities",
       "order_type": "sebi-fine",
-      "snippet": "Sebi has levied a penalty of Rs 1 lakh on SMC Global Securities due to regulatory infractions, particularly the mishandling of client order-placement records uncovered during an inspection.",
+      "snippet": "Sebi penalises SMC Global Securities for compliance lapses.",
       "source_url": "https://economictimes.indiatimes.com/topic/sebi",
       "source_label": "Economic Times — SEBI topic (news)",
       "origins": [
@@ -87,22 +62,35 @@
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
           "order_type": "sebi-fine",
-          "snippet": "Sebi has levied a penalty of Rs 1 lakh on SMC Global Securities due to regulatory infractions, particularly the mishandling of client order-placement records uncovered during an inspection."
+          "snippet": "Sebi penalises SMC Global Securities for compliance lapses."
         }
       ],
-      "first_seen_at": "2026-10-06T06:19:50.185Z"
+      "first_seen_at": "2026-10-06T17:00:14.910Z"
+    },
+    "LLOYDSENT": {
+      "primary_name": "Lloyds Enterprises",
+      "order_type": "settlement",
+      "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi.",
+      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
+      "source_label": "Economic Times — SEBI topic (news)",
+      "origins": [
+        "scraper"
+      ],
+      "mentions": [
+        {
+          "source": "Economic Times — SEBI topic (news)",
+          "origin": "scraper",
+          "order_type": "settlement",
+          "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi."
+        }
+      ],
+      "first_seen_at": "2026-10-06T17:00:14.910Z"
     }
   },
   "unmatched_sample": [
     {
       "name": "Gautam Adani",
       "type": "settlement",
-      "source": "Business Standard — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Carlsberg India",
-      "type": "other",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -119,15 +107,9 @@
       "origin": "scraper"
     },
     {
-      "name": "Sindhuja Microcredit",
+      "name": "Functional & Innovative Foods",
       "type": "other",
       "source": "Business Standard — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Adani Group",
-      "type": "other",
-      "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
@@ -137,8 +119,8 @@
       "origin": "scraper"
     },
     {
-      "name": "Learn and Earn",
-      "type": "sebi-fine",
+      "name": "Adani Group",
+      "type": "settlement",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -148,7 +130,7 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-06T06:19:17.190Z",
+      "at": "2026-10-06T17:00:00.197Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -156,41 +138,36 @@
       "total_extracted": 3,
       "prefilter_sample": [
         {
+          "name": "Jane Street",
+          "order_type": "sebi-ban",
+          "is_listed_entity": false,
+          "snippet": "US hedge fund Jane Street has petitioned Securities Appellate Tribunal to compel Sebi to disclose the underlying trading and counterparty data backing"
+        },
+        {
           "name": "Lloyds Enterprises",
           "order_type": "settlement",
           "is_listed_entity": true,
-          "snippet": "Lloyds Enterprises settles Sebi case over ₹144.82 crore advances."
+          "snippet": "Lloyds Enterprises has paid ₹1.28 crore, while former managing director Rajesh Rajnarayan Gupta and chief financial officer Viresh Shankar Sohoni have"
         },
         {
           "name": "Embassy Office Parks REIT",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "SEBI relies on amended rules in Embassy REIT ‘Fit and Proper’ matter, tells Bombay HC no disqualification made out."
-        },
-        {
-          "name": "Jane Street",
-          "order_type": "sebi-ban",
-          "is_listed_entity": false,
-          "snippet": "Jane Street seeks trading data from Sebi in market manipulation case."
+          "snippet": "SEBI told the Bombay High Court that its examination of complaints concerning the “fit and proper” status of persons associated with Embassy Office Pa"
         }
       ],
-      "after_filter_count": 2,
+      "after_filter_count": 1,
       "dropped_counts": {
         "not_listed": 1,
-        "no_sebi_signal_in_snippet": 0,
+        "no_sebi_signal_in_snippet": 1,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
-          "name": "Lloyds Enterprises",
-          "order_type": "settlement",
-          "snippet": "Lloyds Enterprises settles Sebi case over ₹144.82 crore advances."
-        },
-        {
           "name": "Embassy Office Parks REIT",
           "order_type": "other",
-          "snippet": "SEBI relies on amended rules in Embassy REIT ‘Fit and Proper’ matter, tells Bombay HC no disqualification made out."
+          "snippet": "SEBI told the Bombay High Court that its examination of complaints concerning the “fit and proper” status of persons ass"
         }
       ]
     },
@@ -198,51 +175,45 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-06T06:19:24.404Z",
+      "at": "2026-10-06T17:00:03.670Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 6,
-      "total_extracted": 6,
+      "total_extracted_raw": 5,
+      "total_extracted": 5,
       "prefilter_sample": [
         {
-          "name": "Inox Clean Energy Ltd",
+          "name": "Inox Clean Energy",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Sebi keeps Inox Clean Energy's IPO papers to raise ₹10K cr in abeyance"
+          "snippet": "Sebi keeps Inox Clean Energy's IPO papers to raise ₹10K cr in abeyance."
         },
         {
           "name": "Gautam Adani",
           "order_type": "settlement",
           "is_listed_entity": true,
-          "snippet": "Gautam Adani, 4 group companies settle matter with Sebi on MPS norms"
-        },
-        {
-          "name": "Carlsberg India",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Sindhuja raises ₹100 crore via NCDs; Carlsberg gets Sebi approval for IPO"
+          "snippet": "Gautam Adani, four group companies settle matter with Sebi on MPS norms."
         },
         {
           "name": "Pioneer Fil-Med",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Pioneer Fil-Med, Tonbo Imaging among 3 firms to get Sebi nod for IPOs"
+          "snippet": "Pioneer Fil-Med, Tonbo Imaging among 3 firms to get Sebi nod for IPOs."
         },
         {
           "name": "Tonbo Imaging",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Pioneer Fil-Med, Tonbo Imaging among 3 firms to get Sebi nod for IPOs"
+          "snippet": "Pioneer Fil-Med, Tonbo Imaging among 3 firms to get Sebi nod for IPOs."
         },
         {
-          "name": "Sindhuja Microcredit",
+          "name": "Functional & Innovative Foods",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Sindhuja raises ₹100 crore via NCDs; Carlsberg gets Sebi approval for IPO"
+          "snippet": "Pioneer Fil-Med, Tonbo Imaging among 3 firms to get Sebi nod for IPOs."
         }
       ],
-      "after_filter_count": 6,
+      "after_filter_count": 5,
       "dropped_counts": {
         "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
@@ -251,34 +222,29 @@
       },
       "sample": [
         {
-          "name": "Inox Clean Energy Ltd",
+          "name": "Inox Clean Energy",
           "order_type": "other",
-          "snippet": "Sebi keeps Inox Clean Energy's IPO papers to raise ₹10K cr in abeyance"
+          "snippet": "Sebi keeps Inox Clean Energy's IPO papers to raise ₹10K cr in abeyance."
         },
         {
           "name": "Gautam Adani",
           "order_type": "settlement",
-          "snippet": "Gautam Adani, 4 group companies settle matter with Sebi on MPS norms"
-        },
-        {
-          "name": "Carlsberg India",
-          "order_type": "other",
-          "snippet": "Sindhuja raises ₹100 crore via NCDs; Carlsberg gets Sebi approval for IPO"
+          "snippet": "Gautam Adani, four group companies settle matter with Sebi on MPS norms."
         },
         {
           "name": "Pioneer Fil-Med",
           "order_type": "other",
-          "snippet": "Pioneer Fil-Med, Tonbo Imaging among 3 firms to get Sebi nod for IPOs"
+          "snippet": "Pioneer Fil-Med, Tonbo Imaging among 3 firms to get Sebi nod for IPOs."
         },
         {
           "name": "Tonbo Imaging",
           "order_type": "other",
-          "snippet": "Pioneer Fil-Med, Tonbo Imaging among 3 firms to get Sebi nod for IPOs"
+          "snippet": "Pioneer Fil-Med, Tonbo Imaging among 3 firms to get Sebi nod for IPOs."
         },
         {
-          "name": "Sindhuja Microcredit",
+          "name": "Functional & Innovative Foods",
           "order_type": "other",
-          "snippet": "Sindhuja raises ₹100 crore via NCDs; Carlsberg gets Sebi approval for IPO"
+          "snippet": "Pioneer Fil-Med, Tonbo Imaging among 3 firms to get Sebi nod for IPOs."
         }
       ]
     },
@@ -286,36 +252,24 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-06T06:19:31.127Z",
+      "at": "2026-10-06T17:00:07.423Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 6,
-      "total_extracted": 6,
+      "total_extracted_raw": 7,
+      "total_extracted": 7,
       "prefilter_sample": [
         {
           "name": "SMC Global Securities",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Sebi has levied a penalty of Rs 1 lakh on SMC Global Securities due to regulatory infractions, particularly the mishandling of client order-placement "
-        },
-        {
-          "name": "Embassy Office Parks REIT",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "SEBI relies on amended rules in Embassy REIT 'Fit and Proper' matter, tells Bombay HC no disqualification made out."
+          "snippet": "Sebi penalises SMC Global Securities for compliance lapses."
         },
         {
           "name": "Lloyds Enterprises",
           "order_type": "settlement",
           "is_listed_entity": true,
-          "snippet": "Sebi has settled a case involving Lloyds Enterprises and former executives Rajesh Rajnarayan Gupta and Viresh Shankar Sohoni after Rs 4.16 crore was p"
-        },
-        {
-          "name": "Adani Group",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Adani Group has settled with Sebi, with companies like Adani Enterprises and Adani Green Energy collectively paying ₹1.5 crore over allegations concer"
+          "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi."
         },
         {
           "name": "Omaxe",
@@ -324,16 +278,34 @@
           "snippet": "Sebi bans Omaxe, 5 others for violating minimum public shareholding norms."
         },
         {
-          "name": "Learn and Earn",
-          "order_type": "sebi-fine",
+          "name": "Adani Group",
+          "order_type": "settlement",
           "is_listed_entity": true,
-          "snippet": "Sebi has imposed a fine of ₹50 lakh on Learn and Earn for misleading investors."
+          "snippet": "Adani Group firms settle Sebi case on governance issues."
+        },
+        {
+          "name": "Embassy Office Parks REIT",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": true,
+          "snippet": "SEBI relies on amended rules in Embassy REIT 'Fit and Proper' matter."
+        },
+        {
+          "name": "Growpital",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": true,
+          "snippet": "Securities and Exchange Board of India has ordered a refund for investors affected by Growpital's scheme."
+        },
+        {
+          "name": "Jio Platforms",
+          "order_type": "sebi-investigation",
+          "is_listed_entity": true,
+          "snippet": "Jio Platforms IPO in final stages after concluding worldwide roadshows."
         }
       ],
-      "after_filter_count": 6,
+      "after_filter_count": 5,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 0,
+        "no_sebi_signal_in_snippet": 2,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -341,22 +313,12 @@
         {
           "name": "SMC Global Securities",
           "order_type": "sebi-fine",
-          "snippet": "Sebi has levied a penalty of Rs 1 lakh on SMC Global Securities due to regulatory infractions, particularly the mishandl"
-        },
-        {
-          "name": "Embassy Office Parks REIT",
-          "order_type": "other",
-          "snippet": "SEBI relies on amended rules in Embassy REIT 'Fit and Proper' matter, tells Bombay HC no disqualification made out."
+          "snippet": "Sebi penalises SMC Global Securities for compliance lapses."
         },
         {
           "name": "Lloyds Enterprises",
           "order_type": "settlement",
-          "snippet": "Sebi has settled a case involving Lloyds Enterprises and former executives Rajesh Rajnarayan Gupta and Viresh Shankar So"
-        },
-        {
-          "name": "Adani Group",
-          "order_type": "other",
-          "snippet": "Adani Group has settled with Sebi, with companies like Adani Enterprises and Adani Green Energy collectively paying ₹1.5"
+          "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi."
         },
         {
           "name": "Omaxe",
@@ -364,9 +326,14 @@
           "snippet": "Sebi bans Omaxe, 5 others for violating minimum public shareholding norms."
         },
         {
-          "name": "Learn and Earn",
-          "order_type": "sebi-fine",
-          "snippet": "Sebi has imposed a fine of ₹50 lakh on Learn and Earn for misleading investors."
+          "name": "Adani Group",
+          "order_type": "settlement",
+          "snippet": "Adani Group firms settle Sebi case on governance issues."
+        },
+        {
+          "name": "Embassy Office Parks REIT",
+          "order_type": "sebi-investigation",
+          "snippet": "SEBI relies on amended rules in Embassy REIT 'Fit and Proper' matter."
         }
       ]
     },
@@ -374,7 +341,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-10-06T06:19:42.129Z",
+      "at": "2026-10-06T17:00:13.359Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
