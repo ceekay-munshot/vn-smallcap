@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-11T05:44:37.228Z",
+  "generated_at": "2026-10-12T05:55:10.787Z",
   "source_count": 4,
   "curated_baseline_count": 0,
   "total_entities_seen": 13,
@@ -7,7 +7,7 @@
     "INOXWIND": {
       "primary_name": "Inox Clean Energy Ltd",
       "order_type": "other",
-      "snippet": "Markets regulator Sebi has kept in 'abeyance' the draft offer documents of Inox Clean Energy Ltd, which is looking to raise up to Rs 10,000 crore through an initial public offering (IPO).",
+      "snippet": "Sebi has kept in 'abeyance' the draft offer documents of Inox Clean Energy Ltd.",
       "source_url": "https://www.business-standard.com/topic/sebi",
       "source_label": "Business Standard — SEBI topic (news)",
       "origins": [
@@ -18,15 +18,15 @@
           "source": "Business Standard — SEBI topic (news)",
           "origin": "scraper",
           "order_type": "other",
-          "snippet": "Markets regulator Sebi has kept in 'abeyance' the draft offer documents of Inox Clean Energy Ltd, which is looking to raise up to Rs 10,000 crore through an initial public offering (IPO)."
+          "snippet": "Sebi has kept in 'abeyance' the draft offer documents of Inox Clean Energy Ltd."
         }
       ],
-      "first_seen_at": "2026-10-11T05:44:37.228Z"
+      "first_seen_at": "2026-10-12T05:55:10.787Z"
     },
     "SMCGLOBAL": {
       "primary_name": "SMC Global Securities",
       "order_type": "sebi-fine",
-      "snippet": "Sebi penalises SMC Global Securities for compliance lapses",
+      "snippet": "Sebi penalises SMC Global Securities for compliance lapses.",
       "source_url": "https://economictimes.indiatimes.com/topic/sebi",
       "source_label": "Economic Times — SEBI topic (news)",
       "origins": [
@@ -37,34 +37,15 @@
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
           "order_type": "sebi-fine",
-          "snippet": "Sebi penalises SMC Global Securities for compliance lapses"
+          "snippet": "Sebi penalises SMC Global Securities for compliance lapses."
         }
       ],
-      "first_seen_at": "2026-10-11T05:44:37.228Z"
-    },
-    "EMBDL": {
-      "primary_name": "Embassy Office Parks REIT",
-      "order_type": "other",
-      "snippet": "SEBI relies on amended rules in Embassy REIT 'Fit and Proper' matter, tells Bombay HC no disqualification made out",
-      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
-      "source_label": "Economic Times — SEBI topic (news)",
-      "origins": [
-        "scraper"
-      ],
-      "mentions": [
-        {
-          "source": "Economic Times — SEBI topic (news)",
-          "origin": "scraper",
-          "order_type": "other",
-          "snippet": "SEBI relies on amended rules in Embassy REIT 'Fit and Proper' matter, tells Bombay HC no disqualification made out"
-        }
-      ],
-      "first_seen_at": "2026-10-11T05:44:37.228Z"
+      "first_seen_at": "2026-10-12T05:55:10.787Z"
     },
     "LLOYDSENT": {
       "primary_name": "Lloyds Enterprises",
       "order_type": "other",
-      "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi",
+      "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi.",
       "source_url": "https://economictimes.indiatimes.com/topic/sebi",
       "source_label": "Economic Times — SEBI topic (news)",
       "origins": [
@@ -75,21 +56,27 @@
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
           "order_type": "other",
-          "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi"
+          "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi."
         }
       ],
-      "first_seen_at": "2026-10-11T05:44:37.228Z"
+      "first_seen_at": "2026-10-12T05:55:10.787Z"
     }
   },
   "unmatched_sample": [
     {
-      "name": "Sindhuja Microcredit",
+      "name": "Carlsberg India",
       "type": "other",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Carlsberg India",
+      "name": "Anarock Property Consultants Ltd",
+      "type": "other",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "NSE",
       "type": "other",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
@@ -101,37 +88,37 @@
       "origin": "scraper"
     },
     {
-      "name": "Carlsberg",
+      "name": "Jane Street",
+      "type": "other",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Jane Street",
       "type": "other",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
       "name": "Adani Enterprises",
-      "type": "sebi-investigation",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "JioBlackRock Mutual Fund",
       "type": "other",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Growpital",
+      "name": "Adani Enterprises",
       "type": "other",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Biocon Electric",
+      "name": "Carlsberg India",
       "type": "other",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Vinir Engineering",
+      "name": "Carlsberg India",
       "type": "other",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
@@ -142,53 +129,47 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-11T05:44:15.615Z",
+      "at": "2026-10-12T05:54:41.654Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 6,
-      "total_extracted": 6,
+      "total_extracted_raw": 5,
+      "total_extracted": 5,
       "prefilter_sample": [
         {
           "name": "Jane Street",
-          "order_type": "sebi-ban",
+          "order_type": "sebi-investigation",
           "is_listed_entity": false,
-          "snippet": "SAT has reserved its verdict on Jane Street's appeal against Sebi's ex-parte interim order."
+          "snippet": "SAT to pass order in Jane Street ‘manipulation’ case on 21 October"
         },
         {
           "name": "Jane Street",
           "order_type": "sebi-investigation",
           "is_listed_entity": false,
-          "snippet": "US hedge fund Jane Street has petitioned Securities Appellate Tribunal to compel Sebi to disclose the underlying trading and counterparty data."
-        },
-        {
-          "name": "Jane Street",
-          "order_type": "sebi-fine",
-          "is_listed_entity": false,
-          "snippet": "The dispute stems from Sebi’s July 2025 ex-parte interim order, which barred Jane Street from the Indian securities market."
+          "snippet": "Jane Street seeks trading data from Sebi in market manipulation case"
         },
         {
           "name": "Jane Street",
           "order_type": "sebi-investigation",
           "is_listed_entity": false,
-          "snippet": "SEBI informed a local court that it shared trade logs with Jane Street Group, urging them to respond to market manipulation allegations."
+          "snippet": "Jane Street gets SEBI trade logs as regulator presses firm on manipulation allegations"
         },
         {
           "name": "Jane Street",
           "order_type": "sebi-investigation",
           "is_listed_entity": false,
-          "snippet": "Sebi argues Jane Street should clarify its trading strategy rather than questioning the regulator’s actions amid accusations of market manipulation."
+          "snippet": "Sebi vs Jane Street: 'Dilatory tactic; ulta chor kotwal ko daante' - What the markets regulator's lawyer said in hearing"
         },
         {
           "name": "Jane Street",
-          "order_type": "sebi-fine",
+          "order_type": "sebi-investigation",
           "is_listed_entity": false,
-          "snippet": "Sebi's ex-parte interim order directed it to disgorge ₹4,843 crore in alleged unlawful gains."
+          "snippet": "Sebi’s investor protection fund balloons but spending lags amid rising fraud risks"
         }
       ],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 6,
+        "not_listed": 5,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
@@ -199,60 +180,83 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-11T05:44:21.954Z",
+      "at": "2026-10-12T05:54:48.538Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 4,
-      "total_extracted": 4,
+      "total_extracted_raw": 7,
+      "total_extracted": 7,
       "prefilter_sample": [
         {
           "name": "Jane Street",
           "order_type": "other",
           "is_listed_entity": false,
-          "snippet": "Jane Street seeks order logs and counterparty details to defend itself in the market manipulation case, while Sebi argues that it has disclosed all ma"
+          "snippet": "Jane Street seeks order logs and counterparty details to defend itself in the market manipulation case."
+        },
+        {
+          "name": "Sebi",
+          "order_type": "other",
+          "is_listed_entity": false,
+          "snippet": "Sebi introduces Credit Risk-o-Meter, eases private debt norms."
         },
         {
           "name": "Sindhuja Microcredit",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Sindhuja Microcredit raised ₹100 crore through NCDs, while Carlsberg India received Sebi's observations for a ₹6,600 crore IPO involving a stake sale "
+          "snippet": "Sindhuja Microcredit raised ₹100 crore through NCDs."
         },
         {
           "name": "Carlsberg India",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Sindhuja Microcredit raised ₹100 crore through NCDs, while Carlsberg India received Sebi's observations for a ₹6,600 crore IPO involving a stake sale "
+          "snippet": "Carlsberg India received Sebi's observations for a ₹6,600 crore IPO."
         },
         {
           "name": "Inox Clean Energy Ltd",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Markets regulator Sebi has kept in 'abeyance' the draft offer documents of Inox Clean Energy Ltd, which is looking to raise up to Rs 10,000 crore thro"
+          "snippet": "Sebi has kept in 'abeyance' the draft offer documents of Inox Clean Energy Ltd."
+        },
+        {
+          "name": "Anarock Property Consultants Ltd",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Anarock Property Consultants Ltd has filed draft papers with Sebi to raise Rs 1,000 crore through an Initial Public Offering."
+        },
+        {
+          "name": "NSE",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "NSE has received Sebi's no-objection certificate to introduce corporate bond index futures."
         }
       ],
-      "after_filter_count": 3,
+      "after_filter_count": 4,
       "dropped_counts": {
-        "not_listed": 1,
-        "no_sebi_signal_in_snippet": 0,
+        "not_listed": 2,
+        "no_sebi_signal_in_snippet": 1,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
-          "name": "Sindhuja Microcredit",
-          "order_type": "other",
-          "snippet": "Sindhuja Microcredit raised ₹100 crore through NCDs, while Carlsberg India received Sebi's observations for a ₹6,600 cro"
-        },
-        {
           "name": "Carlsberg India",
           "order_type": "other",
-          "snippet": "Sindhuja Microcredit raised ₹100 crore through NCDs, while Carlsberg India received Sebi's observations for a ₹6,600 cro"
+          "snippet": "Carlsberg India received Sebi's observations for a ₹6,600 crore IPO."
         },
         {
           "name": "Inox Clean Energy Ltd",
           "order_type": "other",
-          "snippet": "Markets regulator Sebi has kept in 'abeyance' the draft offer documents of Inox Clean Energy Ltd, which is looking to ra"
+          "snippet": "Sebi has kept in 'abeyance' the draft offer documents of Inox Clean Energy Ltd."
+        },
+        {
+          "name": "Anarock Property Consultants Ltd",
+          "order_type": "other",
+          "snippet": "Anarock Property Consultants Ltd has filed draft papers with Sebi to raise Rs 1,000 crore through an Initial Public Offe"
+        },
+        {
+          "name": "NSE",
+          "order_type": "other",
+          "snippet": "NSE has received Sebi's no-objection certificate to introduce corporate bond index futures."
         }
       ]
     },
@@ -260,90 +264,78 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-11T05:44:26.697Z",
+      "at": "2026-10-12T05:54:56.600Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 12,
-      "total_extracted": 12,
+      "total_extracted_raw": 10,
+      "total_extracted": 10,
       "prefilter_sample": [
         {
           "name": "SMC Global Securities",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Sebi penalises SMC Global Securities for compliance lapses"
-        },
-        {
-          "name": "Embassy Office Parks REIT",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "SEBI relies on amended rules in Embassy REIT 'Fit and Proper' matter, tells Bombay HC no disqualification made out"
+          "snippet": "Sebi penalises SMC Global Securities for compliance lapses."
         },
         {
           "name": "Jane Street",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Sebi accuses Jane Street of dilatory tactics at SAT, says 'investigator is being investigated'"
+          "snippet": "Jane Street hits back at Sebi’s allegations, says ‘regulator changed the goal posts’."
         },
         {
-          "name": "Carlsberg",
+          "name": "Jane Street",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Danish brewing giant Carlsberg’s India arm, 3 others get Sebi nod to float IPOs"
+          "snippet": "Sebi says Jane Street’s appeal for more details a delaying ploy."
+        },
+        {
+          "name": "Jane Street",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Sebi accuses Jane Street of dilatory tactics at SAT, says 'investigator is being investigated'."
         },
         {
           "name": "Adani Enterprises",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "Sebi clears Gautam, Vinod Adani of MPS norm violation"
-        },
-        {
-          "name": "JioBlackRock Mutual Fund",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "JioBlackRock Mutual Fund files draft document with Sebi for a gold ETF"
+          "snippet": "Sebi clears Gautam, Vinod Adani of MPS norm violation."
         },
         {
-          "name": "Growpital",
+          "name": "Adani Enterprises",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Growpital case: Sebi to refund money directly to investors for first time"
+          "snippet": "Sebi drops minimum public shareholding norms violation case against Vinod Adani and 4 Adani group companies."
         },
         {
-          "name": "Biocon Electric",
+          "name": "Adani Enterprises",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "IPO Ahead! Electrical products maker Biocon Electric files draft papers with Sebi"
+          "snippet": "Adani Enterprises shares fall 4% despite getting CARE Ratings upgrade to AA; stable."
         },
         {
           "name": "Lloyds Enterprises",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi"
+          "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi."
         },
         {
-          "name": "Vinir Engineering",
+          "name": "Carlsberg India",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Vinir Engineering files DRHP with SEBI for fresh issue of up to 7.1 crore shares"
+          "snippet": "Danish brewing giant Carlsberg’s India arm, 3 others get Sebi nod to float IPOs."
         },
         {
-          "name": "TCS",
+          "name": "Carlsberg India",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "TCS dividend! IT giant declares second interim dividend of Rs 12 per share for FY27"
-        },
-        {
-          "name": "Poonawalla Fincorp",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Poonawalla Fincorp Q2 Results: Profit skyrockets 407% YoY to Rs 375 crore, NII rises 81%"
+          "snippet": "Carlsberg India IPO gets Sebi approval along with three other public offers."
         }
       ],
-      "after_filter_count": 10,
+      "after_filter_count": 9,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 2,
+        "no_sebi_signal_in_snippet": 1,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -351,52 +343,47 @@
         {
           "name": "SMC Global Securities",
           "order_type": "sebi-fine",
-          "snippet": "Sebi penalises SMC Global Securities for compliance lapses"
-        },
-        {
-          "name": "Embassy Office Parks REIT",
-          "order_type": "other",
-          "snippet": "SEBI relies on amended rules in Embassy REIT 'Fit and Proper' matter, tells Bombay HC no disqualification made out"
+          "snippet": "Sebi penalises SMC Global Securities for compliance lapses."
         },
         {
           "name": "Jane Street",
           "order_type": "other",
-          "snippet": "Sebi accuses Jane Street of dilatory tactics at SAT, says 'investigator is being investigated'"
+          "snippet": "Jane Street hits back at Sebi’s allegations, says ‘regulator changed the goal posts’."
         },
         {
-          "name": "Carlsberg",
+          "name": "Jane Street",
           "order_type": "other",
-          "snippet": "Danish brewing giant Carlsberg’s India arm, 3 others get Sebi nod to float IPOs"
+          "snippet": "Sebi says Jane Street’s appeal for more details a delaying ploy."
+        },
+        {
+          "name": "Jane Street",
+          "order_type": "other",
+          "snippet": "Sebi accuses Jane Street of dilatory tactics at SAT, says 'investigator is being investigated'."
         },
         {
           "name": "Adani Enterprises",
-          "order_type": "sebi-investigation",
-          "snippet": "Sebi clears Gautam, Vinod Adani of MPS norm violation"
+          "order_type": "other",
+          "snippet": "Sebi clears Gautam, Vinod Adani of MPS norm violation."
         },
         {
-          "name": "JioBlackRock Mutual Fund",
+          "name": "Adani Enterprises",
           "order_type": "other",
-          "snippet": "JioBlackRock Mutual Fund files draft document with Sebi for a gold ETF"
-        },
-        {
-          "name": "Growpital",
-          "order_type": "other",
-          "snippet": "Growpital case: Sebi to refund money directly to investors for first time"
-        },
-        {
-          "name": "Biocon Electric",
-          "order_type": "other",
-          "snippet": "IPO Ahead! Electrical products maker Biocon Electric files draft papers with Sebi"
+          "snippet": "Sebi drops minimum public shareholding norms violation case against Vinod Adani and 4 Adani group companies."
         },
         {
           "name": "Lloyds Enterprises",
           "order_type": "other",
-          "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi"
+          "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi."
         },
         {
-          "name": "Vinir Engineering",
+          "name": "Carlsberg India",
           "order_type": "other",
-          "snippet": "Vinir Engineering files DRHP with SEBI for fresh issue of up to 7.1 crore shares"
+          "snippet": "Danish brewing giant Carlsberg’s India arm, 3 others get Sebi nod to float IPOs."
+        },
+        {
+          "name": "Carlsberg India",
+          "order_type": "other",
+          "snippet": "Carlsberg India IPO gets Sebi approval along with three other public offers."
         }
       ]
     },
@@ -404,23 +391,16 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-10-11T05:44:35.066Z",
+      "at": "2026-10-12T05:55:03.647Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 1,
-      "total_extracted": 1,
-      "prefilter_sample": [
-        {
-          "name": "CITRUS CHECK INNS LIMITED",
-          "order_type": "public-notice",
-          "is_listed_entity": false,
-          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
-        }
-      ],
+      "total_extracted_raw": 0,
+      "total_extracted": 0,
+      "prefilter_sample": [],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 1,
+        "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
