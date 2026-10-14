@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-10-14T08:59:21.508Z",
+  "generated_at": "2026-10-14T09:26:40.717Z",
   "source": "Munshot quote API (fastapi.muns.io/stock-data)",
   "note": "Live intraday snapshot per basket ticker. dayHigh/dayLow drive intraday target/SL touch detection; current is the latest traded price.",
   "ticker_count": 10,
   "prices": {
     "RPGLIFE": {
-      "current": 2815,
+      "current": 2813,
       "open": 2814.8,
       "prevClose": 2806.6,
       "dayHigh": 2837.9,
@@ -15,11 +15,11 @@
       "ma50": 2755.95,
       "ma200": 2347.37,
       "vol10d": 32767,
-      "marketCap": 46557327225,
+      "marketCap": 46524249195,
       "yearlyChangePct": 22.51
     },
     "KMCSHIL": {
-      "current": 163.32,
+      "current": 161.91,
       "open": 153.67,
       "prevClose": 152.2,
       "dayHigh": 168.9,
@@ -29,11 +29,11 @@
       "ma50": 150.13,
       "ma200": 150.13,
       "vol10d": 746620,
-      "marketCap": 26635043394.47,
+      "marketCap": 26405092947.24,
       "yearlyChangePct": 7.07
     },
     "BLSE": {
-      "current": 152.45,
+      "current": 152.5,
       "open": 148.1,
       "prevClose": 149.5,
       "dayHigh": 154.5,
@@ -43,25 +43,25 @@
       "ma50": 158.33,
       "ma200": 113.43,
       "vol10d": 802945,
-      "marketCap": 27640427523.99,
+      "marketCap": 27649493485,
       "yearlyChangePct": 83.46
     },
     "RPTECH": {
-      "current": 915.2,
+      "current": 915.05,
       "open": 885,
       "prevClose": 887.4,
-      "dayHigh": 916.8,
+      "dayHigh": 917,
       "dayLow": 878.6,
       "week52High": 1004.7,
       "week52Low": 316.3,
       "ma50": 859.54,
       "ma200": 584.33,
       "vol10d": 431788,
-      "marketCap": 60774539549.82,
+      "marketCap": 60764577066.68,
       "yearlyChangePct": 166.69
     },
     "GALAXYSURF": {
-      "current": 2625,
+      "current": 2609.9,
       "open": 2582.6,
       "prevClose": 2581.9,
       "dayHigh": 2635,
@@ -71,7 +71,7 @@
       "ma50": 2253.81,
       "ma200": 1966.59,
       "vol10d": 86866,
-      "marketCap": 96008831625,
+      "marketCap": 95456548678.94,
       "yearlyChangePct": 17.79
     },
     "THEJO": {
@@ -89,7 +89,7 @@
       "yearlyChangePct": 13.19
     },
     "POWERMECH": {
-      "current": 2470.5,
+      "current": 2473.2,
       "open": 2438,
       "prevClose": 2443,
       "dayHigh": 2514.7,
@@ -99,11 +99,11 @@
       "ma50": 2452.83,
       "ma200": 2373.32,
       "vol10d": 76841,
-      "marketCap": 78108049386,
+      "marketCap": 78193411830.64,
       "yearlyChangePct": -12.12
     },
     "VENUSREM": {
-      "current": 1582.9,
+      "current": 1586,
       "open": 1586.4,
       "prevClose": 1585.5,
       "dayHigh": 1605,
@@ -113,7 +113,7 @@
       "ma50": 1652.63,
       "ma200": 1244.11,
       "vol10d": 35109,
-      "marketCap": 21183463493.53,
+      "marketCap": 21224949512,
       "yearlyChangePct": 243.55
     },
     "DYNAMATECH": {
@@ -131,7 +131,7 @@
       "yearlyChangePct": 78.97
     },
     "BOROLTD": {
-      "current": 277.4,
+      "current": 275.55,
       "open": 271.55,
       "prevClose": 273.8,
       "dayHigh": 280,
@@ -141,7 +141,7 @@
       "ma50": 256.9,
       "ma200": 247.77,
       "vol10d": 371813,
-      "marketCap": 33173607554.7,
+      "marketCap": 32952369711.14,
       "yearlyChangePct": -18.86
     }
   }
