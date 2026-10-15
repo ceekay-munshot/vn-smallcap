@@ -1,28 +1,9 @@
 {
-  "generated_at": "2026-10-14T15:30:57.052Z",
+  "generated_at": "2026-10-15T04:35:39.072Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 7,
+  "total_entities_seen": 6,
   "flagged_companies": {
-    "IEX": {
-      "primary_name": "Indian Gas Exchange",
-      "order_type": "sebi-investigation",
-      "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO",
-      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
-      "source_label": "Economic Times — SEBI topic (news)",
-      "origins": [
-        "scraper"
-      ],
-      "mentions": [
-        {
-          "source": "Economic Times — SEBI topic (news)",
-          "origin": "scraper",
-          "order_type": "sebi-investigation",
-          "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO"
-        }
-      ],
-      "first_seen_at": "2026-10-14T15:30:57.052Z"
-    },
     "SMCGLOBAL": {
       "primary_name": "SMC Global Securities",
       "order_type": "sebi-fine",
@@ -40,11 +21,11 @@
           "snippet": "Sebi penalises SMC Global Securities for compliance lapses"
         }
       ],
-      "first_seen_at": "2026-10-14T15:30:57.052Z"
+      "first_seen_at": "2026-10-15T04:35:39.071Z"
     },
     "LLOYDSENT": {
       "primary_name": "Lloyds Enterprises",
-      "order_type": "other",
+      "order_type": "settlement",
       "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi",
       "source_url": "https://economictimes.indiatimes.com/topic/sebi",
       "source_label": "Economic Times — SEBI topic (news)",
@@ -55,11 +36,11 @@
         {
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
-          "order_type": "other",
+          "order_type": "settlement",
           "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi"
         }
       ],
-      "first_seen_at": "2026-10-14T15:30:57.052Z"
+      "first_seen_at": "2026-10-15T04:35:39.071Z"
     }
   },
   "unmatched_sample": [
@@ -77,7 +58,7 @@
     },
     {
       "name": "Carlsberg",
-      "type": "sebi-approval",
+      "type": "other",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -93,7 +74,7 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-14T15:30:21.296Z",
+      "at": "2026-10-15T04:35:28.719Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -104,7 +85,7 @@
           "name": "Rajesh Exports",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Sebi bars Rajesh Mehta from trading in Rajesh Exports, keeps curbs in place."
+          "snippet": "Sebi bars Rajesh Mehta from trading in Rajesh Exports, keeps curbs in place"
         }
       ],
       "after_filter_count": 1,
@@ -118,7 +99,7 @@
         {
           "name": "Rajesh Exports",
           "order_type": "sebi-ban",
-          "snippet": "Sebi bars Rajesh Mehta from trading in Rajesh Exports, keeps curbs in place."
+          "snippet": "Sebi bars Rajesh Mehta from trading in Rajesh Exports, keeps curbs in place"
         }
       ]
     },
@@ -126,7 +107,7 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-14T15:30:34.284Z",
+      "at": "2026-10-15T04:35:30.896Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -141,9 +122,9 @@
         },
         {
           "name": "Carlsberg",
-          "order_type": "sebi-approval",
+          "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Carlsberg gets Sebi approval for IPO involving a stake sale by its parent."
+          "snippet": "Carlsberg gets Sebi approval for a ₹6,600 crore IPO involving a stake sale by its parent."
         }
       ],
       "after_filter_count": 2,
@@ -161,8 +142,8 @@
         },
         {
           "name": "Carlsberg",
-          "order_type": "sebi-approval",
-          "snippet": "Carlsberg gets Sebi approval for IPO involving a stake sale by its parent."
+          "order_type": "other",
+          "snippet": "Carlsberg gets Sebi approval for a ₹6,600 crore IPO involving a stake sale by its parent."
         }
       ]
     },
@@ -170,24 +151,18 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-14T15:30:39.397Z",
+      "at": "2026-10-15T04:35:33.177Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 4,
-      "total_extracted": 4,
+      "total_extracted_raw": 3,
+      "total_extracted": 3,
       "prefilter_sample": [
         {
           "name": "Singularity AMC",
           "order_type": "settlement",
           "is_listed_entity": true,
           "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi"
-        },
-        {
-          "name": "Indian Gas Exchange",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO"
         },
         {
           "name": "SMC Global Securities",
@@ -197,12 +172,12 @@
         },
         {
           "name": "Lloyds Enterprises",
-          "order_type": "other",
+          "order_type": "settlement",
           "is_listed_entity": true,
           "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi"
         }
       ],
-      "after_filter_count": 4,
+      "after_filter_count": 3,
       "dropped_counts": {
         "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
@@ -216,18 +191,13 @@
           "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi"
         },
         {
-          "name": "Indian Gas Exchange",
-          "order_type": "sebi-investigation",
-          "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO"
-        },
-        {
           "name": "SMC Global Securities",
           "order_type": "sebi-fine",
           "snippet": "Sebi penalises SMC Global Securities for compliance lapses"
         },
         {
           "name": "Lloyds Enterprises",
-          "order_type": "other",
+          "order_type": "settlement",
           "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi"
         }
       ]
@@ -236,7 +206,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-10-14T15:30:45.739Z",
+      "at": "2026-10-15T04:35:36.204Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
