@@ -1,28 +1,9 @@
 {
-  "generated_at": "2026-10-15T15:25:00.067Z",
+  "generated_at": "2026-10-16T04:30:04.431Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 8,
+  "total_entities_seen": 7,
   "flagged_companies": {
-    "LLOYDSENT": {
-      "primary_name": "Lloyds Enterprises",
-      "order_type": "settlement",
-      "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi",
-      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
-      "source_label": "Economic Times — SEBI topic (news)",
-      "origins": [
-        "scraper"
-      ],
-      "mentions": [
-        {
-          "source": "Economic Times — SEBI topic (news)",
-          "origin": "scraper",
-          "order_type": "settlement",
-          "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi"
-        }
-      ],
-      "first_seen_at": "2026-10-15T15:25:00.067Z"
-    },
     "SMCGLOBAL": {
       "primary_name": "SMC Global Securities",
       "order_type": "sebi-fine",
@@ -40,26 +21,7 @@
           "snippet": "Sebi penalises SMC Global Securities for compliance lapses"
         }
       ],
-      "first_seen_at": "2026-10-15T15:25:00.067Z"
-    },
-    "IEX": {
-      "primary_name": "Indian Gas Exchange Ltd",
-      "order_type": "sebi-investigation",
-      "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO",
-      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
-      "source_label": "Economic Times — SEBI topic (news)",
-      "origins": [
-        "scraper"
-      ],
-      "mentions": [
-        {
-          "source": "Economic Times — SEBI topic (news)",
-          "origin": "scraper",
-          "order_type": "sebi-investigation",
-          "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO"
-        }
-      ],
-      "first_seen_at": "2026-10-15T15:25:00.067Z"
+      "first_seen_at": "2026-10-16T04:30:04.431Z"
     }
   },
   "unmatched_sample": [
@@ -72,24 +34,30 @@
     {
       "name": "Rajesh Exports",
       "type": "other",
+      "source": "Mint — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Rajesh Exports",
+      "type": "sebi-ban",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Carlsberg",
-      "type": "other",
-      "source": "Business Standard — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Sindhuja Microcredit",
-      "type": "other",
-      "source": "Business Standard — SEBI topic (news)",
+      "name": "Rajesh Exports",
+      "type": "enforcement-order",
+      "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
       "name": "Singularity AMC",
       "type": "settlement",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Rajesh Exports",
+      "type": "enforcement-order",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -99,7 +67,51 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-15T15:24:39.826Z",
+      "at": "2026-10-16T04:29:30.378Z",
+      "fc_status": 200,
+      "outcome": "ok",
+      "upstream_status": 200,
+      "total_extracted_raw": 2,
+      "total_extracted": 2,
+      "prefilter_sample": [
+        {
+          "name": "Rajesh Exports",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars Rajesh Mehta from trading in Rajesh Exports, keeps curbs in place."
+        },
+        {
+          "name": "Rajesh Exports",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "In a confirmatory order, the market regulator demands full compliance with a forensic audit following allegations of a ₹15.15-trillion revenue misrepr"
+        }
+      ],
+      "after_filter_count": 2,
+      "dropped_counts": {
+        "not_listed": 0,
+        "no_sebi_signal_in_snippet": 0,
+        "resolved_in_favour": 0,
+        "no_name": 0
+      },
+      "sample": [
+        {
+          "name": "Rajesh Exports",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars Rajesh Mehta from trading in Rajesh Exports, keeps curbs in place."
+        },
+        {
+          "name": "Rajesh Exports",
+          "order_type": "other",
+          "snippet": "In a confirmatory order, the market regulator demands full compliance with a forensic audit following allegations of a ₹"
+        }
+      ]
+    },
+    {
+      "url": "https://www.business-standard.com/topic/sebi",
+      "label": "Business Standard — SEBI topic (news)",
+      "mode": "news",
+      "at": "2026-10-16T04:29:34.810Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -110,7 +122,7 @@
           "name": "Rajesh Exports",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Sebi bars Rajesh Mehta from trading in Rajesh Exports, keeps curbs in place."
+          "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe."
         }
       ],
       "after_filter_count": 1,
@@ -124,86 +136,7 @@
         {
           "name": "Rajesh Exports",
           "order_type": "sebi-ban",
-          "snippet": "Sebi bars Rajesh Mehta from trading in Rajesh Exports, keeps curbs in place."
-        }
-      ]
-    },
-    {
-      "url": "https://www.business-standard.com/topic/sebi",
-      "label": "Business Standard — SEBI topic (news)",
-      "mode": "news",
-      "at": "2026-10-15T15:24:42.278Z",
-      "fc_status": 200,
-      "outcome": "ok",
-      "upstream_status": 200,
-      "total_extracted_raw": 7,
-      "total_extracted": 7,
-      "prefilter_sample": [
-        {
-          "name": "Rajesh Exports",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe"
-        },
-        {
-          "name": "Carlsberg",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Carlsberg gets Sebi approval for IPO"
-        },
-        {
-          "name": "Sebi",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi proposes tighter IPO proceeds monitoring, fines for defaulting firms"
-        },
-        {
-          "name": "Sebi",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi extends relaxation to revise fresh issue size till March 2027"
-        },
-        {
-          "name": "Sebi",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi nudges brokerage firms to join return verification platform"
-        },
-        {
-          "name": "Sebi",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi notifies common ad code, allows celebrity endorsements for brands"
-        },
-        {
-          "name": "Sindhuja Microcredit",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Sindhuja raises ₹100 crore via NCDs; Carlsberg gets Sebi approval for IPO"
-        }
-      ],
-      "after_filter_count": 3,
-      "dropped_counts": {
-        "not_listed": 4,
-        "no_sebi_signal_in_snippet": 0,
-        "resolved_in_favour": 0,
-        "no_name": 0
-      },
-      "sample": [
-        {
-          "name": "Rajesh Exports",
-          "order_type": "other",
-          "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe"
-        },
-        {
-          "name": "Carlsberg",
-          "order_type": "other",
-          "snippet": "Carlsberg gets Sebi approval for IPO"
-        },
-        {
-          "name": "Sindhuja Microcredit",
-          "order_type": "other",
-          "snippet": "Sindhuja raises ₹100 crore via NCDs; Carlsberg gets Sebi approval for IPO"
+          "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe."
         }
       ]
     },
@@ -211,7 +144,7 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-15T15:24:51.081Z",
+      "at": "2026-10-16T04:29:47.190Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -219,16 +152,28 @@
       "total_extracted": 8,
       "prefilter_sample": [
         {
+          "name": "Rajesh Exports",
+          "order_type": "enforcement-order",
+          "is_listed_entity": true,
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved"
+        },
+        {
           "name": "Singularity AMC",
           "order_type": "settlement",
           "is_listed_entity": true,
           "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi"
         },
         {
-          "name": "Lloyds Enterprises",
-          "order_type": "settlement",
+          "name": "Rajesh Exports",
+          "order_type": "enforcement-order",
           "is_listed_entity": true,
-          "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi"
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, promoter over alleged fund routing"
+        },
+        {
+          "name": "Polycab India",
+          "order_type": "sebi-fine",
+          "is_listed_entity": true,
+          "snippet": "Polycab shares tumble 5% as stock set to exit F&O segment from December 30 onwards. Here's why"
         },
         {
           "name": "SMC Global Securities",
@@ -237,34 +182,22 @@
           "snippet": "Sebi penalises SMC Global Securities for compliance lapses"
         },
         {
-          "name": "Indian Gas Exchange Ltd",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO"
-        },
-        {
-          "name": "Sebi",
-          "order_type": "enforcement-order",
-          "is_listed_entity": false,
-          "snippet": "Sebi has proposed Rs 50,000 fine for firms not cooperating with monitoring agencies."
-        },
-        {
-          "name": "Jane Street",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": false,
-          "snippet": "Jane Street hits back at Sebi’s allegations, says ‘regulator changed the goal posts’."
-        },
-        {
           "name": "Polycab India",
           "order_type": "sebi-investigation",
           "is_listed_entity": true,
-          "snippet": "Polycab India shares drop 6% after NSE announced its exclusion from the equity derivatives segment."
+          "snippet": "Polycab India's F&O exit: NSE sets December 30 deadline; NCLAT stays insolvency order"
         },
         {
-          "name": "Jubilant Pharmova",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "Jubilant Pharmova block deal: Quant Mutual Fund offloads Rs 190 crore stake amid Rs 800 crore fundraising plan."
+          "name": "Jane Street",
+          "order_type": "enforcement-order",
+          "is_listed_entity": false,
+          "snippet": "Jane Street hits back at Sebi’s allegations, says ‘regulator changed the goal posts’"
+        },
+        {
+          "name": "Jane Street",
+          "order_type": "enforcement-order",
+          "is_listed_entity": false,
+          "snippet": "Sebi accuses Jane Street of dilatory tactics at SAT, says investigator is being investigated"
         }
       ],
       "after_filter_count": 4,
@@ -276,24 +209,24 @@
       },
       "sample": [
         {
+          "name": "Rajesh Exports",
+          "order_type": "enforcement-order",
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved"
+        },
+        {
           "name": "Singularity AMC",
           "order_type": "settlement",
           "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi"
         },
         {
-          "name": "Lloyds Enterprises",
-          "order_type": "settlement",
-          "snippet": "Lloyds Enterprises settles listing rule violations case with Sebi"
+          "name": "Rajesh Exports",
+          "order_type": "enforcement-order",
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, promoter over alleged fund routing"
         },
         {
           "name": "SMC Global Securities",
           "order_type": "sebi-fine",
           "snippet": "Sebi penalises SMC Global Securities for compliance lapses"
-        },
-        {
-          "name": "Indian Gas Exchange Ltd",
-          "order_type": "sebi-investigation",
-          "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO"
         }
       ]
     },
@@ -301,7 +234,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-10-15T15:24:57.372Z",
+      "at": "2026-10-16T04:29:54.927Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -311,7 +244,7 @@
         {
           "name": "CITRUS CHECK INNS LIMITED",
           "order_type": "other",
-          "is_listed_entity": true,
+          "is_listed_entity": false,
           "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
         },
         {
@@ -323,8 +256,8 @@
       ],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 1,
-        "no_sebi_signal_in_snippet": 1,
+        "not_listed": 2,
+        "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
