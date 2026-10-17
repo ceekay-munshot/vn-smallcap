@@ -1,32 +1,13 @@
 {
-  "generated_at": "2026-10-16T15:04:39.492Z",
+  "generated_at": "2026-10-17T04:24:18.449Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 6,
+  "total_entities_seen": 5,
   "flagged_companies": {
-    "IEX": {
-      "primary_name": "Indian Gas Exchange",
-      "order_type": "settlement",
-      "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO",
-      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
-      "source_label": "Economic Times — SEBI topic (news)",
-      "origins": [
-        "scraper"
-      ],
-      "mentions": [
-        {
-          "source": "Economic Times — SEBI topic (news)",
-          "origin": "scraper",
-          "order_type": "settlement",
-          "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO"
-        }
-      ],
-      "first_seen_at": "2026-10-16T15:04:39.492Z"
-    },
     "SMCGLOBAL": {
       "primary_name": "SMC Global Securities",
       "order_type": "sebi-fine",
-      "snippet": "Sebi penalises SMC Global Securities for compliance lapses",
+      "snippet": "Sebi penalises SMC Global Securities for compliance lapses.",
       "source_url": "https://economictimes.indiatimes.com/topic/sebi",
       "source_label": "Economic Times — SEBI topic (news)",
       "origins": [
@@ -37,10 +18,10 @@
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
           "order_type": "sebi-fine",
-          "snippet": "Sebi penalises SMC Global Securities for compliance lapses"
+          "snippet": "Sebi penalises SMC Global Securities for compliance lapses."
         }
       ],
-      "first_seen_at": "2026-10-16T15:04:39.492Z"
+      "first_seen_at": "2026-10-17T04:24:18.448Z"
     }
   },
   "unmatched_sample": [
@@ -52,7 +33,7 @@
     },
     {
       "name": "Rajesh Exports",
-      "type": "sebi-fine",
+      "type": "other",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -74,7 +55,7 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-16T15:04:26.803Z",
+      "at": "2026-10-17T04:24:07.412Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -107,7 +88,7 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-16T15:04:29.022Z",
+      "at": "2026-10-17T04:24:09.599Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -116,7 +97,7 @@
       "prefilter_sample": [
         {
           "name": "Rajesh Exports",
-          "order_type": "sebi-fine",
+          "order_type": "other",
           "is_listed_entity": true,
           "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe."
         }
@@ -131,7 +112,7 @@
       "sample": [
         {
           "name": "Rajesh Exports",
-          "order_type": "sebi-fine",
+          "order_type": "other",
           "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe."
         }
       ]
@@ -140,30 +121,30 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-16T15:04:31.303Z",
+      "at": "2026-10-17T04:24:11.437Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 5,
-      "total_extracted": 5,
+      "total_extracted_raw": 8,
+      "total_extracted": 8,
       "prefilter_sample": [
         {
           "name": "Rajesh Exports",
           "order_type": "enforcement-order",
           "is_listed_entity": true,
-          "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved"
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved."
         },
         {
           "name": "Singularity AMC",
           "order_type": "settlement",
           "is_listed_entity": true,
-          "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi"
+          "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi."
         },
         {
-          "name": "Indian Gas Exchange",
-          "order_type": "settlement",
+          "name": "SMC Global Securities",
+          "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO"
+          "snippet": "Sebi penalises SMC Global Securities for compliance lapses."
         },
         {
           "name": "Polycab India",
@@ -172,16 +153,34 @@
           "snippet": "Polycab shares tumble 5% as stock set to exit F&O segment from December 30 onwards."
         },
         {
-          "name": "SMC Global Securities",
-          "order_type": "sebi-fine",
+          "name": "Polycab India",
+          "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Sebi penalises SMC Global Securities for compliance lapses"
+          "snippet": "Polycab India’s F&O exit: NSE sets December 30 deadline; NCLAT stays insolvency order."
+        },
+        {
+          "name": "Jane Street",
+          "order_type": "other",
+          "is_listed_entity": false,
+          "snippet": "Jane Street denies manipulation charges in India appeal case."
+        },
+        {
+          "name": "Yes Bank",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Yes Bank shares nosedive 20% after SC declares AT-1 bond write-off illegal."
+        },
+        {
+          "name": "Jubilant Pharmova",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Jubilant Pharmova block deal: Quant Mutual Fund offloads Rs 190 crore stake amid Rs 800 crore fundraising plan."
         }
       ],
-      "after_filter_count": 4,
+      "after_filter_count": 3,
       "dropped_counts": {
-        "not_listed": 0,
-        "no_sebi_signal_in_snippet": 1,
+        "not_listed": 1,
+        "no_sebi_signal_in_snippet": 4,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -189,22 +188,17 @@
         {
           "name": "Rajesh Exports",
           "order_type": "enforcement-order",
-          "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved"
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved."
         },
         {
           "name": "Singularity AMC",
           "order_type": "settlement",
-          "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi"
-        },
-        {
-          "name": "Indian Gas Exchange",
-          "order_type": "settlement",
-          "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO"
+          "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi."
         },
         {
           "name": "SMC Global Securities",
           "order_type": "sebi-fine",
-          "snippet": "Sebi penalises SMC Global Securities for compliance lapses"
+          "snippet": "Sebi penalises SMC Global Securities for compliance lapses."
         }
       ]
     },
@@ -212,15 +206,21 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-10-16T15:04:37.346Z",
+      "at": "2026-10-17T04:24:15.935Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 1,
-      "total_extracted": 1,
+      "total_extracted_raw": 2,
+      "total_extracted": 2,
       "prefilter_sample": [
         {
           "name": "CITRUS CHECK INNS LIMITED",
+          "order_type": "public-notice",
+          "is_listed_entity": false,
+          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
+        },
+        {
+          "name": "ROYAL TWINKLE STAR CLUB PVT. LTD",
           "order_type": "public-notice",
           "is_listed_entity": false,
           "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
@@ -228,7 +228,7 @@
       ],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 1,
+        "not_listed": 2,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
