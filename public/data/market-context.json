@@ -1,77 +1,16 @@
 {
-  "generated_at": "2026-10-19T04:38:59.267Z",
+  "generated_at": "2026-10-19T13:50:59.563Z",
   "source": "Yahoo Finance chart endpoint",
   "note": "Pre-open context. GIFT Nifty has no free stable feed; S&P futures plus the Asian session carry the same overnight information.",
   "giftNifty": null,
-  "feeds": {
-    "spFutures": {
-      "key": "spFutures",
-      "symbol": "ES=F",
-      "label": "S&P 500 futures",
-      "role": "overnight",
-      "last": 7764.25,
-      "prevClose": 7770.25,
-      "changePct": -0.07721759274154083,
-      "asOf": "2026-10-19T04:28:51.000Z"
-    },
-    "nikkei": {
-      "key": "nikkei",
-      "symbol": "^N225",
-      "label": "Nikkei 225",
-      "role": "asia",
-      "last": 64850.71,
-      "prevClose": 67777.52,
-      "changePct": -4.3182606858439225,
-      "asOf": "2026-10-19T04:23:55.000Z"
-    },
-    "hangSeng": {
-      "key": "hangSeng",
-      "symbol": "^HSI",
-      "label": "Hang Seng",
-      "role": "asia",
-      "last": 24186.83,
-      "prevClose": 24211.35,
-      "changePct": -0.10127481532420379,
-      "asOf": "2026-10-16T08:08:38.000Z"
-    },
-    "vix": {
-      "key": "vix",
-      "symbol": "^INDIAVIX",
-      "label": "India VIX",
-      "role": "vol",
-      "last": 14.61,
-      "prevClose": 14.12,
-      "changePct": 3.4702549575070796,
-      "asOf": "2026-10-19T04:38:56.000Z"
-    },
-    "nifty": {
-      "key": "nifty",
-      "symbol": "^NSEI",
-      "label": "Nifty 50",
-      "role": "home",
-      "last": 23072.85,
-      "prevClose": 22721.95,
-      "changePct": 1.5443216801374726,
-      "asOf": "2026-10-19T04:38:57.000Z"
-    },
-    "smallcap": {
-      "key": "smallcap",
-      "symbol": "NIFTYSMLCAP250.NS",
-      "label": "Nifty Smallcap 250",
-      "role": "home",
-      "last": 17558.45,
-      "prevClose": 17833.45,
-      "changePct": -1.5420459866150371,
-      "asOf": "2026-10-19T04:38:57.000Z"
-    }
-  },
+  "feeds": {},
   "signal": {
-    "lean": -1.143492671662802,
-    "dir": "down",
-    "vix": 14.61,
-    "vixChange": 3.4702549575070796,
-    "vixBand": "normal",
-    "tolerancePct": 0.25,
-    "headline": "Overnight negative — expect a lower open, limits should fill easily"
+    "lean": null,
+    "dir": "flat",
+    "vix": null,
+    "vixChange": null,
+    "vixBand": "unknown",
+    "tolerancePct": 0.5,
+    "headline": "Overnight quiet — a normal open"
   }
 }
