@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-10-20T04:47:42.361Z",
+  "generated_at": "2026-10-20T15:26:25.955Z",
   "source_count": 4,
   "curated_baseline_count": 0,
   "total_entities_seen": 8,
   "flagged_companies": {
     "TTML": {
       "primary_name": "Tata Sons",
-      "order_type": "other",
+      "order_type": "sebi-investigation",
       "snippet": "Tata Sons reviews AoA to meet Sebi listing norms.",
       "source_url": "https://economictimes.indiatimes.com/topic/sebi",
       "source_label": "Economic Times — SEBI topic (news)",
@@ -17,15 +17,15 @@
         {
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
-          "order_type": "other",
+          "order_type": "sebi-investigation",
           "snippet": "Tata Sons reviews AoA to meet Sebi listing norms."
         }
       ],
-      "first_seen_at": "2026-10-20T04:47:42.360Z"
+      "first_seen_at": "2026-10-20T15:26:25.955Z"
     },
     "IEX": {
       "primary_name": "Indian Gas Exchange",
-      "order_type": "other",
+      "order_type": "sebi-approval",
       "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO.",
       "source_url": "https://economictimes.indiatimes.com/topic/sebi",
       "source_label": "Economic Times — SEBI topic (news)",
@@ -36,11 +36,11 @@
         {
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
-          "order_type": "other",
+          "order_type": "sebi-approval",
           "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO."
         }
       ],
-      "first_seen_at": "2026-10-20T04:47:42.360Z"
+      "first_seen_at": "2026-10-20T15:26:25.955Z"
     }
   },
   "unmatched_sample": [
@@ -52,31 +52,31 @@
     },
     {
       "name": "Rajesh Exports",
-      "type": "other",
+      "type": "sebi-ban",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
     {
       "name": "Rajesh Exports",
-      "type": "enforcement-order",
+      "type": "sebi-ban",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
       "name": "Singularity AMC",
-      "type": "settlement",
+      "type": "sebi-settlement",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Rajesh Exports",
+      "type": "sebi-ban",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
       "name": "Cult.fit",
-      "type": "other",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Paramotor Digital Technology",
-      "type": "other",
+      "type": "sebi-approval",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -86,7 +86,7 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-20T04:47:30.668Z",
+      "at": "2026-10-20T15:26:07.717Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -97,7 +97,7 @@
           "name": "Rajesh Exports",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Sebi bars Rajesh Mehta from trading in Rajesh Exports, keeps curbs in place"
+          "snippet": "SEBI bars Rajesh Mehta from trading in Rajesh Exports, keeps curbs in place."
         }
       ],
       "after_filter_count": 1,
@@ -111,7 +111,7 @@
         {
           "name": "Rajesh Exports",
           "order_type": "sebi-ban",
-          "snippet": "Sebi bars Rajesh Mehta from trading in Rajesh Exports, keeps curbs in place"
+          "snippet": "SEBI bars Rajesh Mehta from trading in Rajesh Exports, keeps curbs in place."
         }
       ]
     },
@@ -119,7 +119,7 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-20T04:47:32.823Z",
+      "at": "2026-10-20T15:26:11.099Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -128,7 +128,7 @@
       "prefilter_sample": [
         {
           "name": "Rajesh Exports",
-          "order_type": "other",
+          "order_type": "sebi-ban",
           "is_listed_entity": true,
           "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe"
         }
@@ -143,7 +143,7 @@
       "sample": [
         {
           "name": "Rajesh Exports",
-          "order_type": "other",
+          "order_type": "sebi-ban",
           "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe"
         }
       ]
@@ -152,7 +152,7 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-20T04:47:36.061Z",
+      "at": "2026-10-20T15:26:15.150Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -161,51 +161,51 @@
       "prefilter_sample": [
         {
           "name": "Rajesh Exports",
-          "order_type": "enforcement-order",
+          "order_type": "sebi-ban",
           "is_listed_entity": true,
           "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved."
         },
         {
           "name": "Singularity AMC",
-          "order_type": "settlement",
+          "order_type": "sebi-settlement",
           "is_listed_entity": true,
           "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi."
         },
         {
+          "name": "Rajesh Exports",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, promoter over alleged fund routing."
+        },
+        {
           "name": "Tata Sons",
-          "order_type": "other",
+          "order_type": "sebi-investigation",
           "is_listed_entity": true,
           "snippet": "Tata Sons reviews AoA to meet Sebi listing norms."
         },
         {
-          "name": "Jane Street",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi accuses Jane Street of dilatory tactics at SAT, says 'investigator is being investigated'."
-        },
-        {
           "name": "Cult.fit",
-          "order_type": "other",
+          "order_type": "sebi-approval",
           "is_listed_entity": true,
           "snippet": "Cult.fit receives Sebi approval for proposed IPO."
         },
         {
           "name": "Indian Gas Exchange",
-          "order_type": "other",
+          "order_type": "sebi-approval",
           "is_listed_entity": true,
           "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO."
         },
         {
-          "name": "Paramotor Digital Technology",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Paramotor Digital Technology files updated draft papers with Sebi for Rs 1,000 crore issue."
+          "name": "Jane Street",
+          "order_type": "sebi-enforcement",
+          "is_listed_entity": false,
+          "snippet": "Jane Street hits back at Sebi’s allegations, says ‘regulator changed the goal posts.’"
         },
         {
           "name": "Yes Bank",
-          "order_type": "other",
+          "order_type": "sebi-enforcement",
           "is_listed_entity": true,
-          "snippet": "Yes Bank shares rise as Q2 profit beats estimates, but AT1 bond verdict hit pegged at Rs 5,217 crore."
+          "snippet": "Yes Bank shares nosedive 20% after SC declares AT-1 bond write-off illegal."
         }
       ],
       "after_filter_count": 6,
@@ -218,33 +218,33 @@
       "sample": [
         {
           "name": "Rajesh Exports",
-          "order_type": "enforcement-order",
+          "order_type": "sebi-ban",
           "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved."
         },
         {
           "name": "Singularity AMC",
-          "order_type": "settlement",
+          "order_type": "sebi-settlement",
           "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi."
         },
         {
+          "name": "Rajesh Exports",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, promoter over alleged fund routing."
+        },
+        {
           "name": "Tata Sons",
-          "order_type": "other",
+          "order_type": "sebi-investigation",
           "snippet": "Tata Sons reviews AoA to meet Sebi listing norms."
         },
         {
           "name": "Cult.fit",
-          "order_type": "other",
+          "order_type": "sebi-approval",
           "snippet": "Cult.fit receives Sebi approval for proposed IPO."
         },
         {
           "name": "Indian Gas Exchange",
-          "order_type": "other",
+          "order_type": "sebi-approval",
           "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO."
-        },
-        {
-          "name": "Paramotor Digital Technology",
-          "order_type": "other",
-          "snippet": "Paramotor Digital Technology files updated draft papers with Sebi for Rs 1,000 crore issue."
         }
       ]
     },
@@ -252,15 +252,21 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-10-20T04:47:40.460Z",
+      "at": "2026-10-20T15:26:22.975Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 1,
-      "total_extracted": 1,
+      "total_extracted_raw": 2,
+      "total_extracted": 2,
       "prefilter_sample": [
         {
-          "name": "Citrus Check Inns Limited",
+          "name": "CITRUS CHECK INNS LIMITED",
+          "order_type": "public-notice",
+          "is_listed_entity": false,
+          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
+        },
+        {
+          "name": "ROYAL TWINKLE STAR CLUB PVT. LTD",
           "order_type": "public-notice",
           "is_listed_entity": false,
           "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
@@ -268,7 +274,7 @@
       ],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 1,
+        "not_listed": 2,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
