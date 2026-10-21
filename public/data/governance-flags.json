@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-10-20T15:26:25.955Z",
+  "generated_at": "2026-10-21T04:43:59.587Z",
   "source_count": 4,
   "curated_baseline_count": 0,
   "total_entities_seen": 8,
   "flagged_companies": {
     "TTML": {
       "primary_name": "Tata Sons",
-      "order_type": "sebi-investigation",
+      "order_type": "other",
       "snippet": "Tata Sons reviews AoA to meet Sebi listing norms.",
       "source_url": "https://economictimes.indiatimes.com/topic/sebi",
       "source_label": "Economic Times — SEBI topic (news)",
@@ -17,15 +17,15 @@
         {
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
-          "order_type": "sebi-investigation",
+          "order_type": "other",
           "snippet": "Tata Sons reviews AoA to meet Sebi listing norms."
         }
       ],
-      "first_seen_at": "2026-10-20T15:26:25.955Z"
+      "first_seen_at": "2026-10-21T04:43:59.587Z"
     },
     "IEX": {
       "primary_name": "Indian Gas Exchange",
-      "order_type": "sebi-approval",
+      "order_type": "other",
       "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO.",
       "source_url": "https://economictimes.indiatimes.com/topic/sebi",
       "source_label": "Economic Times — SEBI topic (news)",
@@ -36,11 +36,11 @@
         {
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
-          "order_type": "sebi-approval",
+          "order_type": "other",
           "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO."
         }
       ],
-      "first_seen_at": "2026-10-20T15:26:25.955Z"
+      "first_seen_at": "2026-10-21T04:43:59.587Z"
     }
   },
   "unmatched_sample": [
@@ -64,7 +64,7 @@
     },
     {
       "name": "Singularity AMC",
-      "type": "sebi-settlement",
+      "type": "settlement",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -76,7 +76,7 @@
     },
     {
       "name": "Cult.fit",
-      "type": "sebi-approval",
+      "type": "other",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -86,7 +86,7 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-20T15:26:07.717Z",
+      "at": "2026-10-21T04:43:49.232Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -97,7 +97,7 @@
           "name": "Rajesh Exports",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "SEBI bars Rajesh Mehta from trading in Rajesh Exports, keeps curbs in place."
+          "snippet": "Sebi bars Rajesh Mehta from trading in Rajesh Exports, keeps curbs in place."
         }
       ],
       "after_filter_count": 1,
@@ -111,7 +111,7 @@
         {
           "name": "Rajesh Exports",
           "order_type": "sebi-ban",
-          "snippet": "SEBI bars Rajesh Mehta from trading in Rajesh Exports, keeps curbs in place."
+          "snippet": "Sebi bars Rajesh Mehta from trading in Rajesh Exports, keeps curbs in place."
         }
       ]
     },
@@ -119,7 +119,7 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-20T15:26:11.099Z",
+      "at": "2026-10-21T04:43:51.288Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -130,7 +130,7 @@
           "name": "Rajesh Exports",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe"
+          "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe."
         }
       ],
       "after_filter_count": 1,
@@ -144,7 +144,7 @@
         {
           "name": "Rajesh Exports",
           "order_type": "sebi-ban",
-          "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe"
+          "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe."
         }
       ]
     },
@@ -152,7 +152,7 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-20T15:26:15.150Z",
+      "at": "2026-10-21T04:43:53.095Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -167,7 +167,7 @@
         },
         {
           "name": "Singularity AMC",
-          "order_type": "sebi-settlement",
+          "order_type": "settlement",
           "is_listed_entity": true,
           "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi."
         },
@@ -179,39 +179,39 @@
         },
         {
           "name": "Tata Sons",
-          "order_type": "sebi-investigation",
+          "order_type": "other",
           "is_listed_entity": true,
           "snippet": "Tata Sons reviews AoA to meet Sebi listing norms."
         },
         {
           "name": "Cult.fit",
-          "order_type": "sebi-approval",
+          "order_type": "other",
           "is_listed_entity": true,
           "snippet": "Cult.fit receives Sebi approval for proposed IPO."
         },
         {
           "name": "Indian Gas Exchange",
-          "order_type": "sebi-approval",
+          "order_type": "other",
           "is_listed_entity": true,
           "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO."
         },
         {
-          "name": "Jane Street",
-          "order_type": "sebi-enforcement",
-          "is_listed_entity": false,
-          "snippet": "Jane Street hits back at Sebi’s allegations, says ‘regulator changed the goal posts.’"
+          "name": "Jio Platforms",
+          "order_type": "sebi-fine",
+          "is_listed_entity": true,
+          "snippet": "Jio IPO: LIC, BlackRock, Fidelity, GIC among 212 anchor investors to pour Rs 8,110 crore."
         },
         {
           "name": "Yes Bank",
-          "order_type": "sebi-enforcement",
+          "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Yes Bank shares nosedive 20% after SC declares AT-1 bond write-off illegal."
+          "snippet": "Yes Bank shares nosedive 20% after SC declares Rs 8,415 crore AT-1 bond write-off illegal."
         }
       ],
       "after_filter_count": 6,
       "dropped_counts": {
-        "not_listed": 1,
-        "no_sebi_signal_in_snippet": 1,
+        "not_listed": 0,
+        "no_sebi_signal_in_snippet": 2,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -223,7 +223,7 @@
         },
         {
           "name": "Singularity AMC",
-          "order_type": "sebi-settlement",
+          "order_type": "settlement",
           "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi."
         },
         {
@@ -233,17 +233,17 @@
         },
         {
           "name": "Tata Sons",
-          "order_type": "sebi-investigation",
+          "order_type": "other",
           "snippet": "Tata Sons reviews AoA to meet Sebi listing norms."
         },
         {
           "name": "Cult.fit",
-          "order_type": "sebi-approval",
+          "order_type": "other",
           "snippet": "Cult.fit receives Sebi approval for proposed IPO."
         },
         {
           "name": "Indian Gas Exchange",
-          "order_type": "sebi-approval",
+          "order_type": "other",
           "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO."
         }
       ]
@@ -252,21 +252,15 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-10-20T15:26:22.975Z",
+      "at": "2026-10-21T04:43:57.687Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 2,
-      "total_extracted": 2,
+      "total_extracted_raw": 1,
+      "total_extracted": 1,
       "prefilter_sample": [
         {
           "name": "CITRUS CHECK INNS LIMITED",
-          "order_type": "public-notice",
-          "is_listed_entity": false,
-          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
-        },
-        {
-          "name": "ROYAL TWINKLE STAR CLUB PVT. LTD",
           "order_type": "public-notice",
           "is_listed_entity": false,
           "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
@@ -274,7 +268,7 @@
       ],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 2,
+        "not_listed": 1,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
