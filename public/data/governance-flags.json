@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-10-21T15:39:31.820Z",
+  "generated_at": "2026-10-22T04:42:09.391Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 7,
+  "total_entities_seen": 8,
   "flagged_companies": {
     "TTML": {
       "primary_name": "Tata Sons",
-      "order_type": "sebi-investigation",
-      "snippet": "Tata Sons reviews AoA to meet Sebi listing norms.",
+      "order_type": "other",
+      "snippet": "Tata Sons reviews AoA to meet Sebi listing norms",
       "source_url": "https://economictimes.indiatimes.com/topic/sebi",
       "source_label": "Economic Times — SEBI topic (news)",
       "origins": [
@@ -17,11 +17,30 @@
         {
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
-          "order_type": "sebi-investigation",
-          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms."
+          "order_type": "other",
+          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms"
         }
       ],
-      "first_seen_at": "2026-10-21T15:39:31.820Z"
+      "first_seen_at": "2026-10-22T04:42:09.391Z"
+    },
+    "IEX": {
+      "primary_name": "Indian Gas Exchange Ltd",
+      "order_type": "other",
+      "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO",
+      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
+      "source_label": "Economic Times — SEBI topic (news)",
+      "origins": [
+        "scraper"
+      ],
+      "mentions": [
+        {
+          "source": "Economic Times — SEBI topic (news)",
+          "origin": "scraper",
+          "order_type": "other",
+          "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO"
+        }
+      ],
+      "first_seen_at": "2026-10-22T04:42:09.391Z"
     }
   },
   "unmatched_sample": [
@@ -33,8 +52,14 @@
     },
     {
       "name": "Rajesh Exports",
-      "type": "sebi-ban",
+      "type": "enforcement-order",
       "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Rajesh Exports",
+      "type": "sebi-ban",
+      "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
@@ -51,13 +76,7 @@
     },
     {
       "name": "Cult.fit",
-      "type": "sebi-investigation",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "NSE",
-      "type": "sebi-investigation",
+      "type": "other",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -67,7 +86,7 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-21T15:39:14.437Z",
+      "at": "2026-10-22T04:41:50.996Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -100,7 +119,7 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-21T15:39:17.990Z",
+      "at": "2026-10-22T04:41:57.558Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -109,7 +128,7 @@
       "prefilter_sample": [
         {
           "name": "Rajesh Exports",
-          "order_type": "sebi-ban",
+          "order_type": "enforcement-order",
           "is_listed_entity": true,
           "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe"
         }
@@ -124,7 +143,7 @@
       "sample": [
         {
           "name": "Rajesh Exports",
-          "order_type": "sebi-ban",
+          "order_type": "enforcement-order",
           "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe"
         }
       ]
@@ -133,96 +152,78 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-21T15:39:20.189Z",
+      "at": "2026-10-22T04:42:00.348Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 13,
-      "total_extracted": 13,
+      "total_extracted_raw": 10,
+      "total_extracted": 10,
       "prefilter_sample": [
         {
           "name": "Rajesh Exports",
           "order_type": "sebi-ban",
           "is_listed_entity": true,
-          "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved."
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved"
+        },
+        {
+          "name": "Rajesh Exports",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, promoter over alleged fund routing"
         },
         {
           "name": "Singularity AMC",
           "order_type": "settlement",
           "is_listed_entity": true,
-          "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi."
-        },
-        {
-          "name": "Cult.fit",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "Cult.fit receives Sebi approval for proposed IPO."
-        },
-        {
-          "name": "PC Jeweller",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "PC Jeweller shares soar 26% in just two sessions. Here’s what’s triggering the sharp surge."
+          "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi"
         },
         {
           "name": "Tata Sons",
-          "order_type": "sebi-investigation",
+          "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms."
+          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms"
         },
         {
-          "name": "Urban Company",
-          "order_type": "sebi-investigation",
+          "name": "Cult.fit",
+          "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Urban Company shares slide 7% as Q2 net loss triples YoY on InstaHelp burn."
+          "snippet": "Cult.fit receives Sebi approval for proposed IPO"
+        },
+        {
+          "name": "Indian Gas Exchange Ltd",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO"
+        },
+        {
+          "name": "Paras Healthcare",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Paras Healthcare fixes IPO price band at Rs 660-693; issue opens on Oct 21"
         },
         {
           "name": "Yes Bank",
-          "order_type": "sebi-investigation",
+          "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Yes Bank shares nosedive 20% after SC declares Rs 8,415 crore AT-1 bond write-off illegal."
-        },
-        {
-          "name": "Polycab India",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "Polycab shares tumble 5% as stock set to exit F&O segment."
-        },
-        {
-          "name": "HFCL",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "HFCL Q2 Results: Profit zooms 448% YoY to Rs 394 crore."
-        },
-        {
-          "name": "Titan Company",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "Titan redeems Rs 1,000 crore commercial paper."
-        },
-        {
-          "name": "Hindustan Zinc",
-          "order_type": "sebi-investigation",
-          "is_listed_entity": true,
-          "snippet": "Hindustan Zinc Q2 Results: Net profit skyrockets 142% YoY."
+          "snippet": "Yes Bank shares nosedive 20% after SC declares Rs 8,415 crore AT-1 bond write-off illegal"
         },
         {
           "name": "NSE",
-          "order_type": "sebi-investigation",
+          "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "NSE, BSE, Groww, other capital market stocks rise up to 3% as Sebi revises CAS framework."
+          "snippet": "NSEIX, London Stock Exchange sign pact to deepen India-UK market links"
         },
         {
-          "name": "Adani Power",
-          "order_type": "sebi-investigation",
+          "name": "Urban Company",
+          "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Market Trading Guide: Adani Power among 2 stock recommendations."
+          "snippet": "Urban Company shares slide 7% as Q2 net loss triples YoY on InstaHelp burn. Should you buy, sell or hold?"
         }
       ],
-      "after_filter_count": 5,
+      "after_filter_count": 6,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 8,
+        "no_sebi_signal_in_snippet": 4,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -230,27 +231,32 @@
         {
           "name": "Rajesh Exports",
           "order_type": "sebi-ban",
-          "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved."
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved"
+        },
+        {
+          "name": "Rajesh Exports",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, promoter over alleged fund routing"
         },
         {
           "name": "Singularity AMC",
           "order_type": "settlement",
-          "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi."
-        },
-        {
-          "name": "Cult.fit",
-          "order_type": "sebi-investigation",
-          "snippet": "Cult.fit receives Sebi approval for proposed IPO."
+          "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi"
         },
         {
           "name": "Tata Sons",
-          "order_type": "sebi-investigation",
-          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms."
+          "order_type": "other",
+          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms"
         },
         {
-          "name": "NSE",
-          "order_type": "sebi-investigation",
-          "snippet": "NSE, BSE, Groww, other capital market stocks rise up to 3% as Sebi revises CAS framework."
+          "name": "Cult.fit",
+          "order_type": "other",
+          "snippet": "Cult.fit receives Sebi approval for proposed IPO"
+        },
+        {
+          "name": "Indian Gas Exchange Ltd",
+          "order_type": "other",
+          "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO"
         }
       ]
     },
@@ -258,29 +264,16 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-10-21T15:39:27.987Z",
+      "at": "2026-10-22T04:42:07.841Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 2,
-      "total_extracted": 2,
-      "prefilter_sample": [
-        {
-          "name": "CITRUS CHECK INNS LIMITED",
-          "order_type": "public-notice",
-          "is_listed_entity": false,
-          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
-        },
-        {
-          "name": "ROYAL TWINKLE STAR CLUB PVT. LTD",
-          "order_type": "public-notice",
-          "is_listed_entity": false,
-          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
-        }
-      ],
+      "total_extracted_raw": 0,
+      "total_extracted": 0,
+      "prefilter_sample": [],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 2,
+        "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
