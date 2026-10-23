@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-10-23T04:46:47.781Z",
+  "generated_at": "2026-10-23T15:30:58.878Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 6,
+  "total_entities_seen": 9,
   "flagged_companies": {
-    "IEX": {
-      "primary_name": "Indian Gas Exchange",
-      "order_type": "sebi-investigation",
-      "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO",
+    "TTML": {
+      "primary_name": "Tata Sons",
+      "order_type": "other",
+      "snippet": "Tata Sons reviews AoA to meet Sebi listing norms",
       "source_url": "https://economictimes.indiatimes.com/topic/sebi",
       "source_label": "Economic Times — SEBI topic (news)",
       "origins": [
@@ -17,14 +17,26 @@
         {
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
-          "order_type": "sebi-investigation",
-          "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO"
+          "order_type": "other",
+          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms"
         }
       ],
-      "first_seen_at": "2026-10-23T04:46:47.780Z"
+      "first_seen_at": "2026-10-23T15:30:58.878Z"
     }
   },
   "unmatched_sample": [
+    {
+      "name": "Groww",
+      "type": "other",
+      "source": "Mint — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Billionbrains Garage Ventures",
+      "type": "other",
+      "source": "Mint — SEBI topic (news)",
+      "origin": "scraper"
+    },
     {
       "name": "Rajesh Exports",
       "type": "sebi-investigation",
@@ -32,8 +44,14 @@
       "origin": "scraper"
     },
     {
+      "name": "Nippon Life India Asset Management Company",
+      "type": "settlement",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
       "name": "Rajesh Exports",
-      "type": "sebi-investigation",
+      "type": "sebi-fine",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -51,7 +69,7 @@
     },
     {
       "name": "Cult.fit",
-      "type": "sebi-investigation",
+      "type": "other",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -61,69 +79,98 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-23T04:46:34.566Z",
+      "at": "2026-10-23T15:30:37.714Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 4,
-      "total_extracted": 4,
+      "total_extracted_raw": 6,
+      "total_extracted": 6,
       "prefilter_sample": [
         {
-          "name": "Reliance Industries",
+          "name": "Groww",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Jio IPO gets blockbuster response, but Reliance stock near 52-week low"
-        },
-        {
-          "name": "PC Jeweller",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "PC Jeweller shares jump 9% after Q2 results; Halwasiya’s bulk deal in focus"
+          "snippet": "Stock to buy after SEBI CAS new rule: Experts bullish on Groww brand parent Billionbrains Garage Ventures shares; target"
         },
         {
           "name": "Billionbrains Garage Ventures",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Experts bullish on Groww brand parent Billionbrains Garage Ventures shares; target"
+          "snippet": "Stock to buy after SEBI CAS new rule: Experts bullish on Groww brand parent Billionbrains Garage Ventures shares; target"
         },
         {
-          "name": "Myntra",
+          "name": "eMudhra",
           "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Myntra’s FY26 financials: How falling logistics income dragged revenue down"
+          "snippet": "eMudhra to exit website security certification business after security weakness, company says no data breach—All we know"
+        },
+        {
+          "name": "Tata Teleservices",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Tata Teleservices shares crash 11% after Q2 result 2026 - What's next for the stock? Expert view"
+        },
+        {
+          "name": "OpenAI",
+          "order_type": "other",
+          "is_listed_entity": false,
+          "snippet": "OpenAI cuts valuation target by $150 bn to $1.25 tn \\| Why it has scaled back its funding ambitions ahead of IPO"
+        },
+        {
+          "name": "Reliance Jio",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Reliance Jio IPO oversubscribed \\| Should investors apply or avoid or buy shares after listing? What experts suggest"
         }
       ],
-      "after_filter_count": 0,
+      "after_filter_count": 2,
       "dropped_counts": {
-        "not_listed": 0,
-        "no_sebi_signal_in_snippet": 4,
+        "not_listed": 1,
+        "no_sebi_signal_in_snippet": 3,
         "resolved_in_favour": 0,
         "no_name": 0
       },
-      "sample": []
+      "sample": [
+        {
+          "name": "Groww",
+          "order_type": "other",
+          "snippet": "Stock to buy after SEBI CAS new rule: Experts bullish on Groww brand parent Billionbrains Garage Ventures shares; target"
+        },
+        {
+          "name": "Billionbrains Garage Ventures",
+          "order_type": "other",
+          "snippet": "Stock to buy after SEBI CAS new rule: Experts bullish on Groww brand parent Billionbrains Garage Ventures shares; target"
+        }
+      ]
     },
     {
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-23T04:46:38.284Z",
+      "at": "2026-10-23T15:30:45.407Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 1,
-      "total_extracted": 1,
+      "total_extracted_raw": 2,
+      "total_extracted": 2,
       "prefilter_sample": [
+        {
+          "name": "Nippon Life India AMC",
+          "order_type": "settlement",
+          "is_listed_entity": true,
+          "snippet": "Nippon Life India AMC received in-principle regulatory approval to settle the Yes Bank AT-1 bond case after paying ₹96.76 crore."
+        },
         {
           "name": "Rajesh Exports",
           "order_type": "sebi-investigation",
           "is_listed_entity": true,
-          "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe"
+          "snippet": "Rajesh Mehta remains barred from dealing in Rajesh Exports securities as Sebi examines financial disclosures, subsidiary consolidation and alleged rel"
         }
       ],
       "after_filter_count": 1,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 0,
+        "no_sebi_signal_in_snippet": 1,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -131,7 +178,7 @@
         {
           "name": "Rajesh Exports",
           "order_type": "sebi-investigation",
-          "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe"
+          "snippet": "Rajesh Mehta remains barred from dealing in Rajesh Exports securities as Sebi examines financial disclosures, subsidiary"
         }
       ]
     },
@@ -139,16 +186,22 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-23T04:46:40.297Z",
+      "at": "2026-10-23T15:30:48.947Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 5,
-      "total_extracted": 5,
+      "total_extracted_raw": 10,
+      "total_extracted": 10,
       "prefilter_sample": [
         {
+          "name": "Nippon Life India Asset Management Company",
+          "order_type": "settlement",
+          "is_listed_entity": true,
+          "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case"
+        },
+        {
           "name": "Rajesh Exports",
-          "order_type": "sebi-investigation",
+          "order_type": "sebi-fine",
           "is_listed_entity": true,
           "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved"
         },
@@ -166,28 +219,57 @@
         },
         {
           "name": "Cult.fit",
-          "order_type": "sebi-investigation",
+          "order_type": "other",
           "is_listed_entity": true,
           "snippet": "Cult.fit receives Sebi approval for proposed IPO"
         },
         {
-          "name": "Indian Gas Exchange",
-          "order_type": "sebi-investigation",
+          "name": "Tata Sons",
+          "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO"
+          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms"
+        },
+        {
+          "name": "Amagi Media Labs",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Amagi Media Labs shares fall 3% after company flags cyber extortion attempt"
+        },
+        {
+          "name": "PC Jeweller",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "PC Jeweller shares soar 9% after Q2 net profit rises 58% YoY; plans 100 new stores in 18 months."
+        },
+        {
+          "name": "eMudhra",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "eMudhra shares crash another 4%, down 40% in 3 sessions. What's behind this free fall?"
+        },
+        {
+          "name": "Jane Street",
+          "order_type": "other",
+          "is_listed_entity": false,
+          "snippet": "Jane Street hits back at Sebi’s allegations, says ‘regulator changed the goal posts’"
         }
       ],
-      "after_filter_count": 5,
+      "after_filter_count": 6,
       "dropped_counts": {
-        "not_listed": 0,
-        "no_sebi_signal_in_snippet": 0,
+        "not_listed": 1,
+        "no_sebi_signal_in_snippet": 3,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
+          "name": "Nippon Life India Asset Management Company",
+          "order_type": "settlement",
+          "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case"
+        },
+        {
           "name": "Rajesh Exports",
-          "order_type": "sebi-investigation",
+          "order_type": "sebi-fine",
           "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved"
         },
         {
@@ -202,13 +284,13 @@
         },
         {
           "name": "Cult.fit",
-          "order_type": "sebi-investigation",
+          "order_type": "other",
           "snippet": "Cult.fit receives Sebi approval for proposed IPO"
         },
         {
-          "name": "Indian Gas Exchange",
-          "order_type": "sebi-investigation",
-          "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO"
+          "name": "Tata Sons",
+          "order_type": "other",
+          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms"
         }
       ]
     },
@@ -216,12 +298,12 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-10-23T04:46:45.071Z",
+      "at": "2026-10-23T15:30:55.626Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 2,
-      "total_extracted": 2,
+      "total_extracted_raw": 3,
+      "total_extracted": 3,
       "prefilter_sample": [
         {
           "name": "Pancard Clubs Limited",
@@ -234,11 +316,17 @@
           "order_type": "other",
           "is_listed_entity": false,
           "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
+        },
+        {
+          "name": "Royal Twinkle Star Club Pvt. Ltd.",
+          "order_type": "other",
+          "is_listed_entity": false,
+          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
         }
       ],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 2,
+        "not_listed": 3,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
