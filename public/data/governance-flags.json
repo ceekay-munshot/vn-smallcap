@@ -1,28 +1,9 @@
 {
-  "generated_at": "2026-10-22T15:41:14.217Z",
+  "generated_at": "2026-10-23T04:46:47.781Z",
   "source_count": 4,
   "curated_baseline_count": 0,
   "total_entities_seen": 6,
   "flagged_companies": {
-    "TTML": {
-      "primary_name": "Tata Sons",
-      "order_type": "show-cause",
-      "snippet": "Tata Sons reviews AoA to meet Sebi listing norms",
-      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
-      "source_label": "Economic Times — SEBI topic (news)",
-      "origins": [
-        "scraper"
-      ],
-      "mentions": [
-        {
-          "source": "Economic Times — SEBI topic (news)",
-          "origin": "scraper",
-          "order_type": "show-cause",
-          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms"
-        }
-      ],
-      "first_seen_at": "2026-10-22T15:41:14.217Z"
-    },
     "IEX": {
       "primary_name": "Indian Gas Exchange",
       "order_type": "sebi-investigation",
@@ -40,13 +21,13 @@
           "snippet": "Indian Gas Exchange secures Sebi's nod to float IPO"
         }
       ],
-      "first_seen_at": "2026-10-22T15:41:14.217Z"
+      "first_seen_at": "2026-10-23T04:46:47.780Z"
     }
   },
   "unmatched_sample": [
     {
       "name": "Rajesh Exports",
-      "type": "other",
+      "type": "sebi-investigation",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -67,6 +48,12 @@
       "type": "settlement",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
+    },
+    {
+      "name": "Cult.fit",
+      "type": "sebi-investigation",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
     }
   ],
   "sources": [
@@ -74,36 +61,42 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-22T15:40:33.324Z",
+      "at": "2026-10-23T04:46:34.566Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 3,
-      "total_extracted": 3,
+      "total_extracted_raw": 4,
+      "total_extracted": 4,
       "prefilter_sample": [
         {
-          "name": "Sebi",
+          "name": "Reliance Industries",
           "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi to form working group to review mainboard IPO, further public offer norms"
+          "is_listed_entity": true,
+          "snippet": "Jio IPO gets blockbuster response, but Reliance stock near 52-week low"
         },
         {
-          "name": "Groww",
+          "name": "PC Jeweller",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "PC Jeweller shares jump 9% after Q2 results; Halwasiya’s bulk deal in focus"
+        },
+        {
+          "name": "Billionbrains Garage Ventures",
           "order_type": "other",
           "is_listed_entity": true,
           "snippet": "Experts bullish on Groww brand parent Billionbrains Garage Ventures shares; target"
         },
         {
-          "name": "Sebi",
+          "name": "Myntra",
           "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi discusses new UPI merchant charges with NPCI as brokers flag cost concerns"
+          "is_listed_entity": true,
+          "snippet": "Myntra’s FY26 financials: How falling logistics income dragged revenue down"
         }
       ],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 2,
-        "no_sebi_signal_in_snippet": 1,
+        "not_listed": 0,
+        "no_sebi_signal_in_snippet": 4,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -113,7 +106,7 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-22T15:40:46.957Z",
+      "at": "2026-10-23T04:46:38.284Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -122,7 +115,7 @@
       "prefilter_sample": [
         {
           "name": "Rajesh Exports",
-          "order_type": "other",
+          "order_type": "sebi-investigation",
           "is_listed_entity": true,
           "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe"
         }
@@ -137,7 +130,7 @@
       "sample": [
         {
           "name": "Rajesh Exports",
-          "order_type": "other",
+          "order_type": "sebi-investigation",
           "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe"
         }
       ]
@@ -146,7 +139,7 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-22T15:40:49.535Z",
+      "at": "2026-10-23T04:46:40.297Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -172,10 +165,10 @@
           "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi"
         },
         {
-          "name": "Tata Sons",
-          "order_type": "show-cause",
+          "name": "Cult.fit",
+          "order_type": "sebi-investigation",
           "is_listed_entity": true,
-          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms"
+          "snippet": "Cult.fit receives Sebi approval for proposed IPO"
         },
         {
           "name": "Indian Gas Exchange",
@@ -208,9 +201,9 @@
           "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi"
         },
         {
-          "name": "Tata Sons",
-          "order_type": "show-cause",
-          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms"
+          "name": "Cult.fit",
+          "order_type": "sebi-investigation",
+          "snippet": "Cult.fit receives Sebi approval for proposed IPO"
         },
         {
           "name": "Indian Gas Exchange",
@@ -223,7 +216,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-10-22T15:41:06.883Z",
+      "at": "2026-10-23T04:46:45.071Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -234,7 +227,7 @@
           "name": "Pancard Clubs Limited",
           "order_type": "other",
           "is_listed_entity": false,
-          "snippet": "Asset Sale committee in matter of Pancard Clubs Limited - All investors are advised to communicate any queries."
+          "snippet": "Asset Sale committee in matter of Pancard Clubs Limited - All investors are advised to communicate any queries/requests to Asset Sale committee in mat"
         },
         {
           "name": "Citrus Check Inns Limited",
