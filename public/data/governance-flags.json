@@ -1,51 +1,25 @@
 {
-  "generated_at": "2026-10-23T15:30:58.878Z",
+  "generated_at": "2026-10-24T04:35:11.187Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 9,
-  "flagged_companies": {
-    "TTML": {
-      "primary_name": "Tata Sons",
-      "order_type": "other",
-      "snippet": "Tata Sons reviews AoA to meet Sebi listing norms",
-      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
-      "source_label": "Economic Times — SEBI topic (news)",
-      "origins": [
-        "scraper"
-      ],
-      "mentions": [
-        {
-          "source": "Economic Times — SEBI topic (news)",
-          "origin": "scraper",
-          "order_type": "other",
-          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms"
-        }
-      ],
-      "first_seen_at": "2026-10-23T15:30:58.878Z"
-    }
-  },
+  "total_entities_seen": 5,
+  "flagged_companies": {},
   "unmatched_sample": [
     {
-      "name": "Groww",
-      "type": "other",
-      "source": "Mint — SEBI topic (news)",
+      "name": "Yes Bank",
+      "type": "settlement",
+      "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Billionbrains Garage Ventures",
-      "type": "other",
-      "source": "Mint — SEBI topic (news)",
+      "name": "Rajesh Exports",
+      "type": "investigation",
+      "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
     {
       "name": "Rajesh Exports",
       "type": "sebi-investigation",
-      "source": "Business Standard — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Nippon Life India Asset Management Company",
-      "type": "settlement",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -56,20 +30,8 @@
       "origin": "scraper"
     },
     {
-      "name": "Rajesh Exports",
-      "type": "sebi-fine",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Singularity AMC",
+      "name": "Nippon AMC",
       "type": "settlement",
-      "source": "Economic Times — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Cult.fit",
-      "type": "other",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -79,75 +41,34 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-23T15:30:37.714Z",
+      "at": "2026-10-24T04:34:56.376Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 6,
-      "total_extracted": 6,
+      "total_extracted_raw": 1,
+      "total_extracted": 1,
       "prefilter_sample": [
         {
-          "name": "Groww",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Stock to buy after SEBI CAS new rule: Experts bullish on Groww brand parent Billionbrains Garage Ventures shares; target"
-        },
-        {
           "name": "Billionbrains Garage Ventures",
-          "order_type": "other",
+          "order_type": "sebi-investigation",
           "is_listed_entity": true,
-          "snippet": "Stock to buy after SEBI CAS new rule: Experts bullish on Groww brand parent Billionbrains Garage Ventures shares; target"
-        },
-        {
-          "name": "eMudhra",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "eMudhra to exit website security certification business after security weakness, company says no data breach—All we know"
-        },
-        {
-          "name": "Tata Teleservices",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Tata Teleservices shares crash 11% after Q2 result 2026 - What's next for the stock? Expert view"
-        },
-        {
-          "name": "OpenAI",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "OpenAI cuts valuation target by $150 bn to $1.25 tn \\| Why it has scaled back its funding ambitions ahead of IPO"
-        },
-        {
-          "name": "Reliance Jio",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Reliance Jio IPO oversubscribed \\| Should investors apply or avoid or buy shares after listing? What experts suggest"
+          "snippet": "Experts bullish on Groww brand parent Billionbrains Garage Ventures shares; target"
         }
       ],
-      "after_filter_count": 2,
+      "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 1,
-        "no_sebi_signal_in_snippet": 3,
+        "not_listed": 0,
+        "no_sebi_signal_in_snippet": 1,
         "resolved_in_favour": 0,
         "no_name": 0
       },
-      "sample": [
-        {
-          "name": "Groww",
-          "order_type": "other",
-          "snippet": "Stock to buy after SEBI CAS new rule: Experts bullish on Groww brand parent Billionbrains Garage Ventures shares; target"
-        },
-        {
-          "name": "Billionbrains Garage Ventures",
-          "order_type": "other",
-          "snippet": "Stock to buy after SEBI CAS new rule: Experts bullish on Groww brand parent Billionbrains Garage Ventures shares; target"
-        }
-      ]
+      "sample": []
     },
     {
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-23T15:30:45.407Z",
+      "at": "2026-10-24T04:34:58.679Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -155,30 +76,35 @@
       "total_extracted": 2,
       "prefilter_sample": [
         {
-          "name": "Nippon Life India AMC",
+          "name": "Yes Bank",
           "order_type": "settlement",
           "is_listed_entity": true,
-          "snippet": "Nippon Life India AMC received in-principle regulatory approval to settle the Yes Bank AT-1 bond case after paying ₹96.76 crore."
+          "snippet": "Nippon Life India AMC gets Sebi nod to settle Yes Bank AT-1 bond case after paying ₹96.76 crore"
         },
         {
           "name": "Rajesh Exports",
-          "order_type": "sebi-investigation",
+          "order_type": "investigation",
           "is_listed_entity": true,
-          "snippet": "Rajesh Mehta remains barred from dealing in Rajesh Exports securities as Sebi examines financial disclosures, subsidiary consolidation and alleged rel"
+          "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe"
         }
       ],
-      "after_filter_count": 1,
+      "after_filter_count": 2,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 1,
+        "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
+          "name": "Yes Bank",
+          "order_type": "settlement",
+          "snippet": "Nippon Life India AMC gets Sebi nod to settle Yes Bank AT-1 bond case after paying ₹96.76 crore"
+        },
+        {
           "name": "Rajesh Exports",
-          "order_type": "sebi-investigation",
-          "snippet": "Rajesh Mehta remains barred from dealing in Rajesh Exports securities as Sebi examines financial disclosures, subsidiary"
+          "order_type": "investigation",
+          "snippet": "Sebi confirms Rajesh Exports curbs, flags incomplete information in probe"
         }
       ]
     },
@@ -186,111 +112,54 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-23T15:30:48.947Z",
+      "at": "2026-10-24T04:35:04.699Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 10,
-      "total_extracted": 10,
+      "total_extracted_raw": 3,
+      "total_extracted": 3,
       "prefilter_sample": [
         {
-          "name": "Nippon Life India Asset Management Company",
-          "order_type": "settlement",
+          "name": "Rajesh Exports",
+          "order_type": "sebi-investigation",
           "is_listed_entity": true,
-          "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case"
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved."
         },
         {
           "name": "Rajesh Exports",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved"
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, promoter over alleged fund routing."
         },
         {
-          "name": "Rajesh Exports",
-          "order_type": "sebi-fine",
-          "is_listed_entity": true,
-          "snippet": "Sebi confirms interim curbs on Rajesh Exports, promoter over alleged fund routing"
-        },
-        {
-          "name": "Singularity AMC",
+          "name": "Nippon AMC",
           "order_type": "settlement",
           "is_listed_entity": true,
-          "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi"
-        },
-        {
-          "name": "Cult.fit",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Cult.fit receives Sebi approval for proposed IPO"
-        },
-        {
-          "name": "Tata Sons",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms"
-        },
-        {
-          "name": "Amagi Media Labs",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Amagi Media Labs shares fall 3% after company flags cyber extortion attempt"
-        },
-        {
-          "name": "PC Jeweller",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "PC Jeweller shares soar 9% after Q2 net profit rises 58% YoY; plans 100 new stores in 18 months."
-        },
-        {
-          "name": "eMudhra",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "eMudhra shares crash another 4%, down 40% in 3 sessions. What's behind this free fall?"
-        },
-        {
-          "name": "Jane Street",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Jane Street hits back at Sebi’s allegations, says ‘regulator changed the goal posts’"
+          "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case."
         }
       ],
-      "after_filter_count": 6,
+      "after_filter_count": 3,
       "dropped_counts": {
-        "not_listed": 1,
-        "no_sebi_signal_in_snippet": 3,
+        "not_listed": 0,
+        "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
-          "name": "Nippon Life India Asset Management Company",
-          "order_type": "settlement",
-          "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case"
+          "name": "Rajesh Exports",
+          "order_type": "sebi-investigation",
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved."
         },
         {
           "name": "Rajesh Exports",
           "order_type": "sebi-fine",
-          "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved"
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, promoter over alleged fund routing."
         },
         {
-          "name": "Rajesh Exports",
-          "order_type": "sebi-fine",
-          "snippet": "Sebi confirms interim curbs on Rajesh Exports, promoter over alleged fund routing"
-        },
-        {
-          "name": "Singularity AMC",
+          "name": "Nippon AMC",
           "order_type": "settlement",
-          "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi"
-        },
-        {
-          "name": "Cult.fit",
-          "order_type": "other",
-          "snippet": "Cult.fit receives Sebi approval for proposed IPO"
-        },
-        {
-          "name": "Tata Sons",
-          "order_type": "other",
-          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms"
+          "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case."
         }
       ]
     },
@@ -298,7 +167,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-10-23T15:30:55.626Z",
+      "at": "2026-10-24T04:35:07.973Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
