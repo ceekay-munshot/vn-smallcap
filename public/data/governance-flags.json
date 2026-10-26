@@ -1,33 +1,13 @@
 {
-  "generated_at": "2026-10-25T04:40:26.771Z",
+  "generated_at": "2026-10-26T04:44:35.764Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 6,
-  "flagged_companies": {
-    "TTML": {
-      "primary_name": "Tata Sons",
-      "order_type": "other",
-      "snippet": "Tata Sons reviews AoA to meet Sebi listing norms",
-      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
-      "source_label": "Economic Times — SEBI topic (news)",
-      "origins": [
-        "scraper"
-      ],
-      "mentions": [
-        {
-          "source": "Economic Times — SEBI topic (news)",
-          "origin": "scraper",
-          "order_type": "other",
-          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms"
-        }
-      ],
-      "first_seen_at": "2026-10-25T04:40:26.771Z"
-    }
-  },
+  "total_entities_seen": 5,
+  "flagged_companies": {},
   "unmatched_sample": [
     {
       "name": "Nippon Life India AMC",
-      "type": "other",
+      "type": "settlement",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -38,7 +18,7 @@
       "origin": "scraper"
     },
     {
-      "name": "Avadhut Sathe",
+      "name": "Avadhut Sathe Academy",
       "type": "sebi-fine",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
@@ -61,23 +41,29 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-25T04:39:54.563Z",
+      "at": "2026-10-26T04:44:05.131Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 1,
-      "total_extracted": 1,
+      "total_extracted_raw": 2,
+      "total_extracted": 2,
       "prefilter_sample": [
         {
           "name": "Avadhut Sathe",
           "order_type": "sebi-fine",
           "is_listed_entity": false,
           "snippet": "Sebi bars Avadhut Sathe, academy from markets, imposes ₹11.5 crore penalty"
+        },
+        {
+          "name": "ASTAPL",
+          "order_type": "sebi-fine",
+          "is_listed_entity": false,
+          "snippet": "In a final order issued on Friday, the market regulator directed ASTAPL and its founder Avadhut Dinkar Sathe to disgorge and refund ₹546.17 crore"
         }
       ],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 1,
+        "not_listed": 2,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
@@ -88,7 +74,7 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-25T04:39:56.560Z",
+      "at": "2026-10-26T04:44:08.379Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -103,7 +89,7 @@
         },
         {
           "name": "Nippon Life India AMC",
-          "order_type": "other",
+          "order_type": "settlement",
           "is_listed_entity": true,
           "snippet": "Nippon Life India AMC gets Sebi nod to settle Yes Bank AT-1 bond case"
         }
@@ -118,7 +104,7 @@
       "sample": [
         {
           "name": "Nippon Life India AMC",
-          "order_type": "other",
+          "order_type": "settlement",
           "snippet": "Nippon Life India AMC gets Sebi nod to settle Yes Bank AT-1 bond case"
         }
       ]
@@ -127,60 +113,42 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-25T04:40:08.782Z",
+      "at": "2026-10-26T04:44:21.105Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 7,
-      "total_extracted": 7,
+      "total_extracted_raw": 4,
+      "total_extracted": 4,
       "prefilter_sample": [
         {
           "name": "Nippon AMC",
           "order_type": "settlement",
           "is_listed_entity": true,
-          "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case"
+          "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case."
         },
         {
-          "name": "Avadhut Sathe",
+          "name": "Avadhut Sathe Academy",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Sebi orders Avadhut Sathe, academy to refund Rs 546 crore"
+          "snippet": "Sebi orders Avadhut Sathe, academy to refund Rs 546 crore."
         },
         {
           "name": "Rajesh Exports",
           "order_type": "sebi-investigation",
           "is_listed_entity": true,
-          "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved"
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved."
         },
         {
           "name": "Rajesh Exports",
           "order_type": "sebi-investigation",
           "is_listed_entity": true,
-          "snippet": "Sebi confirms interim curbs on Rajesh Exports, promoter over alleged fund routing"
-        },
-        {
-          "name": "Tata Sons",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms"
-        },
-        {
-          "name": "Jio Platforms",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Jio Platforms IPO creates history: First issue globally to cross 1 crore applications"
-        },
-        {
-          "name": "Jio Platforms",
-          "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Jio IPO breaks 12 records: Rs 4.5 lakh crore bids, highest applications and more"
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, promoter over alleged fund routing."
         }
       ],
-      "after_filter_count": 5,
+      "after_filter_count": 4,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 2,
+        "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -188,27 +156,22 @@
         {
           "name": "Nippon AMC",
           "order_type": "settlement",
-          "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case"
+          "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case."
         },
         {
-          "name": "Avadhut Sathe",
+          "name": "Avadhut Sathe Academy",
           "order_type": "sebi-fine",
-          "snippet": "Sebi orders Avadhut Sathe, academy to refund Rs 546 crore"
+          "snippet": "Sebi orders Avadhut Sathe, academy to refund Rs 546 crore."
         },
         {
           "name": "Rajesh Exports",
           "order_type": "sebi-investigation",
-          "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved"
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved."
         },
         {
           "name": "Rajesh Exports",
           "order_type": "sebi-investigation",
-          "snippet": "Sebi confirms interim curbs on Rajesh Exports, promoter over alleged fund routing"
-        },
-        {
-          "name": "Tata Sons",
-          "order_type": "other",
-          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms"
+          "snippet": "Sebi confirms interim curbs on Rajesh Exports, promoter over alleged fund routing."
         }
       ]
     },
@@ -216,7 +179,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-10-25T04:40:17.093Z",
+      "at": "2026-10-26T04:44:27.183Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -231,9 +194,9 @@
         },
         {
           "name": "CITRUS CHECK INNS LIMITED",
-          "order_type": "public-notice",
+          "order_type": "other",
           "is_listed_entity": false,
-          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
+          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)..."
         }
       ],
       "after_filter_count": 0,
