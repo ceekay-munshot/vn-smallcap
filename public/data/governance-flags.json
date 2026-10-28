@@ -1,20 +1,34 @@
 {
-  "generated_at": "2026-10-27T16:04:56.922Z",
+  "generated_at": "2026-10-28T05:37:05.206Z",
   "source_count": 4,
   "curated_baseline_count": 0,
   "total_entities_seen": 8,
-  "flagged_companies": {},
+  "flagged_companies": {
+    "TTML": {
+      "primary_name": "Tata Sons",
+      "order_type": "other",
+      "snippet": "Tata Sons reviews AoA to meet Sebi listing norms",
+      "source_url": "https://economictimes.indiatimes.com/topic/sebi",
+      "source_label": "Economic Times — SEBI topic (news)",
+      "origins": [
+        "scraper"
+      ],
+      "mentions": [
+        {
+          "source": "Economic Times — SEBI topic (news)",
+          "origin": "scraper",
+          "order_type": "other",
+          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms"
+        }
+      ],
+      "first_seen_at": "2026-10-28T05:37:05.206Z"
+    }
+  },
   "unmatched_sample": [
     {
-      "name": "Avadhut Sathe",
+      "name": "ASTAPL",
       "type": "sebi-fine",
       "source": "Mint — SEBI topic (news)",
-      "origin": "scraper"
-    },
-    {
-      "name": "Avadhut Sathe Trading Academy Pvt Ltd",
-      "type": "sebi-fine",
-      "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
     {
@@ -31,7 +45,7 @@
     },
     {
       "name": "Avadhut Sathe Academy",
-      "type": "sebi-fine",
+      "type": "enforcement-order",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -48,8 +62,8 @@
       "origin": "scraper"
     },
     {
-      "name": "Singularity AMC",
-      "type": "settlement",
+      "name": "Cult.fit",
+      "type": "other",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -59,7 +73,7 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-27T16:04:39.667Z",
+      "at": "2026-10-28T05:36:33.531Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -67,10 +81,10 @@
       "total_extracted": 1,
       "prefilter_sample": [
         {
-          "name": "Avadhut Sathe",
+          "name": "ASTAPL",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Sebi bars Avadhut Sathe, academy from markets, imposes ₹11.5 crore penalty"
+          "snippet": "Sebi bars Avadhut Sathe, academy from markets, imposes ₹11.5 crore penalty."
         }
       ],
       "after_filter_count": 1,
@@ -82,9 +96,9 @@
       },
       "sample": [
         {
-          "name": "Avadhut Sathe",
+          "name": "ASTAPL",
           "order_type": "sebi-fine",
-          "snippet": "Sebi bars Avadhut Sathe, academy from markets, imposes ₹11.5 crore penalty"
+          "snippet": "Sebi bars Avadhut Sathe, academy from markets, imposes ₹11.5 crore penalty."
         }
       ]
     },
@@ -92,7 +106,7 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-27T16:04:47.470Z",
+      "at": "2026-10-28T05:36:35.491Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -102,33 +116,28 @@
         {
           "name": "Avadhut Sathe Trading Academy Pvt Ltd",
           "order_type": "sebi-fine",
-          "is_listed_entity": true,
-          "snippet": "Sebi orders Avadhut Sathe Trading Academy and its founder to refund ₹546 cr"
+          "is_listed_entity": false,
+          "snippet": "Sebi orders Avadhut Sathe Trading Academy and its founder to refund ₹546 cr."
         },
         {
           "name": "Nippon Life India AMC",
           "order_type": "settlement",
           "is_listed_entity": true,
-          "snippet": "Nippon Life India AMC gets Sebi nod to settle Yes Bank AT-1 bond case"
+          "snippet": "Nippon Life India AMC gets Sebi nod to settle Yes Bank AT-1 bond case."
         }
       ],
-      "after_filter_count": 2,
+      "after_filter_count": 1,
       "dropped_counts": {
-        "not_listed": 0,
+        "not_listed": 1,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
       "sample": [
         {
-          "name": "Avadhut Sathe Trading Academy Pvt Ltd",
-          "order_type": "sebi-fine",
-          "snippet": "Sebi orders Avadhut Sathe Trading Academy and its founder to refund ₹546 cr"
-        },
-        {
           "name": "Nippon Life India AMC",
           "order_type": "settlement",
-          "snippet": "Nippon Life India AMC gets Sebi nod to settle Yes Bank AT-1 bond case"
+          "snippet": "Nippon Life India AMC gets Sebi nod to settle Yes Bank AT-1 bond case."
         }
       ]
     },
@@ -136,12 +145,12 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-27T16:04:49.806Z",
+      "at": "2026-10-28T05:36:48.611Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 5,
-      "total_extracted": 5,
+      "total_extracted_raw": 11,
+      "total_extracted": 11,
       "prefilter_sample": [
         {
           "name": "Nippon AMC",
@@ -151,7 +160,7 @@
         },
         {
           "name": "Avadhut Sathe Academy",
-          "order_type": "sebi-fine",
+          "order_type": "enforcement-order",
           "is_listed_entity": true,
           "snippet": "Sebi orders Avadhut Sathe, academy to refund Rs 546 crore"
         },
@@ -168,16 +177,52 @@
           "snippet": "Sebi confirms interim curbs on Rajesh Exports, promoter over alleged fund routing"
         },
         {
-          "name": "Singularity AMC",
-          "order_type": "settlement",
+          "name": "Tata Sons",
+          "order_type": "other",
           "is_listed_entity": true,
-          "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi"
+          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms"
+        },
+        {
+          "name": "Cult.fit",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Cult.fit receives Sebi approval for proposed IPO"
+        },
+        {
+          "name": "Mankind Pharma",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Mankind Pharma shares jump 8% as Q2 profit rises 38% to Rs 716 crore"
+        },
+        {
+          "name": "Infosys",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Infosys dividend alert! IT major announces Rs 26 per share dividend. Check record date"
+        },
+        {
+          "name": "AU Small Finance Bank",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "AU Small Finance Bank shares tumble 10% after Q2 results, but Jefferies and Motilal see up to 37% upside"
+        },
+        {
+          "name": "Ola Electric",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Ola Electric shares dip 5% after Goldman Sachs downgrades stock to Sell. Here’s why"
+        },
+        {
+          "name": "Jio Platforms",
+          "order_type": "other",
+          "is_listed_entity": true,
+          "snippet": "Jio Platforms shares list at 21% premium over IPO price. Should investors buy, sell or hold the stock?"
         }
       ],
-      "after_filter_count": 5,
+      "after_filter_count": 6,
       "dropped_counts": {
         "not_listed": 0,
-        "no_sebi_signal_in_snippet": 0,
+        "no_sebi_signal_in_snippet": 5,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -189,7 +234,7 @@
         },
         {
           "name": "Avadhut Sathe Academy",
-          "order_type": "sebi-fine",
+          "order_type": "enforcement-order",
           "snippet": "Sebi orders Avadhut Sathe, academy to refund Rs 546 crore"
         },
         {
@@ -203,9 +248,14 @@
           "snippet": "Sebi confirms interim curbs on Rajesh Exports, promoter over alleged fund routing"
         },
         {
-          "name": "Singularity AMC",
-          "order_type": "settlement",
-          "snippet": "Singularity AMC pays over Rs 40 lakh to settle AIF rule violation case with Sebi"
+          "name": "Tata Sons",
+          "order_type": "other",
+          "snippet": "Tata Sons reviews AoA to meet Sebi listing norms"
+        },
+        {
+          "name": "Cult.fit",
+          "order_type": "other",
+          "snippet": "Cult.fit receives Sebi approval for proposed IPO"
         }
       ]
     },
@@ -213,7 +263,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-10-27T16:04:54.267Z",
+      "at": "2026-10-28T05:37:02.891Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -223,20 +273,20 @@
         {
           "name": "Pancard Clubs Limited",
           "order_type": "other",
-          "is_listed_entity": true,
-          "snippet": "Asset Sale committee in matter of Pancard Clubs Limited - All investors are advised to communicate any queries/requests."
+          "is_listed_entity": false,
+          "snippet": "Asset Sale committee in matter of Pancard Clubs Limited - All investors are advised to communicate any queries/requests to Asset Sale committee in mat"
         },
         {
           "name": "Citrus Check Inns Limited",
           "order_type": "other",
-          "is_listed_entity": true,
+          "is_listed_entity": false,
           "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
         }
       ],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 0,
-        "no_sebi_signal_in_snippet": 2,
+        "not_listed": 2,
+        "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
