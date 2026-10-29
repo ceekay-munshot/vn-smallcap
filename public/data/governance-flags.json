@@ -1,10 +1,16 @@
 {
-  "generated_at": "2026-10-29T05:45:13.702Z",
+  "generated_at": "2026-10-29T17:08:49.847Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 3,
+  "total_entities_seen": 4,
   "flagged_companies": {},
   "unmatched_sample": [
+    {
+      "name": "ASTAPL",
+      "type": "sebi-fine",
+      "source": "Mint — SEBI topic (news)",
+      "origin": "scraper"
+    },
     {
       "name": "Nippon AMC",
       "type": "settlement",
@@ -12,14 +18,14 @@
       "origin": "scraper"
     },
     {
-      "name": "Avadhut Sathe",
-      "type": "sebi-fine",
+      "name": "Avadhut Sathe Academy",
+      "type": "refunding",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
       "name": "Rajesh Exports",
-      "type": "sebi-investigation",
+      "type": "other",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -29,34 +35,46 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-29T05:44:52.888Z",
+      "at": "2026-10-29T17:08:28.436Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 1,
-      "total_extracted": 1,
+      "total_extracted_raw": 2,
+      "total_extracted": 2,
       "prefilter_sample": [
         {
           "name": "Avadhut Sathe",
-          "order_type": "sebi-ban",
+          "order_type": "sebi-fine",
           "is_listed_entity": false,
-          "snippet": "Sebi bars Avadhut Sathe, academy from markets, imposes ₹11.5 crore penalty."
+          "snippet": "Sebi bars Avadhut Sathe, academy from markets, imposes ₹11.5 crore penalty"
+        },
+        {
+          "name": "ASTAPL",
+          "order_type": "sebi-fine",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars Avadhut Sathe, academy from markets, imposes ₹11.5 crore penalty"
         }
       ],
-      "after_filter_count": 0,
+      "after_filter_count": 1,
       "dropped_counts": {
         "not_listed": 1,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
-      "sample": []
+      "sample": [
+        {
+          "name": "ASTAPL",
+          "order_type": "sebi-fine",
+          "snippet": "Sebi bars Avadhut Sathe, academy from markets, imposes ₹11.5 crore penalty"
+        }
+      ]
     },
     {
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-29T05:44:54.943Z",
+      "at": "2026-10-29T17:08:31.737Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -83,7 +101,7 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-29T05:44:59.449Z",
+      "at": "2026-10-29T17:08:36.686Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -97,14 +115,14 @@
           "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case"
         },
         {
-          "name": "Avadhut Sathe",
-          "order_type": "sebi-fine",
+          "name": "Avadhut Sathe Academy",
+          "order_type": "refunding",
           "is_listed_entity": true,
           "snippet": "Sebi orders Avadhut Sathe, academy to refund Rs 546 crore"
         },
         {
           "name": "Rajesh Exports",
-          "order_type": "sebi-investigation",
+          "order_type": "other",
           "is_listed_entity": true,
           "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved"
         }
@@ -123,13 +141,13 @@
           "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case"
         },
         {
-          "name": "Avadhut Sathe",
-          "order_type": "sebi-fine",
+          "name": "Avadhut Sathe Academy",
+          "order_type": "refunding",
           "snippet": "Sebi orders Avadhut Sathe, academy to refund Rs 546 crore"
         },
         {
           "name": "Rajesh Exports",
-          "order_type": "sebi-investigation",
+          "order_type": "other",
           "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved"
         }
       ]
@@ -138,7 +156,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-10-29T05:45:04.912Z",
+      "at": "2026-10-29T17:08:45.008Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -147,13 +165,13 @@
       "prefilter_sample": [
         {
           "name": "Pancard Clubs Limited",
-          "order_type": "public-notice",
+          "order_type": "other",
           "is_listed_entity": false,
           "snippet": "Asset Sale committee in matter of Pancard Clubs Limited - All investors are advised to communicate any queries/requests to Asset Sale committee in mat"
         },
         {
           "name": "Citrus Check Inns Limited",
-          "order_type": "public-notice",
+          "order_type": "other",
           "is_listed_entity": false,
           "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
         }
