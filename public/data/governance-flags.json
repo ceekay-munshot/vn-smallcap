@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-10-29T17:08:49.847Z",
+  "generated_at": "2026-10-30T05:44:41.783Z",
   "source_count": 4,
   "curated_baseline_count": 0,
   "total_entities_seen": 4,
   "flagged_companies": {},
   "unmatched_sample": [
     {
-      "name": "ASTAPL",
-      "type": "sebi-fine",
-      "source": "Mint — SEBI topic (news)",
+      "name": "Nippon Life India AMC",
+      "type": "settlement",
+      "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
     {
@@ -19,13 +19,13 @@
     },
     {
       "name": "Avadhut Sathe Academy",
-      "type": "refunding",
+      "type": "sebi-fine",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
       "name": "Rajesh Exports",
-      "type": "other",
+      "type": "sebi-investigation",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -35,46 +35,7 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-29T17:08:28.436Z",
-      "fc_status": 200,
-      "outcome": "ok",
-      "upstream_status": 200,
-      "total_extracted_raw": 2,
-      "total_extracted": 2,
-      "prefilter_sample": [
-        {
-          "name": "Avadhut Sathe",
-          "order_type": "sebi-fine",
-          "is_listed_entity": false,
-          "snippet": "Sebi bars Avadhut Sathe, academy from markets, imposes ₹11.5 crore penalty"
-        },
-        {
-          "name": "ASTAPL",
-          "order_type": "sebi-fine",
-          "is_listed_entity": true,
-          "snippet": "Sebi bars Avadhut Sathe, academy from markets, imposes ₹11.5 crore penalty"
-        }
-      ],
-      "after_filter_count": 1,
-      "dropped_counts": {
-        "not_listed": 1,
-        "no_sebi_signal_in_snippet": 0,
-        "resolved_in_favour": 0,
-        "no_name": 0
-      },
-      "sample": [
-        {
-          "name": "ASTAPL",
-          "order_type": "sebi-fine",
-          "snippet": "Sebi bars Avadhut Sathe, academy from markets, imposes ₹11.5 crore penalty"
-        }
-      ]
-    },
-    {
-      "url": "https://www.business-standard.com/topic/sebi",
-      "label": "Business Standard — SEBI topic (news)",
-      "mode": "news",
-      "at": "2026-10-29T17:08:31.737Z",
+      "at": "2026-10-30T05:44:31.528Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -82,10 +43,10 @@
       "total_extracted": 1,
       "prefilter_sample": [
         {
-          "name": "Avadhut Sathe Trading Academy Pvt Ltd",
-          "order_type": "sebi-fine",
+          "name": "Avadhut Sathe",
+          "order_type": "sebi-ban",
           "is_listed_entity": false,
-          "snippet": "Sebi orders Avadhut Sathe Trading Academy and its founder to refund ₹546 cr"
+          "snippet": "Sebi bars Avadhut Sathe, academy from markets, imposes ₹11.5 crore penalty."
         }
       ],
       "after_filter_count": 0,
@@ -98,10 +59,49 @@
       "sample": []
     },
     {
+      "url": "https://www.business-standard.com/topic/sebi",
+      "label": "Business Standard — SEBI topic (news)",
+      "mode": "news",
+      "at": "2026-10-30T05:44:33.963Z",
+      "fc_status": 200,
+      "outcome": "ok",
+      "upstream_status": 200,
+      "total_extracted_raw": 2,
+      "total_extracted": 2,
+      "prefilter_sample": [
+        {
+          "name": "Avadhut Sathe Trading Academy Pvt Ltd",
+          "order_type": "sebi-fine",
+          "is_listed_entity": false,
+          "snippet": "Sebi orders Avadhut Sathe Trading Academy and its founder to refund ₹546 cr."
+        },
+        {
+          "name": "Nippon Life India AMC",
+          "order_type": "settlement",
+          "is_listed_entity": true,
+          "snippet": "Nippon Life India AMC gets Sebi nod to settle Yes Bank AT-1 bond case."
+        }
+      ],
+      "after_filter_count": 1,
+      "dropped_counts": {
+        "not_listed": 1,
+        "no_sebi_signal_in_snippet": 0,
+        "resolved_in_favour": 0,
+        "no_name": 0
+      },
+      "sample": [
+        {
+          "name": "Nippon Life India AMC",
+          "order_type": "settlement",
+          "snippet": "Nippon Life India AMC gets Sebi nod to settle Yes Bank AT-1 bond case."
+        }
+      ]
+    },
+    {
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-10-29T17:08:36.686Z",
+      "at": "2026-10-30T05:44:36.143Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -116,13 +116,13 @@
         },
         {
           "name": "Avadhut Sathe Academy",
-          "order_type": "refunding",
+          "order_type": "sebi-fine",
           "is_listed_entity": true,
           "snippet": "Sebi orders Avadhut Sathe, academy to refund Rs 546 crore"
         },
         {
           "name": "Rajesh Exports",
-          "order_type": "other",
+          "order_type": "sebi-investigation",
           "is_listed_entity": true,
           "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved"
         }
@@ -142,12 +142,12 @@
         },
         {
           "name": "Avadhut Sathe Academy",
-          "order_type": "refunding",
+          "order_type": "sebi-fine",
           "snippet": "Sebi orders Avadhut Sathe, academy to refund Rs 546 crore"
         },
         {
           "name": "Rajesh Exports",
-          "order_type": "other",
+          "order_type": "sebi-investigation",
           "snippet": "Sebi confirms interim curbs on Rajesh Exports, says financial disclosure concerns remain unresolved"
         }
       ]
@@ -156,7 +156,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-10-29T17:08:45.008Z",
+      "at": "2026-10-30T05:44:39.365Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -167,7 +167,7 @@
           "name": "Pancard Clubs Limited",
           "order_type": "other",
           "is_listed_entity": false,
-          "snippet": "Asset Sale committee in matter of Pancard Clubs Limited - All investors are advised to communicate any queries/requests to Asset Sale committee in mat"
+          "snippet": "Asset Sale committee in matter of Pancard Clubs Limited - All investors are advised to communicate any queries/requests."
         },
         {
           "name": "Citrus Check Inns Limited",
