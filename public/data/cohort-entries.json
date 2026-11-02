@@ -68,8 +68,31 @@
         "POWERMECH": 2459.8
       },
       "complete": true
+    },
+    "2026-11": {
+      "selectionDate": "2026-10-30",
+      "anchorDate": "2026-11-02",
+      "tickers": [
+        "VADILALIND",
+        "SMSPHARMA",
+        "SAREGAMA",
+        "LUMAXTECH",
+        "IIFLCAPS",
+        "TANLA",
+        "TIPSMUSIC"
+      ],
+      "entries": {
+        "VADILALIND": 7241.75,
+        "SMSPHARMA": 496.35,
+        "SAREGAMA": 549.5,
+        "LUMAXTECH": 2026.25,
+        "IIFLCAPS": 347.57,
+        "TANLA": 639.6,
+        "TIPSMUSIC": 785.73
+      },
+      "complete": true
     }
   },
-  "generated_at": "2026-10-01T10:57:40.225Z",
+  "generated_at": "2026-11-02T12:25:25.232Z",
   "cohort_size": 7
 }
