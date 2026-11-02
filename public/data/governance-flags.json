@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-11-01T06:00:51.640Z",
+  "generated_at": "2026-11-02T06:00:57.024Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 4,
+  "total_entities_seen": 7,
   "flagged_companies": {
     "511144": {
       "primary_name": "Axis Capital",
       "order_type": "enforcement-order",
-      "snippet": "Sebi issues final order against Axis Capital, imposes regulatory censure; Axis Bank shares fall over 1%.",
+      "snippet": "SEBI has issued a regulatory censure against Axis Capital, concluding proceedings linked to September 2024 restrictions.",
       "source_url": "https://economictimes.indiatimes.com/topic/sebi",
       "source_label": "Economic Times — SEBI topic (news)",
       "origins": [
@@ -18,17 +18,29 @@
           "source": "Economic Times — SEBI topic (news)",
           "origin": "scraper",
           "order_type": "enforcement-order",
-          "snippet": "Sebi issues final order against Axis Capital, imposes regulatory censure; Axis Bank shares fall over 1%."
+          "snippet": "SEBI has issued a regulatory censure against Axis Capital, concluding proceedings linked to September 2024 restrictions."
         }
       ],
-      "first_seen_at": "2026-11-01T06:00:51.640Z"
+      "first_seen_at": "2026-11-02T06:00:57.024Z"
     }
   },
   "unmatched_sample": [
     {
+      "name": "EKI Energy Services Ltd",
+      "type": "sebi-ban",
+      "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
       "name": "Central Depository Services (India) Ltd",
       "type": "sebi-fine",
       "source": "Business Standard — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "EKI Energy Services Ltd",
+      "type": "sebi-ban",
+      "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
@@ -38,7 +50,13 @@
       "origin": "scraper"
     },
     {
-      "name": "Avadhut Sathe Trading Academy",
+      "name": "Ratnadeep Retail",
+      "type": "show-cause",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Atomberg",
       "type": "enforcement-order",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
@@ -49,53 +67,23 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-11-01T06:00:21.934Z",
+      "at": "2026-11-02T06:00:33.392Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 6,
-      "total_extracted": 6,
+      "total_extracted_raw": 1,
+      "total_extracted": 1,
       "prefilter_sample": [
         {
-          "name": "ASTA",
+          "name": "Avadhut Sathe",
           "order_type": "sebi-ban",
           "is_listed_entity": false,
-          "snippet": "Sebi bars Avadhut Sathe, academy from markets, imposes ₹11.5 crore penalty."
-        },
-        {
-          "name": "SEBI",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "SEBI to review IPO, FPO and SME listing rules, says Chairman Tuhin Kanta Pandey."
-        },
-        {
-          "name": "SEBI",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Working with RBI to make process of bringing foreign investors into Indian markets faster and easier: SEBI chief."
-        },
-        {
-          "name": "SEBI",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Stockbrokers to seek Sebi clarity on peak margin math after EPI relief."
-        },
-        {
-          "name": "SEBI",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Sebi’s CAS rollback raises hopes of recovery in derivatives, brokerage revenue."
-        },
-        {
-          "name": "SEBI",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Mint Explainer: How will Sebi’s relaxed margin rules help brokers?"
+          "snippet": "SEBI bars Avadhut Sathe, academy from markets, imposes ₹11.5 crore penalty."
         }
       ],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 6,
+        "not_listed": 1,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
@@ -106,7 +94,7 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-11-01T06:00:26.394Z",
+      "at": "2026-11-02T06:00:39.521Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -114,64 +102,19 @@
       "total_extracted": 2,
       "prefilter_sample": [
         {
+          "name": "EKI Energy Services Ltd",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars EKI Energy Services Ltd and its Managing Director Manish Kumar Dabkara from the securities market for misrepresenting financial statements."
+        },
+        {
           "name": "Central Depository Services (India) Ltd",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
-          "snippet": "Sebi imposes ₹1 crore fine on Central Depository Services (India) Ltd (CDSL) for multiple compliance lapses"
-        },
-        {
-          "name": "Avadhut Sathe Trading Academy Pvt Ltd",
-          "order_type": "sebi-adjudication",
-          "is_listed_entity": false,
-          "snippet": "Sebi orders Avadhut Sathe Trading Academy and its founder to refund ₹546 cr for providing unregistered investment advisory"
+          "snippet": "Sebi imposed a penalty of Rs 1 crore on Central Depository Services (India) Ltd (CDSL) for multiple compliance lapses."
         }
       ],
-      "after_filter_count": 1,
-      "dropped_counts": {
-        "not_listed": 1,
-        "no_sebi_signal_in_snippet": 0,
-        "resolved_in_favour": 0,
-        "no_name": 0
-      },
-      "sample": [
-        {
-          "name": "Central Depository Services (India) Ltd",
-          "order_type": "sebi-fine",
-          "snippet": "Sebi imposes ₹1 crore fine on Central Depository Services (India) Ltd (CDSL) for multiple compliance lapses"
-        }
-      ]
-    },
-    {
-      "url": "https://economictimes.indiatimes.com/topic/sebi",
-      "label": "Economic Times — SEBI topic (news)",
-      "mode": "news",
-      "at": "2026-11-01T06:00:29.195Z",
-      "fc_status": 200,
-      "outcome": "ok",
-      "upstream_status": 200,
-      "total_extracted_raw": 3,
-      "total_extracted": 3,
-      "prefilter_sample": [
-        {
-          "name": "Axis Capital",
-          "order_type": "enforcement-order",
-          "is_listed_entity": true,
-          "snippet": "Sebi issues final order against Axis Capital, imposes regulatory censure; Axis Bank shares fall over 1%."
-        },
-        {
-          "name": "Nippon Life India Asset Management Company",
-          "order_type": "settlement",
-          "is_listed_entity": true,
-          "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case."
-        },
-        {
-          "name": "Avadhut Sathe Trading Academy",
-          "order_type": "enforcement-order",
-          "is_listed_entity": true,
-          "snippet": "Sebi orders Avadhut Sathe, academy to refund Rs 546 crore."
-        }
-      ],
-      "after_filter_count": 3,
+      "after_filter_count": 2,
       "dropped_counts": {
         "not_listed": 0,
         "no_sebi_signal_in_snippet": 0,
@@ -180,19 +123,97 @@
       },
       "sample": [
         {
-          "name": "Axis Capital",
-          "order_type": "enforcement-order",
-          "snippet": "Sebi issues final order against Axis Capital, imposes regulatory censure; Axis Bank shares fall over 1%."
+          "name": "EKI Energy Services Ltd",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars EKI Energy Services Ltd and its Managing Director Manish Kumar Dabkara from the securities market for misrepre"
         },
         {
-          "name": "Nippon Life India Asset Management Company",
-          "order_type": "settlement",
-          "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case."
+          "name": "Central Depository Services (India) Ltd",
+          "order_type": "sebi-fine",
+          "snippet": "Sebi imposed a penalty of Rs 1 crore on Central Depository Services (India) Ltd (CDSL) for multiple compliance lapses."
+        }
+      ]
+    },
+    {
+      "url": "https://economictimes.indiatimes.com/topic/sebi",
+      "label": "Economic Times — SEBI topic (news)",
+      "mode": "news",
+      "at": "2026-11-02T06:00:45.619Z",
+      "fc_status": 200,
+      "outcome": "ok",
+      "upstream_status": 200,
+      "total_extracted_raw": 6,
+      "total_extracted": 6,
+      "prefilter_sample": [
+        {
+          "name": "Axis Capital",
+          "order_type": "enforcement-order",
+          "is_listed_entity": true,
+          "snippet": "SEBI has issued a regulatory censure against Axis Capital, concluding proceedings linked to September 2024 restrictions."
+        },
+        {
+          "name": "EKI Energy Services Ltd",
+          "order_type": "sebi-ban",
+          "is_listed_entity": true,
+          "snippet": "Sebi bars EKI Energy, MD Dabkara, others from market; imposes penalty"
         },
         {
           "name": "Avadhut Sathe Trading Academy",
           "order_type": "enforcement-order",
-          "snippet": "Sebi orders Avadhut Sathe, academy to refund Rs 546 crore."
+          "is_listed_entity": false,
+          "snippet": "Sebi orders Avadhut Sathe, academy to refund Rs 546 crore"
+        },
+        {
+          "name": "Nippon Life India Asset Management Company",
+          "order_type": "settlement",
+          "is_listed_entity": true,
+          "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case"
+        },
+        {
+          "name": "Ratnadeep Retail",
+          "order_type": "show-cause",
+          "is_listed_entity": true,
+          "snippet": "IPO ahead: Value-fashion retailer Ratnadeep Retail gets Sebi nod to raise funds through public issue"
+        },
+        {
+          "name": "Atomberg",
+          "order_type": "enforcement-order",
+          "is_listed_entity": true,
+          "snippet": "Atomberg gets Sebi nod for IPO; plans Rs 450 crore fresh issue"
+        }
+      ],
+      "after_filter_count": 5,
+      "dropped_counts": {
+        "not_listed": 1,
+        "no_sebi_signal_in_snippet": 0,
+        "resolved_in_favour": 0,
+        "no_name": 0
+      },
+      "sample": [
+        {
+          "name": "Axis Capital",
+          "order_type": "enforcement-order",
+          "snippet": "SEBI has issued a regulatory censure against Axis Capital, concluding proceedings linked to September 2024 restrictions."
+        },
+        {
+          "name": "EKI Energy Services Ltd",
+          "order_type": "sebi-ban",
+          "snippet": "Sebi bars EKI Energy, MD Dabkara, others from market; imposes penalty"
+        },
+        {
+          "name": "Nippon Life India Asset Management Company",
+          "order_type": "settlement",
+          "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case"
+        },
+        {
+          "name": "Ratnadeep Retail",
+          "order_type": "show-cause",
+          "snippet": "IPO ahead: Value-fashion retailer Ratnadeep Retail gets Sebi nod to raise funds through public issue"
+        },
+        {
+          "name": "Atomberg",
+          "order_type": "enforcement-order",
+          "snippet": "Atomberg gets Sebi nod for IPO; plans Rs 450 crore fresh issue"
         }
       ]
     },
@@ -200,21 +221,27 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-11-01T06:00:33.950Z",
+      "at": "2026-11-02T06:00:50.481Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 2,
-      "total_extracted": 2,
+      "total_extracted_raw": 3,
+      "total_extracted": 3,
       "prefilter_sample": [
         {
           "name": "Pancard Clubs Limited",
           "order_type": "other",
           "is_listed_entity": false,
-          "snippet": "Asset Sale committee in matter of Pancard Clubs Limited - All investors are advised to communicate any queries/requests..."
+          "snippet": "Asset Sale committee in matter of Pancard Clubs Limited - All investors are advised to communicate any queries/requests to Asset Sale committee in mat"
         },
         {
           "name": "Citrus Check Inns Limited",
+          "order_type": "other",
+          "is_listed_entity": false,
+          "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
+        },
+        {
+          "name": "Royal Twinkle Star Club Pvt. Ltd",
           "order_type": "other",
           "is_listed_entity": false,
           "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
@@ -222,7 +249,7 @@
       ],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 2,
+        "not_listed": 3,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
