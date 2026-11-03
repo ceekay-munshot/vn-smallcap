@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-03T03:54:42.046Z",
+  "generated_at": "2026-11-03T06:45:35.303Z",
   "source": "Yahoo Finance chart endpoint",
   "note": "Pre-open context. GIFT Nifty has no free stable feed; S&P futures plus the Asian session carry the same overnight information.",
   "giftNifty": null,
@@ -9,10 +9,10 @@
       "symbol": "ES=F",
       "label": "S&P 500 futures",
       "role": "overnight",
-      "last": 7568,
-      "prevClose": 7783.25,
-      "changePct": -2.7655542350560447,
-      "asOf": "2026-11-03T03:44:35.000Z"
+      "last": 7562.5,
+      "prevClose": 7754.25,
+      "changePct": -2.472837476222711,
+      "asOf": "2026-11-03T06:35:32.000Z"
     },
     "nikkei": {
       "key": "nikkei",
@@ -29,47 +29,47 @@
       "symbol": "^HSI",
       "label": "Hang Seng",
       "role": "asia",
-      "last": 23482,
+      "last": 23494.09,
       "prevClose": 23041.32,
-      "changePct": 1.912564037129827,
-      "asOf": "2026-11-03T03:39:38.000Z"
+      "changePct": 1.96503498931484,
+      "asOf": "2026-11-03T06:30:32.000Z"
     },
     "vix": {
       "key": "vix",
       "symbol": "^INDIAVIX",
       "label": "India VIX",
       "role": "vol",
-      "last": 15.975,
+      "last": 15.873,
       "prevClose": 16.25,
-      "changePct": -1.692307692307693,
-      "asOf": "2026-11-03T03:54:40.000Z"
+      "changePct": -2.32,
+      "asOf": "2026-11-03T06:45:33.000Z"
     },
     "nifty": {
       "key": "nifty",
       "symbol": "^NSEI",
       "label": "Nifty 50",
       "role": "home",
-      "last": 23590.3,
+      "last": 23655.4,
       "prevClose": 22698.85,
-      "changePct": 3.927291470713268,
-      "asOf": "2026-11-03T03:54:40.000Z"
+      "changePct": 4.2140901411305,
+      "asOf": "2026-11-03T06:45:33.000Z"
     },
     "smallcap": {
       "key": "smallcap",
       "symbol": "NIFTYSMLCAP250.NS",
       "label": "Nifty Smallcap 250",
       "role": "home",
-      "last": 17106.4,
+      "last": 17081.35,
       "prevClose": 16989.4,
-      "changePct": 0.6886646968109478,
-      "asOf": "2026-11-03T03:54:40.000Z"
+      "changePct": 0.5412198194167939,
+      "asOf": "2026-11-03T06:45:34.000Z"
     }
   },
   "signal": {
-    "lean": -0.9783340713825972,
+    "lean": -0.8188579539196772,
     "dir": "down",
-    "vix": 15.975,
-    "vixChange": -1.692307692307693,
+    "vix": 15.873,
+    "vixChange": -2.32,
     "vixBand": "normal",
     "tolerancePct": 0.25,
     "headline": "Overnight negative — expect a lower open, limits should fill easily"
