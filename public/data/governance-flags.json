@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-11-03T18:05:25.492Z",
+  "generated_at": "2026-11-04T06:13:44.037Z",
   "source_count": 4,
   "curated_baseline_count": 0,
-  "total_entities_seen": 7,
+  "total_entities_seen": 8,
   "flagged_companies": {
     "511144": {
       "primary_name": "Axis Capital",
@@ -21,7 +21,7 @@
           "snippet": "Sebi issues final order against Axis Capital, imposes regulatory censure; Axis Bank shares fall over 1%"
         }
       ],
-      "first_seen_at": "2026-11-03T18:05:25.491Z"
+      "first_seen_at": "2026-11-04T06:13:44.036Z"
     }
   },
   "unmatched_sample": [
@@ -32,14 +32,14 @@
       "origin": "scraper"
     },
     {
-      "name": "Central Depository Services (India) Ltd",
+      "name": "Central Depository Services (India) Ltd (CDSL)",
       "type": "sebi-fine",
       "source": "Business Standard — SEBI topic (news)",
       "origin": "scraper"
     },
     {
       "name": "EKI Energy Services Ltd",
-      "type": "sebi-fine",
+      "type": "sebi-ban",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
@@ -50,14 +50,20 @@
       "origin": "scraper"
     },
     {
-      "name": "Ratnadeep Retail",
-      "type": "sebi-approval",
+      "name": "Nippon AMC",
+      "type": "settlement",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     },
     {
-      "name": "Nippon Life India Asset Management",
-      "type": "settlement",
+      "name": "Ratnadeep Retail",
+      "type": "enforcement-order",
+      "source": "Economic Times — SEBI topic (news)",
+      "origin": "scraper"
+    },
+    {
+      "name": "Atomberg",
+      "type": "enforcement-order",
       "source": "Economic Times — SEBI topic (news)",
       "origin": "scraper"
     }
@@ -67,29 +73,23 @@
       "url": "https://www.livemint.com/topic/sebi",
       "label": "Mint — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-11-03T18:04:57.215Z",
+      "at": "2026-11-04T06:13:27.250Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 2,
-      "total_extracted": 2,
+      "total_extracted_raw": 1,
+      "total_extracted": 1,
       "prefilter_sample": [
         {
           "name": "Avadhut Sathe",
           "order_type": "sebi-ban",
           "is_listed_entity": false,
-          "snippet": "Sebi bars Avadhut Sathe, academy from markets, imposes ₹11.5 crore penalty"
-        },
-        {
-          "name": "ASTAPL",
-          "order_type": "sebi-ban",
-          "is_listed_entity": false,
-          "snippet": "Sebi bars Avadhut Sathe, academy from markets, imposes ₹11.5 crore penalty"
+          "snippet": "Sebi bars Avadhut Sathe, academy from markets, imposes ₹11.5 crore penalty."
         }
       ],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 2,
+        "not_listed": 1,
         "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
@@ -100,7 +100,7 @@
       "url": "https://www.business-standard.com/topic/sebi",
       "label": "Business Standard — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-11-03T18:05:01.181Z",
+      "at": "2026-11-04T06:13:30.037Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -114,7 +114,7 @@
           "snippet": "Sebi bars EKI Energy, MD Dabkara, others from market; imposes penalty"
         },
         {
-          "name": "Central Depository Services (India) Ltd",
+          "name": "Central Depository Services (India) Ltd (CDSL)",
           "order_type": "sebi-fine",
           "is_listed_entity": true,
           "snippet": "Sebi imposes ₹1 crore fine on CDSL for multiple compliance lapses"
@@ -134,7 +134,7 @@
           "snippet": "Sebi bars EKI Energy, MD Dabkara, others from market; imposes penalty"
         },
         {
-          "name": "Central Depository Services (India) Ltd",
+          "name": "Central Depository Services (India) Ltd (CDSL)",
           "order_type": "sebi-fine",
           "snippet": "Sebi imposes ₹1 crore fine on CDSL for multiple compliance lapses"
         }
@@ -144,12 +144,12 @@
       "url": "https://economictimes.indiatimes.com/topic/sebi",
       "label": "Economic Times — SEBI topic (news)",
       "mode": "news",
-      "at": "2026-11-03T18:05:04.930Z",
+      "at": "2026-11-04T06:13:36.462Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
-      "total_extracted_raw": 8,
-      "total_extracted": 8,
+      "total_extracted_raw": 7,
+      "total_extracted": 7,
       "prefilter_sample": [
         {
           "name": "Axis Capital",
@@ -159,7 +159,7 @@
         },
         {
           "name": "EKI Energy Services Ltd",
-          "order_type": "sebi-fine",
+          "order_type": "sebi-ban",
           "is_listed_entity": true,
           "snippet": "Sebi bars EKI Energy, MD Dabkara, others from market; imposes penalty"
         },
@@ -170,40 +170,34 @@
           "snippet": "PC Jeweller shares drop 4% after Sebi sends warning letters to MD, company secretary. Here's why"
         },
         {
-          "name": "Ratnadeep Retail",
-          "order_type": "sebi-approval",
-          "is_listed_entity": true,
-          "snippet": "IPO ahead: Value-fashion retailer Ratnadeep Retail gets Sebi nod to raise funds through public issue"
-        },
-        {
-          "name": "Nippon Life India Asset Management",
-          "order_type": "settlement",
-          "is_listed_entity": true,
-          "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case"
-        },
-        {
-          "name": "Avadhut Sathe Trading Academy",
+          "name": "Avadhut Sathe",
           "order_type": "enforcement-order",
           "is_listed_entity": false,
           "snippet": "Sebi orders Avadhut Sathe, academy to refund Rs 546 crore"
         },
         {
-          "name": "GAIL",
-          "order_type": "sebi-approval",
+          "name": "Nippon AMC",
+          "order_type": "settlement",
           "is_listed_entity": true,
-          "snippet": "GAIL Q2 Results: Profit zooms 139% YoY to Rs 4,720 crore, revenue rises 33%; board approves GAIL Gas IPO"
+          "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case"
         },
         {
-          "name": "Adani Enterprises",
-          "order_type": "sebi-fine",
+          "name": "Ratnadeep Retail",
+          "order_type": "enforcement-order",
           "is_listed_entity": true,
-          "snippet": "Adani Enterprises Q2 Results: Revenue spikes 75% YoY to Rs 37,216 crore, profit at Rs 1,492 crore"
+          "snippet": "IPO ahead: Value-fashion retailer Ratnadeep Retail gets Sebi nod to raise funds through public issue"
+        },
+        {
+          "name": "Atomberg",
+          "order_type": "enforcement-order",
+          "is_listed_entity": true,
+          "snippet": "Atomberg gets Sebi nod for IPO; plans Rs 450 crore fresh issue"
         }
       ],
-      "after_filter_count": 5,
+      "after_filter_count": 6,
       "dropped_counts": {
         "not_listed": 1,
-        "no_sebi_signal_in_snippet": 2,
+        "no_sebi_signal_in_snippet": 0,
         "resolved_in_favour": 0,
         "no_name": 0
       },
@@ -215,7 +209,7 @@
         },
         {
           "name": "EKI Energy Services Ltd",
-          "order_type": "sebi-fine",
+          "order_type": "sebi-ban",
           "snippet": "Sebi bars EKI Energy, MD Dabkara, others from market; imposes penalty"
         },
         {
@@ -224,14 +218,19 @@
           "snippet": "PC Jeweller shares drop 4% after Sebi sends warning letters to MD, company secretary. Here's why"
         },
         {
+          "name": "Nippon AMC",
+          "order_type": "settlement",
+          "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case"
+        },
+        {
           "name": "Ratnadeep Retail",
-          "order_type": "sebi-approval",
+          "order_type": "enforcement-order",
           "snippet": "IPO ahead: Value-fashion retailer Ratnadeep Retail gets Sebi nod to raise funds through public issue"
         },
         {
-          "name": "Nippon Life India Asset Management",
-          "order_type": "settlement",
-          "snippet": "Nippon AMC gets Sebi nod for settlement in Yes Bank AT1 case"
+          "name": "Atomberg",
+          "order_type": "enforcement-order",
+          "snippet": "Atomberg gets Sebi nod for IPO; plans Rs 450 crore fresh issue"
         }
       ]
     },
@@ -239,7 +238,7 @@
       "url": "https://www.sebi.gov.in/enforcement/orders.html",
       "label": "SEBI — orders listing (backup)",
       "mode": "regulator",
-      "at": "2026-11-03T18:05:22.879Z",
+      "at": "2026-11-04T06:13:40.785Z",
       "fc_status": 200,
       "outcome": "ok",
       "upstream_status": 200,
@@ -248,21 +247,21 @@
       "prefilter_sample": [
         {
           "name": "Pancard Clubs Limited",
-          "order_type": "other",
-          "is_listed_entity": false,
-          "snippet": "Asset Sale committee in matter of Pancard Clubs Limited - All investors are advised to communicate any queries/requests to Asset Sale committee."
+          "order_type": "public-notice",
+          "is_listed_entity": true,
+          "snippet": "Asset Sale committee in matter of Pancard Clubs Limited - All investors are advised to communicate any queries/requests to Asset Sale committee in mat"
         },
         {
           "name": "Citrus Check Inns Limited",
-          "order_type": "other",
+          "order_type": "public-notice",
           "is_listed_entity": true,
           "snippet": "PUBLIC NOTICE IN THE MATTER OF CITRUS CHECK INNS LIMITED AND ROYAL TWINKLE STAR CLUB PVT. LTD FOR REFUND (PHASE-II)"
         }
       ],
       "after_filter_count": 0,
       "dropped_counts": {
-        "not_listed": 1,
-        "no_sebi_signal_in_snippet": 1,
+        "not_listed": 0,
+        "no_sebi_signal_in_snippet": 2,
         "resolved_in_favour": 0,
         "no_name": 0
       },
